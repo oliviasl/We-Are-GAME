@@ -4,7 +4,7 @@ const Home = () => {
     const [collegeTable, setCollegeTable] = useState([] as any[]);
 
     useEffect(() => {
-        fetch(`/api/getCollegeData`)
+        fetch(`/api/allColleges`)
             .then(response => response.json())
             .then(data => {console.log(data); setCollegeTable(data)})
             .catch(error => console.error(error));

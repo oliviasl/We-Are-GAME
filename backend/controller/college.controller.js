@@ -4,7 +4,7 @@ const db = require("../db");
 
 class collegeController {
 
-    async getCollegeTable() {
+    async allColleges() {
         try {
             const result = await db.query(
                 "SELECT * FROM colleges;",
@@ -15,6 +15,8 @@ class collegeController {
             return error;
         }
     }
+
+
 }
 
 module.exports = new collegeController();
