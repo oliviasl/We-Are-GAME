@@ -21,7 +21,7 @@ app.get("/api/allColleges", (req, res) => {
 
 
 // collegeByAcademicResources
-// returns data of colleges with non null academic_resources_web_addr 
+// returns data of colleges with non null academic_resources_web_addr
 
 
 // collegeByDiversityResources
@@ -46,13 +46,24 @@ app.get("/api/allColleges", (req, res) => {
 
 // createCollege
 // adds a new college entry with passed in params
-
+app.post("/api/createCollege", (req, res) => {
+  const { collegeData } = req.body;
+  collegeController
+    .createCollege(collegeData)
+    .then((data) => {
+      return res.status(200).json(data);
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 // editCollege
 // edits an existing college entry with passed in params
 
 
-// Start Backend Port 
+// Start Backend Port
 app.listen(port, () => {
-  console.log(`Server listening on the port  ${port}`);
+    console.log(`Server listening on the port  ${port}`);
 });
