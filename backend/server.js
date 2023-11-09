@@ -50,7 +50,7 @@ app.get("/api/allColleges", (req, res) => {
 
 // editCollege
 // edits an existing college entry with passed in params
-app.get("/api/editCollege", (req, res) => {
+app.put("/api/editCollege", (req, res) => {
   const { collegeId, newFields } = req.body;
   collegeController.editCollege(newFields, collegeId).then((data) => {
     return res.status(200).json(data);
