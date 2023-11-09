@@ -16,8 +16,19 @@ class collegeController {
         }
     }
 
+    async collegeByACT(act) {
+        try {
+            const result = await db.query(
+                "SELECT * FROM colleges WHERE $1 BETWEEN min_act AND max_act;",
+                [act]
+            );
+             return result.rows;
+        } catch (error) {
+            return error;
+        }
+    }
+
     async editCollege(newFields, college_id) {
-        
         try {
             const query =
                 "UPDATE colleges SET " +
