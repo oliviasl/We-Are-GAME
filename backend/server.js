@@ -28,9 +28,20 @@ app.get("/api/allColleges", (req, res) => {
 // returns data of colleges with non null diversity_resources_web_addr
 
 
-// collegeByGPA
+// collegesByGPA
 // returns data of colleges that include GPA within their min/max
-
+app.get("/api/collegesByGPA", (req, res) => {
+  const { gpa } = req.body;
+  collegeController
+    .collegesByGPA(gpa)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 // collegeBySATRead
 // returns data of colleges that include SAT Reading/Writing score within their min/max
@@ -57,7 +68,12 @@ app.get("/api/collegeByACT", (req, res) => {
 
 // editCollege
 // edits an existing college entry with passed in params
-
+app.put("/api/editCollege", (req, res) => {
+  const { collegeId, newFields } = req.body;
+  collegeController.editCollege(newFields, collegeId).then((data) => {
+    return res.status(200).json(data);
+  });
+});
 
 // Start Backend Port 
 app.listen(port, () => {
