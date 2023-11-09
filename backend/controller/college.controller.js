@@ -16,6 +16,18 @@ class collegeController {
         }
     }
 
+    async collegeByACT(act) {
+        try {
+            const result = await db.query(
+                "SELECT * FROM colleges WHERE min_act <= "+act+" AND max_act >= "+act+";",
+                []
+            );
+            return result.rows;
+        } catch (error) {
+            return error;
+        }
+    }
+
 
 }
 

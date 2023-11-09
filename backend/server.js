@@ -42,7 +42,14 @@ app.get("/api/allColleges", (req, res) => {
 
 // collegeByACT
 // returns data of colleges that include ACT score within their min/max
-
+app.get("/api/collegeByACT", (req, res) => {
+  const { act } = req.body;
+  collegeController
+    .collegeByACT(act)
+    .then((data)=>
+      res.status(200).json(data)
+    );
+});
 
 // createCollege
 // adds a new college entry with passed in params
