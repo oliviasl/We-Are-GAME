@@ -19,8 +19,8 @@ class collegeController {
     async collegeByACT(act) {
         try {
             const result = await db.query(
-                "SELECT * FROM colleges WHERE min_act <= "+act+" AND max_act >= "+act+";",
-                []
+                "SELECT * FROM colleges WHERE $1 BETWEEN min_act AND max_act;",
+                [act]
             );
             return result.rows;
         } catch (error) {
