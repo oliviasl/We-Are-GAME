@@ -61,7 +61,12 @@ app.get("/api/collegesByGPA", (req, res) => {
 
 // editCollege
 // edits an existing college entry with passed in params
-
+app.put("/api/editCollege", (req, res) => {
+  const { collegeId, newFields } = req.body;
+  collegeController.editCollege(newFields, collegeId).then((data) => {
+    return res.status(200).json(data);
+  });
+});
 
 // Start Backend Port 
 app.listen(port, () => {
