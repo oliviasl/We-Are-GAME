@@ -61,14 +61,6 @@ class collegeController {
         return result.rows;
     }
 
-    async collegeBySATMath(sat_math) {
-        const result = await db.query(
-            "SELECT * FROM colleges WHERE $1 BETWEEN min_sat_math AND max_sat_math;",
-            [sat_math]
-        );
-        return result.rows;
-    }
-
 }
 
 module.exports = new collegeController();
