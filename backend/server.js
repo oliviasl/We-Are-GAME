@@ -45,7 +45,18 @@ app.get("/api/collegesByGPA", (req, res) => {
 
 // collegeBySATRead
 // returns data of colleges that include SAT Reading/Writing score within their min/max
-
+app.get("/api/collegeBySATRead", (req, res) => {
+  const { satReadWrite } = req.body;
+  collegeController
+    .collegeBySATRead(satReadWrite)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 // collegeBySATMath
 // returns data of colleges that include SAT Math score within their min/max
@@ -62,6 +73,8 @@ app.get("/api/collegeBySATMath", (req, res) => {
     });
 });
 
+// collegeBySATMath
+// returns data of colleges that include SAT Math score within their min/max
 
 // collegeByACT
 // returns data of colleges that include ACT score within their min/max
