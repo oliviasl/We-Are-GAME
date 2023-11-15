@@ -49,6 +49,18 @@ app.get("/api/collegesByGPA", (req, res) => {
 
 // collegeBySATMath
 // returns data of colleges that include SAT Math score within their min/max
+app.get("/api/collegeBySATMath", (req, res) => {
+  const { satMath } = req.body;
+  collegeController
+    .collegeBySATMath(satMath)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 
 // collegeByACT
