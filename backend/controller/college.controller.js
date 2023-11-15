@@ -28,7 +28,7 @@ class collegeController {
         }
     }
 
-    async editCollege(newFields, college_id) {
+    async editCollege(newFields, collegeId) {
         try {
             const query =
                 "UPDATE colleges SET " +
@@ -36,7 +36,7 @@ class collegeController {
                 .map((column) => column + "='" + newFields[column] + "'")
                 .join(", ") +
                 " WHERE college_id=" +
-                college_id +
+                collegeId +
                 " RETURNING *;";
             const result = await db.query(query, []);
             return result.rows;
@@ -53,10 +53,10 @@ class collegeController {
         return result.rows;
     }
 
-    async collegeBySATRead(sat_read_write) {
+    async collegeBySATRead(satReadWrite) {
         const result = await db.query(
             "SELECT * FROM colleges WHERE $1 BETWEEN min_sat_read_write AND max_sat_read_write;",
-            [sat_read_write]
+            [satReadWrite]
         );
         return result.rows;
     }

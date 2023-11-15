@@ -46,9 +46,9 @@ app.get("/api/collegesByGPA", (req, res) => {
 // collegeBySATRead
 // returns data of colleges that include SAT Reading/Writing score within their min/max
 app.get("/api/collegeBySATRead", (req, res) => {
-  const { sat_read_write } = req.body;
+  const { satReadWrite } = req.body;
   collegeController
-    .collegeBySATRead(sat_read_write)
+    .collegeBySATRead(satReadWrite)
     .then((data) =>
       res.status(200).json(data)
     )
