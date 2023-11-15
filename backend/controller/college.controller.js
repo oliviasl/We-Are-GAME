@@ -57,6 +57,14 @@ class collegeController {
         const result = await db.query(
             "SELECT * FROM colleges WHERE $1 BETWEEN min_sat_read_write AND max_sat_read_write;",
             [satReadWrite]
+          );
+        return result.rows;
+    }
+
+    async collegeBySATMath(satMath) {
+        const result = await db.query(
+            "SELECT * FROM colleges WHERE $1 BETWEEN min_sat_math AND max_sat_math;",
+            [satMath]
         );
         return result.rows;
     }
