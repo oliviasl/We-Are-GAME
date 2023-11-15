@@ -50,9 +50,9 @@ app.get("/api/collegesByGPA", (req, res) => {
 // collegeBySATMath
 // returns data of colleges that include SAT Math score within their min/max
 app.get("/api/collegeBySATMath", (req, res) => {
-  const { sat_math } = req.body;
+  const { satMath } = req.body;
   collegeController
-    .collegeBySATMath(sat_math)
+    .collegeBySATMath(satMath)
     .then((data) =>
       res.status(200).json(data)
     )
