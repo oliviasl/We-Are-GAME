@@ -27,11 +27,12 @@ class collegeController {
             return error;
         }
     }
-    async collegeByName(name){
+    async collegeByName(college_name){
         try {
+            console.log(college_name);
             const result = await db.query(
-                "SELECT * FROM colleges WHERE name = $1;",
-                [name]
+                "SELECT * FROM colleges WHERE college_name = $1;",
+                [college_name]
             );
             return result.rows;
         }
