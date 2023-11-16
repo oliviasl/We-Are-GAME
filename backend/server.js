@@ -48,6 +48,10 @@ app.get("/api/allColleges", (req, res) => {
 // adds a new college entry with passed in params
 app.post("/api/createCollege", (req, res) => {
   const { collegeData } = req.body;
+
+  if (!collegeData["college_name"])
+    return res.status(400).json({ error: "Must provide college_name field." });
+
   collegeController
     .createCollege(collegeData)
     .then((data) => {
