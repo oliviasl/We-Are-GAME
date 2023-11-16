@@ -19,8 +19,9 @@ app.get("/api/allColleges", (req, res) => {
 // collegeByName
 // returns data of colleges by name
 app.get("/api/collegeByName", (req, res) => {
+  const { name } = req.body;
   collegeController
-    .collegeByName(req.query.name)
+    .collegeByName(name)
     .then((data) =>
       res.status(200).json(data)
     );
