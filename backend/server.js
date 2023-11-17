@@ -31,7 +31,6 @@ app.get("/api/collegeByName", (req, res) => {
     });
 });
 
-
 // collegeHasAcademicResources
 // returns data of colleges with non null academic_resources_web_addr 
 app.get("/api/collegeHasAcademicResource", (req, res) => {
@@ -97,9 +96,6 @@ app.get("/api/collegeBySATMath", (req, res) => {
     });
 });
 
-// collegeBySATMath
-// returns data of colleges that include SAT Math score within their min/max
-
 // collegeByACT
 // returns data of colleges that include ACT score within their min/max
 app.get("/api/collegeByACT", (req, res) => {
@@ -113,7 +109,22 @@ app.get("/api/collegeByACT", (req, res) => {
 
 // createCollege
 // adds a new college entry with passed in params
+app.post("/api/createCollege", (req, res) => {
+  const { collegeData } = req.body;
 
+  if (!collegeData["college_name"])
+    return res.status(400).json({ error: "Must provide college_name field." });
+
+  collegeController
+    .createCollege(collegeData)
+    .then((data) => {
+      return res.status(200).json(data);
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 // editCollege
 // edits an existing college entry with passed in params
@@ -124,7 +135,7 @@ app.put("/api/editCollege", (req, res) => {
   });
 });
 
-// Start Backend Port 
+// Start Backend Port
 app.listen(port, () => {
-  console.log(`Server listening on the port  ${port}`);
+    console.log(`Server listening on the port  ${port}`);
 });
