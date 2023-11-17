@@ -18,15 +18,39 @@ app.get("/api/allColleges", (req, res) => {
 
 // collegeByName
 // returns data of colleges by name
+app.get("/api/collegeByName", (req, res) => {
+  const { college_name } = req.query;
+  collegeController
+    .collegeByName(college_name)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 
-// collegeByAcademicResources
+// collegeHasAcademicResources
 // returns data of colleges with non null academic_resources_web_addr 
-
+app.get("/api/collegeHasAcademicResource", (req, res) => {
+  collegeController
+    .collegeHasAcademicResource()
+    .then((data) =>
+      res.status(200).json(data)
+    );
+});
 
 // collegeByDiversityResources
 // returns data of colleges with non null diversity_resources_web_addr
-
+app.get("/api/collegeHasDiversityResource", (req, res) => {
+  collegeController
+    .collegeHasDiversityResource()
+    .then((data) =>
+      res.status(200).json(data)
+    );
+});
 
 // collegesByGPA
 // returns data of colleges that include GPA within their min/max

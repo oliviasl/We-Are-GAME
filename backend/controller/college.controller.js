@@ -27,6 +27,19 @@ class collegeController {
             return error;
         }
     }
+    async collegeByName(college_name){
+        try {
+            console.log(college_name);
+            const result = await db.query(
+                "SELECT * FROM colleges WHERE college_name = $1;",
+                [college_name]
+            );
+            return result.rows;
+        }
+        catch(error){
+            return error;
+        }
+    }
 
     async editCollege(newFields, collegeId) {
         try {
@@ -39,6 +52,17 @@ class collegeController {
                 collegeId +
                 " RETURNING *;";
             const result = await db.query(query, []);
+            return result.rows;
+        } catch (error) {
+            return error;
+        }
+    }
+    async collegeHasAcademicResource() {
+        try {
+            const result = await db.query(
+                "SELECT * FROM colleges WHERE academic_resources_web_addr IS NOT NULL",
+                []
+            );
             return result.rows;
         } catch (error) {
             return error;
@@ -67,6 +91,18 @@ class collegeController {
             [satMath]
         );
         return result.rows;
+    }
+
+    async collegeHasDiversityResource() {
+        try {
+            const result = await db.query(
+                "SELECT * FROM colleges WHERE diversity_resources_web_addr IS NOT NULL",
+                []
+            );
+            return result.rows;
+        } catch (error) {
+            return error;
+        }
     }
 
 }
