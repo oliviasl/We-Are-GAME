@@ -7,6 +7,8 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+// *** COLLEGE API CALLS ***
+
 // returns data of all colleges
 app.get("/api/allColleges", (req, res) => {
   collegeController
@@ -30,6 +32,13 @@ app.get("/api/collegeByName", (req, res) => {
       return res.status(500).json({ error });
     });
 });
+
+// collegeById
+// returns data of college by collegeId
+
+// collegeHasStuAthAcademicRes
+// returns data of colleges with non null stu_ath_academic_res_web_addr
+
 
 // collegeHasAcademicResources
 // returns data of colleges with non null academic_resources_web_addr 
@@ -134,6 +143,41 @@ app.put("/api/editCollege", (req, res) => {
     return res.status(200).json(data);
   });
 });
+
+// deleteCollege
+
+// autofill college api
+
+
+// *** USER API CALLS ***
+
+// userById
+
+// userBySport
+
+// createUser
+
+// editUser
+
+// deleteUser
+
+// approveUser
+
+// rejectUser
+
+// validateUser
+
+
+// *** MENTOR API CALLS ***
+
+// mentorById
+
+// createMentor
+
+// editMentor
+
+// deleteMentor
+
 
 // Start Backend Port
 app.listen(port, () => {

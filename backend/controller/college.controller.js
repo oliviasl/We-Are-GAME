@@ -16,17 +16,6 @@ class collegeController {
         }
     }
 
-    async collegeByACT(act) {
-        try {
-            const result = await db.query(
-                "SELECT * FROM colleges WHERE $1 BETWEEN min_act AND max_act;",
-                [act]
-            );
-             return result.rows;
-        } catch (error) {
-            return error;
-        }
-    }
     async collegeByName(college_name){
         try {
             console.log(college_name);
@@ -41,22 +30,10 @@ class collegeController {
         }
     }
 
-    async editCollege(newFields, collegeId) {
-        try {
-            const query =
-                "UPDATE colleges SET " +
-                Object.keys(newFields)
-                .map((column) => column + "='" + newFields[column] + "'")
-                .join(", ") +
-                " WHERE college_id=" +
-                collegeId +
-                " RETURNING *;";
-            const result = await db.query(query, []);
-            return result.rows;
-        } catch (error) {
-            return error;
-        }
-    }
+    // collegeById
+    
+    // collegeHasStuAthAcademicRes
+
     async collegeHasAcademicResource() {
         try {
             const result = await db.query(
@@ -104,6 +81,18 @@ class collegeController {
         );
         return result.rows;
     }
+
+    async collegeByACT(act) {
+        try {
+            const result = await db.query(
+                "SELECT * FROM colleges WHERE $1 BETWEEN min_act AND max_act;",
+                [act]
+            );
+             return result.rows;
+        } catch (error) {
+            return error;
+        }
+    }
   
     async createCollege(collegeData) {
         const insertKeys = Object.keys(collegeData);
@@ -124,6 +113,27 @@ class collegeController {
 
         return result.rows[0];
     }
+
+    async editCollege(newFields, collegeId) {
+        try {
+            const query =
+                "UPDATE colleges SET " +
+                Object.keys(newFields)
+                .map((column) => column + "='" + newFields[column] + "'")
+                .join(", ") +
+                " WHERE college_id=" +
+                collegeId +
+                " RETURNING *;";
+            const result = await db.query(query, []);
+            return result.rows;
+        } catch (error) {
+            return error;
+        }
+    }
+
+    // deleteCollege
+
+    // autofill college api
 }
 
 module.exports = new collegeController();
