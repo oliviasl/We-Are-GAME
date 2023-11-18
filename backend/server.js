@@ -21,7 +21,7 @@ app.get("/api/allColleges", (req, res) => {
 // collegeByName
 // returns data of colleges by name
 app.get("/api/collegeByName", (req, res) => {
-  const { college_name } = req.query;
+  const { college_name } = req.body;
   collegeController
     .collegeByName(college_name)
     .then((data) =>
@@ -148,12 +148,22 @@ app.put("/api/editCollege", (req, res) => {
 
 // autofill college api
 
+// assignmentByUserId
+
+// createAssignment
+
+// deleteAssignment
+
 
 // *** USER API CALLS ***
 
 // userById
 
+// userByName
+
 // userBySport
+
+// userByMajor
 
 // createUser
 

@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS colleges;
 DROP TABLE IF EXISTS user_status;
 DROP TABLE IF EXISTS master_users;
 DROP TABLE IF EXISTS mentors;
+DROP TABLE IF EXISTS college_assignments;
 
 CREATE TABLE IF NOT EXISTS colleges
 (
@@ -82,6 +83,13 @@ CREATE TABLE IF NOT EXISTS user_status
 (
     user_id INTEGER PRIMARY KEY REFERENCES master_users,
     user_status INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS college_assignments
+(
+    assignment_id SERIAL PRIMARY KEY,
+    college_id INTEGER REFERENCES colleges,
+    user_id INTEGER REFERENCES master_users
 );
 
 CREATE TABLE IF NOT EXISTS mentors
@@ -181,6 +189,13 @@ VALUES ('janedoe@example.com', 'password', 'Jane', 'Doe', '000-000-0000', 'MVHS'
 
 INSERT INTO user_status (user_id, user_status)
 VALUES (1, 1);
+
+
+INSERT INTO college_assignments (
+    user_id,
+    college_id
+)
+VALUES (1, 1), (1, 2);
 
 
 INSERT INTO mentors (
