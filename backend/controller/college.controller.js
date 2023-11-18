@@ -18,10 +18,9 @@ class collegeController {
 
     async collegeByName(college_name){
         try {
-            console.log(college_name);
             const result = await db.query(
-                "SELECT * FROM colleges WHERE college_name = $1;",
-                [college_name]
+                "SELECT * FROM colleges WHERE LOWER(college_name) LIKE LOWER($1);",
+                ['%' + college_name + '%']
             );
             return result.rows;
         }
@@ -134,6 +133,12 @@ class collegeController {
     // deleteCollege
 
     // autofill college api
+
+    // assignmentByUserId
+
+    // createAssignment
+
+    // deleteAssignment
 }
 
 module.exports = new collegeController();
