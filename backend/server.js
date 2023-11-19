@@ -171,9 +171,9 @@ app.put("/api/editCollege", (req, res) => {
 
 // deleteUser
 
-// approveUser
+// unapprovedUsers
 
-// rejectUser
+// approveUser
 
 // validateUser
 

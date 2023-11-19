@@ -6,7 +6,11 @@ class userController {
 
     // userById
 
+    // userByName
+
     // userBySport
+
+    // userByMajor
 
     // createUser
 
@@ -14,9 +18,9 @@ class userController {
 
     // deleteUser
 
-    // approveUser
+    // unapprovedUsers
 
-    // rejectUser
+    // approveUser
 
     // validateUser
 
