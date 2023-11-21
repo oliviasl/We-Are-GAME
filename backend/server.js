@@ -38,6 +38,13 @@ app.get("/api/collegeByName", (req, res) => {
 
 // collegeHasStuAthAcademicRes
 // returns data of colleges with non null stu_ath_academic_res_web_addr
+app.get("/api/collegeHasStuAthAcademicRes", (req, res) => {
+  collegeController
+    .collegeHasStuAthAcademicRes()
+    .then((data) =>
+      res.status(200).json(data)
+    );
+});
 
 
 // collegeHasAcademicResources
@@ -164,6 +171,18 @@ app.put("/api/editCollege", (req, res) => {
 // userBySport
 
 // userByMajor
+app.get("/api/userByMajor", (req, res) => {
+  const { major } = req.body;
+  collegeController
+    .userByMajor(major)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 // createUser
 
