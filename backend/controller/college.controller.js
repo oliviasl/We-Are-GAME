@@ -160,6 +160,30 @@ class collegeController {
     // createAssignment
 
     // deleteAssignment
+
+    async collegeHasStuAthAcademicRes() {
+        try {
+            const result = await db.query(
+                "SELECT * FROM colleges WHERE stu_ath_academic_res_web_addr IS NOT NULL",
+                []
+            );
+            return result.rows;
+        } catch (error) {
+            return error;
+        }
+    }
+
+    async userByMajor(major) {
+        try {
+            const result = await db.query(
+                "SELECT * FROM master_users WHERE (LOWER(user_potential_major) LIKE LOWER($1) OR LOWER(user_alt_major1) LIKE LOWER($1) OR LOWER(user_alt_major2) LIKE LOWER($1));",
+                ['%' + major + '%']
+            );
+            return result.rows;
+        } catch (error) {
+            return error;
+        }
+    }
 }
 
 module.exports = new collegeController();
