@@ -2,6 +2,8 @@ const express = require("express");
 require("dotenv").config();
 
 const collegeController = require("./controller/college.controller");
+const userController = require("./controller/user.controller");
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -162,6 +164,18 @@ app.put("/api/editCollege", (req, res) => {
 // userByName
 
 // userBySport
+app.get("/api/userBySport", (req, res) => {
+  const { sport } = req.body;
+  userController
+    .userBySport(sport)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 // userByMajor
 
