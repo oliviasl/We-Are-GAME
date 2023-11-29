@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 
 const collegeController = require("./controller/college.controller");
+const userController = require("./controller/user.controller");
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -11,11 +12,7 @@ app.use(express.json());
 
 // returns data of all colleges
 app.get("/api/allColleges", (req, res) => {
-  collegeController
-    .allColleges()
-    .then((data) =>
-      res.status(200).json(data)
-    );
+  collegeController.allColleges().then((data) => res.status(200).json(data));
 });
 
 // collegeByName
@@ -24,9 +21,7 @@ app.get("/api/collegeByName", (req, res) => {
   const { college_name } = req.body;
   collegeController
     .collegeByName(college_name)
-    .then((data) =>
-      res.status(200).json(data)
-    )
+    .then((data) => res.status(200).json(data))
     .catch((error) => {
       console.error(error);
       return res.status(500).json({ error });
@@ -39,15 +34,12 @@ app.get("/api/collegeByName", (req, res) => {
 // collegeHasStuAthAcademicRes
 // returns data of colleges with non null stu_ath_academic_res_web_addr
 
-
 // collegeHasAcademicResources
-// returns data of colleges with non null academic_resources_web_addr 
+// returns data of colleges with non null academic_resources_web_addr
 app.get("/api/collegeHasAcademicResource", (req, res) => {
   collegeController
     .collegeHasAcademicResource()
-    .then((data) =>
-      res.status(200).json(data)
-    );
+    .then((data) => res.status(200).json(data));
 });
 
 // collegeByDiversityResources
@@ -55,9 +47,7 @@ app.get("/api/collegeHasAcademicResource", (req, res) => {
 app.get("/api/collegeHasDiversityResource", (req, res) => {
   collegeController
     .collegeHasDiversityResource()
-    .then((data) =>
-      res.status(200).json(data)
-    );
+    .then((data) => res.status(200).json(data));
 });
 
 // collegesByGPA
@@ -66,9 +56,7 @@ app.get("/api/collegesByGPA", (req, res) => {
   const { gpa } = req.body;
   collegeController
     .collegesByGPA(gpa)
-    .then((data) =>
-      res.status(200).json(data)
-    )
+    .then((data) => res.status(200).json(data))
     .catch((error) => {
       console.error(error);
       return res.status(500).json({ error });
@@ -81,9 +69,7 @@ app.get("/api/collegeBySATRead", (req, res) => {
   const { satReadWrite } = req.body;
   collegeController
     .collegeBySATRead(satReadWrite)
-    .then((data) =>
-      res.status(200).json(data)
-    )
+    .then((data) => res.status(200).json(data))
     .catch((error) => {
       console.error(error);
       return res.status(500).json({ error });
@@ -96,9 +82,7 @@ app.get("/api/collegeBySATMath", (req, res) => {
   const { satMath } = req.body;
   collegeController
     .collegeBySATMath(satMath)
-    .then((data) =>
-      res.status(200).json(data)
-    )
+    .then((data) => res.status(200).json(data))
     .catch((error) => {
       console.error(error);
       return res.status(500).json({ error });
@@ -111,9 +95,7 @@ app.get("/api/collegeByACT", (req, res) => {
   const { act } = req.body;
   collegeController
     .collegeByACT(act)
-    .then((data)=>
-      res.status(200).json(data)
-    );
+    .then((data) => res.status(200).json(data));
 });
 
 // createCollege
@@ -154,7 +136,6 @@ app.put("/api/editCollege", (req, res) => {
 
 // deleteAssignment
 
-
 // *** USER API CALLS ***
 
 // userById
@@ -166,7 +147,12 @@ app.put("/api/editCollege", (req, res) => {
 // userByMajor
 
 // createUser
-
+app.post("/api/createUser", (req, res) => {
+  const { userData } = req.body;
+  userController.createUser(userData).then((data) => {
+    return res.status(200).json(data);
+  });
+});
 // editUser
 
 // deleteUser
@@ -176,7 +162,6 @@ app.put("/api/editCollege", (req, res) => {
 // approveUser
 
 // validateUser
-
 
 // *** MENTOR API CALLS ***
 
@@ -188,8 +173,7 @@ app.put("/api/editCollege", (req, res) => {
 
 // deleteMentor
 
-
 // Start Backend Port
 app.listen(port, () => {
-    console.log(`Server listening on the port  ${port}`);
+  console.log(`Server listening on the port  ${port}`);
 });
