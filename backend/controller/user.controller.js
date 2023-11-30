@@ -39,7 +39,7 @@ class userController {
             return res.json([-1, -1]);
         
         // retrieve the user's status based on user_id
-        const statusQuery = await pool.query(
+        const statusQuery = await db.query(
             'SELECT user_status FROM user_status WHERE user_id = $1',
             [user.user_id]
         );
