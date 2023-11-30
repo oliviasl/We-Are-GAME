@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 
 const collegeController = require("./controller/college.controller");
+const userController = require("./controller/user.controller");
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -158,6 +159,18 @@ app.put("/api/editCollege", (req, res) => {
 // *** USER API CALLS ***
 
 // userById
+app.get("/api/userById", (req, res) => {
+  const { userId } = req.body;
+  userController
+    .userById(userId)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 // userByName
 
