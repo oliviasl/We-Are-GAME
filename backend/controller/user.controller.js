@@ -15,7 +15,6 @@ class userController {
     // createUser
     async createUser(userData) {
         const email = userData.user_email;
-        // const email="'janedoe@exeample.com'";
         
         const query = `SELECT COUNT(*) AS count FROM master_users WHERE user_email = '${email}'`;
 
@@ -26,6 +25,7 @@ class userController {
             return false;
         }
 
+        //taken from CreateCollege
         const insertKeys = Object.keys(userData);
         const insertValues = Object.values(userData);
       
