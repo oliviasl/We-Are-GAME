@@ -1,8 +1,8 @@
+DROP TABLE IF EXISTS college_assignments;
 DROP TABLE IF EXISTS colleges;
 DROP TABLE IF EXISTS user_status;
 DROP TABLE IF EXISTS master_users;
 DROP TABLE IF EXISTS mentors;
-DROP TABLE IF EXISTS college_assignments;
 
 CREATE TABLE IF NOT EXISTS colleges
 (

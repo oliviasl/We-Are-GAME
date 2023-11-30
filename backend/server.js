@@ -37,6 +37,19 @@ app.get("/api/collegeByName", (req, res) => {
 // collegeById
 // returns data of college by collegeId
 
+app.get("/api/collegeById", (req, res) => {
+  const { collegeId } = req.body;
+  collegeController
+    .collegeById(collegeId)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
+
 // collegeHasStuAthAcademicRes
 // returns data of colleges with non null stu_ath_academic_res_web_addr
 
@@ -159,16 +172,51 @@ app.put("/api/editCollege", (req, res) => {
 // *** USER API CALLS ***
 
 // userById
+app.get("/api/userById", (req, res) => {
+  const { userId } = req.body;
+  userController
+    .userById(userId)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 // userByName
 
 // userBySport
+app.get("/api/userBySport", (req, res) => {
+  const { sport } = req.body;
+  userController
+    .userBySport(sport)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 // userByMajor
 
 // createUser
 
 // editUser
+app.put("/api/editUser", (req, res) => {
+  const { userId, newFields } = req.body;
+  userController.editUser(newFields, userId).then((data) => {
+    return res.status(200).json(data);
+  })
+  .catch((error) => {
+    console.error(error);
+    return res.status(500).json({ error });
+  });
+
+});
 
 // deleteUser
 
@@ -182,6 +230,18 @@ app.get("/api/unapprovedUsers", (req, res) => {
 });
 
 // approveUser
+app.put("/api/approveUser", (req, res) => {
+  const { userId } = req.body;
+  userController
+    .approveUser(userId)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 // validateUser
 
