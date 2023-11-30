@@ -1,63 +1,201 @@
+const express = require("express");
 require("dotenv").config();
-const db = require("../db");
+
+const collegeController = require("./controller/college.controller");
+const userController = require("./controller/user.controller");
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(express.json());
+
+// *** COLLEGE API CALLS ***
+
+// returns data of all colleges
+app.get("/api/allColleges", (req, res) => {
+  collegeController
+    .allColleges()
+    .then((data) =>
+      res.status(200).json(data)
+    );
+});
+
+// collegeByName
+// returns data of colleges by name
+app.get("/api/collegeByName", (req, res) => {
+  const { college_name } = req.body;
+  collegeController
+    .collegeByName(college_name)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
+
+// collegeById
+// returns data of college by collegeId
+
+// collegeHasStuAthAcademicRes
+// returns data of colleges with non null stu_ath_academic_res_web_addr
 
 
-class userController {
+// collegeHasAcademicResources
+// returns data of colleges with non null academic_resources_web_addr 
+app.get("/api/collegeHasAcademicResource", (req, res) => {
+  collegeController
+    .collegeHasAcademicResource()
+    .then((data) =>
+      res.status(200).json(data)
+    );
+});
 
-    // userById
+// collegeByDiversityResources
+// returns data of colleges with non null diversity_resources_web_addr
+app.get("/api/collegeHasDiversityResource", (req, res) => {
+  collegeController
+    .collegeHasDiversityResource()
+    .then((data) =>
+      res.status(200).json(data)
+    );
+});
 
-    // userByName
+// collegesByGPA
+// returns data of colleges that include GPA within their min/max
+app.get("/api/collegesByGPA", (req, res) => {
+  const { gpa } = req.body;
+  collegeController
+    .collegesByGPA(gpa)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
-    // userBySport
+// collegeBySATRead
+// returns data of colleges that include SAT Reading/Writing score within their min/max
+app.get("/api/collegeBySATRead", (req, res) => {
+  const { satReadWrite } = req.body;
+  collegeController
+    .collegeBySATRead(satReadWrite)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
-    // userByMajor
+// collegeBySATMath
+// returns data of colleges that include SAT Math score within their min/max
+app.get("/api/collegeBySATMath", (req, res) => {
+  const { satMath } = req.body;
+  collegeController
+    .collegeBySATMath(satMath)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
-    // createUser
-    async createUser(userData) {
-        const email = userData.user_email;
-        
-        const query = `SELECT COUNT(*) AS count FROM master_users WHERE user_email = '${email}'`;
+// collegeByACT
+// returns data of colleges that include ACT score within their min/max
+app.get("/api/collegeByACT", (req, res) => {
+  const { act } = req.body;
+  collegeController
+    .collegeByACT(act)
+    .then((data)=>
+      res.status(200).json(data)
+    );
+});
 
-        const emailMatch = await db.query(query, []);
+// createCollege
+// adds a new college entry with passed in params
+app.post("/api/createCollege", (req, res) => {
+  const { collegeData } = req.body;
 
-        if(emailMatch.rows[0].count!=0){
-            //email already exists
-            return false;
-        }
+  if (!collegeData["college_name"])
+    return res.status(400).json({ error: "Must provide college_name field." });
 
-        //taken from CreateCollege
-        const insertKeys = Object.keys(userData);
-        const insertValues = Object.values(userData);
-      
-        // create placeholder values ($1, $2, etc.) for each value to be inserted
-        const placeholders = insertKeys
-            .map((_, index) => `$${index + 1}`)
-            .join(", ");
+  collegeController
+    .createCollege(collegeData)
+    .then((data) => {
+      return res.status(200).json(data);
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
-        const insertQuery = `
-            INSERT INTO master_users (${insertKeys.join(", ")})
-            VALUES (${placeholders});
-        `;
-        try {
-            await db.query(insertQuery, insertValues);
+// editCollege
+// edits an existing college entry with passed in params
+app.put("/api/editCollege", (req, res) => {
+  const { collegeId, newFields } = req.body;
+  collegeController.editCollege(newFields, collegeId).then((data) => {
+    return res.status(200).json(data);
+  });
+});
 
-        } catch (error) {
-            return error;
-        }
+// deleteCollege
 
-        return true;
-       
-    }
-    // editUser
+// autofill college api
 
-    // deleteUser 
+// assignmentByUserId
 
-    // unapprovedUsers
+// createAssignment
 
-    // approveUser
+// deleteAssignment
 
-    // validateUser
 
-}
+// *** USER API CALLS ***
 
-module.exports = new userController();
+// userById
+
+// userByName
+
+// userBySport
+
+// userByMajor
+
+// createUser
+app.post("/api/createUser", (req, res) => {
+    const { userData } = req.body;
+    userController.createUser(userData).then((data) => {
+        return res.status(200).json(data);
+    });
+});
+// editUser
+
+// deleteUser
+
+// unapprovedUsers
+
+// approveUser
+
+// validateUser
+
+
+// *** MENTOR API CALLS ***
+
+// mentorById
+
+// createMentor
+
+// editMentor
+
+// deleteMentor
+
+
+// Start Backend Port
+app.listen(port, () => {
+    console.log(`Server listening on the port  ${port}`);
+});
