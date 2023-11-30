@@ -155,11 +155,27 @@ class collegeController {
     async userByMajor(major) {
         try {
             const result = await db.query(
-                "SELECT * FROM master_users WHERE (LOWER(user_potential_major) LIKE LOWER($1) OR LOWER(user_alt_major1) LIKE LOWER($1) OR LOWER(user_alt_major2) LIKE LOWER($1));",
+                "SELECT * FROM master_users WHERE LOWER(user_potential_major) LIKE LOWER($1) OR LOWER(user_alt_major1) LIKE LOWER($1) OR LOWER(user_alt_major2) LIKE LOWER($1);",
                 ['%' + major + '%']
             );
+            
             return result.rows;
         } catch (error) {
+            return error;
+        }
+    }
+
+    async deleteUser(userId) {
+        try {
+            await db.query("DELETE FROM college_assignments WHERE user_id = $1", [userId]);
+            await db.query("DELETE FROM user_status WHERE user_id = $1", [userId]);
+            const result = await db.query(
+                "DELETE FROM master_users WHERE user_id = $1",
+                [userId]
+            );
+            return result.rows;
+        }
+        catch (error) {
             return error;
         }
     }
