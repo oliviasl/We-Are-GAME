@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 
 const collegeController = require("./controller/college.controller");
+const userController = require("./controller/user.controller");
 const app = express();
 const port = process.env.PORT || 3000;
 
