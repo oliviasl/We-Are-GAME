@@ -37,6 +37,19 @@ app.get("/api/collegeByName", (req, res) => {
 // collegeById
 // returns data of college by collegeId
 
+app.get("/api/collegeById", (req, res) => {
+  const { collegeId } = req.body;
+  collegeController
+    .collegeById(collegeId)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
+
 // collegeHasStuAthAcademicRes
 // returns data of colleges with non null stu_ath_academic_res_web_addr
 
