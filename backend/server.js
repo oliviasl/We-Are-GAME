@@ -251,6 +251,18 @@ app.put("/api/editUser", (req, res) => {
 });
 
 // deleteUser
+app.get("/api/deleteUser", (req, res) => {
+  const { userId } = req.body;
+  collegeController
+    .deleteUser(userId)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 // unapprovedUsers
 app.get("/api/unapprovedUsers", (req, res) => {
