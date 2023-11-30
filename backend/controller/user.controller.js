@@ -2,6 +2,7 @@ require("dotenv").config();
 const db = require("../db");
 
 
+
 class userController {
 
     // userById
@@ -9,6 +10,18 @@ class userController {
     // userByName
 
     // userBySport
+    async userBySport(sport){
+        try {
+            const result = await db.query(
+                "SELECT * FROM master_users WHERE LOWER(user_sport1) LIKE LOWER($1) OR LOWER(user_sport2) LIKE LOWER($1);",
+                ['%' + sport + '%']
+            );
+            return result.rows;
+        }
+        catch(error){
+            return error;
+        }
+    }
 
     // userByMajor
 
@@ -37,6 +50,18 @@ class userController {
     // unapprovedUsers
 
     // approveUser
+    async approveUser(userId){
+        try {
+            const result = await db.query(
+                "UPDATE user_status SET user_status = 1 WHERE user_id = $1",
+                [userId]
+            );
+             return result.rows;
+        } catch (error) {
+            return error;
+        }
+    }
+
 
     // validateUser
 
