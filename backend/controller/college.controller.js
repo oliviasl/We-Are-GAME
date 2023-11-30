@@ -31,6 +31,19 @@ class collegeController {
 
     // collegeById
     
+    async collegeById(collegeId){
+        try {
+            const result = await db.query(
+                "SELECT * FROM colleges WHERE college_id = $1;",
+                [collegeId]
+            );
+            return result.rows;
+        }
+        catch(error){
+            return error;
+        }
+      }
+    
     // collegeHasStuAthAcademicRes
 
     async collegeHasAcademicResource() {
