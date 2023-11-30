@@ -21,7 +21,9 @@ class userController {
     // unapprovedUsers
 
     // approveUser
-    async approveUser(email, password) {
+
+    // validateUser
+    async validateUser(email, password) {
         // ensure the user exists in the master_users table
         const userQuery = await db.query(
             'SELECT * FROM master_users WHERE user_email = $1',
@@ -46,8 +48,6 @@ class userController {
         if (statusQuery.rows.length > 0 && statusQuery.rows[0].user_status > 0)
             return res.json([user.user_id, statusQuery.rows[0].user_status]);
     }
-
-    // validateUser
 
 }
 
