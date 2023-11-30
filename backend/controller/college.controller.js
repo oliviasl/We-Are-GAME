@@ -34,7 +34,7 @@ class collegeController {
     async collegeById(collegeId){
         try {
             const result = await db.query(
-                "SELECT * FROM college_id WHERE collegeId = $1;",
+                "SELECT * FROM colleges WHERE college_id = $1;",
                 [collegeId]
             );
             return result.rows;
