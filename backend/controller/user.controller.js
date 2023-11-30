@@ -28,6 +28,22 @@ class userController {
     // createUser
 
     // editUser
+    async editUser(newFields, userId) {
+        try {
+            const query =
+                "UPDATE master_users SET " +
+                Object.keys(newFields)
+                .map((column) => column + "='" + newFields[column] + "'")
+                .join(", ") +
+                " WHERE user_id=" +
+                userId +
+                " RETURNING *;";
+            const result = await db.query(query, []);
+            return result.rows;
+        } catch (error) {
+            return error;
+        }
+    }
 
     // deleteUser
 
