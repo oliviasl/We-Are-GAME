@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 
 const collegeController = require("./controller/college.controller");
+const userController = require("./controller/user.controller");
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -176,6 +177,19 @@ app.put("/api/editCollege", (req, res) => {
 // approveUser
 
 // validateUser
+app.post("/api/validateUser", (req, res) => {
+  const { email, password } = req.body;
+
+  userController
+    .validateUser(email, password)
+    .then((data) => {
+      return res.status(200).json(data);
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+})
 
 
 // *** MENTOR API CALLS ***
