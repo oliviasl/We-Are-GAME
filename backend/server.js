@@ -188,6 +188,18 @@ app.get("/api/userBySport", (req, res) => {
 // unapprovedUsers
 
 // approveUser
+app.put("/api/approveUser", (req, res) => {
+  const { userId } = req.body;
+  userController
+    .approveUser(userId)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 // validateUser
 
