@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 
 const collegeController = require("./controller/college.controller");
+const userController = require("./controller/user.controller");
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -41,7 +42,7 @@ app.get("/api/collegeByName", (req, res) => {
 
 
 // collegeHasAcademicResources
-// returns data of colleges with non null academic_resources_web_addr 
+// returns data of colleges with non null academic_resources_web_addr
 app.get("/api/collegeHasAcademicResource", (req, res) => {
   collegeController
     .collegeHasAcademicResource()
@@ -145,6 +146,18 @@ app.put("/api/editCollege", (req, res) => {
 });
 
 // deleteCollege
+app.post("/api/deleteCollege", (req, res) => {
+  const { collegeId } = req.body;
+  collegeController
+    .deleteCollege(collegeId)
+    .then((data) => {
+      return res.status(200).json(data);
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 // autofill college api
 
@@ -172,6 +185,13 @@ app.put("/api/editCollege", (req, res) => {
 // deleteUser
 
 // unapprovedUsers
+app.get("/api/unapprovedUsers", (req, res) => {
+  userController
+    .unapprovedUsers()
+    .then((data)=>
+      res.status(200).json(data)
+    );
+});
 
 // approveUser
 
@@ -191,5 +211,5 @@ app.put("/api/editCollege", (req, res) => {
 
 // Start Backend Port
 app.listen(port, () => {
-    console.log(`Server listening on the port  ${port}`);
+  console.log(`Server listening on the port  ${port}`);
 });
