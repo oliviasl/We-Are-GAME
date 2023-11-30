@@ -146,18 +146,6 @@ app.put("/api/editCollege", (req, res) => {
 });
 
 // deleteCollege
-app.post("/api/deleteCollege", (req, res) => {
-  const { collegeId } = req.body;
-  collegeController
-    .deleteCollege(collegeId)
-    .then((data) => {
-      return res.status(200).json(data);
-    })
-    .catch((error) => {
-      console.error(error);
-      return res.status(500).json({ error });
-    });
-});
 
 // autofill college api
 
