@@ -237,7 +237,7 @@ app.put("/api/approveUser", (req, res) => {
 });
 
 // validateUser
-app.post("/api/validateUser", (req, res) => {
+app.get("/api/validateUser", (req, res) => {
   const { email, password } = req.body;
 
   userController
