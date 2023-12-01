@@ -55,7 +55,7 @@ app.get("/api/collegeById", (req, res) => {
 
 
 // collegeHasAcademicResources
-// returns data of colleges with non null academic_resources_web_addr 
+// returns data of colleges with non null academic_resources_web_addr
 app.get("/api/collegeHasAcademicResource", (req, res) => {
   collegeController
     .collegeHasAcademicResource()
@@ -221,6 +221,13 @@ app.put("/api/editUser", (req, res) => {
 // deleteUser
 
 // unapprovedUsers
+app.get("/api/unapprovedUsers", (req, res) => {
+  userController
+    .unapprovedUsers()
+    .then((data)=>
+      res.status(200).json(data)
+    );
+});
 
 // approveUser
 app.put("/api/approveUser", (req, res) => {
@@ -265,5 +272,5 @@ app.get("/api/validateUser", (req, res) => {
 
 // Start Backend Port
 app.listen(port, () => {
-    console.log(`Server listening on the port  ${port}`);
+  console.log(`Server listening on the port  ${port}`);
 });
