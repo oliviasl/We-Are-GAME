@@ -158,6 +158,18 @@ class collegeController {
     // assignmentByUserId
 
     // createAssignment
+    async createAssignment(userId, collegeId){
+        const insertQuery = `
+        INSERT INTO college_assignments (user_id, college_id)
+        VALUES ($1, $2)
+        RETURNING assignment_id;
+        `;
+
+        const result = await db.query(insertQuery, [userId, collegeId]);
+
+        return result.rows[0];
+    }
+
 
     // deleteAssignment
 }
