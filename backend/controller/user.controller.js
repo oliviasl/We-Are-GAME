@@ -14,14 +14,21 @@ class userController {
 
     // createUser
     async createUser(userData) {
+        console.log(userData);
+        if(!(userData.user_email && userData.user_password && userData.user_firstname && userData.user_lastname)){
+            console.log("Missing mandatory field");
+            return false;
+        }   
+
         const email = userData.user_email;
-        
+
         const query = `SELECT COUNT(*) AS count FROM master_users WHERE user_email = '${email}'`;
 
         const emailMatch = await db.query(query, []);
 
         if(emailMatch.rows[0].count!=0){
             //email already exists
+            console.log("Matching email already exists");
             return false;
         }
 
