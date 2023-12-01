@@ -159,7 +159,7 @@ app.put("/api/editCollege", (req, res) => {
 });
 
 // deleteCollege
-app.post("/api/deleteCollege", (req, res) => {
+app.delete("/api/deleteCollege", (req, res) => {
   const { collegeId } = req.body;
 
   collegeController
