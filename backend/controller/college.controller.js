@@ -1,9 +1,6 @@
 require("dotenv").config();
 const db = require("../db");
 
-// Technically should be in a env or smth but who cares ++ this is a get only endpoint
-const SCORECARD_API_KEY="BPGdOVwiRg9I45TLDD1bQfIxQjZW24K49ZEraSbS";
-
 class collegeController {
 
     async allColleges() {
@@ -164,13 +161,23 @@ class collegeController {
     // deleteAssignment
 
     // fetchFromScorecard
-    async fetchFromScorecard(namePrefix, desiredFields){
-        // DOCUMENTATION: https://github.com/RTICWDT/open-data-maker/blob/master/API.md
+    /**
+     * Fetch school data from collegescorecard api
+     * @param {string} namePrefix - name to search by
+     * @param {string[]} desiredFields - limit desired fields, defaults to all fields
+     * @param {bool} findExact - return names with exact matches only, defaults to false
+     * @returns {object} If findExact, an object of the school info is returned. If not, a paged object of all autocomplete matches 
+     */
+    async fetchFromScorecard(namePrefix, desiredFields=[], findExact=false, page=0, perPage=20){
         
+        // DOCUMENTATION: https://github.com/RTICWDT/open-data-maker/blob/master/API.md
+        // Technically should be in a env or smth but who cares ++ this is a get only endpoint  
+        const SCORECARD_API_KEY="BPGdOVwiRg9I45TLDD1bQfIxQjZW24K49ZEraSbS";
+
         // reformat spaces for url
         const formattedPrefix=namePrefix.replace(/ /g, '%20');
 
-        let baseURL="https://api.data.gov/ed/collegescorecard/v1/schools.json?api_key="+SCORECARD_API_KEY;
+        let baseURL="https://api.data.gov/ed/collegescorecard/v1/schools.json?api_key="+SCORECARD_API_KEY+"&page="+page+"&per_page="+perPage;
 
         if(formattedPrefix.length!=0){
             baseURL+="&school.name="+formattedPrefix;
@@ -182,7 +189,15 @@ class collegeController {
 
         const response = await fetch(baseURL);
         const data = await response.json();
-
+        console.log(baseURL);
+        if(findExact){
+            for (const result of data.results) {
+                if (result["school.name"] === namePrefix) {
+                    return result;
+                }
+            }
+            return {};
+        }
         return data;
     }
 }

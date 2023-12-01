@@ -183,9 +183,9 @@ app.delete("/api/deleteCollege", (req, res) => {
 
 // fetchFromScorecard
 app.get("/api/fetchFromScorecard", (req, res) => {
-  const { namePrefix, desiredFields } = req.body;
+  const { namePrefix, desiredFields, findExact, page, perPage } = req.body;
   collegeController
-    .fetchFromScorecard(namePrefix, desiredFields)
+    .fetchFromScorecard(namePrefix, desiredFields, findExact, page, perPage)
     .then((data) =>
       res.status(200).json(data)
     )
