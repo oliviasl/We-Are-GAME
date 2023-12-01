@@ -21,6 +21,32 @@ class userController {
     }
 
     // userByName
+    async userByName(userName){
+        try{
+            // If there is no space in userName, check for matches with first and last name
+            let result = null;
+            if(!userName.includes(" ")){
+                result = await db.query(
+                    "SELECT * FROM master_users WHERE LOWER(user_firstname) LIKE LOWER($1) OR LOWER(user_lastname) LIKE LOWER($1);",
+                    [userName]
+                );
+            }
+                else{
+                    // If there is a space in userName, check for matches with first and last name
+                    const names = userName.split(" ");
+                    result = await db.query(
+                        "SELECT * FROM master_users WHERE LOWER(user_firstname) LIKE LOWER($1) AND LOWER(user_lastname) LIKE LOWER($2);",
+                        [names[0], names[1]]
+                    );
+
+                }
+
+            return result.rows;
+        }
+        catch(error){
+            return error;
+        }
+    }
 
     // userBySport
     async userBySport(sport){

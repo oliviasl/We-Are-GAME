@@ -199,6 +199,18 @@ app.get("/api/userById", (req, res) => {
 });
 
 // userByName
+app.get("/api/userByName", (req, res) => {
+    const { userName } = req.body;
+    userController
+        .userByName(userName)
+        .then((data) =>
+        res.status(200).json(data)
+        )
+        .catch((error) => {
+        console.error(error);
+        return res.status(500).json({ error });
+        });
+});
 
 // userBySport
 app.get("/api/userBySport", (req, res) => {
