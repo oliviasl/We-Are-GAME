@@ -237,6 +237,19 @@ app.put("/api/approveUser", (req, res) => {
 });
 
 // validateUser
+app.get("/api/validateUser", (req, res) => {
+  const { email, password } = req.body;
+
+  userController
+    .validateUser(email, password)
+    .then((data) => {
+      return res.status(200).json(data);
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+})
 
 
 // *** MENTOR API CALLS ***
