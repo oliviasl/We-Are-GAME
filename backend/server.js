@@ -251,7 +251,7 @@ app.put("/api/editUser", (req, res) => {
 });
 
 // deleteUser
-app.get("/api/deleteUser", (req, res) => {
+app.delete("/api/deleteUser", (req, res) => {
   const { userId } = req.body;
   collegeController
     .deleteUser(userId)
