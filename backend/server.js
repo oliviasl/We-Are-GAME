@@ -190,6 +190,16 @@ app.post("/api/createAssignment", (req, res) => {
 });
 
 // deleteAssignment
+app.delete("/api/deleteAssignment", (req, res) => {
+  const {userId, collegeId} = req.body;
+    collegeController.deleteAssignment(userId, collegeId).then((data) => {
+        return res.status(200).json(data);
+    })
+    .catch((error) => {
+        console.error(error);
+        return res.status(500).json({ error });
+    });
+});
 
 
 // *** USER API CALLS ***

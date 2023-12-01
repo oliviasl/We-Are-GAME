@@ -172,6 +172,10 @@ class collegeController {
 
 
     // deleteAssignment
+    async deleteAssignment(userId, collegeId){
+        const result = await db.query(`DELETE FROM college_assignments WHERE user_id = $1 AND college_id = $2`, [userId, collegeId]);
+        return result.rows;
+    }
 }
 
 module.exports = new collegeController();
