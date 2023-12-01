@@ -181,6 +181,19 @@ app.delete("/api/deleteCollege", (req, res) => {
 
 // deleteAssignment
 
+// fetchFromScorecard
+app.get("/api/fetchFromScorecard", (req, res) => {
+  const { namePrefix, desiredFields } = req.body;
+  collegeController
+    .fetchFromScorecard(namePrefix, desiredFields)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 // *** USER API CALLS ***
 

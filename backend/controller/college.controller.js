@@ -1,6 +1,8 @@
 require("dotenv").config();
 const db = require("../db");
 
+// Technically should be in a env or smth but who cares ++ this is a get only endpoint
+const SCORECARD_API_KEY="BPGdOVwiRg9I45TLDD1bQfIxQjZW24K49ZEraSbS";
 
 class collegeController {
 
@@ -160,6 +162,29 @@ class collegeController {
     // createAssignment
 
     // deleteAssignment
+
+    // fetchFromScorecard
+    async fetchFromScorecard(namePrefix, desiredFields){
+        // DOCUMENTATION: https://github.com/RTICWDT/open-data-maker/blob/master/API.md
+        
+        // reformat spaces for url
+        const formattedPrefix=namePrefix.replace(/ /g, '%20');
+
+        let baseURL="https://api.data.gov/ed/collegescorecard/v1/schools.json?api_key="+SCORECARD_API_KEY;
+
+        if(formattedPrefix.length!=0){
+            baseURL+="&school.name="+formattedPrefix;
+        }
+
+        if(desiredFields.length!=0){
+            baseURL+="&fields="+desiredFields.join(",");
+        }
+
+        const response = await fetch(baseURL);
+        const data = await response.json();
+
+        return data;
+    }
 }
 
 module.exports = new collegeController();
