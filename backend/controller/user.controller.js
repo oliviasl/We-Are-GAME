@@ -216,6 +216,20 @@ class userController {
             return [user.user_id, statusQuery.rows[0].user_status];
     }
 
+    // assignmentsByUserId
+    async assignmentsByUserId(userId){
+        try {
+            const result = await db.query(
+                "SELECT * FROM college_assignments WHERE user_id = $1;",
+                [userId]
+            );
+            return result.rows;
+        }
+        catch(error){
+            return error;
+        }
+    }
+
 }
 
 module.exports = new userController();
