@@ -224,7 +224,7 @@ app.get("/api/userBySport", (req, res) => {
 // userByMajor
 app.get("/api/userByMajor", (req, res) => {
   const { major } = req.body;
-  collegeController
+  userController
     .userByMajor(major)
     .then((data) =>
       res.status(200).json(data)
@@ -253,7 +253,7 @@ app.put("/api/editUser", (req, res) => {
 // deleteUser
 app.delete("/api/deleteUser", (req, res) => {
   const { userId } = req.body;
-  collegeController
+  userController
     .deleteUser(userId)
     .then((data) =>
       res.status(200).json(data)
