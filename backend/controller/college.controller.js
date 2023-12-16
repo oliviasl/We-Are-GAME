@@ -160,8 +160,6 @@ class collegeController {
         return result.rows;
     }
 
-    // assignmentByUserId
-
     // createAssignment
     async createAssignment(userId, collegeId){
         const insertQuery = `

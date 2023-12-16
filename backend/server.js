@@ -180,8 +180,6 @@ app.delete("/api/deleteCollege", (req, res) => {
     });
 });
 
-// assignmentByUserId
-
 // createAssignment
 app.post("/api/createAssignment", (req, res) => {
   const {userId, collegeId} = req.body;
@@ -351,6 +349,20 @@ app.get("/api/validateUser", (req, res) => {
       return res.status(500).json({ error });
     });
 })
+
+// assignmentsByUserId
+app.get("/api/assignmentsByUserId", (req, res) => {
+  const { userId } = req.body;
+  userController
+    .assignmentsByUserId(userId)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 
 // *** MENTOR API CALLS ***
