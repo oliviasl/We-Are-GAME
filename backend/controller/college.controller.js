@@ -28,8 +28,6 @@ class collegeController {
             return error;
         }
     }
-
-    // collegeById
     
     async collegeById(collegeId){
         try {
@@ -44,7 +42,17 @@ class collegeController {
         }
       }
     
-    // collegeHasStuAthAcademicRes
+    async collegeHasStuAthAcademicRes() {
+        try {
+            const result = await db.query(
+                "SELECT * FROM colleges WHERE stu_ath_academic_res_web_addr IS NOT NULL",
+                []
+            );
+            return result.rows;
+        } catch (error) {
+            return error;
+        }
+    }
 
     async collegeHasAcademicResource() {
         try {
@@ -144,6 +152,14 @@ class collegeController {
     }
 
     // deleteCollege
+    async deleteCollege(collegeId) {
+        // delete assignments tied to college
+        await db.query(`DELETE FROM college_assignments WHERE college_id = $1`, [collegeId]);
+
+        // delete college
+        const result = await db.query(`DELETE FROM colleges WHERE college_id = $1`, [collegeId]);
+        return result.rows;
+    }
 
     // autofill college api
 
@@ -153,45 +169,6 @@ class collegeController {
 
     // deleteAssignment
 
-    async collegeHasStuAthAcademicRes() {
-        try {
-            const result = await db.query(
-                "SELECT * FROM colleges WHERE stu_ath_academic_res_web_addr IS NOT NULL",
-                []
-            );
-            return result.rows;
-        } catch (error) {
-            return error;
-        }
-    }
-
-    async userByMajor(major) {
-        try {
-            const result = await db.query(
-                "SELECT * FROM master_users WHERE LOWER(user_potential_major) LIKE LOWER($1) OR LOWER(user_alt_major1) LIKE LOWER($1) OR LOWER(user_alt_major2) LIKE LOWER($1);",
-                ['%' + major + '%']
-            );
-            
-            return result.rows;
-        } catch (error) {
-            return error;
-        }
-    }
-
-    async deleteUser(userId) {
-        try {
-            await db.query("DELETE FROM college_assignments WHERE user_id = $1", [userId]);
-            await db.query("DELETE FROM user_status WHERE user_id = $1", [userId]);
-            const result = await db.query(
-                "DELETE FROM master_users WHERE user_id = $1",
-                [userId]
-            );
-            return result.rows;
-        }
-        catch (error) {
-            return error;
-        }
-    }
 }
 
 module.exports = new collegeController();
