@@ -185,8 +185,28 @@ app.delete("/api/deleteCollege", (req, res) => {
 // assignmentByUserId
 
 // createAssignment
+app.post("/api/createAssignment", (req, res) => {
+  const {userId, collegeId} = req.body;
+    collegeController.createAssignment(userId, collegeId).then((data) => {
+        return res.status(200).json(data);
+    })
+    .catch((error) => {
+        console.error(error);
+        return res.status(500).json({ error });
+    });
+});
 
 // deleteAssignment
+app.delete("/api/deleteAssignment", (req, res) => {
+  const {userId, collegeId} = req.body;
+    collegeController.deleteAssignment(userId, collegeId).then((data) => {
+        return res.status(200).json(data);
+    })
+    .catch((error) => {
+        console.error(error);
+        return res.status(500).json({ error });
+    });
+});
 
 
 // *** USER API CALLS ***
@@ -206,6 +226,18 @@ app.get("/api/userById", (req, res) => {
 });
 
 // userByName
+app.get("/api/userByName", (req, res) => {
+    const { userName } = req.body;
+    userController
+        .userByName(userName)
+        .then((data) =>
+        res.status(200).json(data)
+        )
+        .catch((error) => {
+        console.error(error);
+        return res.status(500).json({ error });
+        });
+});
 
 // userBySport
 app.get("/api/userBySport", (req, res) => {
