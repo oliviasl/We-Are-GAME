@@ -76,10 +76,19 @@ class userController {
                 INSERT INTO master_users (${insertKeys.join(", ")})
                 VALUES (${placeholders});
             `;
+        const userIdQuery = `
+                SELECT user_id FROM master_users WHERE user_email = '${email}'
+            `;
         try {
-          await db.query(insertQuery, insertValues);
+            await db.query(insertQuery, insertValues);
+            const result = await db.query(userIdQuery, []);
+            const newUserId = result.rows[0].user_id;
+            await db.query(
+                "INSERT INTO user_status (user_id, user_status) VALUES ($1, 0);",
+                [newUserId]
+            );
         } catch (error) {
-          return error;
+            return error;
         }
     
         return true;
