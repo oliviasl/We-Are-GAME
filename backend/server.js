@@ -208,7 +208,6 @@ app.delete("/api/deleteAssignment", (req, res) => {
     });
 });
 
-
 // *** USER API CALLS ***
 
 // userById
@@ -268,6 +267,12 @@ app.get("/api/userByMajor", (req, res) => {
 });
 
 // createUser
+app.post("/api/createUser", (req, res) => {
+  const { userData } = req.body;
+  userController.createUser(userData).then((data) => {
+    return res.status(200).json(data);
+  });
+});
 
 // editUser
 app.put("/api/editUser", (req, res) => {
@@ -350,3 +355,4 @@ app.get("/api/validateUser", (req, res) => {
 app.listen(port, () => {
   console.log(`Server listening on the port  ${port}`);
 });
+
