@@ -21,6 +21,32 @@ class userController {
     }
 
     // userByName
+    async userByName(userName){
+        try{
+            // If there is no space in userName, check for matches with first and last name
+            let result = null;
+            if(!userName.includes(" ")){
+                result = await db.query(
+                    "SELECT * FROM master_users WHERE LOWER(user_firstname) LIKE LOWER($1) OR LOWER(user_lastname) LIKE LOWER($1);",
+                    [userName]
+                );
+            }
+                else{
+                    // If there is a space in userName, check for matches with first and last name
+                    const names = userName.split(" ");
+                    result = await db.query(
+                        "SELECT * FROM master_users WHERE LOWER(user_firstname) LIKE LOWER($1) AND LOWER(user_lastname) LIKE LOWER($2);",
+                        [names[0], names[1]]
+                    );
+
+                }
+
+            return result.rows;
+        }
+        catch(error){
+            return error;
+        }
+    }
 
     // userBySport
     async userBySport(sport){
@@ -37,9 +63,74 @@ class userController {
     }
 
     // userByMajor
+    async userByMajor(major) {
+        try {
+            const result = await db.query(
+                "SELECT * FROM master_users WHERE LOWER(user_potential_major) LIKE LOWER($1) OR LOWER(user_alt_major1) LIKE LOWER($1) OR LOWER(user_alt_major2) LIKE LOWER($1);",
+                ['%' + major + '%']
+            );
+            
+            return result.rows;
+        } catch (error) {
+            return error;
+        }
+    }
 
     // createUser
-
+    async createUser(userData) {
+        if (
+          !(
+            userData.user_email &&
+            userData.user_password &&
+            userData.user_firstname &&
+            userData.user_lastname
+          )
+        ) {
+          console.log("Missing mandatory field");
+          return false;
+        }
+    
+        const email = userData.user_email;
+        const query = `SELECT COUNT(*) AS count FROM master_users WHERE user_email = '${email}'`;
+    
+        const emailMatch = await db.query(query, []);
+    
+        if (emailMatch.rows[0].count != 0) {
+          //email already exists
+          console.log("Matching email already exists");
+          return false;
+        }
+    
+        //taken from
+        const insertKeys = Object.keys(userData);
+        const insertValues = Object.values(userData);
+    
+        // create placeholder values ($1, $2, etc.) for each value to be inserted
+        const placeholders = insertKeys
+          .map((_, index) => `$${index + 1}`)
+          .join(", ");
+    
+        const insertQuery = `
+                INSERT INTO master_users (${insertKeys.join(", ")})
+                VALUES (${placeholders});
+            `;
+        const userIdQuery = `
+                SELECT user_id FROM master_users WHERE user_email = '${email}'
+            `;
+        try {
+            await db.query(insertQuery, insertValues);
+            const result = await db.query(userIdQuery, []);
+            const newUserId = result.rows[0].user_id;
+            await db.query(
+                "INSERT INTO user_status (user_id, user_status) VALUES ($1, 0);",
+                [newUserId]
+            );
+        } catch (error) {
+            return error;
+        }
+    
+        return true;
+    }
     // editUser
     async editUser(newFields, userId) {
         try {
@@ -59,6 +150,20 @@ class userController {
     }
 
     // deleteUser
+    async deleteUser(userId) {
+        try {
+            await db.query("DELETE FROM college_assignments WHERE user_id = $1", [userId]);
+            await db.query("DELETE FROM user_status WHERE user_id = $1", [userId]);
+            const result = await db.query(
+                "DELETE FROM master_users WHERE user_id = $1",
+                [userId]
+            );
+            return result.rows;
+        }
+        catch (error) {
+            return error;
+        }
+    }
 
     // unapprovedUsers
     async unapprovedUsers() {

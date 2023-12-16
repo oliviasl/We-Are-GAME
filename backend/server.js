@@ -52,6 +52,13 @@ app.get("/api/collegeById", (req, res) => {
 
 // collegeHasStuAthAcademicRes
 // returns data of colleges with non null stu_ath_academic_res_web_addr
+app.get("/api/collegeHasStuAthAcademicRes", (req, res) => {
+  collegeController
+    .collegeHasStuAthAcademicRes()
+    .then((data) =>
+      res.status(200).json(data)
+    );
+});
 
 
 // collegeHasAcademicResources
@@ -173,13 +180,31 @@ app.delete("/api/deleteCollege", (req, res) => {
     });
 });
 
-// autofill college api
-
 // assignmentByUserId
 
 // createAssignment
+app.post("/api/createAssignment", (req, res) => {
+  const {userId, collegeId} = req.body;
+    collegeController.createAssignment(userId, collegeId).then((data) => {
+        return res.status(200).json(data);
+    })
+    .catch((error) => {
+        console.error(error);
+        return res.status(500).json({ error });
+    });
+});
 
 // deleteAssignment
+app.delete("/api/deleteAssignment", (req, res) => {
+  const {userId, collegeId} = req.body;
+    collegeController.deleteAssignment(userId, collegeId).then((data) => {
+        return res.status(200).json(data);
+    })
+    .catch((error) => {
+        console.error(error);
+        return res.status(500).json({ error });
+    });
+});
 
 // fetchFromScorecard
 app.get("/api/fetchFromScorecard", (req, res) => {
@@ -194,6 +219,7 @@ app.get("/api/fetchFromScorecard", (req, res) => {
       return res.status(500).json({ error });
     });
 });
+
 
 // *** USER API CALLS ***
 
@@ -212,6 +238,18 @@ app.get("/api/userById", (req, res) => {
 });
 
 // userByName
+app.get("/api/userByName", (req, res) => {
+    const { userName } = req.body;
+    userController
+        .userByName(userName)
+        .then((data) =>
+        res.status(200).json(data)
+        )
+        .catch((error) => {
+        console.error(error);
+        return res.status(500).json({ error });
+        });
+});
 
 // userBySport
 app.get("/api/userBySport", (req, res) => {
@@ -228,8 +266,26 @@ app.get("/api/userBySport", (req, res) => {
 });
 
 // userByMajor
+app.get("/api/userByMajor", (req, res) => {
+  const { major } = req.body;
+  userController
+    .userByMajor(major)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 // createUser
+app.post("/api/createUser", (req, res) => {
+  const { userData } = req.body;
+  userController.createUser(userData).then((data) => {
+    return res.status(200).json(data);
+  });
+});
 
 // editUser
 app.put("/api/editUser", (req, res) => {
@@ -245,6 +301,18 @@ app.put("/api/editUser", (req, res) => {
 });
 
 // deleteUser
+app.delete("/api/deleteUser", (req, res) => {
+  const { userId } = req.body;
+  userController
+    .deleteUser(userId)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
 
 // unapprovedUsers
 app.get("/api/unapprovedUsers", (req, res) => {
@@ -300,3 +368,4 @@ app.get("/api/validateUser", (req, res) => {
 app.listen(port, () => {
   console.log(`Server listening on the port  ${port}`);
 });
+
