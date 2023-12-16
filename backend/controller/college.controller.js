@@ -28,8 +28,6 @@ class collegeController {
             return error;
         }
     }
-
-    // collegeById
     
     async collegeById(collegeId){
         try {
@@ -44,7 +42,17 @@ class collegeController {
         }
       }
     
-    // collegeHasStuAthAcademicRes
+    async collegeHasStuAthAcademicRes() {
+        try {
+            const result = await db.query(
+                "SELECT * FROM colleges WHERE stu_ath_academic_res_web_addr IS NOT NULL",
+                []
+            );
+            return result.rows;
+        } catch (error) {
+            return error;
+        }
+    }
 
     async collegeHasAcademicResource() {
         try {
@@ -158,8 +166,25 @@ class collegeController {
     // assignmentByUserId
 
     // createAssignment
+    async createAssignment(userId, collegeId){
+        const insertQuery = `
+        INSERT INTO college_assignments (user_id, college_id)
+        VALUES ($1, $2)
+        RETURNING assignment_id;
+        `;
+
+        const result = await db.query(insertQuery, [userId, collegeId]);
+
+        return result.rows[0];
+    }
+
 
     // deleteAssignment
+    async deleteAssignment(userId, collegeId){
+        const result = await db.query(`DELETE FROM college_assignments WHERE user_id = $1 AND college_id = $2`, [userId, collegeId]);
+        return result.rows;
+    }
+
 }
 
 module.exports = new collegeController();
