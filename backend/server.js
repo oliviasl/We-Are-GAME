@@ -180,8 +180,6 @@ app.delete("/api/deleteCollege", (req, res) => {
     });
 });
 
-// autofill college api
-
 // assignmentByUserId
 
 // createAssignment
@@ -207,6 +205,21 @@ app.delete("/api/deleteAssignment", (req, res) => {
         return res.status(500).json({ error });
     });
 });
+
+// fetchFromScorecard
+app.get("/api/fetchFromScorecard", (req, res) => {
+  const { namePrefix, desiredFields, findExact, page, perPage } = req.body;
+  collegeController
+    .fetchFromScorecard(namePrefix, desiredFields, findExact, page, perPage)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
+
 
 // *** USER API CALLS ***
 
