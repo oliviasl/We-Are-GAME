@@ -81,12 +81,12 @@ app.get("/api/collegeHasDiversityResource", (req, res) => {
     );
 });
 
-// collegesByGPA
+// collegeByGPA
 // returns data of colleges that include GPA within their min/max
-app.get("/api/collegesByGPA", (req, res) => {
+app.get("/api/collegeByGPA", (req, res) => {
   const { gpa } = req.body;
   collegeController
-    .collegesByGPA(gpa)
+    .collegeByGPA(gpa)
     .then((data) =>
       res.status(200).json(data)
     )
@@ -218,6 +218,15 @@ app.get("/api/fetchFromScorecard", (req, res) => {
     });
 });
 
+// collegesFiltered
+app.get("/api/collegesFiltered", (req, res) => {
+  const { fields } = req.body;
+  collegeController
+    .collegesFiltered(fields)
+    .then((data)=>
+      res.status(200).json(data)
+    );
+});
 
 // *** USER API CALLS ***
 

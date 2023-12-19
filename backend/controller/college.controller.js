@@ -3,113 +3,183 @@ const db = require("../db");
 
 class collegeController {
 
-    async allColleges() {
-        try {
-            const result = await db.query(
-                "SELECT * FROM colleges;",
-                []
-            );
-            return result.rows;
-        } catch (error) {
-            return error;
+    static filterMap = new Map();
+
+    constructor() {
+        collegeController.filterMap.set('allColleges', () => this.allColleges(false));
+        collegeController.filterMap.set('collegeByName', (college_name) => this.collegeByName(college_name, false));
+        collegeController.filterMap.set('collegeById', (collegeId) => this.collegeById(collegeId, false));
+        collegeController.filterMap.set('collegeHasStuAthAcademicRes', () => this.collegeHasStuAthAcademicRes(false));
+        collegeController.filterMap.set('collegeHasAcademicResource', () => this.collegeHasAcademicResource(false));
+        collegeController.filterMap.set('collegeHasDiversityResource', () => this.collegeHasDiversityResource(false));
+        collegeController.filterMap.set('collegeByGPA', (gpa) => this.collegeByGPA(gpa, false));
+        collegeController.filterMap.set('collegeBySATRead', (satReadWrite) => this.collegeBySATRead(satReadWrite, false));
+        collegeController.filterMap.set('collegeBySATMath', (satMath) => this.collegeBySATRead(satMath, false));
+        collegeController.filterMap.set('collegeByACT', (act) => this.collegeByGPA(act, false));
+    }
+
+    // for all SELECT SQL calls
+    /** 
+    * @param {boolean} directCall - returns results of SQL call if true, otherwise returns SQL statement string and inputs, defaults true
+    */
+
+    async allColleges(directCall=true) {
+        const queryStr = "SELECT * FROM colleges";
+        if (directCall) {
+            try {
+                const result = await db.query(
+                    queryStr + ";",
+                    []
+                );
+                return result.rows;
+            } catch (error) {
+                return error;
+            }
+        } else {
+            return [queryStr];
         }
     }
 
-    async collegeByName(college_name){
-        try {
-            const result = await db.query(
-                "SELECT * FROM colleges WHERE LOWER(college_name) LIKE LOWER($1);",
-                ['%' + college_name + '%']
-            );
-            return result.rows;
-        }
-        catch(error){
-            return error;
+    async collegeByName(college_name, directCall=true){
+        const queryStr = "SELECT * FROM colleges WHERE LOWER(college_name) LIKE LOWER($1)";
+        if (directCall) {
+            try {
+                const result = await db.query(
+                    queryStr + ";",
+                    ['%' + college_name + '%']
+                );
+                return result.rows;
+            }
+            catch(error){
+                return error;
+            }
+        } else {
+            return [queryStr, '%' + college_name + '%'];
         }
     }
     
-    async collegeById(collegeId){
-        try {
-            const result = await db.query(
-                "SELECT * FROM colleges WHERE college_id = $1;",
-                [collegeId]
-            );
-            return result.rows;
-        }
-        catch(error){
-            return error;
+    async collegeById(collegeId, directCall=true){
+        const queryStr = "SELECT * FROM colleges WHERE college_id = $1";
+        if (directCall) {
+            try {
+                const result = await db.query(
+                    queryStr + ";",
+                    [collegeId]
+                );
+                return result.rows;
+            }
+            catch(error){
+                return error;
+            }
+        } else {
+            return [queryStr, collegeId];
         }
       }
     
-    async collegeHasStuAthAcademicRes() {
-        try {
-            const result = await db.query(
-                "SELECT * FROM colleges WHERE stu_ath_academic_res_web_addr IS NOT NULL",
-                []
-            );
-            return result.rows;
-        } catch (error) {
-            return error;
+    async collegeHasStuAthAcademicRes(directCall=true) {
+        const queryStr = "SELECT * FROM colleges WHERE stu_ath_academic_res_web_addr IS NOT NULL";
+        if (directCall) {
+            try {
+                const result = await db.query(
+                    queryStr + ";",
+                    []
+                );
+                return result.rows;
+            } catch (error) {
+                return error;
+            }
+        } else {
+            return [queryStr];
         }
     }
 
-    async collegeHasAcademicResource() {
-        try {
-            const result = await db.query(
-                "SELECT * FROM colleges WHERE academic_resources_web_addr IS NOT NULL",
-                []
-            );
-            return result.rows;
-        } catch (error) {
-            return error;
+    async collegeHasAcademicResource(directCall=true) {
+        const queryStr = "SELECT * FROM colleges WHERE academic_resources_web_addr IS NOT NULL";
+        if (directCall) {
+            try {
+                const result = await db.query(
+                    queryStr + ";",
+                    []
+                );
+                return result.rows;
+            } catch (error) {
+                return error;
+            }
+        } else {
+            return [queryStr];
         }
     }
   
-  async collegeHasDiversityResource() {
-        try {
-            const result = await db.query(
-                "SELECT * FROM colleges WHERE diversity_resources_web_addr IS NOT NULL",
-                []
-            );
-            return result.rows;
-        } catch (error) {
-            return error;
+  async collegeHasDiversityResource(directCall=true) {
+        const queryStr = "SELECT * FROM colleges WHERE diversity_resources_web_addr IS NOT NULL";
+        if (directCall) {
+            try {
+                const result = await db.query(
+                    queryStr + ";",
+                    []
+                );
+                return result.rows;
+            } catch (error) {
+                return error;
+            }
+        } else {
+            return [queryStr];
         }
     }
 
-    async collegesByGPA(gpa) {
-        const result = await db.query(
-            "SELECT * FROM colleges WHERE $1 BETWEEN min_gpa AND max_gpa;",
-            [gpa]
-        );
-        return result.rows;
-    }
-
-    async collegeBySATRead(satReadWrite) {
-        const result = await db.query(
-            "SELECT * FROM colleges WHERE $1 BETWEEN min_sat_read_write AND max_sat_read_write;",
-            [satReadWrite]
-          );
-        return result.rows;
-    }
-
-    async collegeBySATMath(satMath) {
-        const result = await db.query(
-            "SELECT * FROM colleges WHERE $1 BETWEEN min_sat_math AND max_sat_math;",
-            [satMath]
-        );
-        return result.rows;
-    }
-
-    async collegeByACT(act) {
-        try {
+    async collegeByGPA(gpa, directCall=true) {
+        const queryStr = "SELECT * FROM colleges WHERE $1 BETWEEN min_gpa AND max_gpa";
+        if (directCall) {
             const result = await db.query(
-                "SELECT * FROM colleges WHERE $1 BETWEEN min_act AND max_act;",
-                [act]
+                queryStr + ";",
+                [gpa]
             );
-             return result.rows;
-        } catch (error) {
-            return error;
+            return result.rows;
+        } else {
+            return [queryStr, gpa];
+        }
+    }
+
+    async collegeBySATRead(satReadWrite, directCall=true) {
+        const queryStr = "SELECT * FROM colleges WHERE $1 BETWEEN min_sat_read_write AND max_sat_read_write";
+        if (directCall) {
+            const result = await db.query(
+                queryStr + ";",
+                [satReadWrite]
+            );
+            return result.rows;
+        } else {
+            return [queryStr, satReadWrite];
+        }
+    }
+
+    async collegeBySATMath(satMath, directCall=true) {
+        const queryStr = "SELECT * FROM colleges WHERE $1 BETWEEN min_sat_math AND max_sat_math";
+        if (directCall) {
+            const result = await db.query(
+                queryStr + ";",
+                [satMath]
+            );
+            return result.rows;
+        } else {
+            return [queryStr, satMath];
+        }
+    }
+
+    async collegeByACT(act, directCall=true) {
+        const queryStr = "SELECT * FROM colleges WHERE $1 BETWEEN min_act AND max_act";
+        if (directCall) {
+            try {
+                const result = await db.query(
+                    queryStr + ";",
+                    [act]
+                );
+                return result.rows;
+            } catch (error) {
+                return error;
+            }
+        } else {
+            return [queryStr, act];
         }
     }
   
@@ -219,6 +289,53 @@ class collegeController {
             return {};
         }
         return data;
+    }
+
+    // generateFilterQuery
+    /**
+     * Generates sql string and params for a combined filtered search
+     * @param {object} fields - attributes have the search function name as the key and the input param as the value
+     * @returns {[string[], object[]]}  - array of sql query substrings and array of parameters
+     */
+    async generateFilterQuery(fields) {
+        const filterFields = Object.keys(fields);
+        let queryStr = [];
+        let queryParams = [];
+        
+        // null field values mean no input is required for that filter
+        filterFields.forEach((field, idx) => {
+            if (fields[field] != null) {
+                collegeController.filterMap.get(field)(fields[field]).then((res) => {
+                    if (res != undefined) {
+                        if (idx > 0) {
+                            queryStr.push(" INTERSECT ");
+                        }
+                        queryParams.push(res[1]);
+                        queryStr.push(res[0].replace("$1", "$" + queryParams.length));
+                    }
+                });
+            } else {
+                collegeController.filterMap.get(field)().then((res) => {
+                    if (res != undefined) {
+                        if (idx > 0) {
+                            queryStr.push(" INTERSECT ");
+                        }
+                        queryStr.push(res[0]);
+                    }
+                });
+            }
+        })
+    
+        return [queryStr, queryParams];
+    }
+
+    // // collegesFiltered
+    // // uses generated intersected sql call and params to get filtered results
+    async collegesFiltered(fields) {
+        let queryValues = await this.generateFilterQuery(fields);
+        console.log(queryValues[0].join(''));
+        const result = await db.query(queryValues[0].join(''), queryValues[1]);
+        return result.rows;
     }
 
 }
