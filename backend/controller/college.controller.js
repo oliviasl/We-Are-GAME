@@ -329,8 +329,8 @@ class collegeController {
         return [queryStr, queryParams];
     }
 
-    // // collegesFiltered
-    // // uses generated intersected sql call and params to get filtered results
+    // collegesFiltered
+    // uses generated intersected sql call and params to get filtered results
     async collegesFiltered(fields) {
         let queryValues = await this.generateFilterQuery(fields);
         console.log(queryValues[0].join(''));

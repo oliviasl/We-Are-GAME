@@ -1,46 +1,84 @@
 require("dotenv").config();
 const db = require("../db");
 
-
-
 class userController {
 
-    // userById
+    static filterMap = new Map();
 
-    async userById(userId){
-        try {
-            const result = await db.query(
-                "SELECT * FROM master_users WHERE user_id = $1;",
-                [userId]
-            );
-            return result.rows;
+    constructor() {
+        userController.filterMap.set('allUsers', () => this.allUsers(false));
+        userController.filterMap.set('userByName', (userName) => this.userByName(userName, false));
+        userController.filterMap.set('userBySport', (sport) => this.userBySport(sport, false));
+        userController.filterMap.set('userByMajor', (major) => this.userByMajor(major, false));
+    }
+
+    // allUsers
+    async allUsers(directCall=true) {
+        const queryStr = "SELECT * FROM master_users";
+        if (directCall) {
+            try {
+                const result = await db.query(
+                    queryStr + ";",
+                    []
+                );
+                return result.rows;
+            } catch (error) {
+                return error;
+            }
+        } else {
+            return [queryStr];
         }
-        catch(error){
-            return error;
+    }
+
+    // userById
+    async userById(userId, directCall=true){
+        const queryStr = "SELECT * FROM master_users WHERE user_id = $1";
+        if (directCall) {
+            try {
+                const result = await db.query(
+                    queryStr + ";",
+                    [userId]
+                );
+                return result.rows;
+            }
+            catch(error){
+                return error;
+            }
+        } else {
+            return [queryStr, [userId]];
         }
     }
 
     // userByName
-    async userByName(userName){
+    async userByName(userName, directCall=true){
         try{
             // If there is no space in userName, check for matches with first and last name
             let result = null;
-            if(!userName.includes(" ")){
-                result = await db.query(
-                    "SELECT * FROM master_users WHERE LOWER(user_firstname) LIKE LOWER($1) OR LOWER(user_lastname) LIKE LOWER($1);",
-                    [userName]
-                );
-            }
-                else{
-                    // If there is a space in userName, check for matches with first and last name
-                    const names = userName.split(" ");
+            if(!userName.includes(" ")) {
+                console.log("1");
+                const queryStr = "SELECT * FROM master_users WHERE LOWER(user_firstname) LIKE LOWER($1) OR LOWER(user_lastname) LIKE LOWER($1)";
+                if (directCall) {
                     result = await db.query(
-                        "SELECT * FROM master_users WHERE LOWER(user_firstname) LIKE LOWER($1) AND LOWER(user_lastname) LIKE LOWER($2);",
+                        queryStr + ";",
+                        [userName]
+                    );
+                } else {
+                    return [queryStr, [userName]];
+                }
+            } else {
+                console.log("2");
+                // If there is a space in userName, check for matches with first and last name
+                const queryStr = "SELECT * FROM master_users WHERE LOWER(user_firstname) LIKE LOWER($1) AND LOWER(user_lastname) LIKE LOWER($2)";
+                const names = userName.split(" ");
+                if (directCall) {
+                    result = await db.query(
+                        queryStr + ";",
                         [names[0], names[1]]
                     );
-
+                } else {
+                    return [queryStr, [names[0], names[1]]];
                 }
-
+            }
             return result.rows;
         }
         catch(error){
@@ -49,30 +87,40 @@ class userController {
     }
 
     // userBySport
-    async userBySport(sport){
-        try {
-            const result = await db.query(
-                "SELECT * FROM master_users WHERE LOWER(user_sport1) LIKE LOWER($1) OR LOWER(user_sport2) LIKE LOWER($1);",
-                ['%' + sport + '%']
-            );
-            return result.rows;
-        }
-        catch(error){
-            return error;
+    async userBySport(sport, directCall=true){
+        const queryStr = "SELECT * FROM master_users WHERE LOWER(user_sport1) LIKE LOWER($1) OR LOWER(user_sport2) LIKE LOWER($1)";
+        if (directCall) {
+            try {
+                const result = await db.query(
+                    queryStr + ";",
+                    ['%' + sport + '%']
+                );
+                return result.rows;
+            }
+            catch(error){
+                return error;
+            }
+        } else {
+            return [queryStr, ['%' + sport + '%']];
         }
     }
 
     // userByMajor
-    async userByMajor(major) {
-        try {
-            const result = await db.query(
-                "SELECT * FROM master_users WHERE LOWER(user_potential_major) LIKE LOWER($1) OR LOWER(user_alt_major1) LIKE LOWER($1) OR LOWER(user_alt_major2) LIKE LOWER($1);",
-                ['%' + major + '%']
-            );
-            
-            return result.rows;
-        } catch (error) {
-            return error;
+    async userByMajor(major, directCall=true) {
+        const queryStr = "SELECT * FROM master_users WHERE LOWER(user_potential_major) LIKE LOWER($1) OR LOWER(user_alt_major1) LIKE LOWER($1) OR LOWER(user_alt_major2) LIKE LOWER($1)";
+        if (directCall) {
+            try {
+                const result = await db.query(
+                    queryStr + ";",
+                    ['%' + major + '%']
+                );
+                
+                return result.rows;
+            } catch (error) {
+                return error;
+            }
+        } else {
+            return [queryStr, ['%' + major + '%']];
         }
     }
 
@@ -228,6 +276,63 @@ class userController {
         catch(error){
             return error;
         }
+    }
+
+    // generateFilterQuery
+    /**
+     * Generates sql string and params for a combined filtered search
+     * @param {object} fields - attributes have the search function name as the key and the input param as the value
+     * @returns {[string[], object[]]}  - array of sql query substrings and array of parameters
+     */
+    async generateFilterQuery(fields) {
+        const filterFields = Object.keys(fields);
+        let queryStr = [];
+        let queryParams = [];
+        
+        // null field values mean no input is required for that filter
+        filterFields.forEach((field, idx) => {
+            if (fields[field] != null) {
+                userController.filterMap.get(field)(fields[field]).then((res) => {
+                    if (res != undefined) {
+                        if (idx > 0) {
+                            queryStr.push(" INTERSECT ");
+                        }
+                        if (res[1].length === 1) {
+                            queryParams.push(res[1][0]);
+                            queryStr.push(res[0].replaceAll("$1", "$" + queryParams.length));
+                        } else {
+                            let newQueryStr = res[0];
+                            queryParams.push(res[1][0]);
+                            newQueryStr.replaceAll("$1", "$" + queryParams.length)
+                            queryParams.push(res[1][1]);
+                            newQueryStr.replaceAll("$2", "$" + queryParams.length)
+                            queryStr.push(newQueryStr);
+                        }
+                    }
+                });
+            } else {
+                userController.filterMap.get(field)().then((res) => {
+                    if (res != undefined) {
+                        if (idx > 0) {
+                            queryStr.push(" INTERSECT ");
+                        }
+                        queryStr.push(res[0]);
+                    }
+                });
+            }
+        })
+    
+        return [queryStr, queryParams];
+    }
+
+    // collegesFiltered
+    // uses generated intersected sql call and params to get filtered results
+    async usersFiltered(fields) {
+        let queryValues = await this.generateFilterQuery(fields);
+        console.log(queryValues[0].join(''));
+        console.log(queryValues[1]);
+        const result = await db.query(queryValues[0].join(''), queryValues[1]);
+        return result.rows;
     }
 
 }
