@@ -230,6 +230,15 @@ app.get("/api/collegesFiltered", (req, res) => {
 
 // *** USER API CALLS ***
 
+// allUsers
+app.get("/api/allUsers", (req, res) => {
+  userController
+    .allUsers()
+    .then((data) =>
+      res.status(200).json(data)
+    );
+});
+
 // userById
 app.get("/api/userById", (req, res) => {
   const { userId } = req.body;
@@ -371,6 +380,16 @@ app.get("/api/assignmentsByUserId", (req, res) => {
       console.error(error);
       return res.status(500).json({ error });
     });
+});
+
+// collegesFiltered
+app.get("/api/usersFiltered", (req, res) => {
+  const { fields } = req.body;
+  userController
+    .usersFiltered(fields)
+    .then((data)=>
+      res.status(200).json(data)
+    );
 });
 
 
