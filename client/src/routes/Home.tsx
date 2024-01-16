@@ -21,7 +21,7 @@ const Home = () => {
                 {collegeTable.map((data) => (
                     <tr>
                         <td className="w-48 text-center text-2xl p-4">{data.college_name}</td>
-                        <td className="w-48 text-center text-2xl p-4">{data.college_location}</td>
+                        <td className="w-48 text-center text-2xl p-4">{data.location_city}, {data.location_state}</td>
                         <td className="w-48 text-center text-2xl p-4">{data.general_web_addr}</td>
                     </tr>
                 ))

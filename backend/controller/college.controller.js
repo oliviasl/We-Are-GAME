@@ -74,7 +74,7 @@ class collegeController {
         } else {
             return [queryStr, collegeId];
         }
-      }
+    }
     
     async collegeHasStuAthAcademicRes(directCall=true) {
         const queryStr = "SELECT * FROM colleges WHERE stu_ath_academic_res_web_addr IS NOT NULL";
@@ -295,6 +295,7 @@ class collegeController {
     /**
      * Generates sql string and params for a combined filtered search
      * @param {object} fields - attributes have the search function name as the key and the input param as the value
+     * fields that don't require an input value must set null as the value
      * @returns {[string[], object[]]}  - array of sql query substrings and array of parameters
      */
     async generateFilterQuery(fields) {
@@ -304,6 +305,7 @@ class collegeController {
         
         // null field values mean no input is required for that filter
         filterFields.forEach((field, idx) => {
+            // null means true/false value
             if (fields[field] != null) {
                 collegeController.filterMap.get(field)(fields[field]).then((res) => {
                     if (res != undefined) {
@@ -332,8 +334,10 @@ class collegeController {
     // collegesFiltered
     // uses generated intersected sql call and params to get filtered results
     async collegesFiltered(fields) {
+        // queryValues = [queryStr : string[], queryParams : object[]]
         let queryValues = await this.generateFilterQuery(fields);
         console.log(queryValues[0].join(''));
+        console.log(queryValues[1]);
         const result = await db.query(queryValues[0].join(''), queryValues[1]);
         return result.rows;
     }
