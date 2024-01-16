@@ -282,6 +282,7 @@ class userController {
     /**
      * Generates sql string and params for a combined filtered search
      * @param {object} fields - attributes have the search function name as the key and the input param as the value
+     * fields that don't require an input value must set null as the value
      * @returns {[string[], object[]]}  - array of sql query substrings and array of parameters
      */
     async generateFilterQuery(fields) {
@@ -328,6 +329,7 @@ class userController {
     // collegesFiltered
     // uses generated intersected sql call and params to get filtered results
     async usersFiltered(fields) {
+        // queryValues = [queryStr : string[], queryParams : object[]]
         let queryValues = await this.generateFilterQuery(fields);
         console.log(queryValues[0].join(''));
         console.log(queryValues[1]);
