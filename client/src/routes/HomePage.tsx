@@ -1,7 +1,8 @@
 import React, { useEffect, useState, ElementType } from "react";
 import { Home } from "lucide-react";
+import HomePageLinks from "../layouts/HomePageLinks";
 
-const tempRouteTiles = [
+const tempRouteInfo = [
     {
         name: "Explore Colleges", 
         url: "#",
@@ -36,17 +37,10 @@ const HomePage = () => {
 
     return (
         <div className="h-screen w-screen flex flex-col items-center">
-            <h1 className="w-full p-14 pl-20 text-left text-4xl font-bold">
+            <h1 className="w-full p-14 pl-20 text-left text-4xl text-brand-black font-bold font-grotesk">
                 Welcome, {username}!
             </h1>
-            <div className="grid grid-cols-1 lg:grid-cols-2 w-2/3 gap-4 content-center place-items-center">
-                {tempRouteTiles.map(routeTile => (
-                    <a href={routeTile.url} className="flex flex-row items-center rounded gap-4 w-full h-full content-center p-20 bg-secondary-dark-gray">
-                        <routeTile.Icon className="w-6 h-6 text-white" />
-                        <h1 className="text-white text-2xl font-bold">{routeTile.name}</h1>
-                    </a>
-                ))}
-            </div>
+            <HomePageLinks RouteInfo={tempRouteInfo}/>
         </div>
     )
 
