@@ -1,5 +1,6 @@
 require("dotenv").config();
 const db = require("../db");
+const bcrypt = require("bcrypt");
 
 class userController {
 
@@ -148,6 +149,9 @@ class userController {
           console.log("Matching email already exists");
           return false;
         }
+
+        // hash password
+        userData.user_password = await bcrypt.hash(password, 10);
     
         //taken from
         const insertKeys = Object.keys(userData);
@@ -182,6 +186,10 @@ class userController {
     // editUser
     async editUser(newFields, userId) {
         try {
+            if (typeof newFields["user_password"] !== "undefined") {
+                newFields["user_password"] = await bcrypt.hash(password, 10);
+            }
+
             const query =
                 "UPDATE master_users SET " +
                 Object.keys(newFields)
@@ -250,8 +258,10 @@ class userController {
     
         const user = userQuery.rows[0];
     
-        if (user.user_password !== password) // if passwords do not match, user is invalid
+        // if passwords do not match, user is invalid
+        if (await bcrypt.compare(password, user.user_password)) {
             return [-1, -1];
+        }
         
         // retrieve the user's status based on user_id
         const statusQuery = await db.query(
