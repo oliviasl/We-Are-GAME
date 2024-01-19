@@ -128,12 +128,13 @@ class userController {
     // createUser
     async createUser(userData) {
         if (
-          !(
-            userData.user_email &&
-            userData.user_password &&
-            userData.user_firstname &&
-            userData.user_lastname
-          )
+            !userData||
+            !(
+                userData.user_email &&
+                userData.user_password &&
+                userData.user_firstname &&
+                userData.user_lastname
+            )
         ) {
           console.log("Missing mandatory field");
           return false;
@@ -151,7 +152,7 @@ class userController {
         }
 
         // hash password
-        userData.user_password = await bcrypt.hash(password, 10);
+        userData.user_password = await bcrypt.hash(userData.user_password, 10);
     
         //taken from
         const insertKeys = Object.keys(userData);
@@ -259,7 +260,7 @@ class userController {
         const user = userQuery.rows[0];
     
         // if passwords do not match, user is invalid
-        if (await bcrypt.compare(password, user.user_password)) {
+        if (!await bcrypt.compare(password, user.user_password)) {
             return [-1, -1];
         }
         
