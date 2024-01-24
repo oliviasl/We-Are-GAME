@@ -1,5 +1,5 @@
 import React, { useEffect, useState, ElementType } from "react";
-import { Home } from "lucide-react";
+import { Divide, Home } from "lucide-react";
 import HomePageLinks from "../layouts/HomePageLinks";
 
 const tempRouteInfo = [
@@ -26,7 +26,8 @@ const tempRouteInfo = [
 ]
 
 const HomePage = () => {
-    const [username, setUsername] = useState("User");
+    const [tabs, setTabs] = useState("Login");
+    const [password, setPassword] = useState("");
 
     // useEffect(() => {
     //     fetch(`/api/allColleges`)
@@ -43,86 +44,73 @@ const HomePage = () => {
     //         <HomePageLinks RouteInfo={tempRouteInfo}/>
     //     </div>
     // )
-
     return (
         //              NOTES
         // how to center div in middle of screen?
         // not sure why width control isnt working
         // assuming I need to useState() with the login vs signup button and control the underline through a bool?
         
-        <div className="w-full h-full flex items-center justify-center p-6">
-            <form className="w-400px border border-black rounded px-8 pt-6 pb-8 mb-4">
-                <div className="flex items-center justify-between pb-6">
-                    <button>Login</button>
-                    <button>Sign Up</button>
+        <div className="flex justify-center m-3">
+            <div className="w-[612px] border-2 border-black rounded">
+                <div className="flex justify-around mt-3">
+                    <div className="cursor-pointer" onClick={()=>{setTabs("Login")}}>Login</div>
+                    <div onClick={()=>{setTabs("SignUp")}}>Sign Up</div>
                 </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2 py-12px" htmlFor="username">
-                        Username
-                    </label>
-                    <input className="shadow appearance-none border border-black rounded w-full py-2 px-3 text-gray-700 leading-tight" id="username" type="text"></input>
-                </div>
-                <div className="mb-6">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-                        Password
-                    </label>
-                    <input className="shadow appearance-none border border-black rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight" id="password" type="password"></input>
-                </div>
-                <div className="flex items-center justify-center">
-                    <button className="bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-                        Login
-                    </button>
-                </div>
-            </form>
+                {tabs=="Login" ? 
+                    <div className="w-[400px] m-auto mt-12">
+                        <div>
+                            <div className="block text-gray-700 text-sm font-bold mb-3">Username</div>
+                            <input className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3" id="username" type="text"></input>
+                        </div>
+                        <div>
+                            <div className="block text-gray-700 text-sm font-bold mb-3">Password</div>
+                            <input className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 leading-tight mb-5" id="password" type="password"></input>
+                        </div>
+                        <div className="flex items-center justify-center">
+                            <div className="cursor-pointer bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-12">Login</div>
+                        </div>
+                    </div> 
+                : 
+                    <div>
+                        <div className="flex justify-center">
+                            <div className="w-[191px] mx-2">
+                                <div className="text-gray-700 text-sm font-bold mb-3">First</div>
+                                <input className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 leading-tight" id="username" type="text"></input>
+                            </div>
+                            <div className="w-[191px] mx-2">
+                                <div className="text-gray-700 text-sm font-bold mb-3">Last</div>
+                                <input className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 leading-tight" id="username" type="text"></input>
+                            </div>
+                        </div>
+                        <div className="w-[400px] m-auto mt-5">
+                            <div className="block text-gray-700 text-sm font-bold mb-2">Username</div>
+                            <input className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 leading-tight" id="username" type="text"></input>
+                        </div>
+                        <div className="w-[400px] m-auto mt-5">
+                            <div className="block text-gray-700 text-sm font-bold mb-2">Password</div>
+                            <input className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 leading-tight" id="username" type="text"></input>
+                        </div>
+                        <div className="w-[400px] m-auto mt-5">
+                            <div className="block text-gray-700 text-sm font-bold mb-2 py-12px">Verify Password</div>
+                            <input className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 leading-tight" id="username" type="text"></input>
+                        </div>
+                        <div className="w-[400px] m-auto mt-5">
+                            <div className="block text-gray-700 text-sm font-bold mb-2 py-12px">
+                                Email
+                            </div>
+                            <input className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 leading-tight" id="username" type="text"></input>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     );
 
+    // can we map the repetitive structure or needs to be independent because of values?
 
     //          SIGN UP Page
     // return (
-    //     <div className="w-full h-full flex items-center justify-center p-6">
-    //         <form className="w-400px border border-black rounded px-8 pt-6 pb-8 mb-4">
-    //             <div className="flex items-center justify-between pb-6">
-    //                 <button>Login</button>
-    //                 <button>Sign Up</button>
-    //             </div>
-    //             <div className="flex items-center justify-between">
-    //                 <div className="p-2">
-    //                     <label className="block text-gray-700 text-sm font-bold mb-2 py-12px" htmlFor="username">
-    //                         First
-    //                     </label>
-    //                     <input className="shadow appearance-none border border-black rounded w-full py-2 px-3 text-gray-700 leading-tight" id="username" type="text"></input>
-    //                 </div>
-    //                 <div className="p-2">
-    //                     <label className="block text-gray-700 text-sm font-bold mb-2 py-12px" htmlFor="username">
-    //                         Last
-    //                     </label>
-    //                     <input className="shadow appearance-none border border-black rounded w-full py-2 px-3 text-gray-700 leading-tight" id="username" type="text"></input>
-    //                 </div>
-    //             </div>
-    //             <div className="mb-4">
-    //                 <label className="block text-gray-700 text-sm font-bold mb-2 py-12px" htmlFor="username">
-    //                     Username
-    //                 </label>
-    //                 <input className="shadow appearance-none border border-black rounded w-full py-2 px-3 text-gray-700 leading-tight" id="username" type="text"></input>
-
-    //                 <label className="block text-gray-700 text-sm font-bold mb-2 py-12px" htmlFor="username">
-    //                     Password
-    //                 </label>
-    //                 <input className="shadow appearance-none border border-black rounded w-full py-2 px-3 text-gray-700 leading-tight" id="username" type="text"></input>
-                
-    //                 <label className="block text-gray-700 text-sm font-bold mb-2 py-12px" htmlFor="username">
-    //                     Verify Password
-    //                 </label>
-    //                 <input className="shadow appearance-none border border-black rounded w-full py-2 px-3 text-gray-700 leading-tight" id="username" type="text"></input>
-                
-    //                 <label className="block text-gray-700 text-sm font-bold mb-2 py-12px" htmlFor="username">
-    //                     Email
-    //                 </label>
-    //                 <input className="shadow appearance-none border border-black rounded w-full py-2 px-3 text-gray-700 leading-tight" id="username" type="text"></input>
-    //             </div>
-    //         </form>
-    //     </div>
+    
     // );
 
     // return (
