@@ -145,7 +145,7 @@ const HomePage = () => {
             </div>
             <div className="mt-5">
               {/* Verify Password Wrapper */}
-              <div className="block text-gray-700 text-sm font-medium mb-2 py-12px">
+              <div className="block text-gray-700 text-sm font-medium mb-2">
                 Verify Password
               </div>
               <input
@@ -158,7 +158,7 @@ const HomePage = () => {
             </div>
             <div className="mt-5">
               {/* Email Wrapper */}
-              <div className="block text-gray-700 text-sm font-medium mb-2 py-12px">
+              <div className="block text-gray-700 text-sm font-medium mb-2">
                 Email
               </div>
               <input
