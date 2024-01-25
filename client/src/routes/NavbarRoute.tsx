@@ -3,10 +3,23 @@ import { Navbar } from "../components/Navbar";
 
 
 const NavbarRoute = () => {
-  const [activeStep, setActiveStep] = useState(0);
+  const [userType, setUserType] = useState('User');
+
+  let isAdmin = false;
+  /*
+    actual check for if user is an admin should go here
+  */
+
+  if (userType === 'User') { // default state (unset)
+    setUserType(isAdmin ? 'admin' : 'student');
+  }
 
   return <div className="">
-      <Navbar />
+    {userType === 'admin' ? (
+    <Navbar isAdmin />
+    ) : (
+      <Navbar isAdmin={false} />
+    )}
   </div>
 }
 
