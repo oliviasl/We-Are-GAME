@@ -5,10 +5,8 @@ import { Navbar } from "../components/Navbar";
 const NavbarRoute = () => {
   const [activeStep, setActiveStep] = useState(0);
 
-  return <div className="items-center">
-    <div className="w-full">
+  return <div className="">
       <Navbar />
-    </div>
   </div>
 }
 
