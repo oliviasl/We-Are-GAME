@@ -1,5 +1,3 @@
-import { Typography } from "@material-tailwind/react";
-
 const Logo = () => (
   <div className="rounded-full w-20 h-20 bg-gray-200">
     {/* <img src='#' alt='Logo' /> */}
@@ -7,13 +5,15 @@ const Logo = () => (
 );
 
 type NavbarProps = {
-  isAdmin: boolean;
+  userType: string;
 }
 
-export function Navbar({ isAdmin }: NavbarProps) {
-  console.log(isAdmin);
+export function Navbar({ userType }: NavbarProps) {
+  // check if user is admin
+  let isAdmin = userType === 'Admin';
+
   return (
-    // added padding for testing purposes: should be removed once Nav is integrated into other components, not exact green!
+    // added padding for testing purposes: should be removed once Nav is integrated into other components
     <div className="z-[20] mx-auto mt-28 mb-4 px-24 flex w-full items-center justify-between bg-grey-600 text-brand-black font-bold font-grotesk">
       <div className="flex items-center gap-5">
           <a href='#'>
