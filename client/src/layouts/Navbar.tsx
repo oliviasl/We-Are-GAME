@@ -23,14 +23,14 @@ export function Navbar({ isAdmin }: NavbarProps) {
       </div>
       
       <div className="flex items-center gap-12">
-        <div className="hover:text-green-900"><a href='#'>College Directory</a></div>
-        <div className="hover:text-green-900"><a href='#'>Mentor Directory</a></div>
-        <div className="hover:text-green-900"><a href='#'>Student Directory</a></div>
+        <div className="hover:text-brand-green-45"><a href='#'>College Directory</a></div>
+        <div className="hover:text-brand-green-45"><a href='#'>Mentor Directory</a></div>
+        <div className="hover:text-brand-green-45"><a href='#'>Student Directory</a></div>
 
         {isAdmin ? (
-          <div className="hover:text-green-900"><a href='#'>Authenticate Users</a></div>
+          <div className="hover:text-brand-green-45"><a href='#'>Authenticate Users</a></div>
         ) : (
-          <div className="hover:text-green-900"><a href='#'>Student Profile</a></div>
+          <div className="hover:text-brand-green-45"><a href='#'>Student Profile</a></div>
         )}
       </div>
     </div>
