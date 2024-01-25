@@ -1,14 +1,15 @@
+import { useState } from "react";
+
 const Logo = () => (
   <div className="rounded-full w-20 h-20 bg-gray-200">
     {/* <img src='#' alt='Logo' /> */}
   </div>
 );
 
-type NavbarProps = {
-  userType: string;
-}
+export function Navbar() {
+  let [userType, setUserType] = useState('User');
 
-export function Navbar({ userType }: NavbarProps) {
+  // logic for setUserType should go here
   // check if user is admin
   let isAdmin = userType === 'Admin';
 
