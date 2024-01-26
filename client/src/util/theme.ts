@@ -1,4 +1,4 @@
-import type {ButtonStyleTypes, InputStylesType} from "@material-tailwind/react";
+import type {ButtonStyleTypes, InputStylesType, TextareaStylesType} from "@material-tailwind/react";
 
 const button: Partial<ButtonStyleTypes> = {
   styles: {
@@ -40,8 +40,33 @@ const input: Partial<InputStylesType> = {
   }
 }
 
+const textarea: Partial<TextareaStylesType> = {
+  styles: {
+    base: {
+      textarea: {
+        borderWidth: "!border-2",
+      },
+      label: {
+        display: "hidden"
+      }
+    },
+    variants: {
+      outlined: {
+        base: {
+          textarea: {
+            borderColor:
+              "!border-gray-900",
+          },
+        }
+      },
+      standard: {},
+      static: {}
+    }
+  }
+}
+
 const theme = {
-  button, input
+  button, input, textarea
 }
 
 export default theme;
