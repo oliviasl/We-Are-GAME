@@ -1,11 +1,13 @@
 import { Button } from "@material-tailwind/react";
 import { useState } from "react";
 import { CollegeProgressBar } from "../components/CollegeProgressBar";
+import { Navbar } from "../layouts/Navbar";
 
 const AddCollege = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   return <div className="h-screen w-screen flex flex-col items-center">
+    < Navbar />
     <div className="max-w-6xl w-full">
       <CollegeProgressBar activeStep={activeStep} />
     </div>
