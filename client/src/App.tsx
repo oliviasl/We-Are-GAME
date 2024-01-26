@@ -1,19 +1,22 @@
-
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import './App.css';
 import AddCollege from "./routes/AddCollege";
 import HomePage from "./routes/HomePage";
+import {ThemeProvider} from "@material-tailwind/react";
+import theme from "./util/theme";
 
 function App() {
   return (
-    <div>
-      <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/add-college" element={<AddCollege />} />
-        </Routes>
-      </Router>
-    </div>
+    <ThemeProvider value={theme}>
+      <div>
+        <Router>
+          <Routes>
+            <Route path="/" element={<HomePage/>}/>
+            <Route path="/add-college" element={<AddCollege/>}/>
+          </Routes>
+        </Router>
+      </div>
+    </ThemeProvider>
   );
 }
 
