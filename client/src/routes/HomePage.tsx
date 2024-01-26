@@ -5,7 +5,6 @@ const HomePage = () => {
   //Page State
   const [tabs, setTabs] = useState("Login");
   //Input States
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [verifyPassword, setVerifyPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -13,12 +12,42 @@ const HomePage = () => {
   const [email, setEmail] = useState("");
 
   const clearFields = () => {
-    setUsername("");
     setPassword("");
     setVerifyPassword("");
     setFirstName("");
     setLastName("");
     setEmail("");
+  };
+
+  const createUser = async () => {
+    console.log("Would create a user");
+    const response = await fetch("/api/createUser", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_email: email,
+        user_password: password,
+        user_firstname: firstName,
+        user_lastname: lastName,
+      }),
+    });
+    const status = await response.json();
+    console.log(status);
+    //would put toast here
+    setTabs("Login");
+  };
+
+  const authUser = async () => {
+    console.log("Would login/auth a user");
+    const response = await fetch("/api/validate", {
+      method: "get",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    });
+    const status = await response.json();
   };
 
   return (
@@ -29,9 +58,12 @@ const HomePage = () => {
         <div className="flex justify-around mt-2">
           {/* Login vs Signup Nav */}
           <div
-            className={clsx("cursor-pointer w-full text-center py-2 px-4 border-b-2", {
-              "border-black": tabs === "Login",
-            })}
+            className={clsx(
+              "cursor-pointer w-full text-center py-2 px-4 border-b-2",
+              {
+                "border-black": tabs === "Login",
+              }
+            )}
             onClick={() => {
               setTabs("Login");
               clearFields();
@@ -40,9 +72,12 @@ const HomePage = () => {
             Login
           </div>
           <div
-            className={clsx("cursor-pointer w-full text-center py-2 px-4 border-b-2", {
-              "border-black": tabs !== "Login",
-            })}
+            className={clsx(
+              "cursor-pointer w-full text-center py-2 px-4 border-b-2",
+              {
+                "border-black": tabs !== "Login",
+              }
+            )}
             onClick={() => {
               setTabs("SignUp");
               clearFields();
@@ -57,14 +92,14 @@ const HomePage = () => {
             <div>
               {/* Username Wrapper */}
               <div className="block text-gray-700 text-sm font-medium mb-3">
-                Username
+                Email
               </div>
               <input
-                className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3"
+                className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 mb-3"
                 id="username"
                 type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               ></input>
             </div>
             <div>
@@ -73,7 +108,7 @@ const HomePage = () => {
                 Password
               </div>
               <input
-                className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 leading-tight mb-5"
+                className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 mb-5"
                 id="password"
                 type="password"
                 value={password}
@@ -82,7 +117,10 @@ const HomePage = () => {
             </div>
             <div className="flex items-center justify-center">
               {/* Login Button Wrapper */}
-              <div className="cursor-pointer bg-gray-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              <div
+                className="cursor-pointer bg-gray-700 text-white font-medium py-2 px-4 rounded"
+                onClick={authUser}
+              >
                 Login
               </div>
             </div>
@@ -95,10 +133,10 @@ const HomePage = () => {
               <div>
                 {/* First Name */}
                 <div className="text-gray-700 text-sm font-medium mb-3">
-                  First
+                  First Name
                 </div>
                 <input
-                  className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                  className="border-2 border-black rounded w-full py-2 px-3 text-gray-700"
                   id="first"
                   type="text"
                   value={firstName}
@@ -107,9 +145,11 @@ const HomePage = () => {
               </div>
               <div>
                 {/* Last Name */}
-                <div className="text-gray-700 text-sm font-medium mb-3">Last</div>
+                <div className="text-gray-700 text-sm font-medium mb-3">
+                  Last Name
+                </div>
                 <input
-                  className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                  className="border-2 border-black rounded w-full py-2 px-3 text-gray-700"
                   id="last"
                   type="text"
                   value={lastName}
@@ -118,27 +158,14 @@ const HomePage = () => {
               </div>
             </div>
             <div className="mt-5">
-              {/* Username Wrapper */}
-              <div className="block text-gray-700 text-sm font-medium mb-2">
-                Username
-              </div>
-              <input
-                className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 leading-tight"
-                id="username"
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              ></input>
-            </div>
-            <div className="mt-5">
               {/* Password Wrapper */}
               <div className="block text-gray-700 text-sm font-medium mb-2">
                 Password
               </div>
               <input
-                className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                className="border-2 border-black rounded w-full py-2 px-3 text-gray-700"
                 id="password"
-                type="text"
+                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               ></input>
@@ -151,7 +178,7 @@ const HomePage = () => {
               <input
                 className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 leading-tight"
                 id="verifypassword"
-                type="text"
+                type="password"
                 value={verifyPassword}
                 onChange={(e) => setVerifyPassword(e.target.value)}
               ></input>
@@ -171,7 +198,10 @@ const HomePage = () => {
             </div>
             <div className="flex items-center justify-end mt-6">
               {/* Auth Wrapper */}
-              <div className="cursor-pointer bg-gray-700 text-white font-medium py-2 px-4 rounded">
+              <div
+                className="cursor-pointer bg-gray-700 text-white font-medium py-2 px-4 rounded"
+                onClick={createUser}
+              >
                 Request Authorization
               </div>
             </div>
