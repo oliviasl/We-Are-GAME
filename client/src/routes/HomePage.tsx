@@ -1,27 +1,28 @@
 import React, { useEffect, useState, ElementType } from "react";
-import { Home } from "lucide-react";
+import { School, Users, BookUser, SquareUser } from "lucide-react";
 import HomePageLinks from "../layouts/HomePageLinks";
+import { Navbar } from "../layouts/Navbar";
 
 const tempRouteInfo = [
     {
         name: "Explore Colleges", 
         url: "#",
-        Icon: Home
+        Icon: School
     },
     {
         name: "Find a Mentor", 
         url: "#",
-        Icon: Home
+        Icon: Users
     },
     {
         name: "Student Directory", 
         url: "#",
-        Icon: Home
+        Icon: BookUser
     },
     {
         name: "View Profile", 
         url: "#",
-        Icon: Home
+        Icon: SquareUser
     },
 ]
 
@@ -37,7 +38,8 @@ const HomePage = () => {
 
     return (
         <div className="h-screen w-screen flex flex-col items-center">
-            <h1 className="w-full p-14 pl-20 text-left text-4xl text-brand-black font-bold font-grotesk">
+            <Navbar />
+            <h1 className="w-full p-14 pl-24 text-left text-4xl text-brand-black font-bold font-grotesk">
                 Welcome, {username}!
             </h1>
             <HomePageLinks RouteInfo={tempRouteInfo}/>
