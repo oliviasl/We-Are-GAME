@@ -16,7 +16,7 @@ type CollegeProgressBarProps = {
  
 export function CollegeProgressBar({ activeStep }: CollegeProgressBarProps) {
   return (
-    <div className="w-full py-4 px-8">
+    <div className="w-full py-8 px-8">
       <Stepper
         activeStep={activeStep}
       >

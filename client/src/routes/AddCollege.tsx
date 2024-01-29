@@ -23,7 +23,7 @@ const AddCollege = () => {
     <div className="max-w-6xl w-full">
       <CollegeProgressBar activeStep={activeStep}/>
     </div>
-    <div className="mt-16 max-w-4xl w-full space-y-8 pb-12">
+    <div className="mt-16 max-w-4xl w-full space-y-8 pt-4 pb-20">
       <CollegeFormFormSection
         section={collegeForm[activeStep]}
         schema={collegeFormSchemas[activeStep]}
