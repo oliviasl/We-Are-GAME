@@ -20,12 +20,19 @@ export const CollegeFormFormSection = ({section, schema, onBack, onNext, isLastT
   useEffect(() => {
     // no-op effect to trigger re-render on errors
   }, [form.formState.errors])
-
+  
   return <>
     <Typography variant={"h3"}>{section.title}</Typography>
     <form onSubmit={form.handleSubmit(onNext)} className="space-y-8">
       <div className={"flex flex-col space-y-4"}>
-        {section.fields.map((field, i) => <CollegeFormFormField key={i} form={form} field={field}/>)}
+        {section.fields.map((field, i) => (
+          <CollegeFormFormField
+            key={i}
+            form={form}
+            field={field}
+            errors={form.formState.errors}
+          />
+        ))}
         <div className={"flex justify-between pt-8"}>
           <Button
             onClick={onBack}
