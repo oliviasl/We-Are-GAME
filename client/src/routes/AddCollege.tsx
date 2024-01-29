@@ -1,23 +1,36 @@
-import { Button } from "@material-tailwind/react";
-import { useState } from "react";
-import { CollegeProgressBar } from "../components/CollegeProgressBar";
-import { Navbar } from "../layouts/Navbar";
+import {useState} from "react";
+import {CollegeProgressBar} from "../components/CollegeProgressBar";
+import {Navbar} from "../layouts/Navbar";
+import {collegeForm} from "../util/data/college-form";
+import {CollegeFormFormSection} from "../components/CollegeFormFormSection";
+import {collegeFormSchemas} from "../util/college-form-schema";
 
 const AddCollege = () => {
+  const [formData, setFormData] = useState({})
   const [activeStep, setActiveStep] = useState(0);
 
+  async function onNextButtonClick(data: any) {
+    const updatedFormData = {...formData, ...data}
+    setFormData(updatedFormData);
+
+    if (activeStep < collegeFormSchemas.length - 1) {
+      setActiveStep(activeStep + 1)
+    } else alert(JSON.stringify(updatedFormData));
+  }
+
   return <div className="h-screen w-screen flex flex-col items-center">
-    < Navbar />
+    <Navbar/>
     <div className="max-w-6xl w-full">
-      <CollegeProgressBar activeStep={activeStep} />
+      <CollegeProgressBar activeStep={activeStep}/>
     </div>
-    <div className="mt-16 max-w-4xl w-full flex space-x-4">
-      <Button onClick={() => setActiveStep(step=>step-1)} disabled={activeStep===0} fullWidth>
-        Prev
-      </Button>
-      <Button onClick={() => setActiveStep(step=>step+1)} fullWidth>
-        Next
-      </Button>
+    <div className="mt-16 max-w-4xl w-full space-y-8 pb-12">
+      <CollegeFormFormSection
+        section={collegeForm[activeStep]}
+        schema={collegeFormSchemas[activeStep]}
+        onBack={activeStep > 0 ? () => setActiveStep(step => step - 1) : undefined}
+        onNext={onNextButtonClick}
+        isLastTab={activeStep === collegeFormSchemas.length - 1}
+      />
     </div>
   </div>
 }
