@@ -4,6 +4,7 @@ import {useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {CollegeFormSection} from "../util/types/college-form";
+import {useEffect} from "react";
 
 type CollegeFormFormSectionProps = {
   section: CollegeFormSection;
@@ -16,7 +17,9 @@ type CollegeFormFormSectionProps = {
 export const CollegeFormFormSection = ({section, schema, onBack, onNext, isLastTab}: CollegeFormFormSectionProps) => {
   const form = useForm<z.infer<typeof schema>>({resolver: zodResolver(schema)});
 
-  console.log(form.formState.errors)
+  useEffect(() => {
+    // no-op effect to trigger re-render on errors
+  }, [form.formState.errors])
 
   return <>
     <Typography variant={"h3"}>{section.title}</Typography>
