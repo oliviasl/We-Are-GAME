@@ -18,6 +18,9 @@ const button: Partial<ButtonStyleTypes> = {
 const input: Partial<InputStylesType> = {
   styles: {
     base: {
+      container: {
+        minWidth: "min-w-0"
+      },
       input: {
         borderWidth: "!border-2",
       },
