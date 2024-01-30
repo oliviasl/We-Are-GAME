@@ -21,33 +21,44 @@ const HomePage = () => {
 
   const createUser = async () => {
     console.log("Would create a user");
-    const response = await fetch("/api/createUser", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+    const userBody = JSON.stringify({
+      userData: {
         user_email: email,
         user_password: password,
         user_firstname: firstName,
         user_lastname: lastName,
-      }),
+      },
+    });
+    const response = await fetch("/api/createUser", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: userBody,
     });
     const status = await response.json();
     console.log(status);
     //would put toast here
-    setTabs("Login");
+    setTabs("Logged in and user created");
   };
 
   const authUser = async () => {
     console.log("Would login/auth a user");
-    const response = await fetch("/api/validate", {
-      method: "get",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
+    const authBody =  JSON.stringify({
+      email: email,
+      password: password,
+    })
+    const response = await fetch("/api/validateUser", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: authBody
     });
     const status = await response.json();
+    console.log(status); // I think if not [-1,-1], pass
   };
 
   return (
