@@ -19,6 +19,7 @@ const HomePage = () => {
     setEmail("");
   };
 
+
   const createUser = async () => {
     console.log("Would create a user");
     const userBody = JSON.stringify({
@@ -42,6 +43,7 @@ const HomePage = () => {
     //would put toast here
     setTabs("Logged in and user created");
   };
+
 
   const authUser = async () => {
     console.log("Would login/auth a user");
