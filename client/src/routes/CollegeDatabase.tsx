@@ -7,9 +7,12 @@ import CollegeFilters from "../layouts/CollegeFilters";
 const CollegeDatabase = () => {
 
 
-    return <div className="h-screen w-screen flex flex-col items-center">
+    return <div className="h-screen w-screen flex flex-col">
         < Navbar />
-        < CollegeFilters />
+        <div className="flex justify-end mx-28 mt-16">
+            < CollegeFilters />
+        </div>
+
 
     </div>
 }
