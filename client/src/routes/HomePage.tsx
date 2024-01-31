@@ -22,6 +22,28 @@ const HomePage = () => {
   };
 
   const createUser = async () => {
+
+    // duplicate email toast condition
+    const userEmail = JSON.stringify({
+      userData: {
+        user_email: email,
+      },
+    });
+
+    const userEmailResponse = await fetch("/api/userByEmail", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: userEmail,
+    });
+    const userEmailStatus = await userEmailResponse.json();
+
+    if (userEmailStatus.length > 0) {
+      toast.error(email + " is already in use.");
+    }
+
     // invalid email toast condition
     if (!email.includes("@")) {
       toast.warning("Email format is invalid.");
@@ -80,7 +102,6 @@ const HomePage = () => {
     });
     const status = await response.json();
 
-    // is status an int? 
     if (status <= 0) {
       toast.error("You are not authorized.");
     }
