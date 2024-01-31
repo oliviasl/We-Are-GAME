@@ -295,6 +295,20 @@ app.get("/api/userByMajor", (req, res) => {
     });
 });
 
+// userByEmail
+app.get("/api/userByEmail", (req, res) => {
+  const { email } = req.body;
+  userController 
+    .userByEmail(email)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
+
 // createUser
 app.post("/api/createUser", (req, res) => {
   const { userData } = req.body;
