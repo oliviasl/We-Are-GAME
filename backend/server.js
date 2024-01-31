@@ -339,6 +339,17 @@ app.get("/api/unapprovedUsers", (req, res) => {
     );
 });
 
+// paginatedUnapprovedUsers
+app.post("/api/paginatedUnapprovedUsers", (req, res) => {
+  const { page } = req.body;
+
+  userController
+    .paginatedUnapprovedUsers(page)
+    .then((data)=>
+      res.status(200).json(data)
+    );
+});
+
 // approveUser
 app.put("/api/approveUser", (req, res) => {
   const { userId } = req.body;
