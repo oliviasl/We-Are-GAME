@@ -270,6 +270,7 @@ class userController {
             [user.user_id]
         );
 
+
         if (statusQuery.rows.length > 0) {
             return [user.user_id, statusQuery.rows[0].user_status];
         }
