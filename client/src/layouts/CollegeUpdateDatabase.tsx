@@ -3,12 +3,10 @@ import { Button } from "@material-tailwind/react";
 
 const CollegeUpdateDatabase = () => {
     return (
-        <div>
+        <div className="pb-16 pt-[19px] pr-5 flex items-center justify-between">
             <div className="font-bold text-5xl">College Database</div>
-            
-            <Button>
-                Update Database
-            </Button>
+
+            <div><Button>Update Database</Button></div>
         </div>
     );
 };

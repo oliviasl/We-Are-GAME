@@ -5,7 +5,7 @@ import { Checkbox } from "@material-tailwind/react";
 
 const CollegeFilters = () => {
     return (
-        <div>
+        <div className="content-start">
             <div className="text-2xl font-bold">Search & Filter</div>
 
             <div className="flex items-center place-content-between my-2 ">
@@ -34,7 +34,7 @@ const CollegeFilters = () => {
             <div className="flex items-center place-content-between my-2">
                 <div>SAT Math</div>
                 <div className="w-40">
-                    <Input size="md" crossOrigin={undefined} />
+                    <Input size="md" className="" crossOrigin={undefined} />
                 </div>
             </div>
 
@@ -53,18 +53,20 @@ const CollegeFilters = () => {
             </div>
 
             <div className="flex items-center space-x-2">
-                <Checkbox color="green" className="w-9 h-9 bg-[#577347]"
-                          icon={
-                              <svg
-                                  fill="577347"
-                                   className="h-3 w-3"
-                              ></svg>
-                          }
-                          crossOrigin={undefined}/>
+                <Checkbox className="w-9 h-9"
+                        icon={
+                            <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5"
+                            >
+                            <rect className="h-5 w-5" rx="2" fill="#577347"/>
+                            </svg>
+                        }
+                        crossOrigin={undefined}/>
                 <div>Student Academic Resources</div>
             </div>
 
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 pb-6">
                 <Checkbox color="green" className="w-9 h-9" crossOrigin={undefined}/>
                 <div>Diversity Resources</div>
             </div>

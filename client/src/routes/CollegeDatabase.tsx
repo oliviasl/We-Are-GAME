@@ -11,11 +11,13 @@ const CollegeDatabase = () => {
         <div className="h-screen w-screen flex flex-col">
             <Navbar />
             <div className="flex mx-0 mt-16 w-screen">
-                <div className="flex-grow"> {/* Use flex-grow to make this div take up the remaining space */}
+                <div className="flex-grow ml-[100px]"> 
                     <CollegeUpdateDatabase />
                     <CollegeSearchResults />
                 </div>
-                <CollegeFilters />
+                <div className="mr-[100px]">
+                    <CollegeFilters />
+                </div>
             </div>
         </div>
     );

@@ -32,7 +32,7 @@ const CollegeSearchResults = () => {
         },
       ];
     return (
-        <Card shadow={false} className="h-full w-full overflow-scroll">
+        <Card shadow={false} className="h-full w-full">
           <table className="w-full min-w-max table-auto text-left rounded-none">
             <thead>
               <tr>
@@ -55,7 +55,7 @@ const CollegeSearchResults = () => {
             <tbody>
               {TABLE_ROWS.map(({ name, job, date }, index) => {
                 const isLast = index === TABLE_ROWS.length - 1;
-                const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
+                const classes = isLast ? "p-4 border-b border-black" : "p-4 border-b border-black";
      
                 return (
                   <tr key={name}>
