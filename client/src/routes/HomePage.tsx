@@ -60,7 +60,7 @@ const HomePage = () => {
       body: authBody
     });
     const status = await response.json();
-    console.log(status); // I think if not [-1,-1], pass
+    console.log(status); // If not [-1,-1] or [x, 0], pass
   };
 
   return (
