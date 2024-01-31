@@ -259,8 +259,8 @@ class userController {
             [user.user_id]
         );
 
-        // if user is valid, return required info
-        if (statusQuery.rows.length > 0 && statusQuery.rows[0].user_status > 0)
+
+        if (statusQuery.rows.length > 0) {
             return [user.user_id, statusQuery.rows[0].user_status];
     }
 
