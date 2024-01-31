@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import clsx from "clsx";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const HomePage = () => {
   //Page State
@@ -20,6 +22,18 @@ const HomePage = () => {
   };
 
   const createUser = async () => {
+    // invalid email toast condition
+    if (!email.includes("@")) {
+      toast.warning("Email format is invalid.");
+      return;
+    }
+
+    // matching passwords toast condition
+    if (password !== verifyPassword) {
+      toast.warning("Please make sure your passwords match.");
+      return;
+    }
+
     console.log("Would create a user");
     const userBody = JSON.stringify({
       userData: {
@@ -29,6 +43,7 @@ const HomePage = () => {
         user_lastname: lastName,
       },
     });
+
     const response = await fetch("/api/createUser", {
       method: "post",
       headers: {
@@ -44,6 +59,12 @@ const HomePage = () => {
   };
 
   const authUser = async () => {
+    // invalid email toast condition
+    if (!email.includes("@")) {
+      toast.warning("Email format is invalid.");
+      return;
+    }
+
     console.log("Would login/auth a user");
     const authBody =  JSON.stringify({
       email: email,
@@ -58,6 +79,12 @@ const HomePage = () => {
       body: authBody
     });
     const status = await response.json();
+
+    // is status an int? 
+    if (status <= 0) {
+      toast.error("You are not authorized.");
+    }
+
     console.log(status); // If not [-1,-1] or [x, 0], pass
   };
 
@@ -219,6 +246,7 @@ const HomePage = () => {
           </div>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };
