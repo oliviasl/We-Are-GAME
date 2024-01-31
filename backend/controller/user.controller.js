@@ -236,6 +236,7 @@ class userController {
         }
     }
 
+    
 
     // validateUser
     async validateUser(email, password) {
@@ -262,10 +263,30 @@ class userController {
 
         if (statusQuery.rows.length > 0) {
             return [user.user_id, statusQuery.rows[0].user_status];
+        }
+    }
+
+    // userByEmail — for auth toast
+    async userByEmail(email, directCall=true){
+        const queryStr = "SELECT * FROM master_users WHERE user_email = $1";
+        if (directCall) {
+            try {
+                const result = await db.query(
+                    queryStr + ";",
+                    [email]
+                );
+                return result.rows;
+            }
+            catch(error){
+                return error;
+            }
+        } else {
+            return [queryStr, [userId]];
+        }
     }
 
     // assignmentsByUserId
-    async assignmentsByUserId(userId){
+    async assignmentsByUserId(userId) {
         try {
             const result = await db.query(
                 "SELECT * FROM college_assignments WHERE user_id = $1;",
