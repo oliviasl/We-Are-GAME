@@ -1,45 +1,63 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Card, Typography } from "@material-tailwind/react";
 import { Button } from "@material-tailwind/react";
 
+interface CollegeData {
+    college_name: string;
+    // other fields...
+}
+
+async function fetchColleges(fields: any): Promise<any> {
+    try {
+        const response = await fetch('/api/collegesFiltered', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({fields}), // Convert the JavaScript object to a JSON string
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data; // Return the data so it can be used by the caller
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+        throw error; // Re-throw the error so the caller can handle it
+    }
+}
+
 const CollegeSearchResults = () => {
     const TABLE_HEAD = ["College Name", "Location", "Admit Rate", "Average GPA", ""];
-    const TABLE_ROWS = [
-        {
-          name: "John Michael",
-          job: "Manager",
-          date: "23/04/18",
-        },
-        {
-          name: "Alexa Liras",
-          job: "Developer",
-          date: "23/04/18",
-        },
-        {
-          name: "Laurent Perrier",
-          job: "Executive",
-          date: "19/09/17",
-        },
-        {
-          name: "Michael Levi",
-          job: "Developer",
-          date: "24/12/08",
-        },
-        {
-          name: "Richard Gran",
-          job: "Manager",
-          date: "04/10/21",
-        },
-      ];
+    const [TABLE_ROWS, setTableRows] =useState<any[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const fields = { "collegeByGPA": 3};
+                const data = await fetchColleges(fields);
+                console.log("Data: ", data);
+                setTableRows(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    console.log(TABLE_ROWS)
+
     return (
-        <Card shadow={false} className="h-full w-full">
-          <table className="w-full min-w-max table-auto text-left rounded-none">
+        <Card shadow={false} className="h-full w-full pr-5">
+          <table className=" table-auto text-left rounded-none">
             <thead>
-              <tr>
+              <tr className="h-12">
                 {TABLE_HEAD.map((head) => (
                   <th
                     key={head}
-                    className="border-b border-black p-4"
+                    className="border-b border-black p-4 border-t"
+
                   >
                     <Typography
                       variant="small"
@@ -53,19 +71,19 @@ const CollegeSearchResults = () => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROWS.map(({ name, job, date }, index) => {
+              {TABLE_ROWS.map(({ college_name, college_location, acceptance_rate, max_gpa }, index) => {
                 const isLast = index === TABLE_ROWS.length - 1;
-                const classes = isLast ? "p-4 border-b border-black" : "p-4 border-b border-black";
-     
+                const classes = "p-4 border-b border-black";
+
                 return (
-                  <tr key={name}>
+                  <tr key={college_name} className="h-12">
                     <td className={classes}>
                       <Typography
                         variant="small"
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {name}
+                        {college_name}
                       </Typography>
                     </td>
                     <td className={classes}>
@@ -74,7 +92,7 @@ const CollegeSearchResults = () => {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {job}
+                        {college_location}
                       </Typography>
                     </td>
                     <td className={classes}>
@@ -83,7 +101,7 @@ const CollegeSearchResults = () => {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {date}
+                        {acceptance_rate}
                       </Typography>
                     </td>
                     <td className={classes}>
@@ -94,11 +112,11 @@ const CollegeSearchResults = () => {
                         color="blue-gray"
                         className="font-medium"
                       >
-                        Edit
+                          {max_gpa}
                       </Typography>
                     </td>
-                    <td>
-                        <Button variant="outlined">
+                    <td className={classes}>
+                        <Button variant="outlined" className="h-6 flex items-center">
                             Explore
                         </Button>
                     </td>
