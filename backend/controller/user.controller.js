@@ -272,7 +272,7 @@ class userController {
 
 
         if (statusQuery.rows.length > 0) {
-            return [user.user_id, statusQuery.rows[0].user_status];
+            return [user.user_id, statusQuery.rows[0].user_status, user.user_firstname];
         }
         else {
             return [-1, -1];
