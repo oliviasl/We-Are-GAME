@@ -25,9 +25,7 @@ const HomePage = () => {
 
     // duplicate email toast condition
     const userEmail = JSON.stringify({
-      userData: {
         user_email: email,
-      },
     });
 
     const userEmailResponse = await fetch("/api/userByEmail", {
@@ -56,7 +54,6 @@ const HomePage = () => {
       return;
     }
 
-    console.log("Would create a user");
     const userBody = JSON.stringify({
       userData: {
         user_email: email,
@@ -87,7 +84,6 @@ const HomePage = () => {
       return;
     }
 
-    console.log("Would login/auth a user");
     const authBody =  JSON.stringify({
       email: email,
       password: password,
@@ -101,7 +97,6 @@ const HomePage = () => {
       body: authBody
     });
     const status = await response.json();
-
     if (status <= 0) {
       toast.error("You are not authorized.");
     }
