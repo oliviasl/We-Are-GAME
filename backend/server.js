@@ -219,7 +219,7 @@ app.get("/api/fetchFromScorecard", (req, res) => {
 });
 
 // collegesFiltered
-app.get("/api/collegesFiltered", (req, res) => {
+app.post("/api/collegesFiltered", (req, res) => {
   const { fields } = req.body;
   collegeController
     .collegesFiltered(fields)
