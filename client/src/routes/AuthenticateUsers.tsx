@@ -29,10 +29,7 @@ const AuthenticateUsers = () => {
         setTotalPages(totalPages);
     }, [page]);
 
-    // - When the admin presses approve, the user_status should be updated to 1 using the approveUser api
-    // - When the admin presses deny, the user account should be deleted from the database using the deleteUser apo
     const onApprove = async (id: Number) => {
-        console.log("would approve user with id", id.toString());
         const idBody = JSON.stringify({
             userId: id,
         });
