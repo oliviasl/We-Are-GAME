@@ -238,7 +238,7 @@ class userController {
         const PAGE_SIZE = 6;
         const offset = (pageNumber - 1) * PAGE_SIZE;
 
-        const query = `SELECT user_email
+        const query = `SELECT master_users.user_id, master_users.user_email, master_users.user_firstname, master_users.user_lastname
         FROM master_users
         JOIN user_status ON master_users.user_id = user_status.user_id
         WHERE user_status.user_status = 0
@@ -251,7 +251,7 @@ class userController {
         return {
             totalPages: totalPages,
             page: pageNumber,
-            data: result.rows
+            unapprovedUsers: result.rows
         };
     }
 
