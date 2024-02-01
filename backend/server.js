@@ -341,10 +341,10 @@ app.get("/api/unapprovedUsers", (req, res) => {
 
 // paginatedUnapprovedUsers
 app.post("/api/paginatedUnapprovedUsers", (req, res) => {
-  const { page } = req.body;
+  const { pageNumber } = req.body;
 
   userController
-    .paginatedUnapprovedUsers(page)
+    .paginatedUnapprovedUsers(pageNumber)
     .then((data)=>
       res.status(200).json(data)
     );
