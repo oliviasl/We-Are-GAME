@@ -23,6 +23,14 @@ const HomePage = () => {
 
   const createUser = async () => {
 
+    // invalid email toast condition
+    if (!email.includes("@")) {
+      toast("Email format is invalid.", {
+        className: "border-l-8 border-semantic-warning"
+      });
+      return;
+    }
+    
     // duplicate email toast condition
     const userEmail = JSON.stringify({
         user_email: email,
@@ -39,18 +47,16 @@ const HomePage = () => {
     const userEmailStatus = await userEmailResponse.json();
 
     if (userEmailStatus.length > 0) {
-      toast.error(email + " is already in use.");
-    }
-
-    // invalid email toast condition
-    if (!email.includes("@")) {
-      toast.warning("Email format is invalid.");
-      return;
+      toast(email + " is already in use.", {
+        className: "border-l-8 border-semantic-warning"
+      });
     }
 
     // matching passwords toast condition
     if (password !== verifyPassword) {
-      toast.warning("Please make sure your passwords match.");
+      toast("Please make sure your passwords match.", {
+        className: "border-l-8 border-semantic-warning"
+      });
       return;
     }
 
@@ -73,14 +79,15 @@ const HomePage = () => {
     });
     const status = await response.json();
     console.log(status);
-    //would put toast here
     setTabs("Logged in and user created");
   };
 
   const authUser = async () => {
     // invalid email toast condition
     if (!email.includes("@")) {
-      toast.warning("Email format is invalid.");
+      toast("Email format is invalid.", {
+        className: "border-l-8 border-semantic-warning"
+      });
       return;
     }
 
@@ -97,10 +104,9 @@ const HomePage = () => {
       body: authBody
     });
     const status = await response.json();
-    if (status <= 0) {
+    if (status[1] <= 0) {
       toast.error("You are not authorized.");
     }
-
     console.log(status); // If not [-1,-1] or [x, 0], pass
   };
 
@@ -262,7 +268,7 @@ const HomePage = () => {
           </div>
         )}
       </div>
-      <ToastContainer />
+      <ToastContainer hideProgressBar={true} />
     </div>
   );
 };
