@@ -3,7 +3,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import './App.css';
 import AddCollege from "./routes/AddCollege";
 import HomePage from "./routes/HomePage";
-import StudentProfile from "./routes/StudentProfile";
+import StudentProfile from "./routes/StudentProfileRoute";
 
 function App() {
   return (
