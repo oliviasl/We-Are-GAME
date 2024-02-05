@@ -105,7 +105,9 @@ const HomePage = () => {
     });
     const status = await response.json();
     if (status[1] <= 0) {
-      toast.error("You are not authorized.");
+      toast("You are not authorized.", {
+        className: "border-l-8 border-semantic-warning"
+      });
     }
     console.log(status); // If not [-1,-1] or [x, 0], pass
   };
