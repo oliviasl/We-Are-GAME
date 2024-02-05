@@ -3,7 +3,7 @@ import './App.css';
 import AddCollege from "./routes/AddCollege";
 import HomePage from "./routes/HomePage";
 import CollegeDatabase from "./routes/CollegeDatabase";
-import Profile from "./routes/ProfileRoute";
+import StudentProfileRoute from "./routes/StudentProfileRoute";
 import {ThemeProvider} from "@material-tailwind/react";
 import theme from "./util/theme";
 
@@ -16,7 +16,7 @@ function App() {
             <Route path="/" element={<HomePage/>}/>
             <Route path="/add-college" element={<AddCollege/>}/>
             <Route path="/college-database" element={<CollegeDatabase/>}/>
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/student-profile" element={<StudentProfileRoute />} />
           </Routes>
         </Router>
       </div>

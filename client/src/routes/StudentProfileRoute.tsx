@@ -1,8 +1,8 @@
-import { Navbar } from "../layouts/Navbar";
 import StudentProfile from "../layouts/StudentProfile";
+import { Navbar } from "../layouts/Navbar";
 import React, { useEffect, useState, ElementType } from "react";
 
-const Profile = () => {
+const StudentProfileRoute = () => {
   return (
     <div className="">
       <Navbar />
@@ -11,4 +11,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default StudentProfileRoute;
