@@ -3,41 +3,69 @@ import ProfileBox from "../components/ProfileBox";
 
 const Pencil = ({ fill }: { fill: string })  => { 
   return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill={fill} xmlns="http://www.w3.org/2000/svg">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill={fill} xmlns="http://www.w3.org/2000/svg" onClick={() => console.log("hi")}>
       <path d="M0 18V13.75L13.2 0.575C13.4 0.391667 13.621 0.25 13.863 0.15C14.105 0.0500001 14.359 0 14.625 0C14.8917 0 15.15 0.0500001 15.4 0.15C15.65 0.25 15.8667 0.4 16.05 0.6L17.425 2C17.625 2.18333 17.771 2.4 17.863 2.65C17.955 2.9 18.0007 3.15 18 3.4C18 3.66667 17.9543 3.921 17.863 4.163C17.7717 4.405 17.6257 4.62567 17.425 4.825L4.25 18H0ZM14.6 4.8L16 3.4L14.6 2L13.2 3.4L14.6 4.8Z"/>
     </svg>
   );
 };
 
-const StudentProfile = () => {
-  const [userId, setUserId] = useState(1);
-  const [studentData, setStudentData] = useState(null);
+interface studentData {
+  username:string;
+  gradYear:string;
+  phoneNum:string;
+  email:string;
+  gpa:number;
+  eligibility:boolean;
+
+  actMath:number;
+  actScience:number;
+  actReading:number;
+  actEnglish:number;
+  actComposite:number;
+
+  satMath:number,
+  satReading:number,
+  satComposite:number,
+
+  purpose:string;
+  goal:string;
+}
+
+const StudentProfile = ({ studentData }: { studentData: studentData }) => {
+  const personalTitles: Record<string, string> = {
+    gradYear: "Graduation Year",
+    phoneNum: "Phone Number",
+    email: "Email",
+    gpa: "GPA",
+    eligibility: "NCAA Eligibility",
+  };
+
+  const actTitles: Record<string, string> = {
+    actMath: "ACT Math",
+    actScience: "ACT Science",
+    actReading: "ACT Reading",
+    actEnglish: "ACT English",
+    actComposite: "Composite",
+  };
+
+  const satTitles: Record<string, string> = {
+    satMath: "ACT Math",
+    satReading: "ACT Reading",
+    satComposite: "Composite",
+  };
+
+  const personalInfoKeys = ["gradYear", "phoneNum", "email", "gpa", "eligibility"] as Array<keyof typeof studentData>;
+  const actKeys = ["actMath", "actScience", "actReading", "actEnglish", "actComposite"] as Array<keyof typeof studentData>;
+  const satKeys = ["satMath", "satReading", "satComposite"] as Array<keyof typeof studentData>;
   
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`/api/userById?userId=${userId}`);
-        const data = await response.json();
-        setStudentData(data[0]);
-        console.log(data); 
-      } catch (error) {
-        console.error("Error fetching student data:", error);
-      }
-    };
-
-    fetchData();
-  }, [userId]);
-
-  const username = "Sample Username";
-
   return (
     <div className="grid grid-cols-3 gap-4 m-auto mx-20 mt-10 font-circular-std leading-none">
       {/* Username/Grad year */}
       <div className='col-span-2 order-1'>
         <div className="bg-brand-gray-20 rounded-t-md text-brand-white flex p-4 items-center">
           <div className="flex-col flex-grow">
-            <div className="text-lg font-medium p-0 m-0">{username}</div>
-            <div className="text-sm font-normal">Highschool/College Grad Yr.</div>
+            <div className="text-lg font-medium p-0 m-0">{studentData.username}</div>
+            <div className="text-sm font-normal">{studentData.gradYear}</div>
           </div>
           {/* icon */}
           <div className="mr-2">
@@ -59,60 +87,46 @@ const StudentProfile = () => {
         <div className="w-full p-4">
           <h2 className="text-md mb-4">Personal</h2>
           <div className="grid grid-cols-2 gap-y-4 justify-between w-full">
-            <div>Phone Number</div><div className="text-right">999-999-9999</div>
-            <div>Email</div><div className="text-right">student@email.com</div>
-            <div>GPA</div><div className="text-right">4.0</div>
-            <div>NCAA Eligibility</div><div className="text-right">Yes</div>
-            <div className=" text-gray-400">12345</div>
+            {personalInfoKeys.map((key) => (
+              <React.Fragment key={key}>
+                <div>{personalTitles[key]}</div>
+                <div className="text-right">{key === 'gpa' ? studentData[key].toFixed(1) : studentData[key]}</div>
+              </React.Fragment>
+            ))}
           </div>
         </div>
       </div>
       {/* Academics */}
-      <div className=' border-gray-400 border-2 rounded-md min-h-[50px] order-4'>
+      <div className='border-gray-400 border-2 rounded-md min-h-[50px] order-4'>
         <div className="w-full p-4 flex-wrap">
           <h2 className="text-md mb-2">Academics</h2>
-          <div className="bg-brand-blue-95 mb-3 rounded-sm">
+
+          {/* ACT*/}
+          <div className={`bg-brand-blue-95 mb-3 rounded-sm`}>
             <div className="grid grid-cols-2 w-full py-2 px-4 gap-x-6 gap-y-2">
-              <div className="flex justify-between w-full">
-                <div>ACT Math</div>
-                <div>36</div>
-              </div>
-              <div className="flex justify-between w-full">
-                <div>ACT Science</div>
-                <div>36</div>
-              </div>
-              <div className="flex justify-between w-full">
-                <div>ACT Reading</div>
-                <div>36</div>
-              </div>
-              <div className="flex justify-between w-full">
-                <div>ACT English</div>
-                <div>36</div>
-              </div>
-              <div className="flex justify-between w-full">
-                <div>Composite</div>
-                <div>36</div>
-              </div>
+              {actKeys.map((key) => (
+                <div key={key} className="flex justify-between w-full">
+                  <div>{actTitles[key]}</div>
+                  <div>{studentData[key]}</div>
+                </div>
+              ))}
             </div>
           </div>
-          <div className="bg-brand-blue-95 mb-3 rounded-sm">
+
+          {/* SAT*/}
+          <div className={`bg-brand-blue-95 mb-3 rounded-sm`}>
             <div className="grid grid-cols-2 w-full py-2 px-4 gap-x-6 gap-y-2">
-              <div className="flex justify-between w-full">
-                <div>SAT Math</div>
-                <div>800</div>
-              </div>
-              <div className="flex justify-between w-full">
-                <div>SAT Reading</div>
-                <div>800</div>
-              </div>
-              <div className="flex justify-between w-full">
-                <div>Composite</div>
-                <div>1600</div>
-              </div>
+              {satKeys.map((key) => (
+                <div key={key} className="flex justify-between w-full">
+                  <div>{satTitles[key]}</div>
+                  <div>{studentData[key]}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
+
       {/* Extracurriculars */}
       <div className='bg-blue-500 rounded-md min-h-[50px] order-5'></div>
       {/* Special Interests */}
