@@ -264,6 +264,7 @@ class userController {
         if (statusQuery.rows.length > 0) {
             return [user.user_id, statusQuery.rows[0].user_status];
         }
+        return [-1,-1];
     }
 
     // userByEmail — for auth toast
