@@ -4,7 +4,7 @@ export function ProfileBox({ type, data }: { type: string; data: string[] }) {
       <h2 className="text-md mb-2">{type}</h2>
       <div className="flex flex-wrap gap-2">
         {data.map((item, index) => (
-          <div key={index} className="bg-brand-blue-95 rounded-sm p-2">
+          <div key={index} className="bg-brand-blue-95 rounded-md p-2">
             {item}
           </div>
         ))}

@@ -40,12 +40,14 @@ const StudentProfileRoute = () => {
 
     purpose: "Sample Purpose",
     goal: "Sample Goal",
-    notes: "Hi Yeji was here",
+    notes: "Sample Note (yeji was here)",
 
     sports:["Tennis/Singles/Nat.", "Soccer/Goalie/Reg."],
     majors:["Business", "Marketing"],
     extracurriculars:["DECA", "Science Olympiad", "Key Club"],
     specialInterests:["Game Development", "Baking", "Art"],
+    
+    colleges:["Univ. of Southern California", "Univ. of Michigan", "Univ. of California, Los Angeles"]
 
   };
 
