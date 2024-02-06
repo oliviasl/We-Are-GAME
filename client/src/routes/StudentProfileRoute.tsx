@@ -27,16 +27,26 @@ const StudentProfileRoute = () => {
     email: "student@email.com",
     gpa: 4.0,
     eligibility: true,
+
     actMath: 36,
     actScience: 36,
     actReading: 36,
     actEnglish: 36,
     actComposite: 36,
+
     satMath: 1600,
     satReading: 1600,
     satComposite: 1600,
+
     purpose: "Sample Purpose",
     goal: "Sample Goal",
+    notes: "Hi Yeji was here",
+
+    sports:["Tennis/Singles/Nat.", "Soccer/Goalie/Reg."],
+    majors:["Business", "Marketing"],
+    extracurriculars:["DECA", "Science Olympiad", "Key Club"],
+    specialInterests:["Game Development", "Baking", "Art"],
+
   };
 
   return (

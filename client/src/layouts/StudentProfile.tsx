@@ -29,6 +29,13 @@ interface studentData {
 
   purpose:string;
   goal:string;
+  notes:string;
+
+  sports:string[];
+  majors:string[];
+  extracurriculars:string[];
+  specialInterests:string[];
+
 }
 
 const StudentProfile = ({ studentData }: { studentData: studentData }) => {
@@ -59,7 +66,7 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
   const satKeys = ["satMath", "satReading", "satComposite"] as Array<keyof typeof studentData>;
   
   return (
-    <div className="grid grid-cols-3 gap-4 m-auto mx-20 mt-10 font-circular-std leading-none">
+    <div className="grid grid-cols-3 gap-4 m-auto mx-20 my-10 font-circular-std leading-none">
       {/* Username/Grad year */}
       <div className='col-span-2 order-1'>
         <div className="bg-brand-gray-20 rounded-t-md text-brand-white flex p-4 items-center">
@@ -73,15 +80,17 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
           </div>
         </div>
       </div>
+
       {/* Colleges */}
       <div className=' rounded-md row-span-4 order-2 border-gray-400 border-2'>
-        <div className="m-4">
+        <div className="p-4">
           <div className="flex justify-between items-start">
             <h2 className="text-md mb-2">Colleges</h2>
             <div className=" p-1"><Pencil fill="#B3B3B3" /></div>
           </div>
         </div>
       </div>
+
       {/* Personal */}
       <div className=' border-gray-400 border-2 rounded-md order-3'>
         <div className="w-full p-4">
@@ -96,11 +105,11 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
           </div>
         </div>
       </div>
+
       {/* Academics */}
       <div className='border-gray-400 border-2 rounded-md min-h-[50px] order-4'>
         <div className="w-full p-4 flex-wrap">
           <h2 className="text-md mb-2">Academics</h2>
-
           {/* ACT*/}
           <div className={`bg-brand-blue-95 mb-3 rounded-sm`}>
             <div className="grid grid-cols-2 w-full py-2 px-4 gap-x-6 gap-y-2">
@@ -112,7 +121,6 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
               ))}
             </div>
           </div>
-
           {/* SAT*/}
           <div className={`bg-brand-blue-95 mb-3 rounded-sm`}>
             <div className="grid grid-cols-2 w-full py-2 px-4 gap-x-6 gap-y-2">
@@ -127,14 +135,25 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
         </div>
       </div>
 
+      {/* Sport */}
+      <div className="order-5 border-gray-400 border-2 rounded-md ">
+        <ProfileBox type="Sport" data={studentData.sports}/>        
+      </div>
+      
+      {/* Major */}
+      <div className="order-5 border-gray-400 border-2 rounded-md ">
+        <ProfileBox type="Major" data={studentData.majors} />        
+      </div>
+
       {/* Extracurriculars */}
-      <div className='bg-blue-500 rounded-md min-h-[50px] order-5'></div>
+      <div className="order-5 border-gray-400 border-2 rounded-md ">
+        <ProfileBox type="Extracurriculars" data={studentData.extracurriculars} />        
+      </div>
+
       {/* Special Interests */}
-      <div className='bg-purple-500 rounded-md min-h-[50px] order-6'></div>
-      {/* Extracurriculars */}
-      <div className='bg-blue-500 rounded-md min-h-[50px] order-5'></div>
-      {/* Special Interests */}
-      <div className='bg-purple-500 rounded-md min-h-[50px] order-6'></div>
+      <div className="order-5 border-gray-400 border-2 rounded-md ">
+        <ProfileBox type="Special Interests" data={studentData.specialInterests}/>        
+      </div>
 
       {/* Pursue My Purpose */}
       <div className=' border-gray-400 border-2 rounded-md min-h-[50px] col-span-2 order-7'>
@@ -145,13 +164,16 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
       </div>
       {/* Notes */}
       <div className=' border-gray-400 border-2 rounded-md row-span-2 order-8'>
-        <h2 className="text-md m-4 mb-2">Notes</h2>
+        <div className="w-full p-4">
+          <h2 className="text-md mb-2">Notes</h2>
+          <div>{studentData.notes}</div>         
+        </div>
       </div>
       {/* Goal */}
       <div className=' border-gray-400 border-2 rounded-md min-h-[50px] col-span-2 order-9'>
         <div className="w-full m-4">
           <h2 className="text-md mb-2">Goal</h2>
-          <div>I want to maintain a work life balance.</div>
+          <div>{studentData.goal}</div>
         </div>
       </div>
       
