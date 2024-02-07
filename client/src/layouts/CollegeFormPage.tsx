@@ -5,7 +5,7 @@ import {CollegeProgressBar} from "../components/CollegeProgressBar";
 import {CollegeFormFormSection} from "../components/CollegeFormFormSection";
 import {collegeForm} from "../util/data/college-form";
 
-export default function CollegeFormPage({data}: { data?: any }) {
+export default function CollegeFormPage({data, onSubmit}: { data?: any, onSubmit: (data: any) => void }) {
   const [formData, setFormData] = useState({})
   const [activeStep, setActiveStep] = useState(0);
 
@@ -15,7 +15,7 @@ export default function CollegeFormPage({data}: { data?: any }) {
 
     if (activeStep < collegeFormSchemas.length - 1) {
       setActiveStep(activeStep + 1)
-    } else alert(JSON.stringify(updatedFormData));
+    } else onSubmit(updatedFormData);
   }
 
   return <div className="h-screen w-screen flex flex-col items-center">
