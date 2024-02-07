@@ -1,6 +1,7 @@
 import React, { useEffect, useState, ElementType } from "react";
 import ProfileBox from "../components/ProfileBox";
 import CollegeBox from "../components/CollegeBox";
+import {studentData} from "../routes/StudentProfileRoute";
 
 const Pencil = ({ fill }: { fill: string })  => { 
   return (
@@ -10,71 +11,59 @@ const Pencil = ({ fill }: { fill: string })  => {
   );
 };
 
-interface studentData {
-  username:string;
-  gradYear:string;
-  phoneNum:string;
-  email:string;
-  gpa:number;
-  eligibility:boolean;
-
-  actMath:number;
-  actScience:number;
-  actReading:number;
-  actEnglish:number;
-  actComposite:number;
-
-  satMath:number,
-  satReading:number,
-  satComposite:number,
-
-  purpose:string;
-  goal:string;
-  notes:string;
-
-  sports:string[];
-  majors:string[];
-  extracurriculars:string[];
-  specialInterests:string[];
-
-  colleges:string[];
-}
-
 const StudentProfile = ({ studentData }: { studentData: studentData }) => {
+  if (!studentData) {
+    return null;
+  }
+  const capFirstLetter = (str: string): string => {
+    return str.replace(/\b\w/g, (match: string) => match.toUpperCase());
+  };
+
   const personalTitles: Record<string, string> = {
     gradYear: "Graduation Year",
-    phoneNum: "Phone Number",
-    email: "Email",
-    gpa: "GPA",
-    eligibility: "NCAA Eligibility",
+    user_phone: "Phone Number",
+    user_email: "Email",
+    user_gpa: "GPA",
+    user_ncaa_registered: "NCAA Eligibility",
   };
+  const personalInfoKeys = ["gradYear", "user_phone", "user_email", "user_gpa", "user_ncaa_registered"] as Array<keyof typeof studentData>;
 
   const actTitles: Record<string, string> = {
-    actMath: "ACT Math",
-    actScience: "ACT Science",
-    actReading: "ACT Reading",
-    actEnglish: "ACT English",
-    actComposite: "Composite",
+    user_act_math: "ACT Math",
+    user_act_science: "ACT Science",
+    user_act_reading: "ACT Reading",
+    user_act_english: "ACT English",
+    user_act: "Composite",
   };
+  const actKeys = ["user_act_math", "user_act_science", "user_act_reading", "user_act_english", "user_act"] as Array<keyof typeof studentData>;
 
   const satTitles: Record<string, string> = {
-    satMath: "ACT Math",
-    satReading: "ACT Reading",
-    satComposite: "Composite",
+    user_sat_math: "SAT Math",
+    user_sat_read_write: "SAT Reading",
+    user_sat: "Composite",
   };
+  const satKeys = ["user_sat_math", "user_sat_read_write", "user_sat"] as Array<keyof typeof studentData>;
 
-  const personalInfoKeys = ["gradYear", "phoneNum", "email", "gpa", "eligibility"] as Array<keyof typeof studentData>;
-  const actKeys = ["actMath", "actScience", "actReading", "actEnglish", "actComposite"] as Array<keyof typeof studentData>;
-  const satKeys = ["satMath", "satReading", "satComposite"] as Array<keyof typeof studentData>;
+  const sports: string[] = [
+    ...(studentData.user_sport1 ? [`${capFirstLetter(studentData.user_sport1)}/${capFirstLetter(studentData.user_sport1_role)}`] : []),
+    ...(studentData.user_sport2 ? [`${capFirstLetter(studentData.user_sport2)}/${capFirstLetter(studentData.user_sport2_role)}`] : []),
+  ];
   
+  // TO DO: major naming?
+  const majors: string[] = [
+    studentData.user_potential_major ? capFirstLetter(studentData.user_potential_major) : '',
+    studentData.user_alt_major1 ? capFirstLetter(studentData.user_alt_major1) : '',
+    studentData.user_alt_major2 ? capFirstLetter(studentData.user_alt_major2) : '',
+  ];
   return (
     <div className="grid grid-cols-3 gap-4 m-auto mx-20 my-10 font-circular-std leading-none">
       {/* Username/Grad year */}
       <div className='col-span-2 order-1'>
         <div className="bg-brand-gray-20 rounded-t-md text-brand-white flex p-4 items-center">
           <div className="flex-col flex-grow">
-            <div className="text-lg font-medium p-0 m-0">{studentData.username}</div>
-            <div className="text-sm font-normal">{studentData.gradYear}</div>
+            <div className="text-lg font-medium p-0 m-0">{studentData.user_firstname + " " + studentData.user_lastname}</div>
+            {/* TO DO: how to handle? */}
+            <div className="text-sm font-normal">gradyear</div> 
           </div>
           {/* icon */}
           <div className="mr-2">
@@ -83,7 +72,7 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
         </div>
       </div>
 
-      {/* Colleges */}
+    {/* Colleges: TO DO— MAKE DYNAMIC! */}
       <div className=' rounded-md row-span-4 order-2 border-gray-400 border-2'>
         <div className="p-4 ">
           <div className="flex justify-between items-center mb-2">
@@ -108,15 +97,23 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
               <React.Fragment key={key}>
                 <div>{personalTitles[key]}</div>
                 {/* displays gpa with decimal pt. and NCAA eligibility as Yes/No */}
-                <div className="text-right">{key === 'gpa' ? studentData[key].toFixed(1) : key === 'eligibility' ? (studentData[key] ? 'Yes' : 'No') : studentData[key]}</div>
+                <div className="text-right">
+                  {key === 'user_gpa' && typeof studentData[key] !== 'undefined'
+                    ? studentData[key].toFixed(1)
+                    : key === 'user_ncaa_registered'
+                    ? studentData[key]
+                      ? 'Yes'
+                      : 'No'
+                    : studentData[key]}
+                </div>
               </React.Fragment>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Academics */}
-      <div className='border-gray-400 border-2 rounded-md min-h-[50px] order-4'>
+     {/* Academics */}
+     <div className='border-gray-400 border-2 rounded-md min-h-[50px] order-4'>
         <div className="w-full p-4 flex-wrap">
           <h2 className="text-md mb-2">Academics</h2>
           {/* ACT*/}
@@ -143,49 +140,50 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
           </div>
         </div>
       </div>
-
+      
       {/* Sport */}
       <div className="order-5 border-gray-400 border-2 rounded-md ">
-        <ProfileBox type="Sport" data={studentData.sports}/>        
+        <ProfileBox type="Sport" data={sports}/>        
       </div>
-      
+
       {/* Major */}
       <div className="order-5 border-gray-400 border-2 rounded-md ">
-        <ProfileBox type="Major" data={studentData.majors} />        
+        <ProfileBox type="Major" data={majors} />        
       </div>
 
       {/* Extracurriculars */}
       <div className="order-5 border-gray-400 border-2 rounded-md ">
-        <ProfileBox type="Extracurriculars" data={studentData.extracurriculars} />        
+        <ProfileBox type="Extracurriculars" data={studentData.user_extracurriculars} />        
       </div>
 
       {/* Special Interests */}
       <div className="order-5 border-gray-400 border-2 rounded-md ">
-        <ProfileBox type="Special Interests" data={studentData.specialInterests}/>        
+        <ProfileBox type="Special Interests" data={studentData.user_interests}/>        
       </div>
+   
 
       {/* Pursue My Purpose */}
       <div className=' border-gray-400 border-2 rounded-md min-h-[50px] col-span-2 order-7'>
         <div className="w-full p-4">
           <h2 className="text-md mb-2">Pursue My Purpose</h2>
-          <div>{studentData.purpose}</div>
+          <div>{studentData.user_purpose}</div>
         </div>
       </div>
       {/* Notes */}
       <div className=' border-gray-400 border-2 rounded-md row-span-2 order-8'>
         <div className="w-full p-4">
           <h2 className="text-md mb-2">Notes</h2>
-          <div>{studentData.notes}</div>         
+          <div>{studentData.user_notes}</div>         
         </div>
       </div>
       {/* Goal */}
       <div className=' border-gray-400 border-2 rounded-md min-h-[50px] col-span-2 order-9'>
         <div className="w-full m-4">
           <h2 className="text-md mb-2">Goal</h2>
-          <div>{studentData.goal}</div>
+          <div>{studentData.user_goal}</div>
         </div>
       </div>
-      
+
     </div>
   );
 };
