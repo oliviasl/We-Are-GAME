@@ -14,9 +14,17 @@ export interface studentData {
   user_goal: string;
   user_purpose: string;
   user_gpa: number;
+
+  user_sat: number;
   user_sat_read_write: number;
   user_sat_math: number;
+
   user_act: number;
+  user_act_english: number;
+  user_act_math: number;
+  user_act_reading: number;
+  user_act_science: number;
+
   user_potential_major: string;
   user_alt_major1: string;
   user_alt_major2: string;
@@ -28,25 +36,24 @@ export interface studentData {
   user_sport2_role: string;
   user_notes: string;
 
+  user_grad_year:number;
   colleges:string[];
-  gradYear:string;
-  user_act_math: number;
-  user_act_science: number;
-  user_act_reading: number;
-  user_act_english: number;
-  user_sat: number;
+
 }
 
 const StudentProfileRoute = () => {
   const [studentData, setStudentData] = useState<studentData>({} as studentData);
   let userId = 1;
+
+  // REMOVE! hard coded for display purposes
   studentData.colleges = ["Univ. of Southern California", "Univ. of Michigan", "Univ. of California, Los Angeles"];
-  studentData.gradYear = "Sample Gradyear";
+  studentData.user_grad_year = 2026;
   studentData.user_act_math = 36;
   studentData.user_act_science = 36;
   studentData.user_act_reading = 36;
   studentData.user_act_english = 36;
   studentData.user_sat = 1600;
+  // REMOVE! hard coded for display purposes
 
   useEffect(() => {
     const fetchData = async () => {

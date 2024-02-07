@@ -20,13 +20,13 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
   };
 
   const personalTitles: Record<string, string> = {
-    gradYear: "Graduation Year",
+    user_grad_year: "Graduation Year",
     user_phone: "Phone Number",
     user_email: "Email",
     user_gpa: "GPA",
     user_ncaa_registered: "NCAA Eligibility",
   };
-  const personalInfoKeys = ["gradYear", "user_phone", "user_email", "user_gpa", "user_ncaa_registered"] as Array<keyof typeof studentData>;
+  const personalInfoKeys = ["user_grad_year", "user_phone", "user_email", "user_gpa", "user_ncaa_registered"] as Array<keyof typeof studentData>;
 
   const actTitles: Record<string, string> = {
     user_act_math: "ACT Math",
@@ -63,7 +63,7 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
           <div className="flex-col flex-grow">
             <div className="text-lg font-medium p-0 m-0">{studentData.user_firstname + " " + studentData.user_lastname}</div>
             {/* TO DO: how to handle? */}
-            <div className="text-sm font-normal">gradyear</div> 
+            <div className="text-sm font-normal">{studentData.user_grad_year}</div> 
           </div>
           {/* icon */}
           <div className="mr-2">
