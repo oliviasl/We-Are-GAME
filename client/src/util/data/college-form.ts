@@ -58,12 +58,16 @@ const basicInformation: CollegeFormSection = {
         {
           id: "min_sat",
           title: "25th Percentile",
-          type: "number"
+          type: "number",
+          min: 400,
+          max: 1600
         },
         {
           id: "max_sat",
           title: "75th Percentile",
-          type: "number"
+          type: "number",
+          min: 400,
+          max: 1600
         }
       ]
     }, {
@@ -74,12 +78,16 @@ const basicInformation: CollegeFormSection = {
         {
           id: "min_sat_read_write",
           title: "25th Percentile",
-          type: "number"
+          type: "number",
+          min: 200,
+          max: 800
         },
         {
           id: "max_sat_read_write",
           title: "75th Percentile",
-          type: "number"
+          type: "number",
+          min: 200,
+          max: 800
         }
       ]
     }, {
@@ -90,12 +98,16 @@ const basicInformation: CollegeFormSection = {
         {
           id: "min_sat_math",
           title: "25th Percentile",
-          type: "number"
+          type: "number",
+          min: 200,
+          max: 800
         },
         {
           id: "max_sat_math",
           title: "75th Percentile",
-          type: "number"
+          type: "number",
+          min: 200,
+          max: 800
         }
       ]
     }, {
@@ -106,12 +118,16 @@ const basicInformation: CollegeFormSection = {
         {
           id: "min_act",
           title: "25th Percentile",
-          type: "number"
+          type: "number",
+          min: 1,
+          max: 36
         },
         {
           id: "max_act",
           title: "75th Percentile",
-          type: "number"
+          type: "number",
+          min: 1,
+          max: 36
         }
       ]
     }, {
@@ -122,12 +138,16 @@ const basicInformation: CollegeFormSection = {
         {
           id: "min_act_english",
           title: "25th Percentile",
-          type: "number"
+          type: "number",
+          min: 1,
+          max: 36
         },
         {
           id: "max_act_english",
           title: "75th Percentile",
-          type: "number"
+          type: "number",
+          min: 1,
+          max: 36
         }
       ]
     }, {
@@ -138,12 +158,16 @@ const basicInformation: CollegeFormSection = {
         {
           id: "min_act_math",
           title: "25th Percentile",
-          type: "number"
+          type: "number",
+          min: 1,
+          max: 36
         },
         {
           id: "max_act_math",
           title: "75th Percentile",
-          type: "number"
+          type: "number",
+          min: 1,
+          max: 36
         }
       ]
     }, {
@@ -154,12 +178,16 @@ const basicInformation: CollegeFormSection = {
         {
           id: "min_act_reading",
           title: "25th Percentile",
-          type: "number"
+          type: "number",
+          min: 1,
+          max: 36
         },
         {
           id: "max_act_reading",
           title: "75th Percentile",
-          type: "number"
+          type: "number",
+          min: 1,
+          max: 36
         }
       ]
     }, {
@@ -170,12 +198,16 @@ const basicInformation: CollegeFormSection = {
         {
           id: "min_act_science",
           title: "25th Percentile",
-          type: "number"
+          type: "number",
+          min: 1,
+          max: 36
         },
         {
           id: "max_act_science",
           title: "75th Percentile",
-          type: "number"
+          type: "number",
+          min: 1,
+          max: 36
         }
       ]
     }
@@ -224,39 +256,48 @@ const enrollmentStats: CollegeFormSection = {
         {
           type: "number",
           title: "White",
-          id: "race_white"
+          id: "race_white",
+          percentage: true
         }, {
           type: "number",
           title: "Black",
-          id: "race_black"
+          id: "race_black",
+          percentage: true
         }, {
           type: "number",
           title: "Hispanic",
-          id: "race_hispanic"
+          id: "race_hispanic",
+          percentage: true
         }, {
           type: "number",
           title: "Asian",
-          id: "race_asian"
+          id: "race_asian",
+          percentage: true
         }, {
           type: "number",
           title: "Pacific Islander",
-          id: "race_pacific_islander"
+          id: "race_pacific_islander",
+          percentage: true
         }, {
           type: "number",
           title: "Native American",
-          id: "race_native_american"
+          id: "race_native_american",
+          percentage: true
         }, {
           type: "number",
           title: "Two or More",
-          id: "race_two_or_more"
+          id: "race_two_or_more",
+          percentage: true
         }, {
           type: "number",
           title: "International",
-          id: "race_international"
+          id: "race_international",
+          percentage: true
         }, {
           type: "number",
           title: "Other",
-          id: "race_other"
+          id: "race_other",
+          percentage: true
         },
       ]
     }, {
@@ -271,11 +312,13 @@ const enrollmentStats: CollegeFormSection = {
         {
           type: "number",
           title: "Male",
-          id: "gender_male"
+          id: "gender_male",
+          percentage: true
         }, {
           type: "number",
           title: "Female",
-          id: "gender_female"
+          id: "gender_female",
+          percentage: true
         },
       ]
     }, {
@@ -286,17 +329,20 @@ const enrollmentStats: CollegeFormSection = {
       type: "number",
       title: "First Year Retention (%)",
       id: "first_year_retention_rate",
-      half_width: true
+      half_width: true,
+      percentage: true
     }, {
       type: "number",
       title: "First Year Transfer (%)",
       id: "first_year_transfer_rate",
-      half_width: true
+      half_width: true,
+      percentage: true
     }, {
       type: "number",
       title: "First Year Graduation (%)",
       id: "first_year_grad_rate",
-      half_width: true
+      half_width: true,
+      percentage: true
     }
   ]
 }
