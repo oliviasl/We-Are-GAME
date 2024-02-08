@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import X from "../components/X"
 
 interface ModalProps {
   isOpen: boolean;
@@ -27,7 +28,7 @@ const AddCollegeModal: React.FC<ModalProps> = ({ isOpen, onClose}) => {
       <div className="px-10 py-10">
         <div className="font-grotesk flex justify-between">
           <div className="font-bold text-2xl">Add College</div>
-          <button onClick={onClose}>x</button>
+          <button onClick={onClose}><X fill="black" /></button>
         </div>
         <div className="flex mt-8 gap-3 ">
           <input placeholder="Search by college name" className="border-2 border-brand-gray-20 rounded-sm px-2 w-full"></input>
