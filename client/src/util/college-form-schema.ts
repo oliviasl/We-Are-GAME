@@ -10,9 +10,11 @@ const createZodField = (field: CollegeFormField) => {
     case "longform":
       return z
         .string()
-        .refine((data) => !field.required || data.trim() !== "", {
+        .optional()
+        .refine((data) => !field.required || (data || "").trim() !== "", {
           message: "Field is required",
-        });
+        })
+        .transform((v) => (v === "" && field.type === "date") ? null : v);
     case "number":
       return z
         .string()
