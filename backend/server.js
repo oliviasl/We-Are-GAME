@@ -397,6 +397,21 @@ app.get("/api/assignmentsByUserId", (req, res) => {
     });
 });
 
+// assignmentsByUserId with query
+// app.get("/api/assignmentsByUserId", (req, res) => {
+//   const { userId } = req.query; // Retrieve userId from query parameters
+//   userController
+//     .assignmentsByUserId(userId)
+//     .then((data) =>
+//       res.status(200).json(data)
+//     )
+//     .catch((error) => {
+//       console.error(error);
+//       return res.status(500).json({ error });
+//     });
+// });
+
+
 // collegesFiltered
 app.get("/api/usersFiltered", (req, res) => {
   const { fields } = req.body;

@@ -89,7 +89,7 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
             <CollegeBox key={index} name={college} />
           ))}
           </div>
-          <button className="border-4 border-gray-400 border-dashed rounded-md text-gray-400 text-3xl text-center p-2 w-full transition duration-300 ease-in-out hover:bg-gray-200 focus:outline-none" onClick={openModal}>+</button>
+          <button className="border-4 border-gray-400 border-dashed rounded-md text-gray-400 text-3xl text-center p-2 py-1 w-full transition duration-300 ease-in-out hover:bg-brand-blue-95 hover:border-brand-blue-95 hover:text-white focus:outline-none" onClick={openModal}>+</button>
           <AddCollegeModal isOpen={modalOpen} onClose={closeModal}></AddCollegeModal>
         </div>
       </div>
