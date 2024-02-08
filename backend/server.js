@@ -37,8 +37,8 @@ app.get("/api/collegeByName", (req, res) => {
 // collegeById
 // returns data of college by collegeId
 
-app.get("/api/collegeById", (req, res) => {
-  const { collegeId } = req.body;
+app.get("/api/collegeById/:collegeId", (req, res) => {
+  const {collegeId} = req.params;
   collegeController
     .collegeById(collegeId)
     .then((data) =>
