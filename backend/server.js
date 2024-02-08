@@ -239,6 +239,17 @@ app.get("/api/allUsers", (req, res) => {
     );
 });
 
+// paginatedApprovedUsers
+app.post("/api/paginatedApprovedUsers", (req, res) => {
+  const { pageNumber } = req.body;
+
+  userController
+    .paginatedApprovedUsers(pageNumber)
+    .then((data)=>
+      res.status(200).json(data)
+    );
+});
+
 // userById
 app.get("/api/userById", (req, res) => {
   const { userId } = req.body;

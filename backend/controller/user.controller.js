@@ -87,6 +87,36 @@ class userController {
         }
     }
 
+    // paginatedApprovedUsers
+    async paginatedApprovedUsers(pageNumber) {
+        // page size is 6
+        const PAGE_SIZE = 6;
+        const offset = (pageNumber - 1) * PAGE_SIZE;
+
+        // changes: user_status.user_status = 0 --> user_status.user_status >= 0
+
+        // gets userID, email, first name, last name, major, and sport
+        const query = `SELECT master_users.user_id, master_users.user_email, master_users.user_firstname, master_users.user_lastname, master_users.user_potential_major, master_users.user_sport1
+        FROM master_users
+        JOIN user_status ON master_users.user_id = user_status.user_id
+        WHERE user_status.user_status >= 0
+        LIMIT $1 OFFSET $2
+        ORDER BY last_name ASC;`
+
+        const result = await db.query(query, [PAGE_SIZE, offset]);
+
+        const totalCount = (await this.allUsers()).length;
+        const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+        return {
+            totalPages: totalPages,
+            page: pageNumber,
+            approvedUsers: result.rows
+        };
+    }
+
+    
+
     // userBySport
     async userBySport(sport, directCall=true){
         const queryStr = "SELECT * FROM master_users WHERE LOWER(user_sport1) LIKE LOWER($1) OR LOWER(user_sport2) LIKE LOWER($1)";
