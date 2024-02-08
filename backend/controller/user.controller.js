@@ -232,6 +232,29 @@ class userController {
         return result.rows;
     }
 
+    // paginatedUnapprovedUsers
+    async paginatedUnapprovedUsers(pageNumber) {
+        // page size is 6
+        const PAGE_SIZE = 6;
+        const offset = (pageNumber - 1) * PAGE_SIZE;
+
+        const query = `SELECT master_users.user_id, master_users.user_email, master_users.user_firstname, master_users.user_lastname
+        FROM master_users
+        JOIN user_status ON master_users.user_id = user_status.user_id
+        WHERE user_status.user_status = 0
+        LIMIT $1 OFFSET $2;`
+        const result = await db.query(query, [PAGE_SIZE, offset]);
+
+        const totalCount = (await this.unapprovedUsers()).length;
+        const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+        return {
+            totalPages: totalPages,
+            page: pageNumber,
+            unapprovedUsers: result.rows
+        };
+    }
+
     // approveUser
     async approveUser(userId){
         try {

@@ -240,8 +240,22 @@ app.get("/api/allUsers", (req, res) => {
 });
 
 // userById
+// app.get("/api/userById", (req, res) => {
+//   const { userId } = req.body;
+//   userController
+//     .userById(userId)
+//     .then((data) =>
+//       res.status(200).json(data)
+//     )
+//     .catch((error) => {
+//       console.error(error);
+//       return res.status(500).json({ error });
+//     });
+// });
+
+// userById with query
 app.get("/api/userById", (req, res) => {
-  const { userId } = req.body;
+  const { userId } = req.query; // Retrieve userId from query parameters
   userController
     .userById(userId)
     .then((data) =>
@@ -252,6 +266,7 @@ app.get("/api/userById", (req, res) => {
       return res.status(500).json({ error });
     });
 });
+
 
 // userByName
 app.get("/api/userByName", (req, res) => {
@@ -334,6 +349,17 @@ app.delete("/api/deleteUser", (req, res) => {
 app.get("/api/unapprovedUsers", (req, res) => {
   userController
     .unapprovedUsers()
+    .then((data)=>
+      res.status(200).json(data)
+    );
+});
+
+// paginatedUnapprovedUsers
+app.post("/api/paginatedUnapprovedUsers", (req, res) => {
+  const { pageNumber } = req.body;
+
+  userController
+    .paginatedUnapprovedUsers(pageNumber)
     .then((data)=>
       res.status(200).json(data)
     );
