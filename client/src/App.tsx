@@ -3,7 +3,7 @@ import './App.css';
 import AddCollege from "./routes/AddCollege";
 import HomePage from "./routes/HomePage";
 import CollegeDatabase from "./routes/CollegeDatabase";
-import StudentProfileRoute from "./routes/StudentProfileRoute";
+import StudentProfileRoute from "./routes/StudentProfile";
 import {ThemeProvider} from "@material-tailwind/react";
 import theme from "./util/theme";
 
