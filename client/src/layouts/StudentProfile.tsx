@@ -3,11 +3,22 @@ import ProfileBox from "../components/ProfileBox";
 import CollegeBox from "../components/CollegeBox";
 import {studentData} from "../routes/StudentProfile";
 import Pencil from "../components/Pencil";
+import AddCollegeModal from "../components/AddCollegeModal";
 
 const StudentProfile = ({ studentData }: { studentData: studentData }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   if (!studentData) {
     return null;
   }
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   const capFirstLetter = (str: string): string => {
     return str.replace(/\b\w/g, (match: string) => match.toUpperCase());
   };
@@ -48,6 +59,7 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
     studentData.user_alt_major1 ? capFirstLetter(studentData.user_alt_major1) : '',
     studentData.user_alt_major2 ? capFirstLetter(studentData.user_alt_major2) : '',
   ];
+
   return (
     <div className="grid grid-cols-3 gap-4 m-auto mx-20 my-10 font-circular-std leading-none">
       {/* Username/Grad year */}
@@ -65,7 +77,7 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
         </div>
       </div>
 
-    {/* Colleges: TO DO— MAKE DYNAMIC! */}
+    {/* Colleges */}
       <div className=' rounded-md row-span-4 order-2 border-gray-400 border-2'>
         <div className="p-4 ">
           <div className="flex justify-between items-center mb-2">
@@ -77,7 +89,8 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
             <CollegeBox key={index} name={college} />
           ))}
           </div>
-          <button className="border-4 border-gray-400 border-dashed rounded-md text-gray-400 text-3xl text-center p-2 w-full transition duration-300 ease-in-out hover:bg-gray-200 focus:outline-none" onClick={() => console.log('test')}>+</button>
+          <button className="border-4 border-gray-400 border-dashed rounded-md text-gray-400 text-3xl text-center p-2 w-full transition duration-300 ease-in-out hover:bg-gray-200 focus:outline-none" onClick={openModal}>+</button>
+          <AddCollegeModal isOpen={modalOpen} onClose={closeModal}></AddCollegeModal>
         </div>
       </div>
 
