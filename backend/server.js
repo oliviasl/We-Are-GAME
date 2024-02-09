@@ -267,20 +267,6 @@ app.get("/api/userByName", (req, res) => {
         });
 });
 
-// userByName
-app.post("/api/userByEmail", (req, res) => {
-  const { user_email } = req.body;
-  userController
-      .userByEmail(user_email)
-      .then((data) =>
-      res.status(200).json(data)
-      )
-      .catch((error) => {
-      console.error(error);
-      return res.status(500).json({ error });
-      });
-});
-
 // userBySport
 app.get("/api/userBySport", (req, res) => {
   const { sport } = req.body;
@@ -310,7 +296,7 @@ app.get("/api/userByMajor", (req, res) => {
 });
 
 // userByEmail
-app.get("/api/userByEmail", (req, res) => {
+app.post("/api/userByEmail", (req, res) => {
   const { email } = req.body;
   userController 
     .userByEmail(email)

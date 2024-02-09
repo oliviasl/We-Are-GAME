@@ -41,7 +41,7 @@ const HomePage = () => {
 
     // duplicate email toast condition
     const userEmail = JSON.stringify({
-        user_email: email,
+        email: email,
     });
 
     const userEmailResponse = await fetch("/api/userByEmail", {
@@ -53,7 +53,7 @@ const HomePage = () => {
       body: userEmail,
     });
     const userEmailStatus = await userEmailResponse.json();
-    console.log(userEmailStatus);
+
     if (userEmailStatus.length > 0) {
       toast(email + " is already in use.", {
         className: "border-l-8 border-semantic-warning"
