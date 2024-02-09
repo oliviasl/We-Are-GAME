@@ -3,9 +3,8 @@ import { Navbar } from "../layouts/Navbar";
 import StudentDirectoryRow from "../components/StudentDirectoryRow";
 
 const StudentDatabase = () => {
-
     //Table Data
-    const [users, setUsers] = useState<any[]>([]);
+    const [students, setStudents] = useState<any[]>([]);
 
     //Pagination States
     const [page, setPage] = useState(1);
@@ -14,8 +13,9 @@ const StudentDatabase = () => {
     const fetchApprovedUsers = useCallback(async () => {
         const pageBody = JSON.stringify({
             pageNumber: page,
+            fields: { userByName: "Matt" },
         });
-        const response = await fetch("/api/paginatedApprovedUsers", {
+        const response = await fetch("/api/paginatedUsersFiltered", {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
@@ -25,9 +25,11 @@ const StudentDatabase = () => {
         });
         const data = await response.json();
 
-        const { totalPages, approvedUsers } = data;
-        setUsers(approvedUsers);
-        setTotalPages(totalPages);
+        const { student } = data;
+        console.log(student);
+        if (student) {
+            setStudents(student);
+        }
     }, [page]);
 
     useEffect(() => {
@@ -59,27 +61,23 @@ const StudentDatabase = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {users.map((user) => {
+                            {students.map((student) => {
                                 return (
-                                    <StudentDirectoryRow 
-                                        name = {
-                                            user?.user_firstname + " " + user?.user_lastname
+                                    <StudentDirectoryRow
+                                        name={
+                                            student?.user_firstname +
+                                            " " +
+                                            student?.user_lastname
                                         }
-                                        major = {
-                                            user?.user_potential_major
-                                        }
-                                        sport = {
-                                            user?.user_sport1
-                                        } 
-                                        email = {
-                                            user?.user_email
-                                        }
+                                        major={student?.user_potential_major}
+                                        sport={student?.user_sport1}
+                                        email={student?.user_email}
                                     />
-                                )
+                                );
                             })}
                         </tbody>
                     </table>
-                    <div className="flex justify-start items-center gap-2 mt-16">
+                    {/* <div className="flex justify-start items-center gap-2 mt-16">
                         <button
                             disabled={page === 1}
                             className="relative h-8 max-h-[24px] w-8 max-w-[24px] select-none rounded-lg border border-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -138,25 +136,38 @@ const StudentDatabase = () => {
                                 </svg>
                             </span>
                         </button>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Search Component */}
                 <div className="w-1/4 pl-2">
                     <div className="font-bold text-2xl font-grotesk">
-                       Search & Filter
+                        Search & Filter
                     </div>
                     <div className="flex pt-5 items-center">
                         <div className="w-1/3  text-left font-normal">Name</div>
-                        <input className = 'border-2 border-black rounded w-2/3 h-9' type="text" />
+                        <input
+                            className="border-2 border-black rounded w-2/3 h-9"
+                            type="text"
+                        />
                     </div>
                     <div className="flex pt-5 items-center">
-                        <div className="w-1/3  text-left font-normal">Major</div>
-                        <input className = 'border-2 border-black rounded w-2/3 h-9' type="text" />
+                        <div className="w-1/3  text-left font-normal">
+                            Major
+                        </div>
+                        <input
+                            className="border-2 border-black rounded w-2/3 h-9"
+                            type="text"
+                        />
                     </div>
                     <div className="flex pt-5 pb-3 items-center">
-                        <div className="w-1/3  text-left font-normal">Sport</div>
-                        <input className = 'border-2 border-black rounded w-2/3 h-9' type="text" />
+                        <div className="w-1/3  text-left font-normal">
+                            Sport
+                        </div>
+                        <input
+                            className="border-2 border-black rounded w-2/3 h-9"
+                            type="text"
+                        />
                     </div>
                     <div className="flex items-center justify-start mt-3 ">
                         {/* Auth Wrapper */}

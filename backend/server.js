@@ -393,11 +393,22 @@ app.get("/api/assignmentsByUserId", (req, res) => {
     });
 });
 
-// collegesFiltered
-app.get("/api/usersFiltered", (req, res) => {
+// usersFiltered
+app.post("/api/usersFiltered", (req, res) => {
   const { fields } = req.body;
   userController
     .usersFiltered(fields)
+    .then((data)=>
+      res.status(200).json(data)
+    );
+});
+
+// paginatedUsersFiltered
+app.post("/api/paginatedUsersFiltered", (req, res) => {
+  const { fields, pageNumber } = req.body;
+
+  userController
+    .paginatedUsersFiltered(fields, pageNumber)
     .then((data)=>
       res.status(200).json(data)
     );
