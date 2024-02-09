@@ -31,6 +31,14 @@ const HomePage = () => {
       return;
     }
     
+    // matching passwords toast condition
+    if (password !== verifyPassword) {
+      toast("Please make sure your passwords match.", {
+        className: "border-l-8 border-semantic-warning"
+      });
+      return;
+    }
+
     // duplicate email toast condition
     const userEmail = JSON.stringify({
         user_email: email,
@@ -45,19 +53,11 @@ const HomePage = () => {
       body: userEmail,
     });
     const userEmailStatus = await userEmailResponse.json();
-
+    console.log(userEmailStatus);
     if (userEmailStatus.length > 0) {
       toast(email + " is already in use.", {
         className: "border-l-8 border-semantic-warning"
       });
-    }
-
-    // matching passwords toast condition
-    if (password !== verifyPassword) {
-      toast("Please make sure your passwords match.", {
-        className: "border-l-8 border-semantic-warning"
-      });
-      return;
     }
 
     const userBody = JSON.stringify({
@@ -79,7 +79,7 @@ const HomePage = () => {
     });
     const status = await response.json();
     console.log(status);
-    setTabs("Logged in and user created");
+    console.log("Logged in and user created");
   };
 
   const authUser = async () => {
