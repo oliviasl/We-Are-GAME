@@ -299,7 +299,7 @@ app.get("/api/userBySport", (req, res) => {
 // userByEmail
 app.post("/api/userByEmail", (req, res) => {
   const { user_email } = req.body;
-  console.log(user_email);
+
   userController 
     .userByEmail(user_email)
     .then((data) =>

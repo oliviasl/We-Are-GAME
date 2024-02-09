@@ -99,7 +99,6 @@ const HomePage = () => {
         user_lastname: lastName,
       },
     });
-
     const response = await fetch("/api/createUser", {
       method: "post",
       headers: {
