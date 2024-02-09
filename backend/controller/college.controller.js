@@ -342,6 +342,25 @@ class collegeController {
         return result.rows;
     }
 
+    // paginated collegesFiltered
+    async paginatedCollegesFiltered(fields, pageNumber) {
+        // page size is 6
+        const PAGE_SIZE = 7;
+        const offset = (pageNumber - 1) * PAGE_SIZE;
+
+        console.log("fields", fields);
+        const result = await this.collegesFiltered(fields);
+        console.log("result", result);
+        const totalCount = result.length;
+        const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+        return {
+            totalPages: totalPages,
+            page: pageNumber,
+            colleges: result
+        };
+    }
+
 }
 
 module.exports = new collegeController();
