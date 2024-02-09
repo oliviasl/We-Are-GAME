@@ -302,6 +302,24 @@ class userController {
         }
     }
 
+    async userByEmail(email, directCall=true){
+        const queryStr = "SELECT * FROM master_users WHERE user_email = $1";
+        if (directCall) {
+            try {
+                const result = await db.query(
+                    queryStr + ";",
+                    [email]
+                );
+                return result.rows;
+            }
+            catch(error){
+                return error;
+            }
+        } else {
+            return [queryStr, [userId]];
+        }
+    }
+
     // assignmentsByUserId
     async assignmentsByUserId(userId){
         try {

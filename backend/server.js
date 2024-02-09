@@ -296,6 +296,21 @@ app.get("/api/userBySport", (req, res) => {
     });
 });
 
+// userByEmail
+app.post("/api/userByEmail", (req, res) => {
+  const { user_email } = req.body;
+  console.log(user_email);
+  userController 
+    .userByEmail(user_email)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
+
 // userByMajor
 app.get("/api/userByMajor", (req, res) => {
   const { major } = req.body;
