@@ -391,36 +391,41 @@ class userController {
         let wheres=[];
         console.log(fields);
         if("userByName" in fields && fields["userByName"]!=null && fields["userByName"]!=""){
-            wheres.push("(LOWER(user_firstname) LIKE LOWER("+fields["userByName"]+") OR LOWER(user_lastname) LIKE LOWER("+fields["userByName"]+"))");
+            wheres.push("(LOWER(user_firstname) LIKE LOWER('"+fields["userByName"]+"') OR LOWER(user_lastname) LIKE LOWER('"+fields["userByName"]+"'))");
         }
         if("userBySport" in fields && fields["userBySport"]!=null && fields["userBySport"]!=""){
-            wheres.push("(LOWER(user_sport1) LIKE LOWER("+fields["userBySport"]+") OR LOWER(user_sport2) LIKE LOWER("+fields["userBySport"]+"))");
+            wheres.push("(LOWER(user_sport1) LIKE LOWER('"+fields["userBySport"]+"') OR LOWER(user_sport2) LIKE LOWER('"+fields["userBySport"]+"'))");
         }
         if("userByMajor" in fields && fields["userByMajor"]!=null && fields["userByMajor"]!=""){
-            wheres.push("(LOWER(user_potential_major) LIKE LOWER("+fields["userByMajor"]+") OR LOWER(user_alt_major1) LIKE LOWER("+fields["userByMajor"]+") OR LOWER(user_alt_major2) LIKE LOWER("+fields["userByMajor"]+"))");
+            wheres.push("(LOWER(user_potential_major) LIKE LOWER('"+fields["userByMajor"]+"') OR LOWER(user_alt_major1) LIKE LOWER('"+fields["userByMajor"]+"') OR LOWER(user_alt_major2) LIKE LOWER('"+fields["userByMajor"]+"'))");
         }
 
         const sqlWhere=wheres.join(" AND ");
 
         const PAGE_SIZE = 6;
         const offset = (pageNumber - 1) * PAGE_SIZE;
-        const sqlStr = " LIMIT "+PAGE_SIZE+" OFFSET "+offset+" ORDER BY user_lastname ASC;";
+        const sqlStr = " ORDER BY user_lastname LIMIT "+PAGE_SIZE+" OFFSET "+offset+";";
 
         if(wheres.length!=0){
-            return query+" WHERE "+sqlWhere+sqlStr;
+            return [query+" WHERE "+sqlWhere+";", query+" WHERE "+sqlWhere+sqlStr];
         }
-        return query+sqlStr;
+        return [query+";", query+sqlStr];
     }
 
     async paginatedUsersFiltered(fields, pageNumber){
 
         // page size is 6
-        
-        console.log(this.sqlBuilderV2(fields, pageNumber));
-        let queryValues = await this.generateFilterQuery(fields);
-        
-        const result = await db.query(queryValues[0].join(''), queryValues[1]);
-        return result.rows;
+        const PAGE_SIZE = 6;
+
+        const [filteredUserQuery, filteredPaginatedUserQuery] = this.sqlBuilderV2(fields, pageNumber);
+
+        const filteredPaginatedUserResult = await db.query(filteredPaginatedUserQuery);
+        const filteredUserResult = await db.query(filteredUserQuery);
+
+        const totalCount = filteredUserResult.rows.length;
+        const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+        return {studentData: filteredPaginatedUserResult.rows, pageNumber: pageNumber, totalPages: totalPages};
     }
 
 }

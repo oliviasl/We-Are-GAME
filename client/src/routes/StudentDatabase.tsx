@@ -10,10 +10,24 @@ const StudentDatabase = () => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
+    //Search & Filter States
+    const [displayName, setDisplayName] = useState("");
+    const [filterName, setFilterName] = useState("");
+
+    const [displayMajor, setDisplayMajor] = useState("");
+    const [filterMajor, setFilterMajor] = useState("");
+
+    const [displaySport, setDisplaySport] = useState("");
+    const [filterSport, setFilterSport] = useState("");
+
     const fetchApprovedUsers = useCallback(async () => {
         const pageBody = JSON.stringify({
             pageNumber: page,
-            fields: { userByName: "Matt" },
+            fields: {
+                userByName: filterName,
+                userBySport: filterSport,
+                userByMajor: filterMajor,
+            },
         });
         const response = await fetch("/api/paginatedUsersFiltered", {
             method: "post",
@@ -25,12 +39,13 @@ const StudentDatabase = () => {
         });
         const data = await response.json();
 
-        const { student } = data;
-        console.log(student);
-        if (student) {
-            setStudents(student);
+        const { studentData, totalPages } = data;
+
+        if (studentData) {
+            setStudents(studentData);
+            setTotalPages(totalPages);
         }
-    }, [page]);
+    }, [page, filterName, filterSport, filterMajor]);
 
     useEffect(() => {
         fetchApprovedUsers();
@@ -40,7 +55,7 @@ const StudentDatabase = () => {
         <div>
             <Navbar />
             {/* View Wrapper */}
-            <div className="flex mx-20 mt-16">
+            <div className="flex mx-20 mt-16 gap-2">
                 {/* Table Wrapper */}
                 <div className="w-3/4">
                     <div className="font-bold text-5xl font-grotesk">
@@ -72,12 +87,13 @@ const StudentDatabase = () => {
                                         major={student?.user_potential_major}
                                         sport={student?.user_sport1}
                                         email={student?.user_email}
+                                        key={student?.user_email}
                                     />
                                 );
                             })}
                         </tbody>
                     </table>
-                    {/* <div className="flex justify-start items-center gap-2 mt-16">
+                    <div className="flex justify-start items-center gap-2 mt-16">
                         <button
                             disabled={page === 1}
                             className="relative h-8 max-h-[24px] w-8 max-w-[24px] select-none rounded-lg border border-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -136,7 +152,7 @@ const StudentDatabase = () => {
                                 </svg>
                             </span>
                         </button>
-                    </div> */}
+                    </div>
                 </div>
 
                 {/* Search Component */}
@@ -147,6 +163,10 @@ const StudentDatabase = () => {
                     <div className="flex pt-5 items-center">
                         <div className="w-1/3  text-left font-normal">Name</div>
                         <input
+                            value={displayName}
+                            onChange={(e) => {
+                                setDisplayName(e.target.value);
+                            }}
                             className="border-2 border-black rounded w-2/3 h-9"
                             type="text"
                         />
@@ -156,6 +176,10 @@ const StudentDatabase = () => {
                             Major
                         </div>
                         <input
+                            value={displayMajor}
+                            onChange={(e) => {
+                                setDisplayMajor(e.target.value);
+                            }}
                             className="border-2 border-black rounded w-2/3 h-9"
                             type="text"
                         />
@@ -165,13 +189,24 @@ const StudentDatabase = () => {
                             Sport
                         </div>
                         <input
+                            value={displaySport}
+                            onChange={(e) => {
+                                setDisplaySport(e.target.value);
+                            }}
                             className="border-2 border-black rounded w-2/3 h-9"
                             type="text"
                         />
                     </div>
                     <div className="flex items-center justify-start mt-3 ">
                         {/* Auth Wrapper */}
-                        <div className="w-28 h-9 cursor-pointer bg-brand-gray-20 text-white font-medium px-8 py-[5px] rounded">
+                        <div
+                            onClick={() => {
+                                setFilterName(displayName);
+                                setFilterSport(displaySport);
+                                setFilterMajor(displayMajor);
+                            }}
+                            className="w-28 h-9 cursor-pointer bg-brand-gray-20 text-white font-medium px-8 py-[5px] rounded"
+                        >
                             Search
                         </div>
                     </div>
