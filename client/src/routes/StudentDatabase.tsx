@@ -204,6 +204,7 @@ const StudentDatabase = () => {
                                 setFilterName(displayName);
                                 setFilterSport(displaySport);
                                 setFilterMajor(displayMajor);
+                                setPage(1);
                             }}
                             className="w-28 h-9 cursor-pointer bg-brand-gray-20 text-white font-medium px-8 py-[5px] rounded"
                         >

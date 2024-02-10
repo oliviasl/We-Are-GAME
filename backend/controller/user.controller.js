@@ -389,7 +389,7 @@ class userController {
       
         let query="SELECT * FROM master_users";
         let wheres=[];
-        console.log(fields);
+
         if("userByName" in fields && fields["userByName"]!=null && fields["userByName"]!=""){
             wheres.push("(LOWER(user_firstname) LIKE LOWER('"+fields["userByName"]+"') OR LOWER(user_lastname) LIKE LOWER('"+fields["userByName"]+"'))");
         }
