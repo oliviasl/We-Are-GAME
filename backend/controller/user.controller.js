@@ -416,7 +416,7 @@ class userController {
 
         // page size is 6
         const PAGE_SIZE = 6;
-
+        // Make one not paginated to calculate total pages
         const [filteredUserQuery, filteredPaginatedUserQuery] = this.sqlBuilderV2(fields, pageNumber);
 
         const filteredPaginatedUserResult = await db.query(filteredPaginatedUserQuery);

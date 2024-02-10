@@ -41,7 +41,7 @@ const StudentDatabase = () => {
 
         const { studentData, totalPages } = data;
 
-        if (studentData) {
+        if (data) {
             setStudents(studentData);
             setTotalPages(totalPages);
         }
