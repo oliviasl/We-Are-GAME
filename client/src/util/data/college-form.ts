@@ -481,6 +481,7 @@ const addlNotes: CollegeFormSection = {
   fields: [
     {
       type: "longform",
+      title: "Additional Notes",
       id: "extra_notes"
     }
   ]

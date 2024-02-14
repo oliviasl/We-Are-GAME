@@ -22,6 +22,7 @@ type TextField = {
 
 type LongformField = {
   type: "longform";
+  title: string;
   id: string;
 };
 

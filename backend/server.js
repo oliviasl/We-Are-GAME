@@ -37,8 +37,8 @@ app.get("/api/collegeByName", (req, res) => {
 // collegeById
 // returns data of college by collegeId
 
-app.get("/api/collegeById", (req, res) => {
-  const { collegeId } = req.body;
+app.get("/api/collegeById/:collegeId", (req, res) => {
+  const {collegeId} = req.params;
   collegeController
     .collegeById(collegeId)
     .then((data) =>
@@ -158,10 +158,14 @@ app.post("/api/createCollege", (req, res) => {
 
 // editCollege
 // edits an existing college entry with passed in params
-app.put("/api/editCollege", (req, res) => {
+app.post("/api/editCollege", (req, res) => {
   const { collegeId, newFields } = req.body;
   collegeController.editCollege(newFields, collegeId).then((data) => {
     return res.status(200).json(data);
+  })
+  .catch((error) => {
+    console.error(error);
+    return res.status(500).json({ error });
   });
 });
 
