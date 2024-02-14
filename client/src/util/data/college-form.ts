@@ -22,7 +22,8 @@ const basicInformation: CollegeFormSection = {
     {
       type: "url",
       title: "General University Website",
-      id: "general_web_addr"
+      id: "general_web_addr",
+      required: true
     },
     {
       type: "url",
