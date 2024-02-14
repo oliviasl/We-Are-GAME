@@ -7,6 +7,7 @@ import CollegeDatabase from "./routes/CollegeDatabase";
 import StudentProfileRoute from "./routes/StudentProfile";
 import {ThemeProvider} from "@material-tailwind/react";
 import theme from "./util/theme";
+import CollegeProfile from "./routes/CollegeProfile";
 
 function App() {
   return (
@@ -18,7 +19,10 @@ function App() {
             <Route path="/add-college" element={<AddCollege/>}/>
             <Route path="/authenticate" element={<AuthenticateUsers/>}/>
             <Route path="/college-database" element={<CollegeDatabase/>}/>
-            <Route path="/student-profile" element={<StudentProfileRoute />} />
+            <Route path="/student-profile" element={<StudentProfileRoute/>}/>
+            <Route path="/college-profile">
+              <Route path=":id" element={<CollegeProfile/>}/>
+            </Route>
           </Routes>
         </Router>
       </div>
