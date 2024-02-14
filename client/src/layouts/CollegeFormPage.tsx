@@ -19,7 +19,6 @@ export default function CollegeFormPage({data, onSubmit}: { data?: any, onSubmit
   }
 
   return <div className="h-screen w-screen flex flex-col items-center">
-    <Navbar/>
     <div className="max-w-6xl w-full">
       <CollegeProgressBar activeStep={activeStep}/>
     </div>

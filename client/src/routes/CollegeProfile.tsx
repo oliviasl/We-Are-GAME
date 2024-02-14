@@ -27,7 +27,6 @@ const CollegeProfile = () => {
   if (!data) return null;
 
   return <div className="h-screen w-screen flex flex-col items-center">
-    <Navbar/>
     <main className={"w-full px-20 pb-20"}>
       <header className={"flex space-x-8 w-full py-12"}>
         <div className={"flex-1 space-y-4"}>

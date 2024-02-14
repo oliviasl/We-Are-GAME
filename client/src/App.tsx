@@ -10,12 +10,13 @@ import CollegeProfile from "./routes/CollegeProfile";
 import EditCollege from "./routes/EditCollege";
 import {ThemeProvider} from "@material-tailwind/react";
 import theme from "./util/theme";
-
+import { Navbar } from "./layouts/Navbar";
 
 function App() {
   return (
     <ThemeProvider value={theme}>
       <div>
+        <Navbar/>
         <Router>
           <Routes>
             <Route path="/" element={<HomePage/>}/>

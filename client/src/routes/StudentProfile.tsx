@@ -72,7 +72,6 @@ const StudentProfileRoute = () => {
   
   return (
     <div className="">
-      <Navbar />
       {<StudentProfile studentData={studentData} />}
     </div>
   );

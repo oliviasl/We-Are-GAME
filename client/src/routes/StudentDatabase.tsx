@@ -53,7 +53,6 @@ const StudentDatabase = () => {
 
     return (
         <div>
-            <Navbar />
             {/* View Wrapper */}
             <div className="flex mx-20 mt-16 gap-2">
                 {/* Table Wrapper */}

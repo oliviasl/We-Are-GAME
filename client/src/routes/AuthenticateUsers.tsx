@@ -65,7 +65,6 @@ const AuthenticateUsers = () => {
 
     return (
         <div>
-            <Navbar />
             <div className="mx-20 mt-16">
                 <div className="font-bold text-5xl font-grotesk">
                     Authentication
