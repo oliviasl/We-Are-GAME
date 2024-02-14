@@ -1,4 +1,3 @@
-import {Navbar} from "../layouts/Navbar";
 import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {College} from "../util/types/college";

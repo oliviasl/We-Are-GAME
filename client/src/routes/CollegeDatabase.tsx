@@ -1,7 +1,3 @@
-import { Button } from "@material-tailwind/react";
-import { useState } from "react";
-import { CollegeProgressBar } from "../components/CollegeProgressBar";
-import { Navbar } from "../layouts/Navbar";
 import CollegeFilters from "../layouts/CollegeFilters";
 import CollegeSearchResults from "../layouts/CollegeSearchResults";
 import CollegeUpdateDatabase from "../layouts/CollegeUpdateDatabase";

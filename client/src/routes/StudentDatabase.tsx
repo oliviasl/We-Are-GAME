@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Navbar } from "../layouts/Navbar";
 import StudentDirectoryRow from "../components/StudentDirectoryRow";
 
 const StudentDatabase = () => {

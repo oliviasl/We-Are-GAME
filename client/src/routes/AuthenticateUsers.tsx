@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Navbar } from "../layouts/Navbar";
 import AuthUserRow from "../components/AuthUserRow";
 
 const AuthenticateUsers = () => {

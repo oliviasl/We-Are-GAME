@@ -1,7 +1,6 @@
 import { useState } from "react";
 import clsx from "clsx";
 import { useCookies } from 'react-cookie';
-import { Navbar } from "../layouts/Navbar";
 import { School, Users, BookUser, SquareUser } from "lucide-react";
 import HomePageLinks from "../layouts/HomePageLinks";
 import { ToastContainer, toast } from 'react-toastify';
