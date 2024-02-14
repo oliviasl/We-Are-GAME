@@ -22,7 +22,6 @@ const createZodField = (field: CollegeFormField) => {
         .refine((data) => !field.required || !isNaN(data), {
           message: "Field is required",
         })
-        .transform((v) => field.percentage ? v / 100 : v)
         .refine(
           (data) => isNaN(data) || typeof field.min === "undefined" || data >= field.min!,
           {message: `Must be more than ${field.min}`},

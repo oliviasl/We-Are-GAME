@@ -257,47 +257,65 @@ const enrollmentStats: CollegeFormSection = {
           type: "number",
           title: "White",
           id: "race_white",
-          percentage: true
+          percentage: true,
+          min: 0,
+          max: 100
         }, {
           type: "number",
           title: "Black",
           id: "race_black",
-          percentage: true
+          percentage: true,
+          min: 0,
+          max: 100
         }, {
           type: "number",
           title: "Hispanic",
           id: "race_hispanic",
-          percentage: true
+          percentage: true,
+          min: 0,
+          max: 100
         }, {
           type: "number",
           title: "Asian",
           id: "race_asian",
-          percentage: true
+          percentage: true,
+          min: 0,
+          max: 100
         }, {
           type: "number",
           title: "Pacific Islander",
           id: "race_pacific_islander",
-          percentage: true
+          percentage: true,
+          min: 0,
+          max: 100
         }, {
           type: "number",
           title: "Native American",
           id: "race_native_american",
-          percentage: true
+          percentage: true,
+          min: 0,
+          max: 100
         }, {
           type: "number",
           title: "Two or More",
           id: "race_two_or_more",
-          percentage: true
+          percentage: true,
+          min: 0,
+          max: 100
         }, {
           type: "number",
           title: "International",
           id: "race_international",
-          percentage: true
+          percentage: true,
+          min: 0,
+          max: 100
         }, {
           type: "number",
           title: "Other",
           id: "race_other",
-          percentage: true
+          percentage: true,
+          min: 0,
+          max: 100
         },
       ]
     }, {
@@ -313,12 +331,16 @@ const enrollmentStats: CollegeFormSection = {
           type: "number",
           title: "Male",
           id: "gender_male",
-          percentage: true
+          percentage: true,
+          min: 0,
+          max: 100
         }, {
           type: "number",
           title: "Female",
           id: "gender_female",
-          percentage: true
+          percentage: true,
+          min: 0,
+          max: 100
         },
       ]
     }, {
@@ -330,19 +352,25 @@ const enrollmentStats: CollegeFormSection = {
       title: "First Year Retention (%)",
       id: "first_year_retention_rate",
       half_width: true,
-      percentage: true
+      percentage: true,
+      min: 0,
+      max: 100
     }, {
       type: "number",
       title: "First Year Transfer (%)",
       id: "first_year_transfer_rate",
       half_width: true,
-      percentage: true
+      percentage: true,
+      min: 0,
+      max: 100
     }, {
       type: "number",
       title: "First Year Graduation (%)",
       id: "first_year_grad_rate",
       half_width: true,
-      percentage: true
+      percentage: true,
+      min: 0,
+      max: 100
     }
   ]
 }
