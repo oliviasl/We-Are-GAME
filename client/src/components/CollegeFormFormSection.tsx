@@ -12,15 +12,27 @@ type CollegeFormFormSectionProps = {
   onBack: (() => void) | undefined;
   onNext: (data: any) => void;
   isLastTab: boolean;
+  data?: any;
 }
 
-export const CollegeFormFormSection = ({section, schema, onBack, onNext, isLastTab}: CollegeFormFormSectionProps) => {
-  const form = useForm<z.infer<typeof schema>>({resolver: zodResolver(schema)});
+
+export const CollegeFormFormSection = ({
+  section,
+  schema,
+  onBack,
+  onNext,
+  isLastTab,
+  data,
+}: CollegeFormFormSectionProps) => {
+  const form = useForm<z.infer<typeof schema>>({
+    resolver: zodResolver(schema),
+    defaultValues: data
+  });
 
   useEffect(() => {
     // no-op effect to trigger re-render on errors
   }, [form.formState.errors])
-  
+
   return <>
     <Typography variant={"h3"}>{section.title}</Typography>
     <form onSubmit={form.handleSubmit(onNext)} className="space-y-8">
