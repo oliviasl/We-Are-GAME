@@ -26,7 +26,6 @@ export function Navbar() {
         <div className="hover:text-brand-green-45 text-sm"><a href='/#'>College Directory</a></div>
         <div className="hover:text-brand-green-45 text-sm"><a href='/#'>Mentor Directory</a></div>
         <div className="hover:text-brand-green-45 text-sm"><a href='/#'>Student Directory</a></div>
-
         {userState === 3 ? (
           <div className="hover:text-brand-green-45 text-sm"><a href='/authenticate'>Authenticate Users</a></div>
         ) : (

@@ -4,10 +4,13 @@ import AddCollege from "./routes/AddCollege";
 import HomePage from "./routes/HomePage";
 import AuthenticateUsers from "./routes/AuthenticateUsers";
 import CollegeDatabase from "./routes/CollegeDatabase";
+import StudentDatabase from "./routes/StudentDatabase";
 import StudentProfileRoute from "./routes/StudentProfile";
+import CollegeProfile from "./routes/CollegeProfile";
+import EditCollege from "./routes/EditCollege";
 import {ThemeProvider} from "@material-tailwind/react";
 import theme from "./util/theme";
-import CollegeProfile from "./routes/CollegeProfile";
+
 
 function App() {
   return (
@@ -17,12 +20,16 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage/>}/>
             <Route path="/add-college" element={<AddCollege/>}/>
+            <Route path="/edit-college">
+              <Route path=":id" element={<EditCollege/>}/>
+            </Route>
             <Route path="/authenticate" element={<AuthenticateUsers/>}/>
             <Route path="/college-database" element={<CollegeDatabase/>}/>
             <Route path="/student-profile" element={<StudentProfileRoute/>}/>
             <Route path="/college-profile">
               <Route path=":id" element={<CollegeProfile/>}/>
             </Route>
+            <Route path="/student-database" element={<StudentDatabase/>}/>
           </Routes>
         </Router>
       </div>

@@ -8,24 +8,40 @@ const createZodField = (field: CollegeFormField) => {
     case "url":
     case "date":
     case "longform":
-      return z.string().refine((data) => !field.required || data.trim() !== '', {
-        message: "Field is required",
-      });
+      return z
+        .string()
+        .optional()
+        .refine((data) => !field.required || (data || "").trim() !== "", {
+          message: "Field is required",
+        })
+        .transform((v) => (v === "" && field.type === "date") ? null : v);
     case "number":
-      return z.string().transform(v => parseInt(v, 10)).refine((data) => !field.required || !isNaN(data), {
-        message: "Field must be a number",
-      });
+      return z
+        .string()
+        .transform((v) => parseInt(v, 10))
+        .refine((data) => !field.required || !isNaN(data), {
+          message: "Field is required",
+        })
+        .refine(
+          (data) => isNaN(data) || typeof field.min === "undefined" || data >= field.min!,
+          {message: `Must be more than ${field.min}`},
+        )
+        .refine(
+          (data) => isNaN(data) || typeof field.max === "undefined" || data <= field.max!,
+          {message: `Must be less than ${field.max}`},
+        );
     default:
       return z.unknown(); // You can customize this for other field types
   }
 };
 
+
 const processFields = (fields: (CategoryField | CollegeFormField)[]) => {
-  const zodFields: Record<string, ReturnType<typeof createZodField>> = {};
+  let zodFields: Record<string, ReturnType<typeof createZodField>> = {};
 
   fields.forEach((field) => {
     if (field.type === "category") {
-      processFields(field.fields);
+      zodFields = {...zodFields, ...processFields(field.fields)};
     } else {
       zodFields[field.id] = createZodField(field)
     }

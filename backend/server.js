@@ -158,10 +158,14 @@ app.post("/api/createCollege", (req, res) => {
 
 // editCollege
 // edits an existing college entry with passed in params
-app.put("/api/editCollege", (req, res) => {
+app.post("/api/editCollege", (req, res) => {
   const { collegeId, newFields } = req.body;
   collegeController.editCollege(newFields, collegeId).then((data) => {
     return res.status(200).json(data);
+  })
+  .catch((error) => {
+    console.error(error);
+    return res.status(500).json({ error });
   });
 });
 
@@ -235,6 +239,17 @@ app.get("/api/allUsers", (req, res) => {
   userController
     .allUsers()
     .then((data) =>
+      res.status(200).json(data)
+    );
+});
+
+// paginatedApprovedUsers
+app.post("/api/paginatedApprovedUsers", (req, res) => {
+  const { pageNumber } = req.body;
+
+  userController
+    .paginatedApprovedUsers(pageNumber)
+    .then((data)=>
       res.status(200).json(data)
     );
 });
@@ -423,11 +438,22 @@ app.get("/api/assignmentsByUserId", (req, res) => {
     });
 });
 
-// collegesFiltered
-app.get("/api/usersFiltered", (req, res) => {
+// usersFiltered
+app.post("/api/usersFiltered", (req, res) => {
   const { fields } = req.body;
   userController
     .usersFiltered(fields)
+    .then((data)=>
+      res.status(200).json(data)
+    );
+});
+
+// paginatedUsersFiltered
+app.post("/api/paginatedUsersFiltered", (req, res) => {
+  const { fields, pageNumber } = req.body;
+
+  userController
+    .paginatedUsersFiltered(fields, pageNumber)
     .then((data)=>
       res.status(200).json(data)
     );
