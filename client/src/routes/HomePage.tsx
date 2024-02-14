@@ -1,7 +1,6 @@
 import { useState } from "react";
 import clsx from "clsx";
 import { useCookies } from 'react-cookie';
-import { Navbar } from "../layouts/Navbar";
 import { School, Users, BookUser, SquareUser } from "lucide-react";
 import HomePageLinks from "../layouts/HomePageLinks";
 import { ToastContainer, toast } from 'react-toastify';
@@ -160,7 +159,6 @@ const HomePage = () => {
 
   return (
     <div>
-      <Navbar /> 
       {(cookies.user_id !== null && cookies.user_id > 0) ? (
         <div className="h-screen w-screen flex flex-col items-center">
           <h1 className="w-full p-14 pl-24 text-left text-4xl text-brand-black font-bold font-grotesk">

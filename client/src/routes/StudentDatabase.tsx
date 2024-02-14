@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Navbar } from "../layouts/Navbar";
 import StudentDirectoryRow from "../components/StudentDirectoryRow";
 
 const StudentDatabase = () => {
@@ -53,7 +52,6 @@ const StudentDatabase = () => {
 
     return (
         <div>
-            <Navbar />
             {/* View Wrapper */}
             <div className="flex mx-20 mt-16 gap-2">
                 {/* Table Wrapper */}
