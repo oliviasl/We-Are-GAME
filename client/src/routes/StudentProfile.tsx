@@ -1,6 +1,7 @@
 import StudentProfile from "../layouts/StudentProfile";
 import { Navbar } from "../layouts/Navbar";
 import React, { useEffect, useState, ElementType } from "react";
+import { CookiesProvider, useCookies } from "react-cookie";
 
 export interface studentData {
   user_id: number;
