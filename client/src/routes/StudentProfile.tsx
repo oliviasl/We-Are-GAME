@@ -164,6 +164,31 @@ const StudentProfileRoute = () => {
     }
   };
 
+  const handleAdd = async (collegeId: number) => {
+    try {
+      const response = await fetch('/api/createAssignment', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          userId: studentData.user_id,
+          collegeId: collegeId,
+        }),
+      });
+
+      if (response.ok) {
+        // fetchAssignments();
+        console.log('Assignment created');
+      } else {
+        console.error('Cannot create assignment');
+      }
+    } catch (error) {
+      console.error('Error creating assignment:', error);
+    }
+  };
+
   return (
     <div className="">
       <Navbar />
@@ -171,6 +196,7 @@ const StudentProfileRoute = () => {
         studentData={studentData}
         collegeAssignments={collegeAssignments}
         handleDelete={handleDelete}
+        handleAdd={handleAdd}
       />
     </div>
   );

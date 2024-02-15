@@ -9,9 +9,10 @@ interface StudentProfileProps {
   studentData: studentData;
   collegeAssignments: collegeAssignments[];
   handleDelete: (collegeId: number) => void;
+  handleAdd: (collegeId: number) => void;
 }
 
-const StudentProfile: React.FC<StudentProfileProps> = ({ studentData, collegeAssignments, handleDelete }) => {
+const StudentProfile: React.FC<StudentProfileProps> = ({ studentData, collegeAssignments, handleDelete, handleAdd }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   if (!studentData) {
@@ -101,7 +102,11 @@ const StudentProfile: React.FC<StudentProfileProps> = ({ studentData, collegeAss
           ))}
           </div>
           <button className="border-4 border-gray-400 border-dashed rounded-md text-gray-400 text-3xl text-center p-2 py-1 w-full transition duration-300 ease-in-out hover:bg-brand-blue-95 hover:border-brand-blue-95 hover:text-white focus:outline-none" onClick={openModal}>+</button>
-          <AddCollegeModal isOpen={modalOpen} onClose={closeModal}></AddCollegeModal>
+          <AddCollegeModal
+            isOpen={modalOpen}
+            onClose={closeModal}
+            onAdd={handleAdd} 
+          />
         </div>
       </div>
 

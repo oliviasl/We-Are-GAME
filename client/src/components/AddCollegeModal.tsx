@@ -7,15 +7,15 @@ Modal.setAppElement(appElement);
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onAdd: (collegeId: number) => void;
 }
-
 
 interface CollegeData {
   college_id: number;
   college_name: string;
 }
 
-const AddCollegeModal: React.FC<ModalProps> = ({ isOpen, onClose}) => {
+const AddCollegeModal: React.FC<ModalProps> = ({ isOpen, onClose, onAdd}) => {
   const [input, setInput] = useState("");
   const [searchResults, setSearchResults] = useState<CollegeData[]>([]);
 
@@ -89,7 +89,7 @@ const AddCollegeModal: React.FC<ModalProps> = ({ isOpen, onClose}) => {
                 </div>
                 <button
                   className=" bg-gray-300 px-3 py-0.5 text-xs rounded-sm border-black border-1"
-                  onClick={() => console.log("hey")}>
+                  onClick={() => onAdd(result.college_id)}>
                   Add
                 </button>
               </div>
