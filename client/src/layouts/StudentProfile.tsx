@@ -5,7 +5,13 @@ import {studentData, collegeAssignments} from "../routes/StudentProfile";
 import Pencil from "../components/Pencil";
 import AddCollegeModal from "../components/AddCollegeModal";
 
-const StudentProfile = ({ studentData, collegeAssignments }: { studentData: studentData, collegeAssignments: collegeAssignments[] }) => {
+interface StudentProfileProps {
+  studentData: studentData;
+  collegeAssignments: collegeAssignments[];
+  handleDelete: (collegeId: number) => void;
+}
+
+const StudentProfile: React.FC<StudentProfileProps> = ({ studentData, collegeAssignments, handleDelete }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   if (!studentData) {
@@ -21,30 +27,6 @@ const StudentProfile = ({ studentData, collegeAssignments }: { studentData: stud
 
   const capFirstLetter = (str: string): string => {
     return str.replace(/\b\w/g, (match: string) => match.toUpperCase());
-  };
-
-  const handleDelete = async (collegeId: number) => {
-    try {
-      const response = await fetch('/api/deleteAssignment', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          userId: studentData.user_id,
-          collegeId: collegeId,
-        }),
-      });
-
-      if (response.ok) {
-        console.log('Assignment deleted');
-      } else {
-        console.error('Cannot delete assignment');
-      }
-    } catch (error) {
-      console.error('Error deleting assignment:', error);
-    }
   };
 
   const personalTitles: Record<string, string> = {

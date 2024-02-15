@@ -102,32 +102,30 @@ const StudentProfileRoute = () => {
 
         const assignmentsData = await assignmentsResponse.json();        
         const collegeNamesPromises = (assignmentsData as collegeAssignments[]).map(async (assignment: collegeAssignments) => {
-          const collegeId = assignment.college_id;
+        const collegeId = assignment.college_id;
         
-          const collegeResponse = await fetch("/api/collegeById", {
-            method: "post",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify({
-              userId: userId,
-              collegeId: collegeId,
-            }),
-          });
-        
-          const collegeData = await collegeResponse.json();
-          return {
-            assignment_id: assignment.assignment_id,
-            college_id: assignment.college_id,
-            user_id: assignment.user_id,
-            college_name: collegeData[0]?.college_name || "College unknown",
+        const collegeResponse = await fetch("/api/collegeById", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            userId: userId,
+            collegeId: collegeId,
+          }),
+        });
+      
+        const collegeData = await collegeResponse.json();
+        return {
+          assignment_id: assignment.assignment_id,
+          college_id: assignment.college_id,
+          user_id: assignment.user_id,
+          college_name: collegeData[0]?.college_name || "College unknown",
           };
         });
         
         const resolvedCollegeNames = await Promise.all(collegeNamesPromises);
-        console.log("Resolved names:", resolvedCollegeNames);
-
         setCollegeAssignments(resolvedCollegeNames);
 
       } catch (error) {
@@ -139,10 +137,41 @@ const StudentProfileRoute = () => {
     fetchAssignments();
   }, [userId]);
 
+  const handleDelete = async (collegeId: number) => {
+    try {
+      const response = await fetch('/api/deleteAssignment', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          userId: studentData.user_id,
+          collegeId: collegeId,
+        }),
+      });
+
+      if (response.ok) {
+        setCollegeAssignments(prevCollegeAssignments =>
+          prevCollegeAssignments.filter(assignment => assignment.college_id !== collegeId)
+        );
+        console.log('Assignment deleted');
+      } else {
+        console.error('Cannot delete assignment');
+      }
+    } catch (error) {
+      console.error('Error deleting assignment:', error);
+    }
+  };
+
   return (
     <div className="">
       <Navbar />
-      {<StudentProfile studentData={studentData} collegeAssignments={collegeAssignments} />}
+      <StudentProfile
+        studentData={studentData}
+        collegeAssignments={collegeAssignments}
+        handleDelete={handleDelete}
+      />
     </div>
   );
 };
