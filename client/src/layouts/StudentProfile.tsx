@@ -1,11 +1,11 @@
 import React, { useEffect, useState, ElementType } from "react";
 import ProfileBox from "../components/ProfileBox";
 import CollegeBox from "../components/CollegeBox";
-import {studentData} from "../routes/StudentProfile";
+import {studentData, collegeAssignments} from "../routes/StudentProfile";
 import Pencil from "../components/Pencil";
 import AddCollegeModal from "../components/AddCollegeModal";
 
-const StudentProfile = ({ studentData }: { studentData: studentData }) => {
+const StudentProfile = ({ studentData, collegeAssignments }: { studentData: studentData, collegeAssignments: collegeAssignments[] }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   if (!studentData) {
@@ -61,7 +61,7 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
   ];
 
   return (
-    <div className="grid grid-cols-3 gap-4 m-auto mx-20 my-10 font-circular-std leading-none">
+    <div className="grid grid-cols-3 gap-4 m-auto mx-20 my-10 mb-32 font-circular-std leading-none">
       {/* Username/Grad year */}
       <div className='col-span-2 order-1'>
         <div className="bg-brand-gray-20 rounded-t-md text-brand-white flex p-4 items-center">
@@ -85,8 +85,8 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
             <div className="px-1 pb-1" ><Pencil fill="#B3B3B3" /></div>
           </div>
           <div>
-          {studentData.colleges.map((college, index) => (
-            <CollegeBox key={index} name={college} />
+          {collegeAssignments.map((assignment) => (
+            <CollegeBox key={assignment.college_id} name={assignment.college_name} />
           ))}
           </div>
           <button className="border-4 border-gray-400 border-dashed rounded-md text-gray-400 text-3xl text-center p-2 py-1 w-full transition duration-300 ease-in-out hover:bg-brand-blue-95 hover:border-brand-blue-95 hover:text-white focus:outline-none" onClick={openModal}>+</button>
