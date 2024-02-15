@@ -23,6 +23,30 @@ const StudentProfile = ({ studentData, collegeAssignments }: { studentData: stud
     return str.replace(/\b\w/g, (match: string) => match.toUpperCase());
   };
 
+  const handleDelete = async (collegeId: number) => {
+    try {
+      const response = await fetch('/api/deleteAssignment', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          userId: studentData.user_id,
+          collegeId: collegeId,
+        }),
+      });
+
+      if (response.ok) {
+        console.log('Assignment deleted');
+      } else {
+        console.error('Cannot delete assignment');
+      }
+    } catch (error) {
+      console.error('Error deleting assignment:', error);
+    }
+  };
+
   const personalTitles: Record<string, string> = {
     user_grad_year: "Graduation Year",
     user_phone: "Phone Number",
@@ -86,7 +110,12 @@ const StudentProfile = ({ studentData, collegeAssignments }: { studentData: stud
           </div>
           <div>
           {collegeAssignments.map((assignment) => (
-            <CollegeBox key={assignment.college_id} name={assignment.college_name} />
+            <CollegeBox 
+              key={assignment.college_id}
+              name={assignment.college_name}
+              college_id={assignment.college_id}
+              onDelete={() => handleDelete(assignment.college_id)}
+            />
           ))}
           </div>
           <button className="border-4 border-gray-400 border-dashed rounded-md text-gray-400 text-3xl text-center p-2 py-1 w-full transition duration-300 ease-in-out hover:bg-brand-blue-95 hover:border-brand-blue-95 hover:text-white focus:outline-none" onClick={openModal}>+</button>

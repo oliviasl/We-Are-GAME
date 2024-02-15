@@ -3,6 +3,7 @@ import { Navbar } from "../layouts/Navbar";
 import React, { useEffect, useState, ElementType } from "react";
 
 export interface studentData {
+  user_id: number;
   user_email: string;
   user_firstname: string;
   user_lastname: string;
@@ -37,7 +38,6 @@ export interface studentData {
   user_notes: string;
 
   user_grad_year:number;
-  // colleges:string[];
 
 }
 
@@ -55,7 +55,6 @@ const StudentProfileRoute = () => {
   let userId = 1;
 
   // REMOVE! hard coded for display purposes
-  // studentData.colleges = ["Univ. of Southern California", "Univ. of Michigan", "Univ. of California, Los Angeles"];
   studentData.user_grad_year = 2026;
   studentData.user_act_math = 36;
   studentData.user_act_science = 36;
