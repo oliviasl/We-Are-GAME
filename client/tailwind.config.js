@@ -31,7 +31,13 @@ module.exports = withMT({
       fontFamily: {
         'grotesk': ['Schibsted Grotesk', 'sans-serif'],
         'circular-std': ['Circular Std', 'sans-serif'],
-      }
+      },
+      borderWidth: {
+        '1': '1px',
+      },
+      padding: {
+        '0.5': '0.125rem',
+      },
     },
   },
   plugins: [],
