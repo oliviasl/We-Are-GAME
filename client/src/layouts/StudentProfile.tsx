@@ -88,7 +88,7 @@ const StudentProfile: React.FC<StudentProfileProps> = ({ studentData, collegeAss
         <div className="p-4 ">
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-md mb-2">Colleges</h2>
-            <div className="px-1 pb-1" ><Pencil fill="#B3B3B3" /></div>
+            <div className="px-1 pb-1" ><Pencil fill="#B3B3B3" onClick={openModal} /></div>
           </div>
           <div>
           {collegeAssignments.map((assignment) => (
