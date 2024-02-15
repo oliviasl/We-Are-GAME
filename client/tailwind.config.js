@@ -9,6 +9,18 @@ module.exports = withMT({
   theme: {
     extend: {
       colors: {
+        yellow: {
+          50: "#FAF7EB",
+          100: "#F3EED2",
+          200: "#E8DDA6",
+          300: "#D8C669",
+          400: "#C6AE33",
+          500: "#A28E2A",
+          600: "#928026",
+          700: "#7E6E21",
+          800: "#695C1B",
+          900: "#494013",
+        },
         semantic: {
           'danger': '#7B2525',
           'warning': '#A3902B',

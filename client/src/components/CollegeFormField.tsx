@@ -32,9 +32,12 @@ export function CollegeFormFormField({form, field, isNested, errors}: CollegeFor
   if (field.type === "longform") {
     return <div>
       <Textarea
+        required={field.required ?? false}
         value={form.getValues()[field.id] as string}
         onChange={e => form.setValue(field.id, e.target.value)}
       />
+      {errors[field.id] &&
+        <p className={"text-xs text-red-500"}>{form.getFieldState(field.id).error?.message}</p>}
     </div>
   }
 

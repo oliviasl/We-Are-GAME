@@ -158,10 +158,14 @@ app.post("/api/createCollege", (req, res) => {
 
 // editCollege
 // edits an existing college entry with passed in params
-app.put("/api/editCollege", (req, res) => {
+app.post("/api/editCollege", (req, res) => {
   const { collegeId, newFields } = req.body;
   collegeController.editCollege(newFields, collegeId).then((data) => {
     return res.status(200).json(data);
+  })
+  .catch((error) => {
+    console.error(error);
+    return res.status(500).json({ error });
   });
 });
 
@@ -239,6 +243,17 @@ app.get("/api/allUsers", (req, res) => {
     );
 });
 
+// paginatedApprovedUsers
+app.post("/api/paginatedApprovedUsers", (req, res) => {
+  const { pageNumber } = req.body;
+
+  userController
+    .paginatedApprovedUsers(pageNumber)
+    .then((data)=>
+      res.status(200).json(data)
+    );
+});
+
 // userById
 app.post("/api/userById", (req, res) => {
   const { userId } = req.body;
@@ -273,6 +288,21 @@ app.get("/api/userBySport", (req, res) => {
   const { sport } = req.body;
   userController
     .userBySport(sport)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ error });
+    });
+});
+
+// userByEmail
+app.post("/api/userByEmail", (req, res) => {
+  const { user_email } = req.body;
+
+  userController 
+    .userByEmail(user_email)
     .then((data) =>
       res.status(200).json(data)
     )
@@ -340,6 +370,17 @@ app.get("/api/unapprovedUsers", (req, res) => {
     );
 });
 
+// paginatedUnapprovedUsers
+app.post("/api/paginatedUnapprovedUsers", (req, res) => {
+  const { pageNumber } = req.body;
+
+  userController
+    .paginatedUnapprovedUsers(pageNumber)
+    .then((data)=>
+      res.status(200).json(data)
+    );
+});
+
 // approveUser
 app.put("/api/approveUser", (req, res) => {
   const { userId } = req.body;
@@ -383,12 +424,22 @@ app.post("/api/assignmentsByUserId", (req, res) => {
     });
 });
 
-
-// collegesFiltered
-app.get("/api/usersFiltered", (req, res) => {
+// usersFiltered
+app.post("/api/usersFiltered", (req, res) => {
   const { fields } = req.body;
   userController
     .usersFiltered(fields)
+    .then((data)=>
+      res.status(200).json(data)
+    );
+});
+
+// paginatedUsersFiltered
+app.post("/api/paginatedUsersFiltered", (req, res) => {
+  const { fields, pageNumber } = req.body;
+
+  userController
+    .paginatedUsersFiltered(fields, pageNumber)
     .then((data)=>
       res.status(200).json(data)
     );

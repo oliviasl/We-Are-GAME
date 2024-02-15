@@ -87,6 +87,36 @@ class userController {
         }
     }
 
+    // paginatedApprovedUsers
+    async paginatedApprovedUsers(pageNumber) {
+        // page size is 6
+        const PAGE_SIZE = 6;
+        const offset = (pageNumber - 1) * PAGE_SIZE;
+
+        // changes: user_status.user_status = 0 --> user_status.user_status >= 0
+
+        // gets userID, email, first name, last name, major, and sport
+        const query = `SELECT master_users.user_id, master_users.user_email, master_users.user_firstname, master_users.user_lastname, master_users.user_potential_major, master_users.user_sport1
+        FROM master_users
+        JOIN user_status ON master_users.user_id = user_status.user_id
+        WHERE user_status.user_status >= 0
+        LIMIT $1 OFFSET $2
+        ORDER BY last_name ASC;`
+
+        const result = await db.query(query, [PAGE_SIZE, offset]);
+
+        const totalCount = (await this.allUsers()).length;
+        const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+        return {
+            totalPages: totalPages,
+            page: pageNumber,
+            approvedUsers: result.rows
+        };
+    }
+
+    
+
     // userBySport
     async userBySport(sport, directCall=true){
         const queryStr = "SELECT * FROM master_users WHERE LOWER(user_sport1) LIKE LOWER($1) OR LOWER(user_sport2) LIKE LOWER($1)";
@@ -232,6 +262,29 @@ class userController {
         return result.rows;
     }
 
+    // paginatedUnapprovedUsers
+    async paginatedUnapprovedUsers(pageNumber) {
+        // page size is 6
+        const PAGE_SIZE = 6;
+        const offset = (pageNumber - 1) * PAGE_SIZE;
+
+        const query = `SELECT master_users.user_id, master_users.user_email, master_users.user_firstname, master_users.user_lastname
+        FROM master_users
+        JOIN user_status ON master_users.user_id = user_status.user_id
+        WHERE user_status.user_status = 0
+        LIMIT $1 OFFSET $2;`
+        const result = await db.query(query, [PAGE_SIZE, offset]);
+
+        const totalCount = (await this.unapprovedUsers()).length;
+        const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+        return {
+            totalPages: totalPages,
+            page: pageNumber,
+            unapprovedUsers: result.rows
+        };
+    }
+
     // approveUser
     async approveUser(userId){
         try {
@@ -279,6 +332,24 @@ class userController {
         }
     }
 
+    async userByEmail(email, directCall=true){
+        const queryStr = "SELECT * FROM master_users WHERE user_email = $1";
+        if (directCall) {
+            try {
+                const result = await db.query(
+                    queryStr + ";",
+                    [email]
+                );
+                return result.rows;
+            }
+            catch(error){
+                return error;
+            }
+        } else {
+            return [queryStr, [userId]];
+        }
+    }
+
     // assignmentsByUserId
     async assignmentsByUserId(userId){
         try {
@@ -304,7 +375,7 @@ class userController {
         const filterFields = Object.keys(fields);
         let queryStr = [];
         let queryParams = [];
-        
+        console.log("-")
         // null field values mean no input is required for that filter
         filterFields.forEach((field, idx) => {
             if (fields[field] != null) {
@@ -337,7 +408,9 @@ class userController {
                 });
             }
         })
-    
+        console.log("queryStr",queryStr);
+        console.log("queryP",queryParams);
+        console.log("-");
         return [queryStr, queryParams];
     }
 
@@ -350,6 +423,50 @@ class userController {
         console.log(queryValues[1]);
         const result = await db.query(queryValues[0].join(''), queryValues[1]);
         return result.rows;
+    }
+
+    sqlBuilderV2(fields, pageNumber) {
+
+      
+        let query="SELECT * FROM master_users";
+        let wheres=[];
+
+        if("userByName" in fields && fields["userByName"]!=null && fields["userByName"]!=""){
+            wheres.push("(LOWER(user_firstname) LIKE LOWER('"+fields["userByName"]+"') OR LOWER(user_lastname) LIKE LOWER('"+fields["userByName"]+"'))");
+        }
+        if("userBySport" in fields && fields["userBySport"]!=null && fields["userBySport"]!=""){
+            wheres.push("(LOWER(user_sport1) LIKE LOWER('"+fields["userBySport"]+"') OR LOWER(user_sport2) LIKE LOWER('"+fields["userBySport"]+"'))");
+        }
+        if("userByMajor" in fields && fields["userByMajor"]!=null && fields["userByMajor"]!=""){
+            wheres.push("(LOWER(user_potential_major) LIKE LOWER('"+fields["userByMajor"]+"') OR LOWER(user_alt_major1) LIKE LOWER('"+fields["userByMajor"]+"') OR LOWER(user_alt_major2) LIKE LOWER('"+fields["userByMajor"]+"'))");
+        }
+
+        const sqlWhere=wheres.join(" AND ");
+
+        const PAGE_SIZE = 6;
+        const offset = (pageNumber - 1) * PAGE_SIZE;
+        const sqlStr = " ORDER BY user_lastname LIMIT "+PAGE_SIZE+" OFFSET "+offset+";";
+
+        if(wheres.length!=0){
+            return [query+" WHERE "+sqlWhere+";", query+" WHERE "+sqlWhere+sqlStr];
+        }
+        return [query+";", query+sqlStr];
+    }
+
+    async paginatedUsersFiltered(fields, pageNumber){
+
+        // page size is 6
+        const PAGE_SIZE = 6;
+        // Make one not paginated to calculate total pages
+        const [filteredUserQuery, filteredPaginatedUserQuery] = this.sqlBuilderV2(fields, pageNumber);
+
+        const filteredPaginatedUserResult = await db.query(filteredPaginatedUserQuery);
+        const filteredUserResult = await db.query(filteredUserQuery);
+
+        const totalCount = filteredUserResult.rows.length;
+        const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+        return {studentData: filteredPaginatedUserResult.rows, pageNumber: pageNumber, totalPages: totalPages};
     }
 
 }

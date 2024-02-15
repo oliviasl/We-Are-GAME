@@ -1,5 +1,4 @@
 import StudentProfile from "../layouts/StudentProfile";
-import { Navbar } from "../layouts/Navbar";
 import React, { useEffect, useState, ElementType } from "react";
 
 export interface studentData {
@@ -189,7 +188,6 @@ const StudentProfileRoute = () => {
 
   return (
     <div className="">
-      <Navbar />
       <StudentProfile
         studentData={studentData}
         collegeAssignments={collegeAssignments}

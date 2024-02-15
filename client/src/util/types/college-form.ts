@@ -9,6 +9,9 @@ type NumberField = {
   type: "number";
   title: string;
   id: string;
+  min?: number;
+  max?: number;
+  percentage?: boolean;
 };
 
 type TextField = {
@@ -19,6 +22,7 @@ type TextField = {
 
 type LongformField = {
   type: "longform";
+  title: string;
   id: string;
 };
 

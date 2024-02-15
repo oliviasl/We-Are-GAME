@@ -1,9 +1,10 @@
 import { useState } from "react";
 import clsx from "clsx";
 import { useCookies } from 'react-cookie';
-import { Navbar } from "../layouts/Navbar";
 import { School, Users, BookUser, SquareUser } from "lucide-react";
 import HomePageLinks from "../layouts/HomePageLinks";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const tempRouteInfo = [
   {
@@ -50,7 +51,45 @@ const HomePage = () => {
   };
 
   const createUser = async () => {
-    console.log("Would create a user");
+
+    // invalid email toast condition
+    if (!email.includes("@")) {
+      toast("Email format is invalid.", {
+        className: "border-l-8 border-semantic-warning"
+      });
+      return;
+    }
+
+    // matching passwords toast condition
+    if (password !== verifyPassword) {
+      toast("Please make sure your passwords match.", {
+        className: "border-l-8 border-semantic-warning"
+      });
+      return;
+    }
+
+    // duplicate email toast condition
+    const userEmail = JSON.stringify({
+      user_email: email,
+    });
+    
+    const userEmailResponse = await fetch("/api/userByEmail", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: userEmail,
+    });
+    const userEmailStatus = await userEmailResponse.json();
+
+    if (userEmailStatus.length > 0) {
+      toast(email + " is already in use.", {
+        className: "border-l-8 border-semantic-warning"
+      });
+      return;
+    }
+
     const userBody = JSON.stringify({
       userData: {
         user_email: email,
@@ -70,7 +109,8 @@ const HomePage = () => {
     const status = await response.json();
     console.log(status);
     //would put toast here
-    setTabs("Logged in and user created");
+    console.log("Logged in and user created");
+    setTabs("Login");
   };
 
 
@@ -82,7 +122,14 @@ const HomePage = () => {
     // user_status: (-1 = doesn't exist, 0 = unauthorized, 1 = student, 2 = mentor, 3 = admin)
     // user_firstname
 
-    console.log("Would login/auth a user");
+    // invalid email toast condition
+    if (!email.includes("@")) {
+      toast("Email format is invalid.", {
+        className: "border-l-8 border-semantic-warning"
+      });
+      return;
+    }
+
     const authBody =  JSON.stringify({
       email: email,
       password: password,
@@ -103,11 +150,15 @@ const HomePage = () => {
       setCookies('user_status', status[1], { path: '/' });
       setCookies('user_name', status[2], { path: '/' });
     }
+    else{
+      toast("You are not authorized.", {
+        className: "border-l-8 border-semantic-warning"
+      });
+    }
   };
 
   return (
     <div>
-      <Navbar /> 
       {(cookies.user_id !== null && cookies.user_id > 0) ? (
         <div className="h-screen w-screen flex flex-col items-center">
           <h1 className="w-full p-14 pl-24 text-left text-4xl text-brand-black font-bold font-grotesk">
@@ -275,6 +326,7 @@ const HomePage = () => {
           </div>
         </div> )
       }
+      <ToastContainer hideProgressBar={true} />
     </div>
   );
 };
