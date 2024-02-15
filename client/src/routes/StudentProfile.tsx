@@ -38,7 +38,6 @@ export interface studentData {
   user_notes: string;
 
   user_grad_year:number;
-
 }
 
 export interface collegeAssignments {
@@ -48,11 +47,60 @@ export interface collegeAssignments {
   college_name: string;
 }
 
+let userId = 1;
+
+
 const StudentProfileRoute = () => {
   const [studentData, setStudentData] = useState<studentData>({} as studentData);
   const [collegeAssignments, setCollegeAssignments] = useState<collegeAssignments[]>([]);
 
-  let userId = 1;
+  const fetchAssignments = async () => {
+    try {
+      const userData = JSON.stringify({
+        userId: userId
+      });
+
+      const assignmentsResponse = await fetch("/api/assignmentsByUserId", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: userData,
+      });
+
+      const assignmentsData = await assignmentsResponse.json();        
+      const collegeNamesPromises = (assignmentsData as collegeAssignments[]).map(async (assignment: collegeAssignments) => {
+      const collegeId = assignment.college_id;
+      
+      const collegeResponse = await fetch("/api/collegeById", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          userId: userId,
+          collegeId: collegeId,
+        }),
+      });
+    
+      const collegeData = await collegeResponse.json();
+      return {
+        assignment_id: assignment.assignment_id,
+        college_id: assignment.college_id,
+        user_id: assignment.user_id,
+        college_name: collegeData[0]?.college_name || "College unknown",
+        };
+      });
+      
+      const resolvedCollegeNames = await Promise.all(collegeNamesPromises);
+      setCollegeAssignments(resolvedCollegeNames);
+
+    } catch (error) {
+      console.error("Error fetching assignments data:", error);
+    }
+  };
 
   // REMOVE! hard coded for display purposes
   studentData.user_grad_year = 2026;
@@ -85,54 +133,6 @@ const StudentProfileRoute = () => {
       }
     };
 
-    const fetchAssignments = async () => {
-      try {
-        const userData = JSON.stringify({
-          userId: userId
-        });
-
-        const assignmentsResponse = await fetch("/api/assignmentsByUserId", {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: userData,
-        });
-
-        const assignmentsData = await assignmentsResponse.json();        
-        const collegeNamesPromises = (assignmentsData as collegeAssignments[]).map(async (assignment: collegeAssignments) => {
-        const collegeId = assignment.college_id;
-        
-        const collegeResponse = await fetch("/api/collegeById", {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            userId: userId,
-            collegeId: collegeId,
-          }),
-        });
-      
-        const collegeData = await collegeResponse.json();
-        return {
-          assignment_id: assignment.assignment_id,
-          college_id: assignment.college_id,
-          user_id: assignment.user_id,
-          college_name: collegeData[0]?.college_name || "College unknown",
-          };
-        });
-        
-        const resolvedCollegeNames = await Promise.all(collegeNamesPromises);
-        setCollegeAssignments(resolvedCollegeNames);
-
-      } catch (error) {
-        console.error("Error fetching assignments data:", error);
-      }
-    };
-
     fetchData();
     fetchAssignments();
   }, [userId]);
@@ -152,9 +152,7 @@ const StudentProfileRoute = () => {
       });
 
       if (response.ok) {
-        setCollegeAssignments(prevCollegeAssignments =>
-          prevCollegeAssignments.filter(assignment => assignment.college_id !== collegeId)
-        );
+        fetchAssignments();
         console.log('Assignment deleted');
       } else {
         console.error('Cannot delete assignment');
@@ -179,7 +177,7 @@ const StudentProfileRoute = () => {
       });
 
       if (response.ok) {
-        // fetchAssignments();
+        fetchAssignments();
         console.log('Assignment created');
       } else {
         console.error('Cannot create assignment');

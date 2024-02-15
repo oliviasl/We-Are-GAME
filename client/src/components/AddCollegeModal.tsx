@@ -89,7 +89,10 @@ const AddCollegeModal: React.FC<ModalProps> = ({ isOpen, onClose, onAdd}) => {
                 </div>
                 <button
                   className=" bg-gray-300 px-3 py-0.5 text-xs rounded-sm border-black border-1"
-                  onClick={() => onAdd(result.college_id)}>
+                  onClick={() => {
+                    onAdd(result.college_id);
+                    onClose();
+                  }}>
                   Add
                 </button>
               </div>
