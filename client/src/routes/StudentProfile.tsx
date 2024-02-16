@@ -2,6 +2,7 @@ import StudentProfile from "../layouts/StudentProfile";
 import React, { useEffect, useState, ElementType } from "react";
 
 export interface studentData {
+  user_id: number;
   user_email: string;
   user_firstname: string;
   user_lastname: string;
@@ -36,16 +37,71 @@ export interface studentData {
   user_notes: string;
 
   user_grad_year:number;
-  colleges:string[];
-
 }
+
+export interface collegeAssignments {
+  assignment_id: number;
+  college_id: number;
+  user_id: number;
+  college_name: string;
+}
+
+let userId = 1;
+
 
 const StudentProfileRoute = () => {
   const [studentData, setStudentData] = useState<studentData>({} as studentData);
-  let userId = 1;
+  const [collegeAssignments, setCollegeAssignments] = useState<collegeAssignments[]>([]);
+
+  const fetchAssignments = async () => {
+    try {
+      const userData = JSON.stringify({
+        userId: userId
+      });
+
+      const assignmentsResponse = await fetch("/api/assignmentsByUserId", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: userData,
+      });
+
+      const assignmentsData = await assignmentsResponse.json();        
+      const collegeNamesPromises = (assignmentsData as collegeAssignments[]).map(async (assignment: collegeAssignments) => {
+      const collegeId = assignment.college_id;
+      
+      const collegeResponse = await fetch("/api/collegeById", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          userId: userId,
+          collegeId: collegeId,
+        }),
+      });
+    
+      const collegeData = await collegeResponse.json();
+      return {
+        assignment_id: assignment.assignment_id,
+        college_id: assignment.college_id,
+        user_id: assignment.user_id,
+        college_name: collegeData[0]?.college_name || "College unknown",
+        };
+      });
+      
+      const resolvedCollegeNames = await Promise.all(collegeNamesPromises);
+      setCollegeAssignments(resolvedCollegeNames);
+
+    } catch (error) {
+      console.error("Error fetching assignments data:", error);
+    }
+  };
 
   // REMOVE! hard coded for display purposes
-  studentData.colleges = ["Univ. of Southern California", "Univ. of Michigan", "Univ. of California, Los Angeles"];
   studentData.user_grad_year = 2026;
   studentData.user_act_math = 36;
   studentData.user_act_science = 36;
@@ -57,9 +113,19 @@ const StudentProfileRoute = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`/api/userById?userId=${userId}`);
+        const userData = JSON.stringify({
+          userId: userId
+        });
+        const response = await fetch(`/api/userById`, {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: userData,
+        });
+
         const data = await response.json();
-        console.log(JSON.stringify(data)); 
         setStudentData(data[0]);
       } catch (error) {
         console.error("Error fetching student data:", error);
@@ -67,11 +133,67 @@ const StudentProfileRoute = () => {
     };
 
     fetchData();
+    fetchAssignments();
   }, [userId]);
-  
+
+  const handleDelete = async (collegeId: number) => {
+    try {
+      const response = await fetch('/api/deleteAssignment', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          userId: studentData.user_id,
+          collegeId: collegeId,
+        }),
+      });
+
+      if (response.ok) {
+        fetchAssignments();
+        console.log('Assignment deleted');
+      } else {
+        console.error('Cannot delete assignment');
+      }
+    } catch (error) {
+      console.error('Error deleting assignment:', error);
+    }
+  };
+
+  const handleAdd = async (collegeId: number) => {
+    try {
+      const response = await fetch('/api/createAssignment', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          userId: studentData.user_id,
+          collegeId: collegeId,
+        }),
+      });
+
+      if (response.ok) {
+        fetchAssignments();
+        console.log('Assignment created');
+      } else {
+        console.error('Cannot create assignment');
+      }
+    } catch (error) {
+      console.error('Error creating assignment:', error);
+    }
+  };
+
   return (
     <div className="">
-      {<StudentProfile studentData={studentData} />}
+      <StudentProfile
+        studentData={studentData}
+        collegeAssignments={collegeAssignments}
+        handleDelete={handleDelete}
+        handleAdd={handleAdd}
+      />
     </div>
   );
 };

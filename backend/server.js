@@ -21,7 +21,7 @@ app.get("/api/allColleges", (req, res) => {
 
 // collegeByName
 // returns data of colleges by name
-app.get("/api/collegeByName", (req, res) => {
+app.post("/api/collegeByName", (req, res) => {
   const { college_name } = req.body;
   collegeController
     .collegeByName(college_name)
@@ -37,8 +37,8 @@ app.get("/api/collegeByName", (req, res) => {
 // collegeById
 // returns data of college by collegeId
 
-app.get("/api/collegeById/:collegeId", (req, res) => {
-  const {collegeId} = req.params;
+app.post("/api/collegeById", (req, res) => {
+  const { collegeId } = req.body;
   collegeController
     .collegeById(collegeId)
     .then((data) =>
@@ -255,22 +255,8 @@ app.post("/api/paginatedApprovedUsers", (req, res) => {
 });
 
 // userById
-// app.get("/api/userById", (req, res) => {
-//   const { userId } = req.body;
-//   userController
-//     .userById(userId)
-//     .then((data) =>
-//       res.status(200).json(data)
-//     )
-//     .catch((error) => {
-//       console.error(error);
-//       return res.status(500).json({ error });
-//     });
-// });
-
-// userById with query
-app.get("/api/userById", (req, res) => {
-  const { userId } = req.query; // Retrieve userId from query parameters
+app.post("/api/userById", (req, res) => {
+  const { userId } = req.body;
   userController
     .userById(userId)
     .then((data) =>
@@ -425,7 +411,7 @@ app.post("/api/validateUser", (req, res) => {
 })
 
 // assignmentsByUserId
-app.get("/api/assignmentsByUserId", (req, res) => {
+app.post("/api/assignmentsByUserId", (req, res) => {
   const { userId } = req.body;
   userController
     .assignmentsByUserId(userId)
