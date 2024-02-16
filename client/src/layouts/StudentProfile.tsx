@@ -3,7 +3,7 @@ import ProfileBox from "../components/ProfileBox";
 import CollegeBox from "../components/CollegeBox";
 import {studentData, collegeAssignments} from "../routes/StudentProfile";
 import Pencil from "../components/Pencil";
-import AddCollegeModal from "../components/AddCollegeModal";
+import AddCollegeModal from "../layouts/AddCollegeModal";
 
 interface StudentProfileProps {
   studentData: studentData;
