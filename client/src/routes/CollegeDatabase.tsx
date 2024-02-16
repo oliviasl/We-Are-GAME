@@ -8,15 +8,17 @@ import CollegeUpdateDatabase from "../layouts/CollegeUpdateDatabase";
 
 const CollegeDatabase = () => {
     return (
-        <div className="h-screen w-screen flex flex-col">
-            <Navbar />
-            <div className="flex mx-0 mt-16 w-screen">
-                <div className="flex-grow ml-[100px]"> 
-                    <CollegeUpdateDatabase />
-                    <CollegeSearchResults />
-                </div>
-                <div className="mr-[100px]">
-                    <CollegeFilters />
+        <div className="flex flex-col">
+            <div><Navbar /></div>
+            <div>
+                <div className="flex mx-0 mt-16 w-screen">
+                    <div className="flex-grow ml-[100px]"> 
+                        <CollegeUpdateDatabase />
+                        <CollegeSearchResults />
+                    </div>
+                    <div className="mr-[100px] w-[295px]">
+                        <CollegeFilters />
+                    </div>
                 </div>
             </div>
         </div>

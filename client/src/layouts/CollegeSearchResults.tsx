@@ -56,13 +56,13 @@ const CollegeSearchResults = () => {
                 {TABLE_HEAD.map((head) => (
                   <th
                     key={head}
-                    className="border-b border-black p-4 border-t"
+                    className="border-b-[2px] border-black p-4 border-t-[2px]"
 
                   >
                     <Typography
                       variant="small"
                       color="black"
-                      className="font-semibold leading-none opacity-70"
+                      className="font-semibold leading-none font-grotesk"
                     >
                       {head}
                     </Typography>
@@ -73,7 +73,7 @@ const CollegeSearchResults = () => {
             <tbody>
               {TABLE_ROWS.map(({ college_name, college_location, acceptance_rate, max_gpa }, index) => {
                 const isLast = index === TABLE_ROWS.length - 1;
-                const classes = "p-4 border-b border-black";
+                const classes = "p-4 border-b-[2px] border-black";
 
                 return (
                   <tr key={college_name} className="h-12">
@@ -81,7 +81,7 @@ const CollegeSearchResults = () => {
                       <Typography
                         variant="small"
                         color="blue-gray"
-                        className="font-normal"
+                        className="font-normal font-circular-std"
                       >
                         {college_name}
                       </Typography>
@@ -90,7 +90,7 @@ const CollegeSearchResults = () => {
                       <Typography
                         variant="small"
                         color="blue-gray"
-                        className="font-normal"
+                        className="font-normal font-circular-std"
                       >
                         {college_location}
                       </Typography>
@@ -99,7 +99,7 @@ const CollegeSearchResults = () => {
                       <Typography
                         variant="small"
                         color="blue-gray"
-                        className="font-normal"
+                        className="font-normal font-circular-std"
                       >
                         {acceptance_rate}
                       </Typography>
