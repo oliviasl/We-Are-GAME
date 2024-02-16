@@ -14,7 +14,13 @@ const CollegeProfile = () => {
 
   useEffect(() => {
     async function fetchCollegeData() {
-      const _data = await fetch(`/api/collegeById/${id}`).then(v => v.json())
+      const _data = await fetch("/api/collegeById/", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({collegeId: id}),
+      }).then(v => v.json())
       if (_data && _data[0]) {
         setData(_data[0])
       }
