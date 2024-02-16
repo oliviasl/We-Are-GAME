@@ -11,7 +11,13 @@ const EditCollege = () => {
 
   useEffect(() => {
     async function fetchCollegeData() {
-      const data = await fetch(`/api/collegeById/${id}`).then(v => v.json())
+      const data = await fetch("/api/collegeById/", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({collegeId: id}),
+      }).then(v => v.json())
       if (data && data[0]) {
         setInitialData(data[0])
       }
