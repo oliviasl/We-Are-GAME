@@ -1,86 +1,121 @@
-import React, { useState } from 'react'
-import { Navbar } from '../layouts/Navbar'
-import { set } from 'react-hook-form';
-import { setgid } from 'process';
-
+import React, { useState } from "react";
+import { Navbar } from "../layouts/Navbar";
+import { set } from "react-hook-form";
+import { setgid } from "process";
+import EditStudentPill from "../components/EditStudentPill";
 
 export const EditStudent = () => {
-
     // field data
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [school, setSchool] = useState('');
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [school, setSchool] = useState("");
 
-    const [phoneNumber, setPhoneNumber] = useState(''); // string?
-    const [email, setEmail] = useState('');
-    const [grade, setGrade] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState(""); // string?
+    const [email, setEmail] = useState("");
+    const [grade, setGrade] = useState("");
 
-    const [instagram, setInstagram] = useState('');
-    const [facebook, setFacebook] = useState('');
+    const [instagram, setInstagram] = useState("");
+    const [facebook, setFacebook] = useState("");
 
-    const [major1, setMajor1] = useState('');
-    const [major2, setMajor2] = useState('');
-    const [major3, setMajor3] = useState('');
+    const [major1, setMajor1] = useState("");
+    const [major2, setMajor2] = useState("");
+    const [major3, setMajor3] = useState("");
 
-    const [sport1, setSport1] = useState('');
-    const [sport2, setSport2] = useState('');
-    const [sport3, setSport3] = useState('');
-    const [position1, setPosition1] = useState('');
-    const [position2, setPosition2] = useState('');
-    const [position3, setPosition3] = useState('');
-    const [level1, setLevel1] = useState('');
-    const [level2, setLevel2] = useState('');
-    const [level3, setLevel3] = useState('');
+    const [sport1, setSport1] = useState("");
+    const [sport2, setSport2] = useState("");
+    const [sport3, setSport3] = useState("");
+    const [position1, setPosition1] = useState("");
+    const [position2, setPosition2] = useState("");
+    const [position3, setPosition3] = useState("");
+    const [level1, setLevel1] = useState("");
+    const [level2, setLevel2] = useState("");
+    const [level3, setLevel3] = useState("");
 
-    const [tempInterest, setTempInterest] = useState('');
-    const [tempExtracurricular, setTempExtracurricular] = useState('');
+    const [inputInterest, setInputInterest] = useState("");
+    const [arrInterest, setArrInterest] = useState<string[]>([]);
+    const [inputExtracurricular, setInputExtracurricular] = useState("");
+    const [arrExtracirricular, setArrExtracirricular] = useState<string[]>([]);
 
-    const [actReading, setACTReading] = useState('');
-    const [actMath, setACTMath] = useState('');
-    const [actScience, setACTScience] = useState('');
-    const [actWriting, setACTWriting] = useState('');
-    const [actComposite, setACTComposite] = useState('');
+    const [actReading, setACTReading] = useState("");
+    const [actMath, setACTMath] = useState("");
+    const [actScience, setACTScience] = useState("");
+    const [actWriting, setACTWriting] = useState("");
+    const [actComposite, setACTComposite] = useState("");
 
-    const [satReading, setSATReading] = useState('');
-    const [satMath, setSATMath] = useState('');
-    const [satComposite, setSATComposite] = useState('');
+    const [satReading, setSATReading] = useState("");
+    const [satMath, setSATMath] = useState("");
+    const [satComposite, setSATComposite] = useState("");
 
-    const [gpa, setGPA] = useState('');
+    const [gpa, setGPA] = useState("");
 
-    const [purpose, setPurpose] = useState('');
-    const [goal, setGoal] = useState('');
+    const [purpose, setPurpose] = useState("");
+    const [goal, setGoal] = useState("");
 
+    const handleInterestKeypress = (
+        event: React.KeyboardEvent<HTMLInputElement>
+    ) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            setArrInterest((prevInterests: string[]) => {
+                return [...prevInterests, inputInterest];
+            });
+            setInputInterest("");
+        }
+    };
 
+    const removeInterest = (indexToRemove: number) => {
+        return () => {
+            setArrInterest((prevItems) => {
+                // Create a copy of the previous array and remove the item at the specified index
+                const updatedItems = [...prevItems];
+                updatedItems.splice(indexToRemove, 1);
+                return updatedItems;
+            });
+        };
+    };
 
+    const handleExtracirricularKeypress = (
+        event: React.KeyboardEvent<HTMLInputElement>
+    ) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            setArrExtracirricular((prevExtracirriculars: string[]) => {
+                return [...prevExtracirriculars, inputExtracurricular];
+            });
+            setInputExtracurricular("");
+        }
+    };
 
-
+    const removeExtracirricular = (indexToRemove: number) => {
+        return () => {
+            setArrExtracirricular((prevItems) => {
+                // Create a copy of the previous array and remove the item at the specified index
+                const updatedItems = [...prevItems];
+                updatedItems.splice(indexToRemove, 1);
+                return updatedItems;
+            });
+        };
+    };
 
     return (
-
-        <div className='mb-10'>
+        <div className="mb-10">
             <Navbar />
 
             {/* Grid Wrapper */}
-            <div className='mx-24 grid grid-cols-3 gap-5'>
-
+            <div className="mx-24 grid grid-cols-3 gap-5">
                 {/* MY EDIT AND CANCEL */}
-                <div className='col-span-full'>
-                    <div className='flex justify-between items-center my-9'>
-                        <div className='text-5xl font-bold'>
-                            My Edit
-                        </div>
-                        <div className='flex justify-center items-center w-28 h-9 bg-brand-gray-90 border-2 border-brand-gray-20 rounded'>
+                <div className="col-span-full">
+                    <div className="flex justify-between items-center my-9">
+                        <div className="text-5xl font-bold">My Edit</div>
+                        <div className="flex justify-center items-center w-28 h-9 bg-brand-gray-90 border-2 border-brand-gray-20 rounded">
                             Cancel
                         </div>
                     </div>
-
                 </div>
 
                 {/* First Name */}
                 <div>
-                    <div className="text-lg font-medium mb-3">
-                        First
-                    </div>
+                    <div className="text-lg font-medium mb-3">First</div>
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="first"
@@ -91,9 +126,7 @@ export const EditStudent = () => {
                 </div>
                 {/* Last Name */}
                 <div>
-                    <div className="text-lg font-medium mb-3">
-                        Last
-                    </div>
+                    <div className="text-lg font-medium mb-3">Last</div>
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="last"
@@ -104,9 +137,7 @@ export const EditStudent = () => {
                 </div>
                 {/* School Name */}
                 <div>
-                    <div className="text-lg font-medium mb-3">
-                        School
-                    </div>
+                    <div className="text-lg font-medium mb-3">School</div>
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="last"
@@ -118,9 +149,7 @@ export const EditStudent = () => {
 
                 {/* Phone Number */}
                 <div>
-                    <div className="text-lg font-medium mb-3">
-                        Phone Number
-                    </div>
+                    <div className="text-lg font-medium mb-3">Phone Number</div>
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="first"
@@ -131,9 +160,7 @@ export const EditStudent = () => {
                 </div>
                 {/* Email */}
                 <div>
-                    <div className="text-lg font-medium mb-3">
-                        Email
-                    </div>
+                    <div className="text-lg font-medium mb-3">Email</div>
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="last"
@@ -144,9 +171,7 @@ export const EditStudent = () => {
                 </div>
                 {/* Grade */}
                 <div>
-                    <div className="text-lg font-medium mb-3">
-                        Grade
-                    </div>
+                    <div className="text-lg font-medium mb-3">Grade</div>
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="last"
@@ -158,9 +183,7 @@ export const EditStudent = () => {
 
                 {/* Instagram */}
                 <div>
-                    <div className="text-lg font-medium mb-3">
-                        Instagram
-                    </div>
+                    <div className="text-lg font-medium mb-3">Instagram</div>
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="first"
@@ -171,9 +194,7 @@ export const EditStudent = () => {
                 </div>
                 {/* Facebook */}
                 <div>
-                    <div className="text-lg font-medium mb-3">
-                        Facebook
-                    </div>
+                    <div className="text-lg font-medium mb-3">Facebook</div>
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="last"
@@ -184,10 +205,8 @@ export const EditStudent = () => {
                 </div>
 
                 {/* Majors */}
-                <div className='col-start-1 my-10'>
-                    <div className="text-lg font-medium mb-3">
-                        Majors
-                    </div>
+                <div className="col-start-1 my-10">
+                    <div className="text-lg font-medium mb-3">Majors</div>
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="first"
@@ -197,7 +216,7 @@ export const EditStudent = () => {
                     />
                 </div>
                 {/* Major 2 */}
-                <div className='flex items-end my-10'>
+                <div className="flex items-end my-10">
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="last"
@@ -207,7 +226,7 @@ export const EditStudent = () => {
                     />
                 </div>
                 {/* Major 3 */}
-                <div className='flex items-end my-10'>
+                <div className="flex items-end my-10">
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="last"
@@ -219,9 +238,7 @@ export const EditStudent = () => {
 
                 {/* Sport */}
                 <div>
-                    <div className="text-lg font-medium mb-3">
-                        Sport
-                    </div>
+                    <div className="text-lg font-medium mb-3">Sport</div>
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="first"
@@ -232,9 +249,7 @@ export const EditStudent = () => {
                 </div>
                 {/* Position */}
                 <div>
-                    <div className="text-lg font-medium mb-3">
-                        Position
-                    </div>
+                    <div className="text-lg font-medium mb-3">Position</div>
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="last"
@@ -245,9 +260,7 @@ export const EditStudent = () => {
                 </div>
                 {/* Level */}
                 <div>
-                    <div className="text-lg font-medium mb-3">
-                        Level
-                    </div>
+                    <div className="text-lg font-medium mb-3">Level</div>
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="last"
@@ -258,7 +271,7 @@ export const EditStudent = () => {
                 </div>
 
                 {/* Sport 2 */}
-                <div className='col-start-1'>
+                <div className="col-start-1">
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="first"
@@ -268,7 +281,7 @@ export const EditStudent = () => {
                     />
                 </div>
                 {/* Position 2 */}
-                <div className='flex items-end'>
+                <div className="flex items-end">
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="last"
@@ -278,7 +291,7 @@ export const EditStudent = () => {
                     />
                 </div>
                 {/* Level 2 */}
-                <div className='flex items-end'>
+                <div className="flex items-end">
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="last"
@@ -289,7 +302,7 @@ export const EditStudent = () => {
                 </div>
 
                 {/* Sport 3 */}
-                <div className='col-start-1'>
+                <div className="col-start-1">
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="first"
@@ -299,7 +312,7 @@ export const EditStudent = () => {
                     />
                 </div>
                 {/* Position 3 */}
-                <div className='flex items-end'>
+                <div className="flex items-end">
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="last"
@@ -309,7 +322,7 @@ export const EditStudent = () => {
                     />
                 </div>
                 {/* Level 3 */}
-                <div className='flex items-end'>
+                <div className="flex items-end">
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="last"
@@ -320,21 +333,31 @@ export const EditStudent = () => {
                 </div>
 
                 {/* Interests */}
-                <div className='my-10'>
-                    <div className="text-lg font-medium mb-3">
-                        Interests
-                    </div>
+                <div className="my-10">
+                    <div className="text-lg font-medium mb-3">Interests</div>
                     <input
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="first"
                         type="text"
-                        value={tempInterest}
-                        onChange={(e) => setTempInterest(e.target.value)}
+                        value={inputInterest}
+                        onChange={(e) => setInputInterest(e.target.value)}
+                        onKeyDown={handleInterestKeypress}
                     />
+                    <div className="gap-3 w-full flex mt-5 flex-wrap">
+                        {arrInterest?.map((interest: string, idx: number) => {
+                            return (
+                                <EditStudentPill
+                                    key={interest + idx}
+                                    text={interest}
+                                    closeHandler={removeInterest(idx)}
+                                />
+                            );
+                        })}
+                    </div>
                     {/* Map each interest from an interests array */}
                 </div>
                 {/* Extracurricular */}
-                <div className='my-10'>
+                <div className="my-10">
                     <div className="text-lg font-medium mb-3">
                         Extracurricular
                     </div>
@@ -342,22 +365,36 @@ export const EditStudent = () => {
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="last"
                         type="text"
-                        value={tempExtracurricular}
-                        onChange={(e) => setTempExtracurricular(e.target.value)}
+                        value={inputExtracurricular}
+                        onChange={(e) =>
+                            setInputExtracurricular(e.target.value)
+                        }
+                        onKeyDown={handleExtracirricularKeypress}
                     />
+                    <div className="gap-3 w-full flex mt-5 flex-wrap">
+                        {arrExtracirricular?.map(
+                            (extracurricular: string, idx: number) => {
+                                return (
+                                    <EditStudentPill
+                                        key={extracurricular + idx}
+                                        text={extracurricular}
+                                        closeHandler={removeExtracirricular(
+                                            idx
+                                        )}
+                                    />
+                                );
+                            }
+                        )}
+                    </div>
                     {/* Map each extracurricular from an extracurriculars array */}
                 </div>
 
                 {/* ACT WRAPPER */}
-                <div className='col-start-1'>
-                    <div className='text-lg font-medium mb-3'>
-                        ACT
-                    </div>
-                    <div className='flex justify-between mb-3'>
-                        <div className='flex justify-between items-center w-full'>
-                            <div>
-                                Reading
-                            </div>
+                <div className="col-start-1">
+                    <div className="text-lg font-medium mb-3">ACT</div>
+                    <div className="flex justify-between mb-3">
+                        <div className="flex justify-between items-center w-full">
+                            <div>Reading</div>
                             <input
                                 className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
                                 id="last"
@@ -366,10 +403,8 @@ export const EditStudent = () => {
                                 onChange={(e) => setACTReading(e.target.value)}
                             />
                         </div>
-                        <div className='flex justify-between items-center w-full'>
-                            <div>
-                                Math
-                            </div>
+                        <div className="flex justify-between items-center w-full">
+                            <div>Math</div>
                             <input
                                 className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
                                 id="last"
@@ -379,11 +414,9 @@ export const EditStudent = () => {
                             />
                         </div>
                     </div>
-                    <div className='flex justify-between items-center mb-3'>
-                        <div className='flex justify-between items-center w-full'>
-                            <div >
-                                Writing
-                            </div>
+                    <div className="flex justify-between items-center mb-3">
+                        <div className="flex justify-between items-center w-full">
+                            <div>Writing</div>
                             <input
                                 className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
                                 id="last"
@@ -392,10 +425,8 @@ export const EditStudent = () => {
                                 onChange={(e) => setACTWriting(e.target.value)}
                             />
                         </div>
-                        <div className='flex justify-between items-center w-full'>
-                            <div>
-                                Science
-                            </div>
+                        <div className="flex justify-between items-center w-full">
+                            <div>Science</div>
                             <input
                                 className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
                                 id="last"
@@ -405,10 +436,8 @@ export const EditStudent = () => {
                             />
                         </div>
                     </div>
-                    <div className='flex justify-between items-center w-1/2'>
-                        <div>
-                            Composite
-                        </div>
+                    <div className="flex justify-between items-center w-1/2">
+                        <div>Composite</div>
                         <input
                             className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
                             id="last"
@@ -421,14 +450,10 @@ export const EditStudent = () => {
 
                 {/* SAT WRAPPER */}
                 <div>
-                    <div className='text-lg font-medium mb-3'>
-                        SAT
-                    </div>
-                    <div className='flex justify-between mb-3'>
-                        <div className='flex justify-between items-center w-full'>
-                            <div>
-                                Reading
-                            </div>
+                    <div className="text-lg font-medium mb-3">SAT</div>
+                    <div className="flex justify-between mb-3">
+                        <div className="flex justify-between items-center w-full">
+                            <div>Reading</div>
                             <input
                                 className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
                                 id="last"
@@ -437,10 +462,8 @@ export const EditStudent = () => {
                                 onChange={(e) => setSATReading(e.target.value)}
                             />
                         </div>
-                        <div className='flex justify-between items-center w-full'>
-                            <div>
-                                Math
-                            </div>
+                        <div className="flex justify-between items-center w-full">
+                            <div>Math</div>
                             <input
                                 className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
                                 id="last"
@@ -450,10 +473,8 @@ export const EditStudent = () => {
                             />
                         </div>
                     </div>
-                    <div className='flex justify-between items-center w-1/2'>
-                        <div>
-                            Composite
-                        </div>
+                    <div className="flex justify-between items-center w-1/2">
+                        <div>Composite</div>
                         <input
                             className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
                             id="last"
@@ -466,9 +487,7 @@ export const EditStudent = () => {
 
                 {/* GPA WRAPPER */}
                 <div>
-                    <div className='text-lg font-medium mb-3'>
-                        GPA
-                    </div>
+                    <div className="text-lg font-medium mb-3">GPA</div>
                     <input
                         className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-12 text-gray-700"
                         id="last"
@@ -479,10 +498,10 @@ export const EditStudent = () => {
                 </div>
 
                 {/* PURPOSE AND GOAL WRAPPER */}
-                <div className='col-span-full mt-8'>
-                    <div className='grid grid-cols-2 gap-5'>
+                <div className="col-span-full mt-8">
+                    <div className="grid grid-cols-2 gap-5">
                         <div>
-                            <div className='text-lg font-medium mb-3'>
+                            <div className="text-lg font-medium mb-3">
                                 Pursue My Purpose
                             </div>
                             <input
@@ -495,9 +514,7 @@ export const EditStudent = () => {
                         </div>
 
                         <div>
-                            <div className='text-lg font-medium mb-3'>
-                                Goal
-                            </div>
+                            <div className="text-lg font-medium mb-3">Goal</div>
                             <input
                                 className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                                 id="last"
@@ -509,16 +526,16 @@ export const EditStudent = () => {
                     </div>
                 </div>
 
-                <div className='col-span-full mt-6'>
-                    <div className='flex justify-end'>
-                        <div className='flex justify-center items-center w-28 h-9 bg-brand-gray-20 border-2 border-brand-gray-20 rounded text-white'>
+                <div className="col-span-full mt-6">
+                    <div className="flex justify-end">
+                        <div className="flex justify-center items-center w-28 h-9 bg-brand-gray-20 border-2 border-brand-gray-20 rounded text-white">
                             Save
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default EditStudent;
