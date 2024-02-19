@@ -4,6 +4,7 @@ import {Navbar} from "./Navbar";
 import {CollegeProgressBar} from "../components/CollegeProgressBar";
 import {CollegeFormFormSection} from "../components/CollegeFormFormSection";
 import {collegeForm} from "../util/data/college-form";
+import AutofillCollege from "./AutofillCollege";
 
 export default function CollegeFormPage({data, onSubmit}: { data?: any, onSubmit: (data: any) => void }) {
   const [formData, setFormData] = useState({})
@@ -19,6 +20,7 @@ export default function CollegeFormPage({data, onSubmit}: { data?: any, onSubmit
   }
 
   return <div className="h-screen w-screen flex flex-col items-center">
+    <AutofillCollege/>
     <div className="max-w-6xl w-full">
       <CollegeProgressBar activeStep={activeStep}/>
     </div>

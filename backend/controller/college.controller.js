@@ -186,7 +186,7 @@ class collegeController {
     async createCollege(collegeData) {
         const insertKeys = Object.keys(collegeData);
         const insertValues = Object.values(collegeData);
-      
+    
         // create placeholder values ($1, $2, etc.) for each value to be inserted
         const placeholders = insertKeys
             .map((_, index) => `$${index + 1}`)
@@ -250,6 +250,78 @@ class collegeController {
         return result.rows;
     }
 
+    //Helper function to store nested object paths - these could be hardcoded?
+    getValueByIndex = (obj, index) => {
+        const keys = index.split('.');
+        let value = obj;
+        for (const key of keys) {
+            if (value && typeof value === 'object') {
+                value = value[key];
+            } else {
+                return undefined; 
+            }
+        }
+        return value;
+    };
+
+    async autofillCollege(name){
+        //fetch data
+
+        //MISSING FIELDS:
+        /*
+            - Yo like im not a high schooler but i swear i had more shit on the act 
+            { name: "title_iv.transf_completed_4yr_by.2yrs", index: "latest.completion.title_iv.transf_completed_4yr_by.2yrs" },
+            -             { name: "act_scores.25th_percentile.writing", index: "latest.admissions.act_scores.25th_percentile.writing" },
+            { name: "act_scores.75th_percentile.writing", index: "latest.admissions.act_scores.75th_percentile.writing" }, IS THERE A WRITING SECTION IN ACT
+        */
+        const DATA_TO_FETCH = [
+            { name: "location_city", index: "school.city" },
+            { name: "location_state", index: "school.state" },
+            { name: "min_sat_read_write", index: "latest.admissions.sat_scores.25th_percentile.critical_reading" },
+            { name: "max_sat_read_write", index: "latest.admissions.sat_scores.75th_percentile.critical_reading" },
+            { name: "min_sat_math", index: "latest.admissions.sat_scores.25th_percentile.math" },
+            { name: "max_sat_math", index: "latest.admissions.sat_scores.75th_percentile.math" },
+            { name: "min_act", index: "latest.admissions.act_scores.25th_percentile.cumulative" },
+            { name: "max_act", index: "latest.admissions.act_scores.75th_percentile.cumulative" },
+            { name: "min_act_english", index: "latest.admissions.act_scores.25th_percentile.english" },
+            { name: "max_act_english", index: "latest.admissions.act_scores.75th_percentile.english" },
+            { name: "min_act_math", index: "latest.admissions.act_scores.25th_percentile.math" },
+            { name: "max_act_math", index: "latest.admissions.act_scores.75th_percentile.math" },
+            { name: "faculty_student_ratio", index: "latest.student.demographics.student_faculty_ratio" },
+            { name: "acceptance_rate", index: "latest.admissions.admission_rate.overall" },
+            { name: "race_white", index: "latest.student.demographics.race_ethnicity.white" },
+            { name: "race_black", index: "latest.student.demographics.race_ethnicity.black" },
+            { name: "race_hispanic", index: "latest.student.demographics.race_ethnicity.hispanic" },
+            { name: "race_asian", index: "latest.student.demographics.race_ethnicity.asian" },
+            { name: "race_native_american", index: "latest.student.demographics.race_ethnicity.aian" },
+            { name: "race_pacific_islander", index: "latest.student.demographics.race_ethnicity.nhpi" },
+            { name: "race_two_or_more", index: "latest.student.demographics.race_ethnicity.two_or_more" },
+            { name: "race_international", index: "latest.student.demographics.race_ethnicity.non_resident_alien" },
+            { name: "race_other", index: "latest.student.demographics.race_ethnicity.unknown" },
+            { name: "first_year_retention_rate", index: "latest.student.retention_rate.four_year.full_time" },
+            { name: "cost_tuition_in_state", index: "latest.cost.tuition.in_state" },
+            { name: "cost_tuition_out_of_state", index: "latest.cost.tuition.out_of_state" },
+            { name: "avg_total_cost_est", index: "latest.cost.avg_net_price.overall" },
+            { name: "net_price_calc_web_addr", index: "latest.school.price_calculator_url" },
+        ];
+
+        const response = await this.fetchFromScorecard(name, [], true, 0, 5);
+        let collegeData = {};
+        
+        DATA_TO_FETCH.forEach((datum) => {
+            const value = this.getValueByIndex(response, datum.index);
+            if(value){
+                collegeData[datum.name] = value;
+            }
+
+        });
+        collegeData["college_name"] = name;
+
+        
+        //push to db
+        return this.createCollege(collegeData);
+    }
+
     // fetchFromScorecard
     /**
      * Fetch school data from collegescorecard api
@@ -259,7 +331,6 @@ class collegeController {
      * @returns {object} If findExact, an object of the school info is returned. If not, a paged object of all autocomplete matches 
      */
     async fetchFromScorecard(namePrefix, desiredFields=[], findExact=false, page=0, perPage=20){
-        
         // DOCUMENTATION: https://github.com/RTICWDT/open-data-maker/blob/master/API.md
         // Technically should be in a env or smth but who cares ++ this is a get only endpoint  
         const SCORECARD_API_KEY="BPGdOVwiRg9I45TLDD1bQfIxQjZW24K49ZEraSbS";
@@ -279,13 +350,22 @@ class collegeController {
 
         const response = await fetch(baseURL);
         const data = await response.json();
-        console.log(baseURL);
-        if(findExact){
-            for (const result of data.results) {
-                if (result["school.name"] === namePrefix) {
-                    return result;
+
+        if(findExact){ 
+            if(desiredFields.length===0){
+                for (const result of data.results) {
+                    if (result.school["name"] === namePrefix) {
+                        return result;
+                    }
+                }
+            }else{
+                for (const result of data.results) {
+                    if (result["school.name"] === namePrefix) {
+                        return result;
+                    }
                 }
             }
+            
             return {};
         }
         return data;
@@ -340,6 +420,12 @@ class collegeController {
         console.log(queryValues[1]);
         const result = await db.query(queryValues[0].join(''), queryValues[1]);
         return result.rows;
+    }
+
+    async searchScorecard(name){
+
+        const response = await this.fetchFromScorecard(name, ["school.name"], false, 0, 5);
+        return response.results.map((datum) => datum["school.name"]);
     }
 
 }
