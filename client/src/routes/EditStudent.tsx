@@ -328,6 +328,7 @@ export const EditStudent = () => {
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="first"
                         type="text"
+                        placeholder="Type and press enter to add"
                         value={tempInterest}
                         onChange={(e) => setTempInterest(e.target.value)}
                     />
@@ -342,6 +343,7 @@ export const EditStudent = () => {
                         className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
                         id="last"
                         type="text"
+                        placeholder="Type and press enter to add"
                         value={tempExtracurricular}
                         onChange={(e) => setTempExtracurricular(e.target.value)}
                     />
