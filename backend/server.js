@@ -252,8 +252,6 @@ app.post("/api/autofillCollege", (req, res) => {
     );
 });
 
-
-
 // *** USER API CALLS ***
 
 // allUsers
