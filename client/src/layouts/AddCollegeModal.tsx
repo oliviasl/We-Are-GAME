@@ -52,7 +52,7 @@ const AddCollegeModal: React.FC<ModalProps> = ({ isOpen, onClose, onAdd}) => {
       border: '2px solid lightgrey' as const,
       width: '52%' as const,
       margin: 'auto' as const,
-      height: searchResults.length > 0 ? '40vh' : '24vh',
+      height: searchResults.length > 0 ? '40vh' : '26vh',
       maxHeight: '40vh',
       overflow: 'hidden' as const,
     },
