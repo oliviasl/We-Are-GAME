@@ -302,53 +302,56 @@ class collegeController {
         const filterFields = Object.keys(fields);
         let queryStr = [];
         let queryParams = [];
+
         
         // null field values mean no input is required for that filter
-        filterFields.forEach((field, idx) => {
-            // null means true/false value
+        for (const [idx, field] of filterFields.entries()) {
             if (fields[field] != null) {
-                collegeController.filterMap.get(field)(fields[field]).then((res) => {
-                    if (res != undefined) {
-                        if (idx > 0) {
-                            queryStr.push(" INTERSECT ");
-                        }
-                        queryParams.push(res[1]);
-                        queryStr.push(res[0].replace("$1", "$" + queryParams.length));
+                // Await the promise and then process the result
+                const res = await collegeController.filterMap.get(field)(fields[field]);
+                if (res !== undefined) {
+                    if (idx > 0 && queryStr.length > 0) { // Ensure INTERSECT is added only if needed
+                        queryStr.push(" INTERSECT ");
                     }
-                });
+                    queryParams.push(res[1]);
+                    queryStr.push(res[0].replace("$1", `$${queryParams.length}`));
+                }
             } else {
-                collegeController.filterMap.get(field)().then((res) => {
-                    if (res != undefined) {
-                        if (idx > 0) {
-                            queryStr.push(" INTERSECT ");
-                        }
-                        queryStr.push(res[0]);
+                const res = await collegeController.filterMap.get(field)();
+                if (res !== undefined) {
+                    if (idx > 0 && queryStr.length > 0) { // Ensure INTERSECT is added only if needed
+                        queryStr.push(" INTERSECT ");
                     }
-                });
+                    queryStr.push(res[0]);
+                }
             }
-        })
+        }
+        queryStr.push(" LIMIT $2 OFFSET $3");
+
     
         return [queryStr, queryParams];
     }
 
     // collegesFiltered
     // uses generated intersected sql call and params to get filtered results
-    async collegesFiltered(fields) {
+    async collegesFiltered(fields, pageSize=null, offset=null) {
         // queryValues = [queryStr : string[], queryParams : object[]]
         let queryValues = await this.generateFilterQuery(fields);
-        console.log(queryValues[0].join(''));
-        console.log(queryValues[1]);
-        const result = await db.query(queryValues[0].join(''), queryValues[1]);
+        console.log("queryValue", queryValues[0].join(''));
+        console.log("queryValue1", queryValues[1]);
+        const queryParams = [...queryValues[1], pageSize, offset];
+        const result = await db.query(queryValues[0].join(''), queryParams);
         return result.rows;
     }
 
     // paginated collegesFiltered
     async paginatedCollegesFiltered(fields, pageNumber) {
         // page size is 6
-        const PAGE_SIZE = 7;
+        const PAGE_SIZE = 1;
         const offset = (pageNumber - 1) * PAGE_SIZE;
 
         console.log("fields", fields);
+        const partialResult = await this.collegesFiltered(fields, PAGE_SIZE, offset);
         const result = await this.collegesFiltered(fields);
         console.log("result", result);
         const totalCount = result.length;
@@ -357,7 +360,7 @@ class collegeController {
         return {
             totalPages: totalPages,
             page: pageNumber,
-            colleges: result
+            colleges: partialResult
         };
     }
 
