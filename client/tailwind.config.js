@@ -50,6 +50,9 @@ module.exports = withMT({
       padding: {
         '0.5': '0.125rem',
       },
+      height: {
+        '25': '8.5rem',
+      },
     },
   },
   plugins: [],
