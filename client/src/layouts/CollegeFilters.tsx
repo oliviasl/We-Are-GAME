@@ -91,7 +91,7 @@ const CollegeFilters = () => {
                 <div>Diversity Resources</div>
             </div>
 
-            <Button>Search</Button>
+            <Button type="submit">Search</Button>
         </form>
     );
 };
