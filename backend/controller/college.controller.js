@@ -347,7 +347,7 @@ class collegeController {
     // paginated collegesFiltered
     async paginatedCollegesFiltered(fields, pageNumber) {
         // page size is 6
-        const PAGE_SIZE = 1;
+        const PAGE_SIZE = 7;
         const offset = (pageNumber - 1) * PAGE_SIZE;
 
         console.log("fields", fields);
