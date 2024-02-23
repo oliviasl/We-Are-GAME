@@ -23,6 +23,7 @@ const input: Partial<InputStylesType> = {
       },
       input: {
         borderWidth: "!border-2",
+        placeholder: "placeholder:!opacity-100"
       },
       label: {
         display: "hidden"

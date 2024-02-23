@@ -10,7 +10,8 @@ import CollegeProfile from "./routes/CollegeProfile";
 import EditCollege from "./routes/EditCollege";
 import {ThemeProvider} from "@material-tailwind/react";
 import theme from "./util/theme";
-import { Navbar } from "./layouts/Navbar";
+import {Navbar} from "./layouts/Navbar";
+import {ToastContainer} from "react-toastify";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           </Routes>
         </Router>
       </div>
+      <ToastContainer hideProgressBar={true} position={"bottom-right"}/>
     </ThemeProvider>
   );
 }
