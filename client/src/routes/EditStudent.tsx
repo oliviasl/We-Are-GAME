@@ -28,9 +28,12 @@ export const EditStudent = () => {
     const [position1, setPosition1] = useState('');
     const [position2, setPosition2] = useState('');
     const [position3, setPosition3] = useState('');
-    const [level1, setLevel1] = useState('');
-    const [level2, setLevel2] = useState('');
-    const [level3, setLevel3] = useState('');
+    const [level1, setLevel1] = useState('Select...');
+    const [level2, setLevel2] = useState('Select...');
+    const [level3, setLevel3] = useState('Select...');
+    const [showLevel1, setShowLevel1] = useState(false);
+    const [showLevel2, setShowLevel2] = useState(false);
+    const [showLevel3, setShowLevel3] = useState(false);
 
     const [tempInterest, setTempInterest] = useState('');
     const [tempExtracurricular, setTempExtracurricular] = useState('');
@@ -248,13 +251,27 @@ export const EditStudent = () => {
                     <div className="text-lg font-medium mb-3">
                         Level
                     </div>
-                    <input
-                        className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-                        id="last"
-                        type="text"
-                        value={level1}
-                        onChange={(e) => setLevel1(e.target.value)}
-                    />
+                    <div className="relative inline-block text-left w-full">
+                        <div>
+                            <button className="flex w-full h-9 justify-between gap-x-1.5 text-md font-medium rounded bg-white px-3 py-2 text-sm text-gray-700 border-black border-2 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true" onClick={() => { setShowLevel1(!showLevel1); setShowLevel2(false); setShowLevel3(false) }}>
+                                {level1}
+                                <svg className="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                        {showLevel1 && (
+                            <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
+                                <div className="py-1" role="none">
+                                    <div className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0" onClick={() => { setLevel1("Club"); setShowLevel1(false) }}>Club</div>
+                                    <div className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0" onClick={() => { setLevel1("Varsity"); setShowLevel1(false) }}>Varsity</div>
+                                    <div className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0" onClick={() => { setLevel1("Junior Varsity"); setShowLevel1(false) }}>Junior Varsity</div>
+                                    <div className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0" onClick={() => { setLevel1("Freshman"); setShowLevel1(false) }}>Freshman</div>
+                                    <div className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0" onClick={() => { setLevel1("Modified"); setShowLevel1(false) }}>Modified</div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 {/* Sport 2 */}
@@ -279,13 +296,27 @@ export const EditStudent = () => {
                 </div>
                 {/* Level 2 */}
                 <div className='flex items-end'>
-                    <input
-                        className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-                        id="last"
-                        type="text"
-                        value={level2}
-                        onChange={(e) => setLevel2(e.target.value)}
-                    />
+                <div className="relative inline-block text-left w-full">
+                        <div>
+                            <button className="flex w-full h-9 justify-between gap-x-1.5 text-md font-medium rounded bg-white px-3 py-2 text-sm text-gray-700 border-black border-2 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true" onClick={() => { setShowLevel2(!showLevel2); setShowLevel1(false); setShowLevel3(false) }}>
+                                {level2}
+                                <svg className="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                        {showLevel2 && (
+                            <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
+                                <div className="py-1" role="none">
+                                    <div className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0" onClick={() => { setLevel2("Club"); setShowLevel2(false) }}>Club</div>
+                                    <div className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0" onClick={() => { setLevel2("Varsity"); setShowLevel2(false) }}>Varsity</div>
+                                    <div className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0" onClick={() => { setLevel2("Junior Varsity"); setShowLevel2(false) }}>Junior Varsity</div>
+                                    <div className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0" onClick={() => { setLevel2("Freshman"); setShowLevel2(false) }}>Freshman</div>
+                                    <div className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0" onClick={() => { setLevel2("Modified"); setShowLevel2(false) }}>Modified</div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 {/* Sport 3 */}
@@ -310,13 +341,27 @@ export const EditStudent = () => {
                 </div>
                 {/* Level 3 */}
                 <div className='flex items-end'>
-                    <input
-                        className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-                        id="last"
-                        type="text"
-                        value={level3}
-                        onChange={(e) => setLevel3(e.target.value)}
-                    />
+                <div className="relative inline-block text-left w-full">
+                        <div>
+                            <button className="flex w-full h-9 justify-between gap-x-1.5 text-md font-medium rounded bg-white px-3 py-2 text-sm text-gray-700 border-black border-2 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true" onClick={() => { setShowLevel3(!showLevel3); setShowLevel1(false); setShowLevel2(false) }}>
+                                {level3}
+                                <svg className="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                        {showLevel3 && (
+                            <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
+                                <div className="py-1" role="none">
+                                    <div className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0" onClick={() => { setLevel3("Club"); setShowLevel3(false) }}>Club</div>
+                                    <div className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0" onClick={() => { setLevel3("Varsity"); setShowLevel3(false) }}>Varsity</div>
+                                    <div className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0" onClick={() => { setLevel3("Junior Varsity"); setShowLevel3(false) }}>Junior Varsity</div>
+                                    <div className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0" onClick={() => { setLevel3("Freshman"); setShowLevel3(false) }}>Freshman</div>
+                                    <div className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0" onClick={() => { setLevel3("Modified"); setShowLevel3(false) }}>Modified</div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 {/* Interests */}
