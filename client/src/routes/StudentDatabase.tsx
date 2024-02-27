@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import StudentDirectoryRow from "../components/StudentDirectoryRow";
 
 const StudentDatabase = () => {
@@ -76,17 +77,18 @@ const StudentDatabase = () => {
                         <tbody>
                             {students.map((student) => {
                                 return (
-                                    <StudentDirectoryRow
-                                        name={
-                                            student?.user_firstname +
-                                            " " +
-                                            student?.user_lastname
-                                        }
-                                        major={student?.user_potential_major}
-                                        sport={student?.user_sport1}
-                                        email={student?.user_email}
-                                        key={student?.user_email}
-                                    />
+                                    <Link to={`/student-profile/${student?.user_id.user_id}`}>
+                                        <StudentDirectoryRow
+                                            name={
+                                                student?.user_firstname +
+                                                " " +
+                                                student?.user_lastname
+                                            }
+                                            major={student?.user_potential_major}
+                                            sport={student?.user_sport1}
+                                            email={student?.user_email}
+                                        />
+                                    </Link>
                                 );
                             })}
                         </tbody>
@@ -96,9 +98,11 @@ const StudentDatabase = () => {
                             disabled={page === 1}
                             className="relative h-8 max-h-[24px] w-8 max-w-[24px] select-none rounded-lg border border-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                             onClick={() => {
-                                setPage((p) => {
-                                    return p - 1;
-                                });
+                                if (totalPages > 0) {
+                                    setPage((p) => {
+                                        return p - 1;
+                                    });
+                                }
                             }}
                         >
                             <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
@@ -127,9 +131,11 @@ const StudentDatabase = () => {
                             className="relative h-8 max-h-[24px] w-8 max-w-[24px] select-none rounded-lg border border-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                             type="button"
                             onClick={() => {
-                                setPage((p) => {
-                                    return p + 1;
-                                });
+                                if (totalPages > 0) {
+                                    setPage((p) => {
+                                        return p + 1;
+                                    });
+                                }
                             }}
                         >
                             <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
