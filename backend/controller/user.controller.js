@@ -163,7 +163,8 @@ class userController {
                 userData.user_email &&
                 userData.user_password &&
                 userData.user_firstname &&
-                userData.user_lastname
+                userData.user_lastname &&
+                userData.user_school
             )
         ) {
           console.log("Missing mandatory field");
