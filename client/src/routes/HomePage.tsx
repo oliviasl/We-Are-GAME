@@ -47,7 +47,7 @@ const adminRouteInfo = [
   },
   {
       name: "Authenticate Users", 
-      url: "/college-database",
+      url: "/authenticate",
       Icon: SquareUser
   },
 ]
