@@ -11,8 +11,8 @@ const AuthUserRow = ({ name, email, institution, onApprove, onDeny }: AuthUserRo
     return (
         <tr className="h-12 border-b border-black" key={email}>
             <td className="pl-16">{name}</td>
-            <td className="px-8">{email}</td>
-            <td className="px-8">{institution}</td>
+            <td className="px-6">{email}</td>
+            <td className="px-3">{institution}</td>
             <td className="pr-16">
                 <span
                     onClick={onApprove}

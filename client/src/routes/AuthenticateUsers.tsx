@@ -74,10 +74,10 @@ const AuthenticateUsers = () => {
                             <th className="text-left py-2 pl-16 font-normal">
                                 Name
                             </th>
-                            <th className="text-left py-2 px-8 font-normal">
+                            <th className="text-left py-2 px-6 font-normal">
                                 Email
                             </th>
-                            <th className="text-left py-2 px-8 font-normal">
+                            <th className="text-left py-2 px-3 font-normal">
                                 Latest Enrollment
                             </th>
                             <th className="text-left py-2 pr-16 font-normal">
