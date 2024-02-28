@@ -6,10 +6,10 @@ import HomePageLinks from "../layouts/HomePageLinks";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const tempRouteInfo = [
+const studentRouteInfo = [
   {
       name: "Explore Colleges", 
-      url: "#",
+      url: "/college-database",
       Icon: School
   },
   {
@@ -28,6 +28,30 @@ const tempRouteInfo = [
       Icon: SquareUser
   },
 ]
+
+const adminRouteInfo = [
+  {
+      name: "College Database", 
+      url: "#",
+      Icon: School
+  },
+  {
+      name: "Mentor Database", 
+      url: "#",
+      Icon: Users
+  },
+  {
+      name: "Student Database", 
+      url: "#",
+      Icon: BookUser
+  },
+  {
+      name: "Authenticate Users", 
+      url: "#",
+      Icon: SquareUser
+  },
+]
+
 
 const HomePage = () => {
 
@@ -163,8 +187,11 @@ const HomePage = () => {
         <div className="h-screen w-screen flex flex-col items-center">
           <h1 className="w-full p-14 pl-24 text-left text-4xl text-brand-black font-bold font-grotesk">
               Welcome, { cookies.user_name }!
+              {/* DELETE */}
+              {cookies.user_status}
           </h1>
-          <HomePageLinks RouteInfo={tempRouteInfo}/>
+          {cookies.user_status === 1 && <HomePageLinks RouteInfo={studentRouteInfo}/>}
+          {cookies.user_status === 3 && <HomePageLinks RouteInfo={adminRouteInfo}/>}
         </div>
       ) : (
         <div className="flex justify-center m-3">
