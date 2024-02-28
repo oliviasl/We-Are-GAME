@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Navbar } from "../layouts/Navbar";
 import AuthUserRow from "../components/AuthUserRow";
 
 const AuthenticateUsers = () => {
@@ -65,7 +64,6 @@ const AuthenticateUsers = () => {
 
     return (
         <div>
-            <Navbar />
             <div className="mx-20 mt-16">
                 <div className="font-bold text-5xl font-grotesk">
                     Authentication
