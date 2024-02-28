@@ -49,6 +49,7 @@ const HomePage = () => {
     setFirstName("");
     setLastName("");
     setEmail("");
+    setInstitution("");
   };
 
   const createUser = async () => {
