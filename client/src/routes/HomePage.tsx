@@ -6,28 +6,52 @@ import HomePageLinks from "../layouts/HomePageLinks";
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const tempRouteInfo = [
+const studentRouteInfo = [
   {
-    name: "Explore Colleges",
-    url: "#",
-    Icon: School
+      name: "Explore Colleges", 
+      url: "/college-database",
+      Icon: School
   },
   {
-    name: "Find a Mentor",
-    url: "#",
-    Icon: Users
+      name: "Find a Mentor",
+      url: "#",
+      Icon: Users
   },
   {
-    name: "Student Directory",
-    url: "#",
-    Icon: BookUser
+      name: "Student Directory", 
+      url: "/student-database",
+      Icon: BookUser
   },
   {
-    name: "View Profile",
-    url: "#",
-    Icon: SquareUser
+      name: "View Profile", 
+      url: "/student-profile",
+      Icon: SquareUser
   },
 ]
+
+const adminRouteInfo = [
+  {
+      name: "College Database", 
+      url: "/college-database",
+      Icon: School
+  },
+  {
+      name: "Mentor Database", 
+      url: "#",
+      Icon: Users
+  },
+  {
+      name: "Student Database", 
+      url: "/student-database",
+      Icon: BookUser
+  },
+  {
+      name: "Authenticate Users", 
+      url: "/authenticate",
+      Icon: SquareUser
+  },
+]
+
 
 const HomePage = () => {
 
@@ -163,7 +187,8 @@ const HomePage = () => {
           <h1 className="w-full p-14 pl-24 text-left text-4xl text-brand-black font-bold font-grotesk">
             Welcome, {cookies.user_name}!
           </h1>
-          <HomePageLinks RouteInfo={tempRouteInfo}/>
+          {cookies.user_status === 1 && <HomePageLinks RouteInfo={studentRouteInfo}/>}
+          {cookies.user_status === 3 && <HomePageLinks RouteInfo={adminRouteInfo}/>}
         </div>
       ) : (
         <div className="flex justify-center m-3">
