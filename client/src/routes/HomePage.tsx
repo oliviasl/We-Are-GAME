@@ -19,12 +19,12 @@ const studentRouteInfo = [
   },
   {
       name: "Student Directory", 
-      url: "#",
+      url: "/student-database",
       Icon: BookUser
   },
   {
       name: "View Profile", 
-      url: "#",
+      url: "/student-profile",
       Icon: SquareUser
   },
 ]
@@ -32,7 +32,7 @@ const studentRouteInfo = [
 const adminRouteInfo = [
   {
       name: "College Database", 
-      url: "#",
+      url: "/college-database",
       Icon: School
   },
   {
@@ -42,12 +42,12 @@ const adminRouteInfo = [
   },
   {
       name: "Student Database", 
-      url: "#",
+      url: "/student-database",
       Icon: BookUser
   },
   {
       name: "Authenticate Users", 
-      url: "#",
+      url: "/college-database",
       Icon: SquareUser
   },
 ]
@@ -187,8 +187,6 @@ const HomePage = () => {
         <div className="h-screen w-screen flex flex-col items-center">
           <h1 className="w-full p-14 pl-24 text-left text-4xl text-brand-black font-bold font-grotesk">
               Welcome, { cookies.user_name }!
-              {/* DELETE */}
-              {cookies.user_status}
           </h1>
           {cookies.user_status === 1 && <HomePageLinks RouteInfo={studentRouteInfo}/>}
           {cookies.user_status === 3 && <HomePageLinks RouteInfo={adminRouteInfo}/>}
