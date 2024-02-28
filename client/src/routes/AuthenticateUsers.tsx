@@ -77,6 +77,9 @@ const AuthenticateUsers = () => {
                             <th className="text-left py-2 px-8 font-normal">
                                 Email
                             </th>
+                            <th className="text-left py-2 px-8 font-normal">
+                                Latest Enrollment
+                            </th>
                             <th className="text-left py-2 pr-16 font-normal">
                                 Approve/Deny
                             </th>
@@ -92,6 +95,7 @@ const AuthenticateUsers = () => {
                                             user?.user_lastname || ""
                                     }
                                     email={user?.user_email || ""}
+                                    institution={user?.user_school || ""}
                                     onApprove={() => {
                                         onApprove(user?.user_id);
                                     }}
