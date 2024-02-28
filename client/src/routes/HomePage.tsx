@@ -1,9 +1,9 @@
-import { useState } from "react";
+import {useState} from "react";
 import clsx from "clsx";
-import { useCookies } from 'react-cookie';
-import { School, Users, BookUser, SquareUser } from "lucide-react";
+import {useCookies} from 'react-cookie';
+import {BookUser, School, SquareUser, Users} from "lucide-react";
 import HomePageLinks from "../layouts/HomePageLinks";
-import { ToastContainer, toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const studentRouteInfo = [
@@ -13,7 +13,7 @@ const studentRouteInfo = [
       Icon: School
   },
   {
-      name: "Find a Mentor", 
+      name: "Find a Mentor",
       url: "#",
       Icon: Users
   },
@@ -96,7 +96,7 @@ const HomePage = () => {
     const userEmail = JSON.stringify({
       user_email: email,
     });
-    
+
     const userEmailResponse = await fetch("/api/userByEmail", {
       method: "post",
       headers: {
@@ -154,7 +154,7 @@ const HomePage = () => {
       return;
     }
 
-    const authBody =  JSON.stringify({
+    const authBody = JSON.stringify({
       email: email,
       password: password,
     })
@@ -170,11 +170,10 @@ const HomePage = () => {
     console.log(status);
 
     if (status[1] > 0) {
-      setCookies('user_id', status[0], { path: '/' });
-      setCookies('user_status', status[1], { path: '/' });
-      setCookies('user_name', status[2], { path: '/' });
-    }
-    else{
+      setCookies('user_id', status[0], {path: '/'});
+      setCookies('user_status', status[1], {path: '/'});
+      setCookies('user_name', status[2], {path: '/'});
+    } else {
       toast("You are not authorized.", {
         className: "border-l-8 border-semantic-warning"
       });
@@ -186,7 +185,7 @@ const HomePage = () => {
       {(cookies.user_id !== null && cookies.user_id > 0) ? (
         <div className="h-screen w-screen flex flex-col items-center">
           <h1 className="w-full p-14 pl-24 text-left text-4xl text-brand-black font-bold font-grotesk">
-              Welcome, { cookies.user_name }!
+            Welcome, {cookies.user_name}!
           </h1>
           {cookies.user_status === 1 && <HomePageLinks RouteInfo={studentRouteInfo}/>}
           {cookies.user_status === 3 && <HomePageLinks RouteInfo={adminRouteInfo}/>}
@@ -349,9 +348,8 @@ const HomePage = () => {
               </div>
             )}
           </div>
-        </div> )
+        </div>)
       }
-      <ToastContainer hideProgressBar={true} />
     </div>
   );
 };

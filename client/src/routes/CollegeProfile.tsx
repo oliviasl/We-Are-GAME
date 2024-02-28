@@ -1,14 +1,17 @@
 import {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {College} from "../util/types/college";
 import {Button, Chip} from "@material-tailwind/react";
 import {MapPinIcon} from "lucide-react";
 import {CollegeProfileSidebar} from "../components/CollegeProfileSidebar";
 import {CollegeProfileInfo} from "../components/CollegeProfileInfo";
+import AssignStudentModal from "../layouts/AssignStudentModal";
 
 const CollegeProfile = () => {
   const {id} = useParams();
   const navigate = useNavigate();
+
+  const [isAssignStudentModalOpen, setIsAssignStudentModalOpen] = useState(false)
 
   const [data, setData] = useState<Partial<College> | undefined>(undefined);
 
@@ -48,8 +51,10 @@ const CollegeProfile = () => {
           </div>
         </div>
         <div className={"space-x-2"}>
-          <Button className={"bg-semantic-warning text-white"}>Edit College</Button>
-          <Button>Assign Student</Button>
+          <Link to={`/edit-college/${data.college_id}`}>
+            <Button className={"bg-semantic-warning text-white"}>Edit College</Button>
+          </Link>
+          <Button onClick={() => setIsAssignStudentModalOpen(true)}>Assign Student</Button>
         </div>
       </header>
       <div className={"grid grid-cols-[3fr_7fr] gap-8"}>
@@ -57,6 +62,7 @@ const CollegeProfile = () => {
         <CollegeProfileInfo data={data!}/>
       </div>
     </main>
+    <AssignStudentModal isOpen={isAssignStudentModalOpen} onClose={() => setIsAssignStudentModalOpen(false)}/>
   </div>
 }
 
