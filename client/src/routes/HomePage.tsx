@@ -63,6 +63,7 @@ const HomePage = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [institution, setInstitution] = useState("");
   // user cookies
   const [cookies, setCookies] = useCookies(['user_id', 'user_status', 'user_name']);
 
@@ -72,6 +73,7 @@ const HomePage = () => {
     setFirstName("");
     setLastName("");
     setEmail("");
+    setInstitution("");
   };
 
   const createUser = async () => {
@@ -120,6 +122,7 @@ const HomePage = () => {
         user_password: password,
         user_firstname: firstName,
         user_lastname: lastName,
+        user_school: institution
       },
     });
     const response = await fetch("/api/createUser", {
@@ -334,6 +337,19 @@ const HomePage = () => {
                     type="text"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                  ></input>
+                </div>
+                <div className="mt-5">
+                  {/* Curr/Last Institution Wrapper */}
+                  <div className="block text-gray-700 text-sm font-medium mb-2">
+                    Current or Last Institution Enrolled
+                  </div>
+                  <input
+                    className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                    id="institution"
+                    type="text"
+                    value={institution}
+                    onChange={(e) => setInstitution(e.target.value)}
                   ></input>
                 </div>
                 <div className="flex items-center justify-end mt-6">
