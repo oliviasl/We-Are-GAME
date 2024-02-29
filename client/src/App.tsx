@@ -27,7 +27,9 @@ function App() {
             </Route>
             <Route path="/authenticate" element={<AuthenticateUsers/>}/>
             <Route path="/college-database" element={<CollegeDatabase/>}/>
-            <Route path="/student-profile" element={<StudentProfileRoute/>}/>
+            <Route path="/student-profile">
+              <Route path=":id" element={<StudentProfileRoute/>}/>
+            </Route>
             <Route path="/college-profile">
               <Route path=":id" element={<CollegeProfile/>}/>
             </Route>
