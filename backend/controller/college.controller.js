@@ -309,14 +309,17 @@ class collegeController {
             console.log("field", field, "fields[field]", fields[field]);
             if (fields[field] != null && fields[field] !== "") {
                 // Await the promise and then process the result
-
                 const res = await collegeController.filterMap.get(field)(fields[field]);
-                if (res[1] !== undefined) {
-                    console.log("res", res[0], "res1", res[1]);
+                if (res[0] !== undefined) {
+                    if (typeof fields[field] === 'boolean' && fields[field] === false){
+                        continue;
+                    }
                     if (idx > 0 && queryStr.length > 0) { // Ensure INTERSECT is added only if needed
                         queryStr.push(" INTERSECT ");
                     }
-                    queryParams.push(res[1]);
+                    if (res[1] !== undefined){
+                        queryParams.push(res[1]);
+                    }
                     queryStr.push(res[0].replace("$1", `$${queryParams.length}`));
                 }
             } else if (fields[field] !== "") {
@@ -358,11 +361,8 @@ class collegeController {
         // page size is 6
         const PAGE_SIZE = 7;
         const offset = (pageNumber - 1) * PAGE_SIZE;
-
-        console.log("fields", fields);
         const partialResult = await this.collegesFiltered(fields, PAGE_SIZE, offset);
         const result = await this.collegesFiltered(fields);
-        // console.log("result", result);
         const totalCount = result.length;
         const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
