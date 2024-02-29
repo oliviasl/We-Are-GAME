@@ -105,7 +105,10 @@ CREATE TABLE IF NOT EXISTS master_users
     user_sport1_role VARCHAR,
     user_sport2 VARCHAR,
     user_sport2_role VARCHAR,
-    user_notes VARCHAR
+    user_notes VARCHAR,
+    user_instagram VARCHAR,
+    user_facebook VARCHAR,
+    user_show_socials BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS user_status
@@ -247,9 +250,12 @@ INSERT INTO master_users (
     user_sport1_role,
     user_sport2,
     user_sport2_role,
-    user_notes
+    user_notes,
+    user_instagram,
+    user_facebook,
+    user_show_socials
 )
-VALUES ('janedoe@example.com', 'password', 'Jane', 'Doe', '000-000-0000', 'MVHS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'cs', 'bio', 'chem', 'coding', 'coding more', 'soccer', 'defense', 'basketball', 'center', 'notes');
+VALUES ('janedoe@example.com', 'password', 'Jane', 'Doe', '000-000-0000', 'MVHS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'cs', 'bio', 'chem', 'coding', 'coding more', 'soccer', 'defense', 'basketball', 'center', 'notes', 'janedoe', 'janedoefb', true);
 
 
 INSERT INTO user_status (user_id, user_status)
