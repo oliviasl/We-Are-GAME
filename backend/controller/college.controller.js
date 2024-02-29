@@ -14,8 +14,8 @@ class collegeController {
         collegeController.filterMap.set('collegeHasDiversityResource', () => this.collegeHasDiversityResource(false));
         collegeController.filterMap.set('collegeByGPA', (gpa) => this.collegeByGPA(gpa, false));
         collegeController.filterMap.set('collegeBySATRead', (satReadWrite) => this.collegeBySATRead(satReadWrite, false));
-        collegeController.filterMap.set('collegeBySATMath', (satMath) => this.collegeBySATRead(satMath, false));
-        collegeController.filterMap.set('collegeByACT', (act) => this.collegeByGPA(act, false));
+        collegeController.filterMap.set('collegeBySATMath', (satMath) => this.collegeBySATMath(satMath, false));
+        collegeController.filterMap.set('collegeByACT', (act) => this.collegeByACT(act, false));
     }
 
     // for all SELECT SQL calls
@@ -306,17 +306,20 @@ class collegeController {
         
         // null field values mean no input is required for that filter
         for (const [idx, field] of filterFields.entries()) {
-            if (fields[field] != null) {
+            console.log("field", field, "fields[field]", fields[field]);
+            if (fields[field] != null && fields[field] !== "") {
                 // Await the promise and then process the result
+
                 const res = await collegeController.filterMap.get(field)(fields[field]);
-                if (res !== undefined) {
+                if (res[1] !== undefined) {
+                    console.log("res", res[0], "res1", res[1]);
                     if (idx > 0 && queryStr.length > 0) { // Ensure INTERSECT is added only if needed
                         queryStr.push(" INTERSECT ");
                     }
                     queryParams.push(res[1]);
                     queryStr.push(res[0].replace("$1", `$${queryParams.length}`));
                 }
-            } else {
+            } else if (fields[field] !== "") {
                 const res = await collegeController.filterMap.get(field)();
                 if (res !== undefined) {
                     if (idx > 0 && queryStr.length > 0) { // Ensure INTERSECT is added only if needed
@@ -326,7 +329,8 @@ class collegeController {
                 }
             }
         }
-        queryStr.push(" LIMIT $2 OFFSET $3");
+        const queryParamLength = queryParams.length;
+        queryStr.push(` LIMIT $${queryParamLength + 1} OFFSET $${queryParamLength + 2}`);
 
     
         return [queryStr, queryParams];
@@ -334,8 +338,13 @@ class collegeController {
 
     // collegesFiltered
     // uses generated intersected sql call and params to get filtered results
-    async collegesFiltered(fields, pageSize=null, offset=null) {
+    async collegesFiltered(fields, pageSize, offset) {
         // queryValues = [queryStr : string[], queryParams : object[]]
+        console.log("fields in collegesFiltered", fields);
+        if (Object.keys(fields).length === 0) {
+            console.log("no fields");
+            return this.allColleges();
+        }
         let queryValues = await this.generateFilterQuery(fields);
         console.log("queryValue", queryValues[0].join(''));
         console.log("queryValue1", queryValues[1]);
@@ -353,7 +362,7 @@ class collegeController {
         console.log("fields", fields);
         const partialResult = await this.collegesFiltered(fields, PAGE_SIZE, offset);
         const result = await this.collegesFiltered(fields);
-        console.log("result", result);
+        // console.log("result", result);
         const totalCount = result.length;
         const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 

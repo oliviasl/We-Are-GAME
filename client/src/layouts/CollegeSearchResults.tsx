@@ -27,7 +27,7 @@ async function fetchColleges(fields: any, pageNumber: number): Promise<any> {
     }
 }
 
-const CollegeSearchResults = () => {
+const CollegeSearchResults = (formData: any) => {
     const TABLE_HEAD = ["College Name", "Location", "Admit Rate", "Average GPA", ""];
     const [TABLE_ROWS, setTableRows] =useState<any[]>([]);
     const [totalPages, setTotalPages] = useState(1);
@@ -36,21 +36,24 @@ const CollegeSearchResults = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const fields = { "collegeByGPA": 3};
+                const fields = formData.formData;
+                console.log("Fields: ", fields);
                 const data = await fetchColleges(fields, page);
-                console.log("Data: ", data);
+                // console.log("Data: ", data);
 
                 const {totalPages, colleges} = data;
-                console.log("colleges: ", colleges);
+                // console.log("colleges: ", colleges);
                 setTableRows(colleges);
                 setTotalPages(totalPages);
+                // console.log("TotalPages: ", totalPages);
+                // console.log("Page: ", page);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
 
         fetchData();
-    }, [page]);
+    }, [page, formData]);
 
     console.log(TABLE_ROWS)
 

@@ -1,32 +1,51 @@
 import React, { useState } from "react";
 import { Input, Button, Checkbox } from "@material-tailwind/react";
 
-const CollegeFilters = () => {
+export interface CollegeFiltersProps {
+    onCollegeData: (formData: CollegeData) => void;
+}
+
+export interface CollegeData {
+    collegeByName?: string;
+    collegeByGPA?: string;
+    collegeBySATRead?: string;
+    collegeBySATMath?: string;
+    collegeByACT?: string;
+    collegeHasStuAthAcademicRes?: boolean;
+    collegeHasAcademicResource?: boolean;
+    collegeHasDiversityResource?: boolean;
+}
+
+
+const CollegeFilters: React.FC<CollegeFiltersProps> = ({ onCollegeData }) => {
     // State for each form input
-    const [collegeName, setCollegeName] = useState('');
-    const [averageGPA, setAverageGPA] = useState('');
-    const [satEBRW, setSatEBRW] = useState('');
-    const [satMath, setSatMath] = useState('');
-    const [actComposite, setActComposite] = useState('');
-    const [studentAthleteResources, setStudentAthleteResources] = useState(false);
-    const [studentAcademicResources, setStudentAcademicResources] = useState(false);
-    const [diversityResources, setDiversityResources] = useState(false);
+    const [collegeByName, setCollegeName] = useState("");
+    const [collegeByGPA, setAverageGPA] = useState("");
+    const [collegeBySATRead, setSatEBRW] = useState("");
+    const [collegeBySATMath, setSatMath] = useState("");
+    const [collegeByACT, setActComposite] = useState("");
+    const [collegeHasStuAthAcademicRes, setStudentAthleteResources] = useState(false);
+    const [collegeHasAcademicResource, setStudentAcademicResources] = useState(false);
+    const [collegeHasDiversityResource, setDiversityResources] = useState(false);
 
     // Form submission handler
     const handleSubmit = (event: any) => {
         event.preventDefault(); // Prevents the default form submission behavior
         const formData = {
-            collegeName,
-            averageGPA,
-            satEBRW,
-            satMath,
-            actComposite,
-            studentAthleteResources,
-            studentAcademicResources,
-            diversityResources,
+            collegeByName,
+            collegeByGPA,
+            collegeBySATRead,
+            collegeBySATMath,
+            collegeByACT,
+            collegeHasStuAthAcademicRes,
+            collegeHasAcademicResource,
+            collegeHasDiversityResource,
         };
-        console.log(formData); // For demonstration, you'd likely send this data to a server
+        console.log("formData", formData); // For demonstration, you'd likely send this data to a server
+        onCollegeData(formData); // Pass the form data to the parent component
     };
+
+
 
     // Checkbox custom icon
     const icon = (
@@ -44,7 +63,7 @@ const CollegeFilters = () => {
             <div className="flex items-center place-content-between my-2">
                 <div>College Name</div>
                 <div className="w-40">
-                    <Input size="lg" value={collegeName} onChange={(e) => setCollegeName(e.target.value)} crossOrigin={undefined} />
+                    <Input size="lg" value={collegeByName} onChange={(e) => setCollegeName(e.target.value)} crossOrigin={undefined} />
                 </div>
 
             </div>
@@ -54,40 +73,40 @@ const CollegeFilters = () => {
             <div className="flex items-center place-content-between my-2">
                 <div>Average GPA</div>
                 <div className="w-40">
-                <Input size="lg" value={averageGPA} onChange={(e) => setAverageGPA(e.target.value)} crossOrigin={undefined} />
+                <Input size="lg" value={collegeByGPA} onChange={(e) => setAverageGPA(e.target.value)} crossOrigin={undefined} />
                 </div>
             </div>
             <div className="flex items-center place-content-between my-2">
                 <div>SAT EBRW</div>
                 <div className="w-40">
-                <Input size="lg" value={satEBRW} onChange={(e) => setSatEBRW(e.target.value)} crossOrigin={undefined}/>
+                <Input size="lg" value={collegeBySATRead} onChange={(e) => setSatEBRW(e.target.value)} crossOrigin={undefined}/>
                 </div>
             </div>
             <div className="flex items-center place-content-between my-2">
                 <div>SAT Math</div>
                 <div className="w-40">
-                <Input size="lg" value={satMath} onChange={(e) => setSatMath(e.target.value)} crossOrigin={undefined} />
+                <Input size="lg" value={collegeBySATMath} onChange={(e) => setSatMath(e.target.value)} crossOrigin={undefined} />
                 </div>
             </div>
             <div className="flex items-center place-content-between my-2">
                 <div>ACT Composite</div>
                 <div className="w-40">
-                <Input size="lg" value={actComposite} onChange={(e) => setActComposite(e.target.value)} crossOrigin={undefined} />
+                <Input size="lg" value={collegeByACT} onChange={(e) => setActComposite(e.target.value)} crossOrigin={undefined} />
                 </div>
             </div>
 
             {/* Resources */}
             <div className="text-2xl font-bold">Resources</div>
             <div className="flex items-center space-x-2">
-                <Checkbox checked={studentAthleteResources} onChange={(e) => setStudentAthleteResources(e.target.checked)} icon={icon} crossOrigin={undefined} />
+                <Checkbox checked={collegeHasStuAthAcademicRes} onChange={(e) => setStudentAthleteResources(e.target.checked)} icon={icon} crossOrigin={undefined} />
                 <div>Student Athlete Academic Resources</div>
             </div>
             <div className="flex items-center space-x-2">
-                <Checkbox checked={studentAcademicResources} onChange={(e) => setStudentAcademicResources(e.target.checked)} icon={icon} crossOrigin={undefined} />
+                <Checkbox checked={collegeHasAcademicResource} onChange={(e) => setStudentAcademicResources(e.target.checked)} icon={icon} crossOrigin={undefined} />
                 <div>Student Academic Resources</div>
             </div>
             <div className="flex items-center space-x-2 pb-6">
-                <Checkbox checked={diversityResources} onChange={(e) => setDiversityResources(e.target.checked)} icon={icon} crossOrigin={undefined} />
+                <Checkbox checked={collegeHasDiversityResource} onChange={(e) => setDiversityResources(e.target.checked)} icon={icon} crossOrigin={undefined} />
                 <div>Diversity Resources</div>
             </div>
 
