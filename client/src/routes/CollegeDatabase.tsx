@@ -2,6 +2,7 @@ import CollegeFilters from "../layouts/CollegeFilters";
 import CollegeSearchResults from "../layouts/CollegeSearchResults";
 import CollegeUpdateDatabase from "../layouts/CollegeUpdateDatabase";
 import { CollegeData } from "../layouts/CollegeFilters";
+import { useState } from "react";
 
 const CollegeDatabase = () => {
     const [formData, setFormData] = useState<CollegeData | {}>({});
