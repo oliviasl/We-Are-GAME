@@ -1,13 +1,31 @@
 import React, { useEffect, useState, ElementType } from "react";
 import ProfileBox from "../components/ProfileBox";
 import CollegeBox from "../components/CollegeBox";
-import {studentData} from "../routes/StudentProfile";
+import {studentData, collegeAssignments} from "../routes/StudentProfile";
 import Pencil from "../components/Pencil";
+import AddCollegeModal from "../layouts/AddCollegeModal";
 
-const StudentProfile = ({ studentData }: { studentData: studentData }) => {
+interface StudentProfileProps {
+  studentData: studentData;
+  collegeAssignments: collegeAssignments[];
+  handleDelete: (collegeId: number) => void;
+  handleAdd: (collegeId: number) => void;
+}
+
+const StudentProfile: React.FC<StudentProfileProps> = ({ studentData, collegeAssignments, handleDelete, handleAdd }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   if (!studentData) {
     return null;
   }
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   const capFirstLetter = (str: string): string => {
     return str.replace(/\b\w/g, (match: string) => match.toUpperCase());
   };
@@ -48,8 +66,9 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
     studentData.user_alt_major1 ? capFirstLetter(studentData.user_alt_major1) : '',
     studentData.user_alt_major2 ? capFirstLetter(studentData.user_alt_major2) : '',
   ];
+
   return (
-    <div className="grid grid-cols-3 gap-4 m-auto mx-20 my-10 font-circular-std leading-none">
+    <div className="grid grid-cols-3 gap-4 m-auto mx-20 my-10 mb-32 font-circular-std leading-none">
       {/* Username/Grad year */}
       <div className='col-span-2 order-1'>
         <div className="bg-brand-gray-20 rounded-t-md text-brand-white flex p-4 items-center">
@@ -65,19 +84,29 @@ const StudentProfile = ({ studentData }: { studentData: studentData }) => {
         </div>
       </div>
 
-    {/* Colleges: TO DO— MAKE DYNAMIC! */}
+    {/* Colleges */}
       <div className=' rounded-md row-span-4 order-2 border-gray-400 border-2'>
         <div className="p-4 ">
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-md mb-2">Colleges</h2>
-            <div className="px-1 pb-1" ><Pencil fill="#B3B3B3" /></div>
+            <div className="px-1 pb-1" ><Pencil fill="#B3B3B3" onClick={openModal} /></div>
           </div>
           <div>
-          {studentData.colleges.map((college, index) => (
-            <CollegeBox key={index} name={college} />
+          {collegeAssignments.map((assignment) => (
+            <CollegeBox 
+              key={assignment.college_id}
+              name={assignment.college_name}
+              college_id={assignment.college_id}
+              onDelete={() => handleDelete(assignment.college_id)}
+            />
           ))}
           </div>
-          <button className="border-4 border-gray-400 border-dashed rounded-md text-gray-400 text-3xl text-center p-2 w-full transition duration-300 ease-in-out hover:bg-gray-200 focus:outline-none" onClick={() => console.log('test')}>+</button>
+          <button className="border-4 border-gray-400 border-dashed rounded-md text-gray-400 text-3xl text-center p-2 py-1 w-full transition duration-300 ease-in-out hover:bg-brand-blue-95 hover:border-brand-blue-95 hover:text-white focus:outline-none" onClick={openModal}>+</button>
+          <AddCollegeModal
+            isOpen={modalOpen}
+            onClose={closeModal}
+            onAdd={handleAdd} 
+          />
         </div>
       </div>
 

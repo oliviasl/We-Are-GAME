@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
-import { Card, Typography } from "@material-tailwind/react";
-import { Button } from "@material-tailwind/react";
+import {Button, Card, Typography} from "@material-tailwind/react";
+import {Link} from "react-router-dom";
 
 interface CollegeData {
-    college_name: string;
-    // other fields...
+  college_name: string;
+  // other fields...
 }
 
 async function fetchColleges(fields: any, pageNumber: number): Promise<any> {
@@ -57,32 +57,32 @@ const CollegeSearchResults = (formData: any) => {
 
     console.log(TABLE_ROWS)
 
-    return (
-        <Card shadow={false} className="h-full w-full pr-5">
-          <table className=" table-auto text-left rounded-none">
-            <thead>
-              <tr className="h-12">
-                {TABLE_HEAD.map((head) => (
-                  <th
-                    key={head}
-                    className="border-b border-black p-4 border-t"
+  return (
+    <Card shadow={false} className="h-full w-full pr-5">
+      <table className=" table-auto text-left rounded-none">
+        <thead>
+        <tr className="h-12">
+          {TABLE_HEAD.map((head) => (
+            <th
+              key={head}
+              className="border-b border-black p-4 border-t"
 
-                  >
-                    <Typography
-                      variant="small"
-                      color="black"
-                      className="font-semibold leading-none opacity-70"
-                    >
-                      {head}
-                    </Typography>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {TABLE_ROWS.map(({ college_name, college_location, acceptance_rate, max_gpa }, index) => {
-                const isLast = index === TABLE_ROWS.length - 1;
-                const classes = "p-4 border-b border-black";
+            >
+              <Typography
+                variant="small"
+                color="black"
+                className="font-semibold leading-none opacity-70"
+              >
+                {head}
+              </Typography>
+            </th>
+          ))}
+        </tr>
+        </thead>
+        <tbody>
+        {TABLE_ROWS.map(({college_id, college_name, college_location, acceptance_rate, max_gpa}, index) => {
+          const isLast = index === TABLE_ROWS.length - 1;
+          const classes = "p-4 border-b border-black";
 
                 return (
                   <tr key={college_name} className="h-12">
