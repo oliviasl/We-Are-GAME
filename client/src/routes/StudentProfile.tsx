@@ -1,5 +1,6 @@
 import StudentProfile from "../layouts/StudentProfile";
 import React, { useEffect, useState, ElementType } from "react";
+import {Link, useNavigate, useParams} from "react-router-dom";
 
 export interface studentData {
   user_id: number;
@@ -46,17 +47,17 @@ export interface collegeAssignments {
   college_name: string;
 }
 
-let userId = 1;
-
-
 const StudentProfileRoute = () => {
+  const {id} = useParams();
+  const navigate = useNavigate();
+
   const [studentData, setStudentData] = useState<studentData>({} as studentData);
   const [collegeAssignments, setCollegeAssignments] = useState<collegeAssignments[]>([]);
 
   const fetchAssignments = async () => {
     try {
       const userData = JSON.stringify({
-        userId: userId
+        userId: id
       });
 
       const assignmentsResponse = await fetch("/api/assignmentsByUserId", {
@@ -79,7 +80,7 @@ const StudentProfileRoute = () => {
           Accept: "application/json",
         },
         body: JSON.stringify({
-          userId: userId,
+          userId: id,
           collegeId: collegeId,
         }),
       });
@@ -101,20 +102,11 @@ const StudentProfileRoute = () => {
     }
   };
 
-  // REMOVE! hard coded for display purposes
-  studentData.user_grad_year = 2026;
-  studentData.user_act_math = 36;
-  studentData.user_act_science = 36;
-  studentData.user_act_reading = 36;
-  studentData.user_act_english = 36;
-  studentData.user_sat = 1600;
-  // REMOVE! hard coded for display purposes
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userData = JSON.stringify({
-          userId: userId
+          userId: id
         });
         const response = await fetch(`/api/userById`, {
           method: "post",
@@ -134,7 +126,7 @@ const StudentProfileRoute = () => {
 
     fetchData();
     fetchAssignments();
-  }, [userId]);
+  }, [id]);
 
   const handleDelete = async (collegeId: number) => {
     try {
@@ -145,7 +137,7 @@ const StudentProfileRoute = () => {
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          userId: studentData.user_id,
+          userId: id,
           collegeId: collegeId,
         }),
       });
@@ -170,7 +162,7 @@ const StudentProfileRoute = () => {
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          userId: studentData.user_id,
+          userId: id,
           collegeId: collegeId,
         }),
       });

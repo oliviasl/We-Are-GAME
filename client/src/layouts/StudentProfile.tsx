@@ -4,7 +4,6 @@ import CollegeBox from "../components/CollegeBox";
 import {studentData, collegeAssignments} from "../routes/StudentProfile";
 import Pencil from "../components/Pencil";
 import AddCollegeModal from "../layouts/AddCollegeModal";
-import {Link, useNavigate, useParams} from "react-router-dom";
 
 
 interface StudentProfileProps {
@@ -15,8 +14,6 @@ interface StudentProfileProps {
 }
 
 const StudentProfile: React.FC<StudentProfileProps> = ({ studentData, collegeAssignments, handleDelete, handleAdd }) => {
-  const {id} = useParams();
-  const navigate = useNavigate();
   
   const [modalOpen, setModalOpen] = useState(false);
 
