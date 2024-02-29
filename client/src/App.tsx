@@ -6,6 +6,7 @@ import AuthenticateUsers from "./routes/AuthenticateUsers";
 import CollegeDatabase from "./routes/CollegeDatabase";
 import StudentDatabase from "./routes/StudentDatabase";
 import StudentProfileRoute from "./routes/StudentProfile";
+import PeerProfileView from "./routes/PeerProfileView";
 import EditStudent from "./routes/EditStudent";
 import CollegeProfile from "./routes/CollegeProfile";
 import EditCollege from "./routes/EditCollege";
@@ -30,6 +31,7 @@ function App() {
             <Route path="/college-database" element={<CollegeDatabase/>}/>
             <Route path="/edit-student" element={<EditStudent/>} />
             <Route path="/student-profile" element={<StudentProfileRoute/>}/>
+            <Route path="/peer-profile" element={<PeerProfileView/>}/>
             <Route path="/college-profile">
               <Route path=":id" element={<CollegeProfile/>}/>
             </Route>
