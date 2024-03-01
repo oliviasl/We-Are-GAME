@@ -84,16 +84,15 @@ const StudentDatabase = () => {
                                         }
                                         major={student?.user_potential_major}
                                         sport={student?.user_sport1}
-                                        email={student?.user_email}
-                                        key={student?.user_email}
+                                        id={student?.user_id}
                                     />
                                 );
-                            })}
+                            })}                          
                         </tbody>
                     </table>
                     <div className="flex justify-start items-center gap-2 mt-16">
                         <button
-                            disabled={page === 1}
+                            disabled={page === 1 || totalPages === 0}
                             className="relative h-8 max-h-[24px] w-8 max-w-[24px] select-none rounded-lg border border-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                             onClick={() => {
                                 setPage((p) => {
@@ -123,7 +122,7 @@ const StudentDatabase = () => {
                             Page {page} of {totalPages}
                         </span>
                         <button
-                            disabled={page === totalPages}
+                            disabled={page === totalPages || totalPages === 0}
                             className="relative h-8 max-h-[24px] w-8 max-w-[24px] select-none rounded-lg border border-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                             type="button"
                             onClick={() => {
