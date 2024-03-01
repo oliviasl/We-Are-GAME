@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from "react";
-import {Link, useNavigate, useParams} from "react-router-dom";
 import StudentDirectoryRow from "../components/StudentDirectoryRow";
 
 const StudentDatabase = () => {
@@ -77,20 +76,18 @@ const StudentDatabase = () => {
                         <tbody>
                             {students.map((student) => {
                                 return (
-                                    <Link to={`/student-profile/${student?.user_id}`}>
-                                        <StudentDirectoryRow
-                                            name={
-                                                student?.user_firstname +
-                                                " " +
-                                                student?.user_lastname
-                                            }
-                                            major={student?.user_potential_major}
-                                            sport={student?.user_sport1}
-                                            email={student?.user_email}
-                                        />
-                                    </Link>
+                                    <StudentDirectoryRow
+                                        name={
+                                            student?.user_firstname +
+                                            " " +
+                                            student?.user_lastname
+                                        }
+                                        major={student?.user_potential_major}
+                                        sport={student?.user_sport1}
+                                        id={student?.user_id}
+                                    />
                                 );
-                            })}
+                            })}                          
                         </tbody>
                     </table>
                     <div className="flex justify-start items-center gap-2 mt-16">

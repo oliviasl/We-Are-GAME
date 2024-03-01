@@ -1,6 +1,6 @@
 import StudentProfile from "../layouts/StudentProfile";
 import React, { useEffect, useState, ElementType } from "react";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export interface studentData {
   user_id: number;
@@ -49,7 +49,6 @@ export interface collegeAssignments {
 
 const StudentProfileRoute = () => {
   const {id} = useParams();
-  const navigate = useNavigate();
 
   const [studentData, setStudentData] = useState<studentData>({} as studentData);
   const [collegeAssignments, setCollegeAssignments] = useState<collegeAssignments[]>([]);
