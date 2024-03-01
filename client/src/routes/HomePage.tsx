@@ -6,28 +6,52 @@ import HomePageLinks from "../layouts/HomePageLinks";
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const tempRouteInfo = [
+const studentRouteInfo = [
   {
-    name: "Explore Colleges",
-    url: "#",
-    Icon: School
+      name: "Explore Colleges", 
+      url: "/college-database",
+      Icon: School
   },
   {
-    name: "Find a Mentor",
-    url: "#",
-    Icon: Users
+      name: "Find a Mentor",
+      url: "#",
+      Icon: Users
   },
   {
-    name: "Student Directory",
-    url: "#",
-    Icon: BookUser
+      name: "Student Directory", 
+      url: "/student-database",
+      Icon: BookUser
   },
   {
-    name: "View Profile",
-    url: "#",
-    Icon: SquareUser
+      name: "View Profile", 
+      url: "/student-profile",
+      Icon: SquareUser
   },
 ]
+
+const adminRouteInfo = [
+  {
+      name: "College Database", 
+      url: "/college-database",
+      Icon: School
+  },
+  {
+      name: "Mentor Database", 
+      url: "#",
+      Icon: Users
+  },
+  {
+      name: "Student Database", 
+      url: "/student-database",
+      Icon: BookUser
+  },
+  {
+      name: "Authenticate Users", 
+      url: "/authenticate",
+      Icon: SquareUser
+  },
+]
+
 
 const HomePage = () => {
 
@@ -39,6 +63,7 @@ const HomePage = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [institution, setInstitution] = useState("");
   // user cookies
   const [cookies, setCookies] = useCookies(['user_id', 'user_status', 'user_name']);
 
@@ -48,6 +73,7 @@ const HomePage = () => {
     setFirstName("");
     setLastName("");
     setEmail("");
+    setInstitution("");
   };
 
   const createUser = async () => {
@@ -96,6 +122,7 @@ const HomePage = () => {
         user_password: password,
         user_firstname: firstName,
         user_lastname: lastName,
+        user_school: institution
       },
     });
     const response = await fetch("/api/createUser", {
@@ -163,7 +190,8 @@ const HomePage = () => {
           <h1 className="w-full p-14 pl-24 text-left text-4xl text-brand-black font-bold font-grotesk">
             Welcome, {cookies.user_name}!
           </h1>
-          <HomePageLinks RouteInfo={tempRouteInfo}/>
+          {cookies.user_status === 1 && <HomePageLinks RouteInfo={studentRouteInfo}/>}
+          {cookies.user_status === 3 && <HomePageLinks RouteInfo={adminRouteInfo}/>}
         </div>
       ) : (
         <div className="flex justify-center m-3">
@@ -309,6 +337,19 @@ const HomePage = () => {
                     type="text"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                  ></input>
+                </div>
+                <div className="mt-5">
+                  {/* Curr/Last Institution Wrapper */}
+                  <div className="block text-gray-700 text-sm font-medium mb-2">
+                    Current or Last Institution Enrolled
+                  </div>
+                  <input
+                    className="border-2 border-black rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                    id="institution"
+                    type="text"
+                    value={institution}
+                    onChange={(e) => setInstitution(e.target.value)}
                   ></input>
                 </div>
                 <div className="flex items-center justify-end mt-6">

@@ -6,6 +6,7 @@ import AuthenticateUsers from "./routes/AuthenticateUsers";
 import CollegeDatabase from "./routes/CollegeDatabase";
 import StudentDatabase from "./routes/StudentDatabase";
 import StudentProfileRoute from "./routes/StudentProfile";
+import EditStudent from "./routes/EditStudent";
 import CollegeProfile from "./routes/CollegeProfile";
 import EditCollege from "./routes/EditCollege";
 import {ThemeProvider} from "@material-tailwind/react";
@@ -30,6 +31,7 @@ function App() {
             <Route path="/student-profile">
               <Route path=":id" element={<StudentProfileRoute/>}/>
             </Route>
+            <Route path="/edit-student" element={<EditStudent/>} />
             <Route path="/college-profile">
               <Route path=":id" element={<CollegeProfile/>}/>
             </Route>
