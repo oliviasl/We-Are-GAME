@@ -314,7 +314,12 @@ class userController {
         const user = userQuery.rows[0];
     
         // if passwords do not match, user is invalid
-        if (!await bcrypt.compare(password, user.user_password)) {
+        // *** TO DELETE, ONLY FOR TESTING PURPOSES
+        // allows for empty passwords for manually inputted test data
+        if (password === '' && password === user.user_password)
+        {}
+        // *** TO DELETE ONLY FOR TESTING PURPOSES
+        else if (!await bcrypt.compare(password, user.user_password)) {
             return [-1, -1];
         }
         
