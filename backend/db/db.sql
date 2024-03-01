@@ -130,6 +130,9 @@ CREATE TABLE IF NOT EXISTS mentors
     mentor_phone VARCHAR,
     mentor_colleges VARCHAR,
     mentor_degrees VARCHAR,
+    mentor_major1 VARCHAR,
+    mentor_major2 VARCHAR,
+    mentor_major3 VARCHAR,
     mentor_curr_employment VARCHAR,
     mentor_highest_sports_level VARCHAR,
     mentor_interests VARCHAR,
@@ -211,7 +214,7 @@ VALUES
 
     ('UC Irvine', 'Irvine', 'CA', 'www.uci.edu', 'admissions.com', 'finaid.com', 2.5, 3.8, 1200, 1600, 400, 800, 400, 800, 27, 34, 27, 34, 27, 34, 27, 34, 27, 34, 'majors.com', 'athletics.com', 'Big West', .8, 'questionaire.com', 4, .15, 'racestats.com', .12, .12, .12, .12, .12, .12, .12, .12, .13, 'genderstats.com', .48, .52, .7, .3, .7, 'netpricecalc.com', 28000, 60000, 85000, 'finaidathlete.com', 'stuathacademicres.com', 'academicresources.com', 'diversityresources.com', 'studentorgs.com', 'studyabroad.com', 'application.com', '2023-12-31', '2023-12-31', '2024-01-15', '2023-11-10', '2023-12-31', 'UCI is fantastic'),
 
-    ('University of Southern California', 'Los Angeles', 'CA', 'https://www.usc.edu', 'https://admissions.com', 'https://finaid.com', 2.0, 4.0, 1200, 1500, 400, 800, 400, 800, 28, 35, 28, 35, 28, 35, 28, 35, 28, 35, 'https://majors.com', 'https://athletics.com', 'PAC12', 75, 'https://questionaire.com', 4, 12, 'https://racestats.com', 11, 11, 11, 11, 11, 11, 11, 11, 12, 'https://genderstats.com', 5, 5, 8, 2, 8, 'netpricecalc.com', 30000, 60000, 80000, 'https://finaidathlete.com', 'https://stuathacademicres.com', 'https://academicresources.com', 'https://diversityresources.com', 'https://studentorgs.com', 'https://studyabroad.com', 'https://application.com', '2023-12-31', '2023-12-31', '2024-01-15', '2023-11-10', '2023-12-31', 'USC is cool ig'),
+    ('University of Southern California', 'Los Angeles', 'CA', 'https://www.usc.edu', 'https://admissions.com', 'https://finaid.com', 2.0, 4.0, 1200, 1500, 400, 800, 400, 800, 28, 35, 28, 35, 28, 35, 28, 35, 28, 35, 'https://majors.com', 'https://athletics.com', 'PAC12', 75, 'https://questionaire.com', 4, 12, 'https://racestats.com', 11, 11, 11, 11, 11, 11, 11, 11, 12, 'https://genderstats.com', 5, 5, 8, 2, 8, 'https://netpricecalc.com', 30000, 60000, 80000, 'https://finaidathlete.com', 'https://stuathacademicres.com', 'https://academicresources.com', 'https://diversityresources.com', 'https://studentorgs.com', 'https://studyabroad.com', 'https://application.com', '2023-12-31', '2023-12-31', '2024-01-15', '2023-11-10', '2023-12-31', 'USC is cool ig'),
 
     ('UC Los Angeles', 'Los Angeles', 'CA', 'www.ucla.edu', 'admissions.com', 'finaid.com', 2.0, 4.0, 800, 1000, 400, 800, 400, 800, 25, 33, 25, 33, 25, 33, 25, 34, 25, 33, 'majors.com', 'athletics.com', 'PAC12', .75, 'questionaire.com', 4, .12, 'racestats.com', .11, .11, .11, .11, .11, .11, .11, .11, .12, 'genderstats.com', .5, .5, .8, .2, .8, 'netpricecalc.com', 30000, 60000, 80000, 'finaidathlete.com', 'stuathacademicres.com', 'academicresources.com', 'diversityresources.com', 'studentorgs.com', 'studyabroad.com', 'application.com', '2023-12-31', '2023-12-31', '2024-01-15', '2023-11-10', '2023-12-31', 'UCLA is great'),
 
@@ -304,6 +307,9 @@ INSERT INTO mentors (
     mentor_phone,
     mentor_colleges,
     mentor_degrees,
+    mentor_major1,
+    mentor_major2,
+    mentor_major3,
     mentor_curr_employment,
     mentor_highest_sports_level,
     mentor_interests,
@@ -313,5 +319,5 @@ INSERT INTO mentors (
     mentor_sport2,
     mentor_sport2_role
 )
-VALUES ('Bob', 'Smith', 'bobsmith@example.com', '111-111-1111', 'USC', 'BS in CS', 'Google', 'D1', 'Hiking', 'CTC', 'football', 'quarterback', 'volleyball', 'setter');
+VALUES ('Bob', 'Smith', 'bobsmith@example.com', '111-111-1111', 'USC', 'Bachelors', 'Computer Science', 'Design', 'Biology', 'Google', 'D1', 'Hiking', 'CTC', 'football', 'quarterback', 'volleyball', 'setter');
 
