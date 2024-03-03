@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {College} from "../util/types/college";
 import {Button, Chip} from "@material-tailwind/react";
 import {MapPinIcon} from "lucide-react";
@@ -10,13 +10,12 @@ import {useCookies} from "react-cookie";
 
 const CollegeProfile = () => {
   const {id} = useParams();
-  const navigate = useNavigate();
 
   const [isAssignStudentModalOpen, setIsAssignStudentModalOpen] = useState(false)
 
   const [data, setData] = useState<Partial<College> | undefined>(undefined);
 
-  const [cookies, setCookies] = useCookies(['user_id', 'user_status']);
+  const [cookies] = useCookies(['user_id', 'user_status']);
 
   useEffect(() => {
     async function fetchCollegeData() {
