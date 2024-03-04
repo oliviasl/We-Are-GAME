@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import AutofillModal from "./AutofillModal";
 
-const AutofillCollege = () => {
+type AutofillCollegeProps={
+    stateAutofill: (arg1: boolean) => void;
+}
+
+const AutofillCollege = ({stateAutofill}: AutofillCollegeProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
@@ -20,7 +24,7 @@ const AutofillCollege = () => {
                 </div>
             </div>
             <div className="z-50">
-                <AutofillModal isOpen={isModalOpen} setIsOpen={setIsModalOpen}/>
+                <AutofillModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} stateAutofill={stateAutofill}/>
             </div>
         </>
     );

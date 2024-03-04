@@ -15,12 +15,17 @@ export default function CollegeFormPage({data, onSubmit}: { data?: any, onSubmit
     setFormData(updatedFormData);
 
     if (activeStep < collegeFormSchemas.length - 1) {
-      setActiveStep(activeStep + 1)
+        setActiveStep(activeStep + 1);
     } else onSubmit(updatedFormData);
   }
 
+  const stateAutofill = async (collegeData : any) => {
+    //fill in state object something {...formData,collegeData}
+    // setFormData((prevData)=>{return {...prevData, ...collegeData}});
+  }
+  console.log(formData);
   return <div className="h-screen w-screen flex flex-col items-center">
-    <AutofillCollege/>
+    <AutofillCollege stateAutofill={stateAutofill}/>
     <div className="max-w-6xl w-full">
       <CollegeProgressBar activeStep={activeStep}/>
     </div>

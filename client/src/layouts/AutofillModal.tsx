@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 type AutofillModalProps = {
+    stateAutofill: (arg1: boolean) => void;
     isOpen: boolean;
     setIsOpen: (arg1: boolean) => void;
 };
@@ -19,7 +20,7 @@ const customStyles = {
     overlay: { zIndex: 1000 },
 };
 
-const AutofillModal = ({ isOpen, setIsOpen }: AutofillModalProps) => {
+const AutofillModal = ({ isOpen, setIsOpen, stateAutofill }: AutofillModalProps) => {
     const [collegeInput, setCollegeInput] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [showMessage, setShowMessage] = useState(true);
@@ -64,6 +65,7 @@ const AutofillModal = ({ isOpen, setIsOpen }: AutofillModalProps) => {
             const collegeLookupBody = JSON.stringify({
                 collegeName: name,
             });
+
             const response = await fetch("/api/autofillCollege", {
                 method: "POST",
                 headers: {
@@ -71,8 +73,11 @@ const AutofillModal = ({ isOpen, setIsOpen }: AutofillModalProps) => {
                 },
                 body: collegeLookupBody,
             });
-            const data = await response.json();
 
+            const data = await response.json();
+            console.log(data);
+            // pass data up
+            stateAutofill(data);
             if (data) {
                 toast("Success.");
             } else {
@@ -129,11 +134,8 @@ const AutofillModal = ({ isOpen, setIsOpen }: AutofillModalProps) => {
                                     {searchResults?.map((result) => {
                                         return (
                                             <AutofillResultRow
-                                                key={result}
                                                 name={result}
-                                                onSelect={autofillCollege(
-                                                    result
-                                                )}
+                                                onSelect={autofillCollege(result)}
                                             />
                                         );
                                     })}

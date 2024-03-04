@@ -316,9 +316,9 @@ class collegeController {
                 collegeData[datum.columnName] = value;
             }
         });
-        
+        // this.createCollege(collegeData);
         //push to db
-        return this.createCollege(collegeData);
+        return collegeData;
     }
 
     // fetchFromScorecard
