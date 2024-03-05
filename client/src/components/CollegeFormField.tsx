@@ -40,8 +40,7 @@ export function CollegeFormFormField({form, field, isNested, errors}: CollegeFor
     return <div>
       <Textarea
         required={field.required ?? false}
-        value={form.getValues()[field.id] as string}
-        onChange={e => form.setValue(field.id, e.target.value)}
+        {...form.register(field.id)}
       />
       {errors[field.id] &&
         <p className={"text-xs text-red-500"}>{form.getFieldState(field.id).error?.message}</p>}
@@ -54,7 +53,6 @@ export function CollegeFormFormField({form, field, isNested, errors}: CollegeFor
     </div>
     <div className={"space-y-1"}>
       <Input
-        key={field.id}
         {...form.register(field.id)}
         type={field.type}
         containerProps={{className: "min-w-0"}}
