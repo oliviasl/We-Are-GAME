@@ -24,7 +24,7 @@ export default function CollegeFormPage({data, onSubmit}: { data?: any, onSubmit
 
   const stateAutofill = async (collegeData : any) => {
     //fill in state object something {...formData,collegeData}
-    // setFormData((prevData)=>{return {...prevData, ...collegeData}});
+    setAutofillData(collegeData);
 
     // possible solution?
     // take existing formData and override all corresponding fields in autofillData
