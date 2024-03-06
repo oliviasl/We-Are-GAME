@@ -459,11 +459,59 @@ app.post("/api/paginatedUsersFiltered", (req, res) => {
 // mentorBySport
 
 // createMentor
+app.post("/api/createMentor", (req, res) => {
+  const {mentorData} = req.body;
+
+  console.log(mentorData["mentor_firstname"]);
+
+  if (!mentorData["mentor_firstname"])
+    return res.status(400).json({error: "Must provide mentor_firstname field."});
+  if (!mentorData["mentor_lastname"])
+    return res.status(400).json({error: "Must provide mentor_lastname field."});
+
+  collegeController
+    .createMentor(mentorData)
+    .then((data) => {
+      return res.status(200).json(data);
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
+});
 
 // editMentor
+app.post("/api/editMentor", (req, res) => {
+  const {mentorId, newFields} = req.body;
+
+  console.log("mentorId: " + mentorId);
+  console.log("newFields: " + newFields);
+
+  collegeController
+    .editMentor(newFields, mentorId)
+    .then((data) => {
+      return res.status(200).json(data);
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
+});
 
 // deleteMentor
+app.delete("/api/deleteMentor", (req, res) => {
+  const {mentorId} = req.body;
 
+  collegeController
+    .deleteMentor(mentorId)
+    .then((data) => {
+      return res.status(200).json(data);
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
+});
 
 // Start Backend Port
 app.listen(port, () => {
