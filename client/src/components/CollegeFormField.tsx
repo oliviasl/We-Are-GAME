@@ -1,6 +1,7 @@
 import {CategoryField, CollegeFormField} from "../util/types/college-form";
 import {Input, Textarea, Typography} from "@material-tailwind/react";
 import {FieldErrors, UseFormReturn} from "react-hook-form";
+import {useEffect} from "react";
 
 type CollegeFormFieldProps = {
   form: UseFormReturn
@@ -10,6 +11,12 @@ type CollegeFormFieldProps = {
 }
 
 export function CollegeFormFormField({form, field, isNested, errors}: CollegeFormFieldProps) {
+  useEffect(() => {
+    if (field.type === "date") {
+      form.setValue((field).id, form.getValues()[field.id].split("T")[0])
+    }
+  }, [form.getValues()[(field as CollegeFormField).id || ""]]);
+
   if (field.type === "category") {
     return <div className={"grid grid-cols-[1fr_2fr] gap-8"}>
       <div className={"h-10 flex items-center"}>
@@ -33,8 +40,7 @@ export function CollegeFormFormField({form, field, isNested, errors}: CollegeFor
     return <div>
       <Textarea
         required={field.required ?? false}
-        value={form.getValues()[field.id] as string}
-        onChange={e => form.setValue(field.id, e.target.value)}
+        {...form.register(field.id)}
       />
       {errors[field.id] &&
         <p className={"text-xs text-red-500"}>{form.getFieldState(field.id).error?.message}</p>}
@@ -47,7 +53,6 @@ export function CollegeFormFormField({form, field, isNested, errors}: CollegeFor
     </div>
     <div className={"space-y-1"}>
       <Input
-        key={field.id}
         {...form.register(field.id)}
         type={field.type}
         containerProps={{className: "min-w-0"}}

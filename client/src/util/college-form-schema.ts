@@ -16,9 +16,8 @@ const createZodField = (field: CollegeFormField) => {
         })
         .transform((v) => (v === "" && field.type === "date") ? null : v);
     case "number":
-      return z
-        .string()
-        .transform((v) => parseInt(v, 10))
+      return z.union([z.string(), z.number()])
+        .transform((v) => parseInt(String(v), 10))
         .refine((data) => !field.required || !isNaN(data), {
           message: "Field is required",
         })
