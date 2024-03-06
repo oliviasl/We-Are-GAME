@@ -80,6 +80,10 @@ const AutofillModal = ({ isOpen, setIsOpen, stateAutofill }: AutofillModalProps)
             stateAutofill(data);
             if (data) {
                 toast("Success.");
+                setCollegeInput("");
+                setErrorMessage("");
+                setSearchResults([]);
+                setIsOpen(false);
             } else {
                 toast("Fail.");
             }

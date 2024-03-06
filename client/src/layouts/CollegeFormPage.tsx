@@ -14,9 +14,6 @@ export default function CollegeFormPage({data, onSubmit}: { data?: any, onSubmit
     const updatedFormData = {...formData, ...data}
     setFormData(updatedFormData);
 
-    setAutofillData({'college_name': 'name', 'grad_rate_athletes': 50.0 })
-
-
     if (activeStep < collegeFormSchemas.length - 1) {
         setActiveStep(activeStep + 1);
     } else onSubmit(updatedFormData);
@@ -25,7 +22,7 @@ export default function CollegeFormPage({data, onSubmit}: { data?: any, onSubmit
   const stateAutofill = async (collegeData : any) => {
     //fill in state object something {...formData,collegeData}
     setAutofillData(collegeData);
-
+    console.log(collegeData);
     // possible solution?
     // take existing formData and override all corresponding fields in autofillData
   }

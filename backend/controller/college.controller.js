@@ -289,17 +289,17 @@ class collegeController {
             { columnName: "min_act_math", objectPath: "latest.admissions.act_scores.25th_percentile.math" },
             { columnName: "max_act_math", objectPath: "latest.admissions.act_scores.75th_percentile.math" },
             { columnName: "faculty_student_ratio", objectPath: "latest.student.demographics.student_faculty_ratio" },
-            { columnName: "acceptance_rate", objectPath: "latest.admissions.admission_rate.overall" },
-            { columnName: "race_white", objectPath: "latest.student.demographics.race_ethnicity.white" },
-            { columnName: "race_black", objectPath: "latest.student.demographics.race_ethnicity.black" },
-            { columnName: "race_hispanic", objectPath: "latest.student.demographics.race_ethnicity.hispanic" },
-            { columnName: "race_asian", objectPath: "latest.student.demographics.race_ethnicity.asian" },
-            { columnName: "race_native_american", objectPath: "latest.student.demographics.race_ethnicity.aian" },
-            { columnName: "race_pacific_islander", objectPath: "latest.student.demographics.race_ethnicity.nhpi" },
-            { columnName: "race_two_or_more", objectPath: "latest.student.demographics.race_ethnicity.two_or_more" },
-            { columnName: "race_international", objectPath: "latest.student.demographics.race_ethnicity.non_resident_alien" },
-            { columnName: "race_other", objectPath: "latest.student.demographics.race_ethnicity.unknown" },
-            { columnName: "first_year_retention_rate", objectPath: "latest.student.retention_rate.four_year.full_time" },
+            { columnName: "acceptance_rate", objectPath: "latest.admissions.admission_rate.overall", multiplier: 100 },
+            { columnName: "race_white", objectPath: "latest.student.demographics.race_ethnicity.white", multiplier: 100 },
+            { columnName: "race_black", objectPath: "latest.student.demographics.race_ethnicity.black", multiplier: 100 },
+            { columnName: "race_hispanic", objectPath: "latest.student.demographics.race_ethnicity.hispanic", multiplier: 100 },
+            { columnName: "race_asian", objectPath: "latest.student.demographics.race_ethnicity.asian", multiplier: 100 },
+            { columnName: "race_native_american", objectPath: "latest.student.demographics.race_ethnicity.aian", multiplier: 100 },
+            { columnName: "race_pacific_islander", objectPath: "latest.student.demographics.race_ethnicity.nhpi", multiplier: 100 },
+            { columnName: "race_two_or_more", objectPath: "latest.student.demographics.race_ethnicity.two_or_more", multiplier: 100 },
+            { columnName: "race_international", objectPath: "latest.student.demographics.race_ethnicity.non_resident_alien", multiplier: 100 },
+            { columnName: "race_other", objectPath: "latest.student.demographics.race_ethnicity.unknown", multiplier: 100 },
+            { columnName: "first_year_retention_rate", objectPath: "latest.student.retention_rate.four_year.full_time", multiplier:100 },
             { columnName: "cost_tuition_in_state", objectPath: "latest.cost.tuition.in_state" },
             { columnName: "cost_tuition_out_of_state", objectPath: "latest.cost.tuition.out_of_state" },
             { columnName: "avg_total_cost_est", objectPath: "latest.cost.avg_net_price.overall" },
@@ -313,7 +313,10 @@ class collegeController {
         DATA_TO_FETCH.forEach((datum) => {
             const value = this.getValueByIndex(response, datum.objectPath);
             if(value){
-                collegeData[datum.columnName] = value;
+                collegeData[datum.columnName] = value.toString();
+                if(datum?.multiplier){
+                    collegeData[datum.columnName]=(Math.round(collegeData[datum.columnName]*datum.multiplier)).toString();
+                }
             }
         });
         // this.createCollege(collegeData);
