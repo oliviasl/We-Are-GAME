@@ -460,7 +460,15 @@ app.post("/api/paginatedUsersFiltered", (req, res) => {
 
 // *** MENTOR API CALLS ***
 
+// allMentors
+
 // mentorById
+
+// mentorByName
+
+// mentorByMajor
+
+// mentorBySport
 
 // createMentor
 

@@ -104,8 +104,6 @@ export const EditStudent = () => {
 
     return (
         <div className="mb-10">
-            <Navbar />
-
             {/* Grid Wrapper */}
             <div className="mx-24 grid grid-cols-3 gap-5">
                 {/* MY EDIT AND CANCEL */}
