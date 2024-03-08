@@ -37,6 +37,10 @@ export interface studentData {
   user_notes: string;
 
   user_grad_year:number;
+
+  user_instagram: string;
+  user_facebook: string;
+  user_show_socials: boolean;
 }
 
 export interface collegeAssignments {
@@ -108,6 +112,9 @@ const StudentProfileRoute = () => {
   studentData.user_act_reading = 36;
   studentData.user_act_english = 36;
   studentData.user_sat = 1600;
+  studentData.user_instagram = "jane_doe";
+  studentData.user_facebook = "Jane Doe";
+  studentData.user_show_socials = true;
   // REMOVE! hard coded for display purposes
 
   useEffect(() => {
@@ -127,6 +134,7 @@ const StudentProfileRoute = () => {
 
         const data = await response.json();
         setStudentData(data[0]);
+        console.log("studentData:", studentData);
       } catch (error) {
         console.error("Error fetching student data:", error);
       }

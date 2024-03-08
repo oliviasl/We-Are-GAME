@@ -34,10 +34,12 @@ const StudentProfile: React.FC<StudentProfileProps> = ({ studentData, collegeAss
     user_grad_year: "Graduation Year",
     user_phone: "Phone Number",
     user_email: "Email",
+    user_facebook: "Facebook",
+    user_instagram: "Instagram",
     user_gpa: "GPA",
     user_ncaa_registered: "NCAA Eligibility",
   };
-  const personalInfoKeys = ["user_grad_year", "user_phone", "user_email", "user_gpa", "user_ncaa_registered"] as Array<keyof typeof studentData>;
+  const personalInfoKeys = ["user_grad_year", "user_phone", "user_email", "user_facebook", "user_instagram", "user_gpa", "user_ncaa_registered"] as Array<keyof typeof studentData>;
 
   const actTitles: Record<string, string> = {
     user_act_math: "ACT Math",
@@ -111,28 +113,32 @@ const StudentProfile: React.FC<StudentProfileProps> = ({ studentData, collegeAss
       </div>
 
       {/* Personal */}
-      <div className=' border-gray-400 border-2 rounded-md order-3'>
-        <div className="w-full p-4">
-          <h2 className="text-md mb-4">Personal</h2>
-          <div className="grid grid-cols-2 gap-y-4 justify-between w-full">
-            {personalInfoKeys.map((key) => (
-              <React.Fragment key={key}>
-                <div>{personalTitles[key]}</div>
-                {/* displays gpa with decimal pt. and NCAA eligibility as Yes/No */}
-                <div className="text-right">
-                  {key === 'user_gpa' && typeof studentData[key] !== 'undefined'
-                    ? studentData[key].toFixed(1)
-                    : key === 'user_ncaa_registered'
-                    ? studentData[key]
-                      ? 'Yes'
-                      : 'No'
-                    : studentData[key]}
-                </div>
-              </React.Fragment>
-            ))}
-          </div>
+    <div className='border-gray-400 border-2 rounded-md order-3'>
+      <div className="w-full p-4">
+        <h2 className="text-md mb-4">Personal</h2>
+        <div className="grid grid-cols-2 gap-y-4 justify-between w-full">
+          {personalInfoKeys.map((key) => (
+            <React.Fragment key={key}>
+              <div>{personalTitles[key]}</div>
+              {/* Separate logic for clarity */}
+              <div className="text-right">
+                {key === 'user_gpa' && typeof studentData[key] !== 'undefined'
+                  ? studentData[key].toFixed(1)
+                  : key === 'user_ncaa_registered'
+                    ? studentData[key] ? 'Yes' : 'No'
+                    : (key !== 'user_facebook' && key !== 'user_instagram') ? studentData[key] : ''
+                }
+                {/* Display socials if user_show_socials is true */}
+                {(key === 'user_facebook' || key === 'user_instagram') && studentData.user_show_socials
+                  ? studentData[key]
+                  : ''}
+              </div>
+            </React.Fragment>
+          ))}
         </div>
       </div>
+    </div>
+
 
      {/* Academics */}
      <div className='border-gray-400 border-2 rounded-md min-h-[50px] order-4'>

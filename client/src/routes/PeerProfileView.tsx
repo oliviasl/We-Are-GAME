@@ -23,7 +23,7 @@ export interface peerData {
     user_grad_year: number;
 }
 
-let userId = 1;
+let userId = 1; // REMOVE LATER AND USE ACTUAL USER ID
   
 
 const PeerProfileViewRoute = () => {
