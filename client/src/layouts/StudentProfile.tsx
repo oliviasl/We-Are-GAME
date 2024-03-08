@@ -5,6 +5,7 @@ import {studentData, collegeAssignments} from "../routes/StudentProfile";
 import Pencil from "../components/Pencil";
 import AddCollegeModal from "../layouts/AddCollegeModal";
 
+
 interface StudentProfileProps {
   studentData: studentData;
   collegeAssignments: collegeAssignments[];
@@ -13,6 +14,7 @@ interface StudentProfileProps {
 }
 
 const StudentProfile: React.FC<StudentProfileProps> = ({ studentData, collegeAssignments, handleDelete, handleAdd }) => {
+  
   const [modalOpen, setModalOpen] = useState(false);
 
   if (!studentData) {
