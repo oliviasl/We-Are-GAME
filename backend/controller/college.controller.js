@@ -14,8 +14,8 @@ class collegeController {
         collegeController.filterMap.set('collegeHasDiversityResource', () => this.collegeHasDiversityResource(false));
         collegeController.filterMap.set('collegeByGPA', (gpa) => this.collegeByGPA(gpa, false));
         collegeController.filterMap.set('collegeBySATRead', (satReadWrite) => this.collegeBySATRead(satReadWrite, false));
-        collegeController.filterMap.set('collegeBySATMath', (satMath) => this.collegeBySATRead(satMath, false));
-        collegeController.filterMap.set('collegeByACT', (act) => this.collegeByGPA(act, false));
+        collegeController.filterMap.set('collegeBySATMath', (satMath) => this.collegeBySATMath(satMath, false));
+        collegeController.filterMap.set('collegeByACT', (act) => this.collegeByACT(act, false));
     }
 
     // for all SELECT SQL calls
@@ -302,43 +302,53 @@ class collegeController {
         const filterFields = Object.keys(fields);
         let queryStr = [];
         let queryParams = [];
+
         
         // null field values mean no input is required for that filter
-        filterFields.forEach((field, idx) => {
-            // null means true/false value
-            if (fields[field] != null) {
-                collegeController.filterMap.get(field)(fields[field]).then((res) => {
-                    if (res != undefined) {
-                        if (idx > 0) {
-                            queryStr.push(" INTERSECT ");
-                        }
+        for (const [idx, field] of filterFields.entries()) {
+            if (fields[field] != null && fields[field] !== "") {
+                // Await the promise and then process the result
+                const res = await collegeController.filterMap.get(field)(fields[field]);
+                if (res[0] !== undefined) {
+                    if (typeof fields[field] === 'boolean' && fields[field] === false){
+                        continue;
+                    }
+                    if (idx > 0 && queryStr.length > 0) { // Ensure INTERSECT is added only if needed
+                        queryStr.push(" INTERSECT ");
+                    }
+                    if (res[1] !== undefined){
                         queryParams.push(res[1]);
-                        queryStr.push(res[0].replace("$1", "$" + queryParams.length));
                     }
-                });
-            } else {
-                collegeController.filterMap.get(field)().then((res) => {
-                    if (res != undefined) {
-                        if (idx > 0) {
-                            queryStr.push(" INTERSECT ");
-                        }
-                        queryStr.push(res[0]);
+                    queryStr.push(res[0].replace("$1", `$${queryParams.length}`));
+                }
+            } else if (fields[field] !== "") {
+                const res = await collegeController.filterMap.get(field)();
+                if (res !== undefined) {
+                    if (idx > 0 && queryStr.length > 0) { // Ensure INTERSECT is added only if needed
+                        queryStr.push(" INTERSECT ");
                     }
-                });
+                    queryStr.push(res[0]);
+                }
             }
-        })
+        }
+        const queryParamLength = queryParams.length;
+        queryStr.push(` LIMIT $${queryParamLength + 1} OFFSET $${queryParamLength + 2}`);
+
     
         return [queryStr, queryParams];
     }
 
     // collegesFiltered
     // uses generated intersected sql call and params to get filtered results
-    async collegesFiltered(fields) {
+    async collegesFiltered(fields, pageSize, offset) {
         // queryValues = [queryStr : string[], queryParams : object[]]
+        if (!Object.values(fields).some(value => value)) {
+            console.log("no fields");
+            return this.allColleges();
+        }
         let queryValues = await this.generateFilterQuery(fields);
-        console.log(queryValues[0].join(''));
-        console.log(queryValues[1]);
-        const result = await db.query(queryValues[0].join(''), queryValues[1]);
+        const queryParams = [...queryValues[1], pageSize, offset];
+        const result = await db.query(queryValues[0].join(''), queryParams);
         return result.rows;
     }
 
@@ -358,7 +368,7 @@ class collegeController {
             colleges: partialResult
         };
     }
-    
+
 }
 
 module.exports = new collegeController();
