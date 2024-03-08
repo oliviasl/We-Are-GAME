@@ -3,6 +3,7 @@ require("dotenv").config();
 
 const collegeController = require("./controller/college.controller");
 const userController = require("./controller/user.controller");
+const mentorController = require("./controller/mentor.controller");
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -469,7 +470,7 @@ app.post("/api/createMentor", (req, res) => {
   if (!mentorData["mentor_lastname"])
     return res.status(400).json({error: "Must provide mentor_lastname field."});
 
-  collegeController
+  mentorController
     .createMentor(mentorData)
     .then((data) => {
       return res.status(200).json(data);
@@ -487,7 +488,7 @@ app.post("/api/editMentor", (req, res) => {
   console.log("mentorId: " + mentorId);
   console.log("newFields: " + newFields);
 
-  collegeController
+  mentorController
     .editMentor(newFields, mentorId)
     .then((data) => {
       return res.status(200).json(data);
@@ -502,7 +503,7 @@ app.post("/api/editMentor", (req, res) => {
 app.delete("/api/deleteMentor", (req, res) => {
   const {mentorId} = req.body;
 
-  collegeController
+  mentorController
     .deleteMentor(mentorId)
     .then((data) => {
       return res.status(200).json(data);
