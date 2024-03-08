@@ -344,7 +344,7 @@ class collegeController {
     async collegesFiltered(fields, pageSize, offset) {
         // queryValues = [queryStr : string[], queryParams : object[]]
         console.log("fields in collegesFiltered", fields);
-        if (Object.keys(fields).length === 0) {
+        if (!Object.values(fields).some(value => value)) {
             console.log("no fields");
             return this.allColleges();
         }
