@@ -306,7 +306,6 @@ class collegeController {
         
         // null field values mean no input is required for that filter
         for (const [idx, field] of filterFields.entries()) {
-            console.log("field", field, "fields[field]", fields[field]);
             if (fields[field] != null && fields[field] !== "") {
                 // Await the promise and then process the result
                 const res = await collegeController.filterMap.get(field)(fields[field]);
@@ -343,14 +342,11 @@ class collegeController {
     // uses generated intersected sql call and params to get filtered results
     async collegesFiltered(fields, pageSize, offset) {
         // queryValues = [queryStr : string[], queryParams : object[]]
-        console.log("fields in collegesFiltered", fields);
         if (!Object.values(fields).some(value => value)) {
             console.log("no fields");
             return this.allColleges();
         }
         let queryValues = await this.generateFilterQuery(fields);
-        console.log("queryValue", queryValues[0].join(''));
-        console.log("queryValue1", queryValues[1]);
         const queryParams = [...queryValues[1], pageSize, offset];
         const result = await db.query(queryValues[0].join(''), queryParams);
         return result.rows;
