@@ -23,56 +23,36 @@ export interface peerData {
     user_grad_year: number;
 }
 
-let userId = 3;
+let userId = 1;
   
 
 const PeerProfileViewRoute = () => {
     const [peerData, setPeerData] = useState({} as peerData);
-    
-    // REMOVE! hard coded for display purposes
-    peerData.user_firstname = "Jane";
-    peerData.user_lastname = "Doe";
-    peerData.user_grad_year = 2026;
-    peerData.user_phone = "310-000-0000";
-    peerData.user_email = "student@email.com";
-    peerData.user_facebook = "@fbjanedoe";
-    peerData.user_instagram = "@igjanedoe";
-    peerData.user_sport1 = "Tennis";
-    peerData.user_sport2 = "Badminton";
-    peerData.user_sport1_role = "Captain";
-    peerData.user_sport2_role = "JV";
-    peerData.user_potential_major = "CS";
-    peerData.user_alt_major1 = "Business";
-    peerData.user_alt_major2 = "Art";
-    peerData.user_school = "High School";
-    peerData.user_show_socials = true;
-    // REMOVE! hard coded for display purposes
 
-    // TO DO: hook up backend
-    //     useEffect(() => {
-    //         const fetchData = async () => {
-    //         try {
-    //             const userData = JSON.stringify({
-    //                 userId: userId
-    //             });
-    //             const response = await fetch(`/api/userById`, {
-    //                 method: "post",
-    //                 headers: {
-    //                     "Content-Type": "application/json",
-    //                     Accept: "application/json",
-    //                 },
-    //                 body: userData,
-    //             });
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const userData = JSON.stringify({
+                userId: userId
+            });
+            const response = await fetch(`/api/userById`, {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                body: userData,
+            });
 
-    //             const data = await response.json();
-    //             setPeerData(data[0]);
-    //         } catch (error) {
-    //             console.error("Error fetching student data:", error);
-    //         }
-    //         };
-
-    //     fetchData();
-    //   }, [userId]);
+            const data = await response.json();
+            console.log("data:", data[0]);
+            setPeerData(data[0]);
+        } catch (error) {
+            console.error("Error fetching student data:", error);
+        }
+        };
+        fetchData();
+    }, []);
 
     return (
         <div>
