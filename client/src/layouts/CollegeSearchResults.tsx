@@ -83,7 +83,6 @@ const CollegeSearchResults = (formData: any) => {
         {TABLE_ROWS.map(({college_id, college_name, location_city, acceptance_rate, max_gpa}, index) => {
           const isLast = index === TABLE_ROWS.length - 1;
           const classes = "p-4 border-b border-black";
-          console.log("location: ", location_city);
 
                 return (
                   <tr key={college_name} className="h-12">
