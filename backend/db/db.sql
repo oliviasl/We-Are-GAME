@@ -312,10 +312,12 @@ INSERT INTO mentors (
     mentor_email,
     mentor_phone,
     mentor_colleges,
-    mentor_degrees,
     mentor_major1,
+    mentor_degree1,
     mentor_major2,
+    mentor_degree2,
     mentor_major3,
+    mentor_degree3,
     mentor_curr_employment,
     mentor_highest_sports_level,
     mentor_interests,
@@ -325,5 +327,5 @@ INSERT INTO mentors (
     mentor_sport2,
     mentor_sport2_role
 )
-VALUES ('Bob', 'Smith', 'bobsmith@example.com', '111-111-1111', 'USC', 'Bachelors', 'Computer Science', 'Design', 'Biology', 'Google', 'D1', 'Hiking', 'CTC', 'football', 'quarterback', 'volleyball', 'setter');
+VALUES ('Bob', 'Smith', 'bobsmith@example.com', '111-111-1111', 'USC', 'Computer Science', 'Bachelors', 'Design', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'football', 'quarterback', 'volleyball', 'setter');
 

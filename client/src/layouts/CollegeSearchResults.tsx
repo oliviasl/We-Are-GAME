@@ -125,9 +125,11 @@ const CollegeSearchResults = (formData: any) => {
                       </Typography>
                     </td>
                     <td className={classes}>
+                      <Link to={`/college-profile/${college_id}`}>
                         <Button variant="outlined" className="h-6 flex items-center">
                             Explore
                         </Button>
+                      </Link>
                     </td>
                   </tr>
                 );
