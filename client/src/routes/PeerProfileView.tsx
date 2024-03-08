@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PeerProfileView from "../layouts/PeerProfileView";
+import { useParams } from "react-router-dom";
 
 export interface peerData {
     user_id: number;
@@ -28,12 +29,13 @@ let userId = 1; // REMOVE LATER AND USE ACTUAL USER ID
 
 const PeerProfileViewRoute = () => {
     const [peerData, setPeerData] = useState({} as peerData);
+    const {id} = useParams();
 
     useEffect(() => {
         const fetchData = async () => {
         try {
             const userData = JSON.stringify({
-                userId: userId
+                userId: id
             });
             const response = await fetch(`/api/userById`, {
                 method: "post",
