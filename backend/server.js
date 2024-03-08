@@ -232,6 +232,16 @@ app.post("/api/collegesFiltered", (req, res) => {
     );
 });
 
+// paginatedCollegesFilterd
+app.post("/api/paginatedCollegesFiltered", (req, res) => {
+  const { fields, pageNumber } = req.body;
+  collegeController
+      .paginatedCollegesFiltered(fields, pageNumber)
+      .then((data)=>
+          res.status(200).json(data)
+      );
+});
+
 // *** USER API CALLS ***
 
 // allUsers
@@ -444,6 +454,8 @@ app.post("/api/paginatedUsersFiltered", (req, res) => {
       res.status(200).json(data)
     );
 });
+
+
 
 
 // *** MENTOR API CALLS ***
