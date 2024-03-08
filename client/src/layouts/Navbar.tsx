@@ -27,7 +27,7 @@ export function Navbar() {
       
       <div className="flex items-center gap-12">
         <div className="hover:text-brand-green-45 text-sm"><a href='/college-database'>College Directory</a></div>
-        <div className="hover:text-brand-green-45 text-sm"><a href='/#'>Mentor Directory</a></div>
+        <div className="hover:text-brand-green-45 text-sm"><a href='/mentor-database'>Mentor Directory</a></div>
         <div className="hover:text-brand-green-45 text-sm"><a href='/student-database'>Student Directory</a></div>
         {cookies.user_status === 3 ? (
           <div className="hover:text-brand-green-45 text-sm"><a href='/authenticate'>Authenticate Users</a></div>
