@@ -457,8 +457,6 @@ app.post("/api/paginatedUsersFiltered", (req, res) => {
 });
 
 
-
-
 // *** MENTOR API CALLS ***
 
 // allMentors
@@ -575,6 +573,17 @@ app.delete("/api/deleteMentor", (req, res) => {
       console.error(error);
       return res.status(500).json({error});
     });
+});
+
+// paginatedMentorsFiltered
+app.post("/api/paginatedMentorsFiltered", (req, res) => {
+  const {fields, pageNumber} = req.body;
+
+  mentorController
+    .paginatedMentorsFiltered(fields, pageNumber)
+    .then((data) =>
+      res.status(200).json(data)
+    );
 });
 
 // Start Backend Port

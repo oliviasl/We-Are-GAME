@@ -1,7 +1,6 @@
 require("dotenv").config();
 const db = require("../db");
 
-
 class mentorController {
 
   // allMentors
@@ -154,6 +153,48 @@ class mentorController {
       // delete mentor
       const result = await db.query(`DELETE FROM mentors WHERE mentor_id = $1`, [mentorId]);
       return result.rows;
+  }
+
+  sqlBuilder(fields, pageNumber) {
+      let query="SELECT * FROM mentors";
+      let wheres=[];
+
+      if("mentorByName" in fields && fields["mentorByName"]!=null && fields["mentorByName"]!=""){
+          wheres.push("(LOWER(mentor_firstname) LIKE LOWER('"+fields["mentorByName"]+"') OR LOWER(mentor_lastname) LIKE LOWER('"+fields["mentorByName"]+"'))");
+      }
+      if("mentorBySport" in fields && fields["mentorBySport"]!=null && fields["mentorBySport"]!=""){
+          wheres.push("(LOWER(mentor_sport1) LIKE LOWER('"+fields["mentorBySport"]+"') OR LOWER(mentor_sport2) LIKE LOWER('"+fields["mentorBySport"]+"'))");
+      }
+      if("mentorByMajor" in fields && fields["mentorByMajor"]!=null && fields["mentorByMajor"]!=""){
+          wheres.push("(LOWER(mentor_major1) LIKE LOWER('"+fields["mentorByMajor"]+"') OR LOWER(mentor_major2) LIKE LOWER('"+fields["mentorByMajor"]+"') OR LOWER(mentor_major3) LIKE LOWER('"+fields["mentorByMajor"]+"'))");
+      }
+
+      const sqlWhere=wheres.join(" AND ");
+
+      const PAGE_SIZE = 6;
+      const offset = (pageNumber - 1) * PAGE_SIZE;
+      const sqlStr = " ORDER BY mentor_lastname LIMIT "+PAGE_SIZE+" OFFSET "+offset+";";
+
+      if(wheres.length!=0){
+          return [query+" WHERE "+sqlWhere+";", query+" WHERE "+sqlWhere+sqlStr];
+      }
+      return [query+";", query+sqlStr];
+  }
+
+  async paginatedMentorsFiltered(fields, pageNumber){
+
+      // page size is 6
+      const PAGE_SIZE = 6;
+      // Make one not paginated to calculate total pages
+      const [filteredMentorQuery, filteredPaginatedMentorQuery] = this.sqlBuilder(fields, pageNumber);
+
+      const filteredPaginatedMentorResult = await db.query(filteredPaginatedMentorQuery);
+      const filteredMentorResult = await db.query(filteredMentorQuery);
+
+      const totalCount = filteredMentorResult.rows.length;
+      const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+      return {mentorData: filteredPaginatedMentorResult.rows, pageNumber: pageNumber, totalPages: totalPages};
   }
 
 }
