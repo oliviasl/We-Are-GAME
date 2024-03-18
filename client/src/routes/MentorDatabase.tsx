@@ -28,14 +28,19 @@ const MentorDatabase = () => {
             <div className="flex mx-20 mt-16 gap-2">
                 {/* Table Wrapper */}
                 <div className="w-3/4">
-                    <div className="font-bold text-5xl font-grotesk">
-                        Mentor Directory
+                    <div className='flex items-center justify-between'>
+                        <div className="font-bold text-5xl font-grotesk">
+                            Find a Mentor
+                        </div>
+                        <div className="w-30 h-9 cursor-pointer bg-brand-gray-20 text-white font-medium px-8 py-[5px] rounded">
+                            Add Profile
+                        </div>
                     </div>
                     <table className="mt-16 w-full px-20 table-fixed font-circular-std">
                         <thead>
                             <tr className="border-y border-black">
                                 <th className="text-left py-2 pl-16 font-semibold">
-                                    Name
+                                    Mentor Name
                                 </th>
                                 <th className="text-left py-2 px-8 font-semibold">
                                     Sport
@@ -167,7 +172,6 @@ const MentorDatabase = () => {
                         />
                     </div>
                     <div className="flex items-center justify-start mt-3 ">
-                        {/* Auth Wrapper */}
                         <div
                             onClick={() => {
                                 setFilterName(displayName);
@@ -175,9 +179,20 @@ const MentorDatabase = () => {
                                 setFilterMajor(displayMajor);
                                 setPage(1);
                             }}
-                            className="w-28 h-9 cursor-pointer bg-brand-gray-20 text-white font-medium px-8 py-[5px] rounded"
+                            className="w-28 h-9 cursor-pointer bg-brand-gray-20 text-white font-medium px-8 py-[5px] mx-3 rounded"
                         >
                             Search
+                        </div>
+                        <div
+                            onClick={() => {
+                                setFilterName("");
+                                setFilterSport("");
+                                setFilterMajor("");
+                                setPage(1);
+                            }}
+                            className="w-38 h-9 cursor-pointer bg-brand-gray-90 border-2 border-brand-gray-20 font-medium px-8 py-[5px] rounded"
+                        >
+                            Clear Filters
                         </div>
                     </div>
                 </div>
