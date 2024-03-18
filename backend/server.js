@@ -457,8 +457,6 @@ app.post("/api/paginatedUsersFiltered", (req, res) => {
 });
 
 
-
-
 // *** MENTOR API CALLS ***
 
 // allMentors
@@ -530,6 +528,17 @@ app.post("/api/mentorBySport", async (req, res) => {
 
 // deleteMentor
 
+
+// paginatedMentorsFiltered
+app.post("/api/paginatedMentorsFiltered", (req, res) => {
+  const {fields, pageNumber} = req.body;
+
+  mentorController
+    .paginatedMentorsFiltered(fields, pageNumber)
+    .then((data) =>
+      res.status(200).json(data)
+    );
+});
 
 // Start Backend Port
 app.listen(port, () => {

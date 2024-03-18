@@ -420,7 +420,7 @@ class userController {
         return [queryStr, queryParams];
     }
 
-    // collegesFiltered
+    // usersFiltered
     // uses generated intersected sql call and params to get filtered results
     async usersFiltered(fields) {
         // queryValues = [queryStr : string[], queryParams : object[]]
