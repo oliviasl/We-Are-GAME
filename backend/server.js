@@ -2,8 +2,8 @@ const express = require("express");
 require("dotenv").config();
 
 const collegeController = require("./controller/college.controller");
-const userController = require("./controller/user.controller");
 const mentorController = require("./controller/mentor.controller");
+const userController = require("./controller/user.controller");
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -462,20 +462,71 @@ app.post("/api/paginatedUsersFiltered", (req, res) => {
 // *** MENTOR API CALLS ***
 
 // allMentors
+app.get("/api/allMentors", async (req, res) => {
+  mentorController
+    .allMentors()
+    .then(mentors => res.status(200).json(mentors))
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
+});
 
 // mentorById
+app.post("/api/mentorById", async (req, res) => {
+  const {mentorId} = req.body;
+
+  mentorController
+    .mentorById(mentorId)
+    .then(data => res.status(200).json(data))
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
+});
 
 // mentorByName
+app.post("/api/mentorByName", async (req, res) => {
+  const {mentorName} = req.body;
+
+  mentorController
+    .mentorByName(mentorName)
+    .then(data => res.status(200).json(data))
+    .catch(error => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
+});
 
 // mentorByMajor
+app.post("/api/mentorByMajor", async (req, res) => {
+  const {major} = req.body;
+
+  mentorController
+    .mentorByMajor(major)
+    .then(data => res.status(200).json(data))
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
+});
 
 // mentorBySport
+app.post("/api/mentorBySport", async (req, res) => {
+  const {sport} = req.body;
+
+  mentorController
+    .mentorBySport(sport)
+    .then((data) => res.status(200).json(data))
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
+});
 
 // createMentor
 app.post("/api/createMentor", (req, res) => {
   const {mentorData} = req.body;
-
-  console.log(mentorData["mentor_firstname"]);
 
   if (!mentorData["mentor_firstname"])
     return res.status(400).json({error: "Must provide mentor_firstname field."});
