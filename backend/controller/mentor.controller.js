@@ -73,9 +73,9 @@ class mentorController {
     const queryStr = `
         SELECT *
         FROM mentors
-        WHERE mentor_major_1 = $1
-           OR mentor_major_2 = $1
-           OR mentor_major_3 = $1`;
+        WHERE LOWER(mentor_major1) LIKE LOWER($1)
+           OR LOWER(mentor_major2) LIKE LOWER($1)
+           OR LOWER(mentor_major3) LIKE LOWER($1)`;
 
     if (directCall) {
       try {
@@ -95,8 +95,8 @@ class mentorController {
     const queryStr = `
         SELECT *
         FROM mentors
-        WHERE mentor_sport1 = $1
-           OR mentor_sport2 = $1`;
+        WHERE LOWER(mentor_sport1) LIKE LOWER($1)
+           OR LOWER(mentor_sport2) LIKE LOWER($1)`;
 
     if (directCall) {
       try {

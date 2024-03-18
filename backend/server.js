@@ -4,7 +4,6 @@ require("dotenv").config();
 const collegeController = require("./controller/college.controller");
 const mentorController = require("./controller/mentor.controller");
 const userController = require("./controller/user.controller");
-const mentorController = require("./controller/mentor.controller");
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -528,8 +527,6 @@ app.post("/api/mentorBySport", async (req, res) => {
 // createMentor
 app.post("/api/createMentor", (req, res) => {
   const {mentorData} = req.body;
-
-  console.log(mentorData["mentor_firstname"]);
 
   if (!mentorData["mentor_firstname"])
     return res.status(400).json({error: "Must provide mentor_firstname field."});
