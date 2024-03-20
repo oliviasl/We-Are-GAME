@@ -52,8 +52,8 @@ const AddCollegeModal: React.FC<ModalProps> = ({ isOpen, onClose, onAdd}) => {
       border: '2px solid lightgrey' as const,
       width: '52%' as const,
       margin: 'auto' as const,
-      height: searchResults.length > 0 ? '34vh' : '24vh',
-      maxHeight: '40vh',
+      height: searchResults.length > 0 ? '44vh' : '26vh',
+      maxHeight: '44vh',
       overflow: 'hidden' as const,
     },
   };
@@ -80,7 +80,7 @@ const AddCollegeModal: React.FC<ModalProps> = ({ isOpen, onClose, onAdd}) => {
         </div>
         {/* search results */}
         {searchResults.length > 0 && (
-          <div className="mt-5 divide-y-2 divide-brand-gray-20">
+          <div className="mt-7 divide-y-2 overflow-y-scroll h-25 divide-brand-gray-20">
             <hr />
             {searchResults.map((result) => (
               <div className="flex justify-between px-5 py-2 items-center" key={result.college_id}>

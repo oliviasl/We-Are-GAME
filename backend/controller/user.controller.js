@@ -163,7 +163,8 @@ class userController {
                 userData.user_email &&
                 userData.user_password &&
                 userData.user_firstname &&
-                userData.user_lastname
+                userData.user_lastname &&
+                userData.user_school
             )
         ) {
           console.log("Missing mandatory field");
@@ -268,7 +269,7 @@ class userController {
         const PAGE_SIZE = 6;
         const offset = (pageNumber - 1) * PAGE_SIZE;
 
-        const query = `SELECT master_users.user_id, master_users.user_email, master_users.user_firstname, master_users.user_lastname
+        const query = `SELECT master_users.user_id, master_users.user_email, master_users.user_firstname, master_users.user_lastname, master_users.user_school
         FROM master_users
         JOIN user_status ON master_users.user_id = user_status.user_id
         WHERE user_status.user_status = 0
@@ -313,7 +314,12 @@ class userController {
         const user = userQuery.rows[0];
     
         // if passwords do not match, user is invalid
-        if (!await bcrypt.compare(password, user.user_password)) {
+        // *** TO DELETE, ONLY FOR TESTING PURPOSES
+        // allows for empty passwords for manually inputted test data
+        if (password === '' && password === user.user_password)
+        {}
+        // *** TO DELETE ONLY FOR TESTING PURPOSES
+        else if (!await bcrypt.compare(password, user.user_password)) {
             return [-1, -1];
         }
         
@@ -414,7 +420,7 @@ class userController {
         return [queryStr, queryParams];
     }
 
-    // collegesFiltered
+    // usersFiltered
     // uses generated intersected sql call and params to get filtered results
     async usersFiltered(fields) {
         // queryValues = [queryStr : string[], queryParams : object[]]

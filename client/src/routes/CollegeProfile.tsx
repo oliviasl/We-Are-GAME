@@ -1,16 +1,21 @@
 import {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {College} from "../util/types/college";
 import {Button, Chip} from "@material-tailwind/react";
 import {MapPinIcon} from "lucide-react";
 import {CollegeProfileSidebar} from "../components/CollegeProfileSidebar";
 import {CollegeProfileInfo} from "../components/CollegeProfileInfo";
+import AssignStudentModal from "../layouts/AssignStudentModal";
+import {useCookies} from "react-cookie";
 
 const CollegeProfile = () => {
   const {id} = useParams();
-  const navigate = useNavigate();
+
+  const [isAssignStudentModalOpen, setIsAssignStudentModalOpen] = useState(false)
 
   const [data, setData] = useState<Partial<College> | undefined>(undefined);
+
+  const [cookies] = useCookies(['user_id', 'user_status']);
 
   useEffect(() => {
     async function fetchCollegeData() {
@@ -28,6 +33,61 @@ const CollegeProfile = () => {
 
     if (id && !data) fetchCollegeData();
   }, [id, setData]);
+
+  const [isAddedToProfile, setIsAddedToProfile] = useState(false);
+
+  async function fetchAssignment() {
+    const assignmentsResponse = await fetch("/api/assignmentsByUserId", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        userId: cookies.user_id
+      }),
+    });
+
+    const assignmentsData = await assignmentsResponse.json() as { college_id: number }[];
+
+    setIsAddedToProfile(!!assignmentsData.find(v => String(v.college_id) === id))
+  }
+
+  useEffect(() => {
+    fetchAssignment()
+  }, [cookies.user_id]);
+
+  async function handleAdd() {
+    await fetch('/api/createAssignment', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        userId: cookies.user_id,
+        collegeId: id,
+      }),
+    });
+
+    await fetchAssignment();
+  }
+
+  async function handleDelete() {
+    await fetch('/api/deleteAssignment', {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        userId: cookies.user_id,
+        collegeId: id,
+      }),
+    });
+
+    await fetchAssignment();
+  }
 
   if (!data) return null;
 
@@ -48,8 +108,13 @@ const CollegeProfile = () => {
           </div>
         </div>
         <div className={"space-x-2"}>
-          <Button className={"bg-semantic-warning text-white"}>Edit College</Button>
-          <Button>Assign Student</Button>
+          {cookies.user_status === 3 ? <>
+            <Link to={`/edit-college/${data.college_id}`}>
+              <Button className={"bg-semantic-warning text-white"}>Edit College</Button>
+            </Link>
+            <Button onClick={() => setIsAssignStudentModalOpen(true)}>Assign Student</Button>
+          </> : <Button
+            onClick={!isAddedToProfile ? handleAdd : handleDelete}>{!isAddedToProfile ? "Add to" : "Remove from"} Profile</Button>}
         </div>
       </header>
       <div className={"grid grid-cols-[3fr_7fr] gap-8"}>
@@ -57,6 +122,7 @@ const CollegeProfile = () => {
         <CollegeProfileInfo data={data!}/>
       </div>
     </main>
+    <AssignStudentModal isOpen={isAssignStudentModalOpen} onClose={() => setIsAssignStudentModalOpen(false)}/>
   </div>
 }
 

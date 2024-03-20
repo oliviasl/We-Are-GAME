@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 
 const collegeController = require("./controller/college.controller");
+const mentorController = require("./controller/mentor.controller");
 const userController = require("./controller/user.controller");
 const app = express();
 const port = process.env.PORT || 3000;
@@ -22,7 +23,7 @@ app.get("/api/allColleges", (req, res) => {
 // collegeByName
 // returns data of colleges by name
 app.post("/api/collegeByName", (req, res) => {
-  const { college_name } = req.body;
+  const {college_name} = req.body;
   collegeController
     .collegeByName(college_name)
     .then((data) =>
@@ -30,7 +31,7 @@ app.post("/api/collegeByName", (req, res) => {
     )
     .catch((error) => {
       console.error(error);
-      return res.status(500).json({ error });
+      return res.status(500).json({error});
     });
 });
 
@@ -38,7 +39,7 @@ app.post("/api/collegeByName", (req, res) => {
 // returns data of college by collegeId
 
 app.post("/api/collegeById", (req, res) => {
-  const { collegeId } = req.body;
+  const {collegeId} = req.body;
   collegeController
     .collegeById(collegeId)
     .then((data) =>
@@ -46,7 +47,7 @@ app.post("/api/collegeById", (req, res) => {
     )
     .catch((error) => {
       console.error(error);
-      return res.status(500).json({ error });
+      return res.status(500).json({error});
     });
 });
 
@@ -84,7 +85,7 @@ app.get("/api/collegeHasDiversityResource", (req, res) => {
 // collegeByGPA
 // returns data of colleges that include GPA within their min/max
 app.get("/api/collegeByGPA", (req, res) => {
-  const { gpa } = req.body;
+  const {gpa} = req.body;
   collegeController
     .collegeByGPA(gpa)
     .then((data) =>
@@ -92,14 +93,14 @@ app.get("/api/collegeByGPA", (req, res) => {
     )
     .catch((error) => {
       console.error(error);
-      return res.status(500).json({ error });
+      return res.status(500).json({error});
     });
 });
 
 // collegeBySATRead
 // returns data of colleges that include SAT Reading/Writing score within their min/max
 app.get("/api/collegeBySATRead", (req, res) => {
-  const { satReadWrite } = req.body;
+  const {satReadWrite} = req.body;
   collegeController
     .collegeBySATRead(satReadWrite)
     .then((data) =>
@@ -107,14 +108,14 @@ app.get("/api/collegeBySATRead", (req, res) => {
     )
     .catch((error) => {
       console.error(error);
-      return res.status(500).json({ error });
+      return res.status(500).json({error});
     });
 });
 
 // collegeBySATMath
 // returns data of colleges that include SAT Math score within their min/max
 app.get("/api/collegeBySATMath", (req, res) => {
-  const { satMath } = req.body;
+  const {satMath} = req.body;
   collegeController
     .collegeBySATMath(satMath)
     .then((data) =>
@@ -122,17 +123,17 @@ app.get("/api/collegeBySATMath", (req, res) => {
     )
     .catch((error) => {
       console.error(error);
-      return res.status(500).json({ error });
+      return res.status(500).json({error});
     });
 });
 
 // collegeByACT
 // returns data of colleges that include ACT score within their min/max
 app.get("/api/collegeByACT", (req, res) => {
-  const { act } = req.body;
+  const {act} = req.body;
   collegeController
     .collegeByACT(act)
-    .then((data)=>
+    .then((data) =>
       res.status(200).json(data)
     );
 });
@@ -140,10 +141,10 @@ app.get("/api/collegeByACT", (req, res) => {
 // createCollege
 // adds a new college entry with passed in params
 app.post("/api/createCollege", (req, res) => {
-  const { collegeData } = req.body;
+  const {collegeData} = req.body;
 
   if (!collegeData["college_name"])
-    return res.status(400).json({ error: "Must provide college_name field." });
+    return res.status(400).json({error: "Must provide college_name field."});
 
   collegeController
     .createCollege(collegeData)
@@ -152,26 +153,26 @@ app.post("/api/createCollege", (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      return res.status(500).json({ error });
+      return res.status(500).json({error});
     });
 });
 
 // editCollege
 // edits an existing college entry with passed in params
 app.post("/api/editCollege", (req, res) => {
-  const { collegeId, newFields } = req.body;
+  const {collegeId, newFields} = req.body;
   collegeController.editCollege(newFields, collegeId).then((data) => {
     return res.status(200).json(data);
   })
-  .catch((error) => {
-    console.error(error);
-    return res.status(500).json({ error });
-  });
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
 });
 
 // deleteCollege
 app.delete("/api/deleteCollege", (req, res) => {
-  const { collegeId } = req.body;
+  const {collegeId} = req.body;
 
   collegeController
     .deleteCollege(collegeId)
@@ -180,37 +181,37 @@ app.delete("/api/deleteCollege", (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      return res.status(500).json({ error });
+      return res.status(500).json({error});
     });
 });
 
 // createAssignment
 app.post("/api/createAssignment", (req, res) => {
   const {userId, collegeId} = req.body;
-    collegeController.createAssignment(userId, collegeId).then((data) => {
-        return res.status(200).json(data);
-    })
+  collegeController.createAssignment(userId, collegeId).then((data) => {
+    return res.status(200).json(data);
+  })
     .catch((error) => {
-        console.error(error);
-        return res.status(500).json({ error });
+      console.error(error);
+      return res.status(500).json({error});
     });
 });
 
 // deleteAssignment
 app.delete("/api/deleteAssignment", (req, res) => {
   const {userId, collegeId} = req.body;
-    collegeController.deleteAssignment(userId, collegeId).then((data) => {
-        return res.status(200).json(data);
-    })
+  collegeController.deleteAssignment(userId, collegeId).then((data) => {
+    return res.status(200).json(data);
+  })
     .catch((error) => {
-        console.error(error);
-        return res.status(500).json({ error });
+      console.error(error);
+      return res.status(500).json({error});
     });
 });
 
 // fetchFromScorecard
 app.get("/api/fetchFromScorecard", (req, res) => {
-  const { namePrefix, desiredFields, findExact, page, perPage } = req.body;
+  const {namePrefix, desiredFields, findExact, page, perPage} = req.body;
   collegeController
     .fetchFromScorecard(namePrefix, desiredFields, findExact, page, perPage)
     .then((data) =>
@@ -218,18 +219,29 @@ app.get("/api/fetchFromScorecard", (req, res) => {
     )
     .catch((error) => {
       console.error(error);
-      return res.status(500).json({ error });
+      return res.status(500).json({error});
     });
 });
 
 // collegesFiltered
 app.post("/api/collegesFiltered", (req, res) => {
-  const { fields } = req.body;
+  const {fields} = req.body;
   collegeController
     .collegesFiltered(fields)
-    .then((data)=>
+    .then((data) =>
       res.status(200).json(data)
     );
+});
+
+// paginatedCollegesFilterd
+app.post("/api/paginatedCollegesFiltered", (req, res) => {
+  const { fields, pageNumber } = req.body;
+  collegeController
+      .paginatedCollegesFiltered(fields, pageNumber)
+      .then((data)=>
+          res.status(200).json(data)
+      );
+
 });
 
 // autofillCollege
@@ -265,18 +277,18 @@ app.get("/api/allUsers", (req, res) => {
 
 // paginatedApprovedUsers
 app.post("/api/paginatedApprovedUsers", (req, res) => {
-  const { pageNumber } = req.body;
+  const {pageNumber} = req.body;
 
   userController
     .paginatedApprovedUsers(pageNumber)
-    .then((data)=>
+    .then((data) =>
       res.status(200).json(data)
     );
 });
 
 // userById
 app.post("/api/userById", (req, res) => {
-  const { userId } = req.body;
+  const {userId} = req.body;
   userController
     .userById(userId)
     .then((data) =>
@@ -284,28 +296,28 @@ app.post("/api/userById", (req, res) => {
     )
     .catch((error) => {
       console.error(error);
-      return res.status(500).json({ error });
+      return res.status(500).json({error});
     });
 });
 
 
 // userByName
-app.get("/api/userByName", (req, res) => {
-    const { userName } = req.body;
-    userController
-        .userByName(userName)
-        .then((data) =>
-        res.status(200).json(data)
-        )
-        .catch((error) => {
-        console.error(error);
-        return res.status(500).json({ error });
-        });
+app.post("/api/userByName", (req, res) => {
+  const {userName} = req.body;
+  userController
+    .userByName(userName)
+    .then((data) =>
+      res.status(200).json(data)
+    )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
 });
 
 // userBySport
 app.get("/api/userBySport", (req, res) => {
-  const { sport } = req.body;
+  const {sport} = req.body;
   userController
     .userBySport(sport)
     .then((data) =>
@@ -313,28 +325,28 @@ app.get("/api/userBySport", (req, res) => {
     )
     .catch((error) => {
       console.error(error);
-      return res.status(500).json({ error });
+      return res.status(500).json({error});
     });
 });
 
 // userByEmail
 app.post("/api/userByEmail", (req, res) => {
-  const { user_email } = req.body;
+  const {user_email} = req.body;
 
-  userController 
+  userController
     .userByEmail(user_email)
     .then((data) =>
       res.status(200).json(data)
     )
     .catch((error) => {
       console.error(error);
-      return res.status(500).json({ error });
+      return res.status(500).json({error});
     });
 });
 
 // userByMajor
 app.get("/api/userByMajor", (req, res) => {
-  const { major } = req.body;
+  const {major} = req.body;
   userController
     .userByMajor(major)
     .then((data) =>
@@ -342,13 +354,13 @@ app.get("/api/userByMajor", (req, res) => {
     )
     .catch((error) => {
       console.error(error);
-      return res.status(500).json({ error });
+      return res.status(500).json({error});
     });
 });
 
 // createUser
 app.post("/api/createUser", (req, res) => {
-  const { userData } = req.body;
+  const {userData} = req.body;
   userController.createUser(userData).then((data) => {
     return res.status(200).json(data);
   });
@@ -356,20 +368,20 @@ app.post("/api/createUser", (req, res) => {
 
 // editUser
 app.put("/api/editUser", (req, res) => {
-  const { userId, newFields } = req.body;
+  const {userId, newFields} = req.body;
   userController.editUser(newFields, userId).then((data) => {
     return res.status(200).json(data);
   })
-  .catch((error) => {
-    console.error(error);
-    return res.status(500).json({ error });
-  });
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
 
 });
 
 // deleteUser
 app.delete("/api/deleteUser", (req, res) => {
-  const { userId } = req.body;
+  const {userId} = req.body;
   userController
     .deleteUser(userId)
     .then((data) =>
@@ -377,7 +389,7 @@ app.delete("/api/deleteUser", (req, res) => {
     )
     .catch((error) => {
       console.error(error);
-      return res.status(500).json({ error });
+      return res.status(500).json({error});
     });
 });
 
@@ -385,25 +397,25 @@ app.delete("/api/deleteUser", (req, res) => {
 app.get("/api/unapprovedUsers", (req, res) => {
   userController
     .unapprovedUsers()
-    .then((data)=>
+    .then((data) =>
       res.status(200).json(data)
     );
 });
 
 // paginatedUnapprovedUsers
 app.post("/api/paginatedUnapprovedUsers", (req, res) => {
-  const { pageNumber } = req.body;
+  const {pageNumber} = req.body;
 
   userController
     .paginatedUnapprovedUsers(pageNumber)
-    .then((data)=>
+    .then((data) =>
       res.status(200).json(data)
     );
 });
 
 // approveUser
 app.put("/api/approveUser", (req, res) => {
-  const { userId } = req.body;
+  const {userId} = req.body;
   userController
     .approveUser(userId)
     .then((data) =>
@@ -411,13 +423,13 @@ app.put("/api/approveUser", (req, res) => {
     )
     .catch((error) => {
       console.error(error);
-      return res.status(500).json({ error });
+      return res.status(500).json({error});
     });
 });
 
 // validateUser
 app.post("/api/validateUser", (req, res) => {
-  const { email, password } = req.body;
+  const {email, password} = req.body;
 
   userController
     .validateUser(email, password)
@@ -426,13 +438,13 @@ app.post("/api/validateUser", (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      return res.status(500).json({ error });
+      return res.status(500).json({error});
     });
 })
 
 // assignmentsByUserId
 app.post("/api/assignmentsByUserId", (req, res) => {
-  const { userId } = req.body;
+  const {userId} = req.body;
   userController
     .assignmentsByUserId(userId)
     .then((data) =>
@@ -440,27 +452,27 @@ app.post("/api/assignmentsByUserId", (req, res) => {
     )
     .catch((error) => {
       console.error(error);
-      return res.status(500).json({ error });
+      return res.status(500).json({error});
     });
 });
 
 // usersFiltered
 app.post("/api/usersFiltered", (req, res) => {
-  const { fields } = req.body;
+  const {fields} = req.body;
   userController
     .usersFiltered(fields)
-    .then((data)=>
+    .then((data) =>
       res.status(200).json(data)
     );
 });
 
 // paginatedUsersFiltered
 app.post("/api/paginatedUsersFiltered", (req, res) => {
-  const { fields, pageNumber } = req.body;
+  const {fields, pageNumber} = req.body;
 
   userController
     .paginatedUsersFiltered(fields, pageNumber)
-    .then((data)=>
+    .then((data) =>
       res.status(200).json(data)
     );
 });
@@ -468,14 +480,132 @@ app.post("/api/paginatedUsersFiltered", (req, res) => {
 
 // *** MENTOR API CALLS ***
 
+// allMentors
+app.get("/api/allMentors", async (req, res) => {
+  mentorController
+    .allMentors()
+    .then(mentors => res.status(200).json(mentors))
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
+});
+
 // mentorById
+app.post("/api/mentorById", async (req, res) => {
+  const {mentorId} = req.body;
+
+  mentorController
+    .mentorById(mentorId)
+    .then(data => res.status(200).json(data))
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
+});
+
+// mentorByName
+app.post("/api/mentorByName", async (req, res) => {
+  const {mentorName} = req.body;
+
+  mentorController
+    .mentorByName(mentorName)
+    .then(data => res.status(200).json(data))
+    .catch(error => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
+});
+
+// mentorByMajor
+app.post("/api/mentorByMajor", async (req, res) => {
+  const {major} = req.body;
+
+  mentorController
+    .mentorByMajor(major)
+    .then(data => res.status(200).json(data))
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
+});
+
+// mentorBySport
+app.post("/api/mentorBySport", async (req, res) => {
+  const {sport} = req.body;
+
+  mentorController
+    .mentorBySport(sport)
+    .then((data) => res.status(200).json(data))
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
+});
 
 // createMentor
+app.post("/api/createMentor", (req, res) => {
+  const {mentorData} = req.body;
+
+  if (!mentorData["mentor_firstname"])
+    return res.status(400).json({error: "Must provide mentor_firstname field."});
+  if (!mentorData["mentor_lastname"])
+    return res.status(400).json({error: "Must provide mentor_lastname field."});
+
+  mentorController
+    .createMentor(mentorData)
+    .then((data) => {
+      return res.status(200).json(data);
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
+});
 
 // editMentor
+app.post("/api/editMentor", (req, res) => {
+  const {mentorId, newFields} = req.body;
+
+  console.log("mentorId: " + mentorId);
+  console.log("newFields: " + newFields);
+
+  mentorController
+    .editMentor(newFields, mentorId)
+    .then((data) => {
+      return res.status(200).json(data);
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
+});
 
 // deleteMentor
+app.delete("/api/deleteMentor", (req, res) => {
+  const {mentorId} = req.body;
 
+  mentorController
+    .deleteMentor(mentorId)
+    .then((data) => {
+      return res.status(200).json(data);
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
+});
+
+// paginatedMentorsFiltered
+app.post("/api/paginatedMentorsFiltered", (req, res) => {
+  const {fields, pageNumber} = req.body;
+
+  mentorController
+    .paginatedMentorsFiltered(fields, pageNumber)
+    .then((data) =>
+      res.status(200).json(data)
+    );
+});
 
 // Start Backend Port
 app.listen(port, () => {

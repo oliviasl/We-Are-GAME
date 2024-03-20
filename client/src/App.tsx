@@ -6,11 +6,13 @@ import AuthenticateUsers from "./routes/AuthenticateUsers";
 import CollegeDatabase from "./routes/CollegeDatabase";
 import StudentDatabase from "./routes/StudentDatabase";
 import StudentProfileRoute from "./routes/StudentProfile";
+import EditStudent from "./routes/EditStudent";
 import CollegeProfile from "./routes/CollegeProfile";
 import EditCollege from "./routes/EditCollege";
 import {ThemeProvider} from "@material-tailwind/react";
 import theme from "./util/theme";
-import { Navbar } from "./layouts/Navbar";
+import {Navbar} from "./layouts/Navbar";
+import {ToastContainer} from "react-toastify";
 
 function App() {
   return (
@@ -26,7 +28,10 @@ function App() {
             </Route>
             <Route path="/authenticate" element={<AuthenticateUsers/>}/>
             <Route path="/college-database" element={<CollegeDatabase/>}/>
-            <Route path="/student-profile" element={<StudentProfileRoute/>}/>
+            <Route path="/student-profile">
+              <Route path=":id" element={<StudentProfileRoute/>}/>
+            </Route>
+            <Route path="/edit-student" element={<EditStudent/>} />
             <Route path="/college-profile">
               <Route path=":id" element={<CollegeProfile/>}/>
             </Route>
@@ -34,6 +39,7 @@ function App() {
           </Routes>
         </Router>
       </div>
+      <ToastContainer hideProgressBar={true} position={"bottom-right"}/>
     </ThemeProvider>
   );
 }
