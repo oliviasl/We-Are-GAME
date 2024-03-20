@@ -241,6 +241,27 @@ app.post("/api/paginatedCollegesFiltered", (req, res) => {
       .then((data)=>
           res.status(200).json(data)
       );
+
+});
+
+// autofillCollege
+app.post("/api/searchScorecard", (req, res) => {
+  const { collegeName } = req.body;
+  collegeController
+    .searchScorecard(collegeName)
+    .then((data)=>
+      res.status(200).json(data)
+    );
+});
+
+// autofillCollege
+app.post("/api/autofillCollege", (req, res) => {
+  const { collegeName } = req.body;
+  collegeController
+    .autofillCollege(collegeName)
+    .then((data)=>
+      res.status(200).json(data)
+    );
 });
 
 // *** USER API CALLS ***
