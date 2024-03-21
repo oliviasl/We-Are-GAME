@@ -13,6 +13,7 @@ import {ThemeProvider} from "@material-tailwind/react";
 import theme from "./util/theme";
 import {Navbar} from "./layouts/Navbar";
 import {ToastContainer} from "react-toastify";
+import MentorDatabase from "./routes/MentorDatabase";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             </Route>
             <Route path="/authenticate" element={<AuthenticateUsers/>}/>
             <Route path="/college-database" element={<CollegeDatabase/>}/>
+            <Route path="/mentor-database" element={<MentorDatabase/>}/>
             <Route path="/student-profile">
               <Route path=":id" element={<StudentProfileRoute/>}/>
             </Route>
