@@ -186,7 +186,7 @@ class collegeController {
     async createCollege(collegeData) {
         const insertKeys = Object.keys(collegeData);
         const insertValues = Object.values(collegeData);
-      
+        
         // create placeholder values ($1, $2, etc.) for each value to be inserted
         const placeholders = insertKeys
             .map((_, index) => `$${index + 1}`)
@@ -250,6 +250,80 @@ class collegeController {
         return result.rows;
     }
 
+    //Helper function to store nested object paths - these could be hardcoded?
+    getValueByIndex = (obj, index) => {
+        const keys = index.split('.');
+        let value = obj;
+        for (const key of keys) {
+            if (value && typeof value === 'object') {
+                value = value[key];
+            } else {
+                return undefined; 
+            }
+        }
+        return value;
+    };
+
+    async autofillCollege(name){
+        //fetch data
+
+        //MISSING FIELDS:
+        /*
+            - Yo like im not a high schooler but i swear i had more shit on the act/sat 
+            { name: "title_iv.transf_completed_4yr_by.2yrs", index: "latest.completion.title_iv.transf_completed_4yr_by.2yrs" },
+            -             { name: "act_scores.25th_percentile.writing", index: "latest.admissions.act_scores.25th_percentile.writing" },
+            { name: "act_scores.75th_percentile.writing", index: "latest.admissions.act_scores.75th_percentile.writing" }, IS THERE A WRITING SECTION IN ACT
+        */
+       
+        const DATA_TO_FETCH = [
+            { columnName: "location_city", objectPath: "school.city" },
+            { columnName: "location_state", objectPath: "school.state" },
+            { columnName: "min_sat_read_write", objectPath: "latest.admissions.sat_scores.25th_percentile.critical_reading" },
+            { columnName: "max_sat_read_write", objectPath: "latest.admissions.sat_scores.75th_percentile.critical_reading" },
+            { columnName: "min_sat_math", objectPath: "latest.admissions.sat_scores.25th_percentile.math" },
+            { columnName: "max_sat_math", objectPath: "latest.admissions.sat_scores.75th_percentile.math" },
+            { columnName: "min_act", objectPath: "latest.admissions.act_scores.25th_percentile.cumulative" },
+            { columnName: "max_act", objectPath: "latest.admissions.act_scores.75th_percentile.cumulative" },
+            { columnName: "min_act_english", objectPath: "latest.admissions.act_scores.25th_percentile.english" },
+            { columnName: "max_act_english", objectPath: "latest.admissions.act_scores.75th_percentile.english" },
+            { columnName: "min_act_math", objectPath: "latest.admissions.act_scores.25th_percentile.math" },
+            { columnName: "max_act_math", objectPath: "latest.admissions.act_scores.75th_percentile.math" },
+            { columnName: "faculty_student_ratio", objectPath: "latest.student.demographics.student_faculty_ratio" },
+            { columnName: "acceptance_rate", objectPath: "latest.admissions.admission_rate.overall", multiplier: 100 },
+            { columnName: "race_white", objectPath: "latest.student.demographics.race_ethnicity.white", multiplier: 100 },
+            { columnName: "race_black", objectPath: "latest.student.demographics.race_ethnicity.black", multiplier: 100 },
+            { columnName: "race_hispanic", objectPath: "latest.student.demographics.race_ethnicity.hispanic", multiplier: 100 },
+            { columnName: "race_asian", objectPath: "latest.student.demographics.race_ethnicity.asian", multiplier: 100 },
+            { columnName: "race_native_american", objectPath: "latest.student.demographics.race_ethnicity.aian", multiplier: 100 },
+            { columnName: "race_pacific_islander", objectPath: "latest.student.demographics.race_ethnicity.nhpi", multiplier: 100 },
+            { columnName: "race_two_or_more", objectPath: "latest.student.demographics.race_ethnicity.two_or_more", multiplier: 100 },
+            { columnName: "race_international", objectPath: "latest.student.demographics.race_ethnicity.non_resident_alien", multiplier: 100 },
+            { columnName: "race_other", objectPath: "latest.student.demographics.race_ethnicity.unknown", multiplier: 100 },
+            { columnName: "first_year_retention_rate", objectPath: "latest.student.retention_rate.four_year.full_time", multiplier:100 },
+            { columnName: "cost_tuition_in_state", objectPath: "latest.cost.tuition.in_state" },
+            { columnName: "cost_tuition_out_of_state", objectPath: "latest.cost.tuition.out_of_state" },
+            { columnName: "avg_total_cost_est", objectPath: "latest.cost.avg_net_price.overall" },
+            { columnName: "net_price_calc_web_addr", objectPath: "latest.school.price_calculator_url" },
+        ];
+
+        const response = await this.fetchFromScorecard(name, [], true, 0, 5);
+        let collegeData = {};
+        
+        collegeData["college_name"] = name;
+        DATA_TO_FETCH.forEach((datum) => {
+            const value = this.getValueByIndex(response, datum.objectPath);
+            if(value){
+                collegeData[datum.columnName] = value.toString();
+                if(datum?.multiplier){
+                    collegeData[datum.columnName]=(Math.round(collegeData[datum.columnName]*datum.multiplier)).toString();
+                }
+            }
+        });
+        // this.createCollege(collegeData);
+        //push to db
+        return collegeData;
+    }
+
     // fetchFromScorecard
     /**
      * Fetch school data from collegescorecard api
@@ -279,13 +353,22 @@ class collegeController {
 
         const response = await fetch(baseURL);
         const data = await response.json();
-        console.log(baseURL);
-        if(findExact){
-            for (const result of data.results) {
-                if (result["school.name"] === namePrefix) {
-                    return result;
+
+        if(findExact){ 
+            if(desiredFields.length===0){
+                for (const result of data.results) {
+                    if (result.school["name"] === namePrefix) {
+                        return result;
+                    }
+                }
+            }else{
+                for (const result of data.results) {
+                    if (result["school.name"] === namePrefix) {
+                        return result;
+                    }
                 }
             }
+            
             return {};
         }
         return data;
@@ -351,7 +434,7 @@ class collegeController {
         const result = await db.query(queryValues[0].join(''), queryParams);
         return result.rows;
     }
-
+  
     // paginated collegesFiltered
     async paginatedCollegesFiltered(fields, pageNumber) {
         // page size is 6
@@ -369,6 +452,12 @@ class collegeController {
         };
     }
 
+    async searchScorecard(name){
+
+        const response = await this.fetchFromScorecard(name, ["school.name"], false, 0, 5);
+        return response.results.map((datum) => datum["school.name"]);
+    }
+    
 }
 
 module.exports = new collegeController();

@@ -13,6 +13,7 @@ type CollegeFormFormSectionProps = {
   onNext: (data: any) => void;
   isLastTab: boolean;
   data?: any;
+  autofillData?: any;
 }
 
 
@@ -23,11 +24,19 @@ export const CollegeFormFormSection = ({
   onNext,
   isLastTab,
   data,
+  autofillData,
 }: CollegeFormFormSectionProps) => {
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: data
   });
+
+  // somehow need to pass autofilled data here
+  useEffect(() => {
+    for (const property in autofillData) {
+      form.setValue(property, autofillData[property])
+    }
+  }, [form, autofillData])
 
   useEffect(() => {
     // no-op effect to trigger re-render on errors
