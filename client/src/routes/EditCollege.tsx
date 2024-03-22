@@ -2,6 +2,8 @@ import CollegeFormPage from "../layouts/CollegeFormPage";
 
 import {useNavigate, useParams} from "react-router-dom"
 import {useEffect, useState} from "react";
+import {useCookies} from "react-cookie";
+import NotFoundPage from "./NotFoundPage";
 
 const EditCollege = () => {
   const {id} = useParams();
@@ -35,6 +37,12 @@ const EditCollege = () => {
       body: JSON.stringify({collegeId: id, newFields: data}),
     })
     navigate("/")
+  }
+
+  const [cookies] = useCookies(['user_status']);
+
+  if (parseInt(cookies.user_status, 10) < 3) {
+    return <NotFoundPage/>
   }
 
   if (!initialData) return null;
