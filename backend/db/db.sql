@@ -80,6 +80,9 @@ CREATE TABLE IF NOT EXISTS master_users
     user_password VARCHAR,
     user_firstname VARCHAR,
     user_lastname VARCHAR,
+    user_instagram VARCHAR,
+    user_facebook VARCHAR,
+    user_show_socials BOOLEAN,
     user_phone VARCHAR,
     user_school VARCHAR,
     user_grad_year INTEGER,
@@ -103,8 +106,10 @@ CREATE TABLE IF NOT EXISTS master_users
     user_extracurriculars VARCHAR,
     user_sport1 VARCHAR,
     user_sport1_role VARCHAR,
+    user_sport1_level VARCHAR,
     user_sport2 VARCHAR,
     user_sport2_role VARCHAR,
+    user_sport2_level VARCHAR,
     user_notes VARCHAR
 );
 
@@ -133,8 +138,11 @@ CREATE TABLE IF NOT EXISTS mentors
 	mentor_degree2 VARCHAR,
 	mentor_degree3 VARCHAR,
     mentor_major1 VARCHAR,
+    mentor_degree1 VARCHAR,
     mentor_major2 VARCHAR,
+    mentor_degree2 VARCHAR,
     mentor_major3 VARCHAR,
+    mentor_degree3 VARCHAR,
     mentor_curr_employment VARCHAR,
     mentor_highest_sports_level VARCHAR,
     mentor_interests VARCHAR,
@@ -235,6 +243,9 @@ INSERT INTO master_users (
     user_firstname,
     user_lastname,
     user_phone,
+    user_instagram,
+    user_facebook,
+    user_show_socials,
     user_school,
     user_grad_year,
     user_ncaa_registered,
@@ -257,20 +268,22 @@ INSERT INTO master_users (
     user_extracurriculars,
     user_sport1,
     user_sport1_role,
+    user_sport1_level,
     user_sport2,
     user_sport2_role,
+    user_sport2_level,
     user_notes
 )
 VALUES 
-    ('janedoe@example.com', '', 'Jane', 'Doe', '000-000-0000', 'Mountain View HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'basketball', 'center', 'notes'),
-    ('admin@example.com', '', 'Admin', 'Admin', '000-000-0000', 'Mountain View HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'basketball', 'center', 'notes'),
-    ('billybob@example.com', '', 'Billy', 'Bob', '000-000-0000', 'Los Altos HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'math', 'english', 'coding', 'coding more', 'tennis', 'doubles', 'basketball', 'center', 'notes'),
-    ('sarahjane@example.com', '', 'Sarah', 'Jane', '000-000-0000', 'Ohio HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'design', 'biology', 'computer science', 'coding', 'coding more', 'soccer', 'defense', 'tennis', 'singles', 'notes'),
-    ('gracekuo@example.com', '', 'Grace', 'Kuo', '000-000-0000', 'Homestead', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'english', 'politcal science', 'design', 'coding', 'coding more', 'football', 'defense', 'hockey', 'center', 'notes'),
-    ('maryjane@example.com', '', 'Olivia', 'Lai', '000-000-0000', 'Mountain View HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'basketball', 'center', 'notes'),
-    ('joeybuddy@example.com', '', 'Joey', 'Buddy', '000-000-0000', 'Los Altos HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'math', 'english', 'coding', 'coding more', 'tennis', 'doubles', 'basketball', 'center', 'notes'),
-    ('sarahdoe@example.com', '', 'Mary', 'Jane', '000-000-0000', 'Ohio HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'design', 'biology', 'computer science', 'coding', 'coding more', 'soccer', 'defense', 'tennis', 'singles', 'notes'),
-    ('bobbyjunior@example.com', '', 'Bobby', 'Junior', '000-000-0000', 'Homestead', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'english', 'politcal science', 'design', 'coding', 'coding more', 'football', 'defense', 'hockey', 'center', 'notes');
+    ('janedoe@example.com', '', 'Jane', 'Doe', '000-000-0000', 'instagram', 'facebook', true, 'Mountain View HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'National', 'basketball', 'center', 'State', 'notes'),
+    ('admin@example.com', '', 'Admin', 'Admin', '000-000-0000', 'instagram', 'facebook', true, 'Mountain View HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'National', 'basketball', 'center', 'State', 'notes'),
+    ('billybob@example.com', '', 'Billy', 'Bob', '000-000-0000', 'instagram', 'facebook', true, 'Los Altos HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'math', 'english', 'coding', 'coding more', 'tennis', 'doubles', 'National', 'basketball', 'center', 'State', 'notes'),
+    ('sarahjane@example.com', '', 'Sarah', 'Jane', '000-000-0000', 'instagram', 'facebook', true, 'Ohio HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'design', 'biology', 'computer science', 'coding', 'coding more', 'soccer', 'defense', 'National', 'tennis', 'singles', 'State', 'notes'),
+    ('gracekuo@example.com', '', 'Grace', 'Kuo', '000-000-0000', 'instagram', 'facebook', true, 'Homestead', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'english', 'politcal science', 'design', 'coding', 'coding more', 'football', 'defense', 'National', 'hockey', 'center', 'State', 'notes'),
+    ('maryjane@example.com', '', 'Olivia', 'Lai', '000-000-0000', 'instagram', 'facebook', true, 'Mountain View HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'National', 'basketball', 'center', 'State', 'notes'),
+    ('joeybuddy@example.com', '', 'Joey', 'Buddy', '000-000-0000', 'instagram', 'facebook', true, 'Los Altos HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'math', 'english', 'coding', 'coding more', 'tennis', 'doubles', 'National', 'basketball', 'center', 'State', 'notes'),
+    ('sarahdoe@example.com', '', 'Mary', 'Jane', '000-000-0000', 'instagram', 'facebook', true, 'Ohio HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'design', 'biology', 'computer science', 'coding', 'coding more', 'soccer', 'defense', 'National', 'tennis', 'singles', 'State', 'notes'),
+    ('bobbyjunior@example.com', '', 'Bobby', 'Junior', '000-000-0000', 'instagram', 'facebook', true, 'Homestead', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'english', 'politcal science', 'design', 'coding', 'coding more', 'football', 'defense', 'National', 'hockey', 'center', 'State', 'notes');
 
 
 
@@ -323,5 +336,13 @@ INSERT INTO mentors (
     mentor_sport2,
     mentor_sport2_role
 )
-VALUES ('Bob', 'Smith', 'bobsmith@example.com', '111-111-1111', 'USC', 'Computer Science', 'Bachelors', 'Design', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'football', 'quarterback', 'volleyball', 'setter');
+VALUES 
+    ('Bob', 'Smith', 'bobsmith@example.com', '111-111-1111', 'USC', 'Computer Science', 'Bachelors', 'Design', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'football', 'quarterback', 'volleyball', 'setter'),
+    ('Bobby', 'Smith', 'bobbysmith@example.com', '111-111-1111', 'USC', 'Computer Science', 'Bachelors', 'Design', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'tennis', 'quarterback', 'soccer', 'setter'),
+    ('Heather', 'Liu', 'heatherliu@example.com', '111-111-1111', 'USC', 'Math', 'Bachelors', 'Design', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'badminton', 'quarterback', 'basketball', 'setter'),
+    ('Icesha', 'Sanders', 'iceshasanders@example.com', '111-111-1111', 'USC', 'Computer Science', 'Bachelors', 'Math', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'soccer', 'quarterback', 'volleyball', 'setter'),
+    ('Vincent', 'Hang', 'vincenthang@example.com', '111-111-1111', 'USC', 'Chemistry', 'Bachelors', 'Design', 'Bachelors', 'Math', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'football', 'quarterback', 'volleyball', 'setter'),
+    ('Angel', 'Liu', 'angelliu@example.com', '111-111-1111', 'USC', 'Computer Science', 'Bachelors', 'Design', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'tennis', 'quarterback', 'soccer', 'setter'),
+    ('Vincent', 'Jung', 'vincentjung@example.com', '111-111-1111', 'USC', 'English', 'Bachelors', 'Design', 'Bachelors', 'Chemistry', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'football', 'quarterback', 'basketball', 'setter');
+
 
