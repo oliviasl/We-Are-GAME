@@ -1,29 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar } from "../layouts/Navbar";
 import { set } from "react-hook-form";
 import { setgid } from "process";
 import { useParams } from "react-router-dom";
 import EditStudentPill from "../components/EditStudentPill";
 
+interface StudentData {
+  firstName: string;
+  lastName: string;
+  school: string;
+  phoneNumber: string;
+  email: string;
+  grade: string;
+  instagram: string;
+  facebook: string;
+  showContact: boolean;
+  major1: string;
+  major2: string;
+  major3: string;
+  sport1: string;
+  sport2: string;
+  sport3: string;
+  position1: string;
+  position2: string;
+  position3: string;
+  level1: string;
+  level2: string;
+  level3: string;
+  showLevel1: boolean;
+  showLevel2: boolean;
+  showLevel3: boolean;
+  interests: string[];
+  extracurriculars: string[];
+  actReading: string;
+  actMath: string;
+  actScience: string;
+  actWriting: string;
+  actComposite: string;
+  satReading: string;
+  satMath: string;
+  satComposite: string;
+  gpa: string;
+  purpose: string;
+  goal: string;
+}
+
 export const EditStudent = () => {
   // field data
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [school, setSchool] = useState("");
-
   const [phoneNumber, setPhoneNumber] = useState(""); // string?
   const [email, setEmail] = useState("");
   const [grade, setGrade] = useState("");
-
   const [instagram, setInstagram] = useState("");
   const [facebook, setFacebook] = useState("");
-
   const [showContact, setShowContact] = useState(false);
-
   const [major1, setMajor1] = useState("");
   const [major2, setMajor2] = useState("");
   const [major3, setMajor3] = useState("");
-
   const [sport1, setSport1] = useState("");
   const [sport2, setSport2] = useState("");
   const [sport3, setSport3] = useState("");
@@ -36,26 +71,80 @@ export const EditStudent = () => {
   const [showLevel1, setShowLevel1] = useState(false);
   const [showLevel2, setShowLevel2] = useState(false);
   const [showLevel3, setShowLevel3] = useState(false);
-
   const [inputInterest, setInputInterest] = useState("");
   const [arrInterest, setArrInterest] = useState<string[]>([]);
   const [inputExtracurricular, setInputExtracurricular] = useState("");
   const [arrExtracirricular, setArrExtracirricular] = useState<string[]>([]);
-
   const [actReading, setACTReading] = useState("");
   const [actMath, setACTMath] = useState("");
   const [actScience, setACTScience] = useState("");
   const [actWriting, setACTWriting] = useState("");
   const [actComposite, setACTComposite] = useState("");
-
   const [satReading, setSATReading] = useState("");
   const [satMath, setSATMath] = useState("");
   const [satComposite, setSATComposite] = useState("");
-
   const [gpa, setGPA] = useState("");
-
   const [purpose, setPurpose] = useState("");
   const [goal, setGoal] = useState("");
+
+  const { id } = useParams();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = JSON.stringify({
+          userId: id,
+        });
+        const response = await fetch(`/api/userById`, {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: userData,
+        });
+
+        const data = await response.json();
+        const studentData = data[0];
+        setFirstName(studentData.user_firstname);
+        setLastName(studentData.user_lastname);
+        setSchool(studentData.user_school);
+        setPhoneNumber(studentData.user_phone);
+        setEmail(studentData.user_email);
+        setGrade(studentData.user_grad_year.toString());
+        setInstagram(studentData.user_instagram);
+        setFacebook(studentData.user_facebook);
+        setMajor1(studentData.user_potential_major);
+        setMajor2(studentData.user_alt_major1);
+        setMajor3(studentData.user_alt_major2);
+        setSport1(studentData.user_sport1);
+        setSport2(studentData.user_sport2);
+        setSport3(studentData.user_sport3);
+        setPosition1(studentData.user_sport1_role);
+        setPosition2(studentData.user_sport2_role);
+        setPosition3(studentData.user_sport3_role);
+        setLevel1(studentData.user_sport1_level);
+        setLevel2(studentData.user_sport2_level);
+        setLevel3(studentData.user_sport3_level);
+        setInputInterest(studentData.user_interests);
+        setInputExtracurricular(studentData.user_extracurriculars);
+        setACTReading(studentData.user_act_reading.toString());
+        setACTMath(studentData.user_act_math.toString());
+        setACTScience(studentData.user_act_science.toString());
+        setACTWriting(studentData.user_act_english.toString());
+        setACTComposite(studentData.user_act.toString());
+        setSATReading(studentData.user_sat_read_write.toString());
+        setSATMath(studentData.user_sat_math.toString());
+        setSATComposite(studentData.user_sat.toString());
+        setGPA(studentData.user_gpa.toString());
+        setPurpose(studentData.user_purpose);
+        setGoal(studentData.user_goal);
+      } catch (error) {
+        console.error("Error fetching student data:", error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
 
   const handleInterestKeypress = (
     event: React.KeyboardEvent<HTMLInputElement>
@@ -102,8 +191,6 @@ export const EditStudent = () => {
       });
     };
   };
-
-  const { id } = useParams();
 
   return (
     <div className="mb-10">
