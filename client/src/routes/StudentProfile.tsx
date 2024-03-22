@@ -38,6 +38,10 @@ export interface studentData {
   user_notes: string;
 
   user_grad_year:number;
+
+  user_instagram: string;
+  user_facebook: string;
+  user_show_socials: boolean;
 }
 
 export interface collegeAssignments {
@@ -118,6 +122,7 @@ const StudentProfileRoute = () => {
 
         const data = await response.json();
         setStudentData(data[0]);
+        console.log("studentData:", studentData);
       } catch (error) {
         console.error("Error fetching student data:", error);
       }
