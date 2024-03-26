@@ -1,6 +1,8 @@
 import CollegeFormPage from "../layouts/CollegeFormPage";
 
 import {useNavigate} from "react-router-dom"
+import {useCookies} from "react-cookie";
+import NotFoundPage from "./NotFoundPage";
 
 const AddCollege = () => {
   const navigate = useNavigate();
@@ -14,6 +16,12 @@ const AddCollege = () => {
       body: JSON.stringify({collegeData: data}),
     })
     navigate("/")
+  }
+
+  const [cookies] = useCookies(['user_status']);
+
+  if (parseInt(cookies.user_status, 10) < 3) {
+    return <NotFoundPage/>
   }
 
   return <CollegeFormPage onSubmit={onSubmit}/>
