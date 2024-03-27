@@ -219,7 +219,10 @@ export const EditStudent = () => {
         <div className="col-span-full">
           <div className="flex justify-between items-center my-9">
             <div className="text-5xl font-bold">My Edit</div>
-            <div className="flex justify-center items-center w-28 h-9 bg-brand-gray-90 border-2 border-brand-gray-20 rounded">
+            <div
+              className="flex justify-center items-center w-28 h-9 bg-brand-gray-90 border-2 border-brand-gray-20 rounded cursor-pointer"
+              onClick={() => navigate(`/student-profile/${id}`)}
+            >
               Cancel
             </div>
           </div>
@@ -764,7 +767,7 @@ export const EditStudent = () => {
         <div className="col-span-full mt-6 mb-52">
           <div className="flex justify-end">
             <div
-              className="flex justify-center items-center w-28 h-9 bg-brand-gray-20 border-2 border-brand-gray-20 rounded text-white hover:bg-brand-green-45 transition duration-300 ease-in-out"
+              className="flex justify-center items-center w-28 h-9 bg-brand-gray-20 border-2 border-brand-gray-20 rounded text-white hover:bg-brand-green-45 transition duration-300 ease-in-out cursor-pointer"
               onClick={saveUserData}
             >
               Save
