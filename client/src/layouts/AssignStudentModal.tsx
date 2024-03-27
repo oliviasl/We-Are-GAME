@@ -81,8 +81,8 @@ const AssignStudentModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       border: "2px solid lightgrey" as const,
       width: "52%" as const,
       margin: "auto" as const,
-      height: searchResults.length > 0 ? "46vh" : "26vh",
-      maxHeight: "46vh",
+      height: searchResults.length > 0 ? "50vh" : "30vh",
+      maxHeight: "50vh",
       overflow: "hidden" as const,
     },
   };
