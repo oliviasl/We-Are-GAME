@@ -1,7 +1,19 @@
-import {Button, Dialog, DialogBody, DialogFooter, DialogHeader, Input} from "@material-tailwind/react";
-import React, {useState} from "react";
-import {toast} from "react-toastify";
-import {useParams} from "react-router-dom";
+import {
+  Button,
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  DialogHeader,
+  Input,
+} from "@material-tailwind/react";
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+
+import Modal from "react-modal";
+import X from "../components/X";
+const appElement = document.getElementById("root")!;
+Modal.setAppElement(appElement);
 
 interface StudentData {
   user_id: number;
