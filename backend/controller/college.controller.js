@@ -324,6 +324,21 @@ class collegeController {
         return collegeData;
     }
 
+    async batchAutofillColleges(){
+        // get all names in db
+        currentCollegeNames=[]
+        const result = await db.query("SELECT college_name FROM colleges");
+        print(result.rows)
+        currentCollegeNames = result.rows;
+        print(currentCollegeNames)
+        return 1;
+
+        // for: 
+        //  attempt fetch
+        //  filter out nulls and upsert
+        // return status(college counts?)
+    }
+
     // fetchFromScorecard
     /**
      * Fetch school data from collegescorecard api
@@ -434,7 +449,7 @@ class collegeController {
         const result = await db.query(queryValues[0].join(''), queryParams);
         return result.rows;
     }
-  
+    
     // paginated collegesFiltered
     async paginatedCollegesFiltered(fields, pageNumber) {
         // page size is 6
