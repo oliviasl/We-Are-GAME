@@ -14,6 +14,7 @@ import theme from "./util/theme";
 import { Navbar } from "./layouts/Navbar";
 import { ToastContainer } from "react-toastify";
 import MentorDatabase from "./routes/MentorDatabase";
+import EditMentor from "./routes/EditMentor";
 
 function App() {
   return (
@@ -40,6 +41,10 @@ function App() {
               <Route path=":id" element={<CollegeProfile />} />
             </Route>
             <Route path="/student-database" element={<StudentDatabase />} />
+            <Route path="/edit-mentor" element={<EditMentor />} />
+            <Route path="/edit-mentor">
+              <Route path=":id" element={<EditMentor />} />
+            </Route>
           </Routes>
         </Router>
       </div>
