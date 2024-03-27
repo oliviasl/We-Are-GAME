@@ -81,8 +81,8 @@ const AssignStudentModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       border: "2px solid lightgrey" as const,
       width: "52%" as const,
       margin: "auto" as const,
-      height: searchResults.length > 0 ? "44vh" : "26vh",
-      maxHeight: "44vh",
+      height: searchResults.length > 0 ? "46vh" : "26vh",
+      maxHeight: "46vh",
       overflow: "hidden" as const,
     },
   };
@@ -121,7 +121,10 @@ const AssignStudentModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         </div>
         {/* search results */}
         {searchResults.length > 0 && (
-          <div className="mt-7 divide-y-2 overflow-y-scroll h-25 divide-brand-gray-20">
+          <div
+            className="mt-7 divide-y-2 h-25 divide-brand-gray-20"
+            style={{ maxHeight: "25vh", overflowY: "auto" }}
+          >
             <hr />
             {searchResults.map((result) => (
               <div

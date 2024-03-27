@@ -87,7 +87,10 @@ const AddCollegeModal: React.FC<ModalProps> = ({ isOpen, onClose, onAdd }) => {
         </div>
         {/* search results */}
         {searchResults.length > 0 && (
-          <div className="mt-7 divide-y-2 overflow-y-scroll h-25 divide-brand-gray-20">
+          <div
+            className="mt-7 divide-y-2 h-25 divide-brand-gray-20"
+            style={{ maxHeight: "25vh", overflowY: "auto" }}
+          >
             <hr />
             {searchResults.map((result) => (
               <div
