@@ -2,48 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Navbar } from "../layouts/Navbar";
 import { set } from "react-hook-form";
 import { setgid } from "process";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import EditStudentPill from "../components/EditStudentPill";
-
-interface StudentData {
-  firstName: string;
-  lastName: string;
-  school: string;
-  phoneNumber: string;
-  email: string;
-  grade: string;
-  instagram: string;
-  facebook: string;
-  showContact: boolean;
-  major1: string;
-  major2: string;
-  major3: string;
-  sport1: string;
-  sport2: string;
-  sport3: string;
-  position1: string;
-  position2: string;
-  position3: string;
-  level1: string;
-  level2: string;
-  level3: string;
-  showLevel1: boolean;
-  showLevel2: boolean;
-  showLevel3: boolean;
-  interests: string[];
-  extracurriculars: string[];
-  actReading: string;
-  actMath: string;
-  actScience: string;
-  actWriting: string;
-  actComposite: string;
-  satReading: string;
-  satMath: string;
-  satComposite: string;
-  gpa: string;
-  purpose: string;
-  goal: string;
-}
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const EditStudent = () => {
   // field data
@@ -61,16 +23,12 @@ export const EditStudent = () => {
   const [major3, setMajor3] = useState("");
   const [sport1, setSport1] = useState("");
   const [sport2, setSport2] = useState("");
-  const [sport3, setSport3] = useState("");
   const [position1, setPosition1] = useState("");
   const [position2, setPosition2] = useState("");
-  const [position3, setPosition3] = useState("");
   const [level1, setLevel1] = useState("Select...");
   const [level2, setLevel2] = useState("Select...");
-  const [level3, setLevel3] = useState("Select...");
   const [showLevel1, setShowLevel1] = useState(false);
   const [showLevel2, setShowLevel2] = useState(false);
-  const [showLevel3, setShowLevel3] = useState(false);
   const [inputInterest, setInputInterest] = useState("");
   const [arrInterest, setArrInterest] = useState<string[]>([]);
   const [inputExtracurricular, setInputExtracurricular] = useState("");
@@ -88,6 +46,70 @@ export const EditStudent = () => {
   const [goal, setGoal] = useState("");
 
   const { id } = useParams();
+  const navigate = useNavigate();
+  const saveUserData = async () => {
+    // cannot save with empty first or last name
+    if (!firstName.trim() || !lastName.trim()) {
+      toast("First name and last name can't be empty!", {
+        className: "border-l-8 border-semantic-warning",
+      });
+      return;
+    }
+    try {
+      const userData = {
+        userId: id,
+        newFields: {
+          user_firstname: firstName,
+          user_lastname: lastName,
+          user_school: school,
+          user_phone: phoneNumber,
+          user_email: email,
+          user_grad_year: parseInt(grade),
+          user_instagram: instagram,
+          user_facebook: facebook,
+          user_potential_major: major1,
+          user_alt_major1: major2,
+          user_alt_major2: major3,
+          user_sport1: sport1,
+          user_sport2: sport2,
+          user_sport1_role: position1,
+          user_sport2_role: position2,
+          user_sport1_level: level1,
+          user_sport2_level: level2,
+          user_interests: arrInterest.join(","),
+          user_extracurriculars: arrExtracirricular.join(","),
+          user_act_reading: parseInt(actReading),
+          user_act_math: parseInt(actMath),
+          user_act_science: parseInt(actScience),
+          user_act_english: parseInt(actWriting),
+          user_act: parseInt(actComposite),
+          user_sat_read_write: parseInt(satReading),
+          user_sat_math: parseInt(satMath),
+          user_sat: parseInt(satComposite),
+          user_gpa: parseFloat(gpa),
+          user_purpose: purpose,
+          user_goal: goal,
+        },
+      };
+      const response = await fetch("/api/editUser", {
+        method: "put",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        navigate(`/student-profile/${id}`);
+      } else {
+        console.error("Error saving user data:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error saving user data:", error);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -118,13 +140,10 @@ export const EditStudent = () => {
         setMajor3(studentData.user_alt_major2);
         setSport1(studentData.user_sport1);
         setSport2(studentData.user_sport2);
-        setSport3(studentData.user_sport3);
         setPosition1(studentData.user_sport1_role);
         setPosition2(studentData.user_sport2_role);
-        setPosition3(studentData.user_sport3_role);
         setLevel1(studentData.user_sport1_level);
         setLevel2(studentData.user_sport2_level);
-        setLevel3(studentData.user_sport3_level);
         setInputInterest(studentData.user_interests);
         setInputExtracurricular(studentData.user_extracurriculars);
         setACTReading(studentData.user_act_reading.toString());
@@ -396,7 +415,6 @@ export const EditStudent = () => {
                 onClick={() => {
                   setShowLevel1(!showLevel1);
                   setShowLevel2(false);
-                  setShowLevel3(false);
                 }}
               >
                 {level1}
@@ -493,7 +511,6 @@ export const EditStudent = () => {
                 onClick={() => {
                   setShowLevel2(!showLevel2);
                   setShowLevel1(false);
-                  setShowLevel3(false);
                 }}
               >
                 {level2}
@@ -746,7 +763,10 @@ export const EditStudent = () => {
 
         <div className="col-span-full mt-6 mb-52">
           <div className="flex justify-end">
-            <div className="flex justify-center items-center w-28 h-9 bg-brand-gray-20 border-2 border-brand-gray-20 rounded text-white">
+            <div
+              className="flex justify-center items-center w-28 h-9 bg-brand-gray-20 border-2 border-brand-gray-20 rounded text-white hover:bg-brand-green-45 transition duration-300 ease-in-out"
+              onClick={saveUserData}
+            >
               Save
             </div>
           </div>
