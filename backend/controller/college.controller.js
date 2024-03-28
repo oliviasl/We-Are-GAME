@@ -326,17 +326,18 @@ class collegeController {
 
     async batchAutofillColleges(){
         // get all names in db
-        currentCollegeNames=[]
-        const result = await db.query("SELECT college_name FROM colleges");
-        print(result.rows)
+        let currentCollegeNames=[]
+        const result = await db.query("SELECT college_id, college_name FROM colleges");
         currentCollegeNames = result.rows;
-        print(currentCollegeNames)
-        return 1;
-
+        let matches=0
+        for (const college of colleges) {
+            console.log(`College ID: ${college.college_id}, College Name: ${college.college_name}`);
+        }        
         // for: 
         //  attempt fetch
         //  filter out nulls and upsert
         // return status(college counts?)
+        return matches;
     }
 
     // fetchFromScorecard
