@@ -201,7 +201,7 @@ const MentorDatabase = () => {
                             type="text"
                         />
                     </div>
-                    <div className="flex items-center justify-start mt-3 ">
+                    <div className="flex items-center justify-center mt-3 gap-4">
                         <div
                             onClick={() => {
                                 setFilterName(displayName);
@@ -209,7 +209,7 @@ const MentorDatabase = () => {
                                 setFilterMajor(displayMajor);
                                 setPage(1);
                             }}
-                            className="w-28 h-9 cursor-pointer bg-brand-gray-20 text-white font-medium px-8 py-[5px] mx-3 rounded"
+                            className="cursor-pointer bg-brand-gray-20 border-2 border-brand-gray-20 text-white font-medium px-8 py-[5px] mx-3 rounded"
                         >
                             Search
                         </div>
@@ -223,9 +223,9 @@ const MentorDatabase = () => {
                                 setFilterMajor("");
                                 setPage(1);
                             }}
-                            className="w-38 h-9 cursor-pointer bg-brand-gray-90 border-2 border-brand-gray-20 font-medium px-8 py-[5px] rounded"
+                            className="cursor-pointer bg-brand-gray-90 border-2 border-brand-gray-20 font-medium px-8 py-[5px] rounded"
                         >
-                            Clear Filters
+                            Clear
                         </div>
                     </div>
                 </div>

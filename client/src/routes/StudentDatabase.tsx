@@ -87,7 +87,7 @@ const StudentDatabase = () => {
                                         id={student?.user_id}
                                     />
                                 );
-                            })}                          
+                            })}
                         </tbody>
                     </table>
                     <div className="flex justify-start items-center gap-2 mt-16">
@@ -194,7 +194,7 @@ const StudentDatabase = () => {
                             type="text"
                         />
                     </div>
-                    <div className="flex items-center justify-start mt-3 ">
+                    <div className="flex items-center justify-center mt-3 gap-4">
                         {/* Auth Wrapper */}
                         <div
                             onClick={() => {
@@ -203,9 +203,19 @@ const StudentDatabase = () => {
                                 setFilterMajor(displayMajor);
                                 setPage(1);
                             }}
-                            className="w-28 h-9 cursor-pointer bg-brand-gray-20 text-white font-medium px-8 py-[5px] rounded"
+                            className="cursor-pointer bg-brand-gray-20 border-2 border-brand-gray-20 text-white font-medium px-8 py-[5px] mx-3 rounded"
                         >
                             Search
+                        </div>
+                        <div
+                            onClick={() => {
+                                setDisplayName("");
+                                setDisplayMajor("");
+                                setDisplaySport("");
+                            }}
+                            className="cursor-pointer bg-brand-gray-90 border-2 border-brand-gray-20 font-medium px-8 py-[5px] rounded"
+                        >
+                            Clear
                         </div>
                     </div>
                 </div>
