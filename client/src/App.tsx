@@ -7,6 +7,7 @@ import CollegeDatabase from "./routes/CollegeDatabase";
 import StudentDatabase from "./routes/StudentDatabase";
 import StudentProfileRoute from "./routes/StudentProfile";
 import PeerProfileViewRoute from "./routes/PeerProfileView";
+import MentorProfileViewRoute from "./routes/MentorProfile";
 import EditStudent from "./routes/EditStudent";
 import CollegeProfile from "./routes/CollegeProfile";
 import EditCollege from "./routes/EditCollege";
@@ -35,6 +36,9 @@ function App() {
             <Route path="/edit-student" element={<EditStudent/>} />
             <Route path="/peer-profile" >
               <Route path=":id" element={<PeerProfileViewRoute/>}/>
+              </Route>
+            <Route path="/mentor-profile" >
+              <Route path=":id" element={<MentorProfileViewRoute/>}/>
               </Route>
             <Route path="/college-profile">
               <Route path=":id" element={<CollegeProfile/>}/>
