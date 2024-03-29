@@ -430,9 +430,9 @@ class userController {
     }
 
     sqlBuilderV2(fields, pageNumber) {
-      
-        let query="SELECT * FROM master_users";
-        let wheres=[];
+
+        let query="SELECT * FROM master_users JOIN user_status ON master_users.user_id = user_status.user_id";
+        let wheres=["user_status.user_status = 0"];
 
         if("userByName" in fields && fields["userByName"]!=null && fields["userByName"]!=""){
             wheres.push("(LOWER(CONCAT('%', user_firstname, '%')) LIKE LOWER('%"+fields["userByName"]+"%') OR LOWER(CONCAT('%', user_lastname, '%')) LIKE LOWER('%"+fields["userByName"]+"%') OR LOWER(CONCAT(user_firstname, ' ', user_lastname)) LIKE LOWER('%"+fields["userByName"]+"%'))");
@@ -450,10 +450,8 @@ class userController {
         const offset = (pageNumber - 1) * PAGE_SIZE;
         const sqlStr = " ORDER BY user_firstname LIMIT "+PAGE_SIZE+" OFFSET "+offset+";";
 
-        if(wheres.length!=0){
-            return [query+" WHERE "+sqlWhere+";", query+" WHERE "+sqlWhere+sqlStr];
-        }
-        return [query+";", query+sqlStr];
+        return [query+" WHERE "+sqlWhere+";", query+" WHERE "+sqlWhere+sqlStr];
+
     }
 
     async paginatedUsersFiltered(fields, pageNumber){
