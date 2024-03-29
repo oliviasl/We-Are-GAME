@@ -46,9 +46,9 @@ export const CollegeFormFormSection = ({
     <Typography variant={"h3"}>{section.title}</Typography>
     <form onSubmit={form.handleSubmit(onNext)} className="space-y-8">
       <div className={"flex flex-col space-y-4"}>
-        {section.fields.map((field, i) => (
+        {section.fields.map((field,) => (
           <CollegeFormFormField
-            key={i}
+            key={field.title}
             form={form}
             field={field}
             errors={form.formState.errors}
