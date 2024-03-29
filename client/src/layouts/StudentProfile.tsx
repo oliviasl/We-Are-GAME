@@ -225,7 +225,7 @@ const StudentProfile: React.FC<StudentProfileProps> = ({
       <div className="order-5 border-gray-400 border-2 rounded-md ">
         <ProfileBox
           type="Extracurriculars"
-          data={studentData.user_extracurriculars.split(",")}
+          data={studentData.user_extracurriculars != null ? studentData.user_extracurriculars.split(",") : []}
         />
       </div>
 
@@ -233,7 +233,7 @@ const StudentProfile: React.FC<StudentProfileProps> = ({
       <div className="order-5 border-gray-400 border-2 rounded-md ">
         <ProfileBox
           type="Special Interests"
-          data={studentData.user_interests.split(",")}
+          data={studentData.user_interests != null ? studentData.user_interests.split(",") : []}
         />
       </div>
 
