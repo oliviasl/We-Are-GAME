@@ -21,6 +21,36 @@ const MentorDatabase = () => {
     const [filterSport, setFilterSport] = useState("");
 
     // paginated mentor query
+    const fetchApprovedMentors = useCallback(async () => {
+        const pageBody = JSON.stringify({
+            pageNumber: page,
+            fields: {
+                mentorByName: filterName,
+                mentorBySport: filterSport,
+                mentorByMajor: filterMajor,
+            },
+        });
+        const response = await fetch("/api/paginatedMentorsFiltered", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            body: pageBody,
+        });
+        const data = await response.json();
+
+        const { mentorData, totalPages } = data;
+
+        if (data) {
+            setMentors(mentorData);
+            setTotalPages(totalPages);
+        }
+    }, [page, filterName, filterSport, filterMajor]);
+
+    useEffect(() => {
+        fetchApprovedMentors();
+    }, [page, fetchApprovedMentors]);
 
     return (
         <div>
@@ -185,6 +215,9 @@ const MentorDatabase = () => {
                         </div>
                         <div
                             onClick={() => {
+                                setDisplayName("");
+                                setDisplaySport("");
+                                setDisplayMajor("");
                                 setFilterName("");
                                 setFilterSport("");
                                 setFilterMajor("");
