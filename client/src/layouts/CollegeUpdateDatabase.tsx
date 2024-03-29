@@ -14,16 +14,25 @@ const CollegeUpdateDatabase = () => {
     return (
         <div className="pb-16 pt-[19px] pr-5 flex items-center justify-between">
             <div className="font-bold text-5xl">College Database</div>
-
-            <div className={"space-x-2"}>
-                <Button color="gray" variant={"outlined"}>
-                    Update Database
-                </Button>
-                <Button color="gray" onClick={() => navigate("/add-college")}>
-                    Add College
-                </Button>
-            </div>
-            <BatchAutofillModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
+            {cookies.user_status === 3 && (
+                <>
+                    <div className={"space-x-2"}>
+                        <Button color="gray" variant={"outlined"}>
+                            Update Database
+                        </Button>
+                        <Button
+                            color="gray"
+                            onClick={() => navigate("/add-college")}
+                        >
+                            Add College
+                        </Button>
+                    </div>
+                    <BatchAutofillModal
+                        isOpen={isModalOpen}
+                        setIsOpen={setIsModalOpen}
+                    />
+                </>
+            )}
         </div>
     );
 };
