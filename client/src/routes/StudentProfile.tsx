@@ -1,6 +1,8 @@
 import StudentProfile from "../layouts/StudentProfile";
 import React, { useEffect, useState, ElementType } from "react";
 import { useParams } from "react-router-dom";
+import PeerProfileView from "../layouts/PeerProfileView";
+import { useCookies } from "react-cookie";
 
 export interface studentData {
   user_id: number;
@@ -44,6 +46,28 @@ export interface studentData {
   user_show_socials: boolean;
 }
 
+export interface peerData {
+  user_id: number;
+  user_email: string;
+  user_firstname: string;
+  user_lastname: string;
+  user_phone: string;
+  user_school: string;
+  user_facebook: string;
+  user_instagram: string;
+  user_show_socials: boolean;
+
+  user_potential_major: string;
+  user_alt_major1: string;
+  user_alt_major2: string;
+  user_sport1: string;
+  user_sport1_role: string;
+  user_sport2: string;
+  user_sport2_role: string;
+
+  user_grad_year: number;
+}
+
 export interface collegeAssignments {
   assignment_id: number;
   college_id: number;
@@ -56,6 +80,8 @@ const StudentProfileRoute = () => {
 
   const [studentData, setStudentData] = useState<studentData>({} as studentData);
   const [collegeAssignments, setCollegeAssignments] = useState<collegeAssignments[]>([]);
+  const [peerData, setPeerData] = useState<peerData>({} as peerData);
+  const [cookies, setCookies] = useCookies(['user_id', 'user_status', 'user_name']);
 
   const fetchAssignments = async () => {
     try {
@@ -183,13 +209,19 @@ const StudentProfileRoute = () => {
   };
 
   return (
-    <div className="">
-      <StudentProfile
-        studentData={studentData}
-        collegeAssignments={collegeAssignments}
-        handleDelete={handleDelete}
-        handleAdd={handleAdd}
-      />
+    <div>
+      {(cookies.user_status === 3 || cookies.user_id === parseInt(id ? id : "")) && cookies.user_status !== 1 ? (
+        <StudentProfile
+          studentData={studentData}
+          collegeAssignments={collegeAssignments}
+          handleDelete={handleDelete}
+          handleAdd={handleAdd}
+        />
+      ) : cookies.user_status === 1 ? (
+        <PeerProfileView
+          peerData={peerData}
+        />
+      ) : null}
     </div>
   );
 };

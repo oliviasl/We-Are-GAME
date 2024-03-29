@@ -1,5 +1,5 @@
 import React from "react";
-import {peerData} from "../routes/PeerProfileView";
+import {peerData} from "../routes/StudentProfile";
 import ProfileBox from "../components/ProfileBox";
 
 interface PeerProfileProps {

@@ -44,13 +44,7 @@ const StudentProfile: React.FC<StudentProfileProps> = ({
     user_gpa: "GPA",
     user_ncaa_registered: "NCAA Eligibility",
   };
-  const personalInfoKeys = [
-    "user_grad_year",
-    "user_phone",
-    "user_email",
-    "user_gpa",
-    "user_ncaa_registered",
-  ] as Array<keyof typeof studentData>;
+  
   const personalInfoKeys = ["user_grad_year", "user_phone", "user_email", "user_facebook", "user_instagram", "user_gpa", "user_ncaa_registered"] as Array<keyof typeof studentData>;
 
   const actTitles: Record<string, string> = {
