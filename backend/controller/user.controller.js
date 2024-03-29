@@ -97,9 +97,9 @@ class userController {
         const query = `SELECT master_users.user_id, master_users.user_email, master_users.user_firstname, master_users.user_lastname, master_users.user_potential_major, master_users.user_sport1
         FROM master_users
         JOIN user_status ON master_users.user_id = user_status.user_id
-        WHERE user_status.user_status >= 0
-        LIMIT $1 OFFSET $2
-        ORDER BY first_name ASC;`
+        WHERE user_status.user_status = 1
+		ORDER BY user_firstname
+        LIMIT $1 OFFSET $2;`
 
         const result = await db.query(query, [PAGE_SIZE, offset]);
 
@@ -435,26 +435,7 @@ class userController {
         let wheres=[];
 
         if("userByName" in fields && fields["userByName"]!=null && fields["userByName"]!=""){
-            // field is being passed in correctly
-
-            // only works when field matches first or last name
-            // wheres.push("(LOWER(user_firstname) LIKE LOWER('"+fields["userByName"]+"') OR LOWER(user_lastname) LIKE LOWER('"+fields["userByName"]+"'))");
-
-            // only works when field is contained in or equals first or last name
-            // wheres.push("(LOWER(user_firstname) LIKE LOWER('%"+fields["userByName"]+"%') OR LOWER(user_lastname) LIKE LOWER('%"+fields["userByName"]+"%'))");
-
-            //  only works when field is >= to user_firstname, user_lastname, or full name
-            wheres.push("(LOWER('%"+fields["userByName"]+"%') LIKE LOWER(CONCAT('%', user_firstname, '%')) OR LOWER('%"+fields["userByName"]+"%') LIKE LOWER(CONCAT('%', user_lastname, '%')) OR LOWER('%"+fields["userByName"]+"%') LIKE LOWER(CONCAT(user_firstname, ' ', user_lastname)))");
-
-            // "billy", "billy ", "bob", "bobby", "billy bob", "bobby Junior" --> billy bob
-            // "bobby", "junior", "bobby junior", "bobby juni" --> bobby junior & billy bob (besides "junior")
-
-            // works when field is contained by or equal to first or last name
-            // wheres.push("(LOWER(CONCAT('%', user_firstname, '%')) LIKE LOWER('%"+fields["userByName"]+"%') OR LOWER(CONCAT('%', user_lastname, '%')) LIKE LOWER('%"+fields["userByName"]+"%'))"); 
-
-            // CONCAT TEST
-            // wheres.push("(LOWER(CONCAT('%', user_firstname, '%')) LIKE LOWER('%"+fields["userByName"]+"%') OR LOWER(CONCAT('%', user_lastname, '%')) LIKE LOWER('%"+fields["userByName"]+"%') OR LOWER(CONCAT('%', user_firstname, ' ', user_lastname '%')) LIKE LOWER('%"+fields["userByName"]+"%'))"); 
-
+            wheres.push("(LOWER(CONCAT('%', user_firstname, '%')) LIKE LOWER('%"+fields["userByName"]+"%') OR LOWER(CONCAT('%', user_lastname, '%')) LIKE LOWER('%"+fields["userByName"]+"%') OR LOWER(CONCAT(user_firstname, ' ', user_lastname)) LIKE LOWER('%"+fields["userByName"]+"%'))");
         }
         if("userBySport" in fields && fields["userBySport"]!=null && fields["userBySport"]!=""){
             wheres.push("(LOWER(user_sport1) LIKE LOWER('"+fields["userBySport"]+"') OR LOWER(user_sport2) LIKE LOWER('"+fields["userBySport"]+"'))");
