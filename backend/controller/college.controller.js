@@ -250,16 +250,7 @@ class collegeController {
     };
 
     async autofillCollege(name){
-        //fetch data
 
-        //MISSING FIELDS:
-        /*
-            - Yo like im not a high schooler but i swear i had more shit on the act/sat 
-            { name: "title_iv.transf_completed_4yr_by.2yrs", index: "latest.completion.title_iv.transf_completed_4yr_by.2yrs" },
-            -             { name: "act_scores.25th_percentile.writing", index: "latest.admissions.act_scores.25th_percentile.writing" },
-            { name: "act_scores.75th_percentile.writing", index: "latest.admissions.act_scores.75th_percentile.writing" }, IS THERE A WRITING SECTION IN ACT
-        */
-       
         const DATA_TO_FETCH = [
             { columnName: "location_city", objectPath: "school.city" },
             { columnName: "location_state", objectPath: "school.state" },
@@ -307,6 +298,35 @@ class collegeController {
         // this.createCollege(collegeData);
         //push to db
         return collegeData;
+    }
+
+    async batchAutofillColleges(){
+        // get all names in db
+        let currentCollegeNames=[]
+        const result = await db.query("SELECT college_id, college_name FROM colleges");
+        currentCollegeNames = result.rows;
+        let matches=0
+        for (const college of currentCollegeNames) {
+            const data = await this.autofillCollege(college.college_name);
+
+            if(Object.keys(data).length>1){
+                const updateString = "UPDATE colleges";
+                let setString=" SET ";
+                for(const key in data){
+
+                    setString+=key+" = "+"'"+data[key]+"', ";
+                }
+                setString=setString.slice(0, -2);
+
+                const whereString = " WHERE college_id="+college.college_id; 
+                const queryString = updateString+setString+whereString;
+                await db.query(queryString);
+                //NULL CHECKS ARE DONE IN autofillCollege
+                matches+=1;
+            }
+        }        
+       
+        return matches;
     }
 
     // fetchFromScorecard
@@ -393,13 +413,14 @@ class collegeController {
         const PAGE_SIZE = 7;
         const offset = (pageNumber - 1) * PAGE_SIZE;
         const sqlStr = " ORDER BY college_name LIMIT "+PAGE_SIZE+" OFFSET "+offset+";";
-
+      
         if(wheres.length!=0){
             return [query+" WHERE "+sqlWhere+";", query+" WHERE "+sqlWhere+sqlStr];
         }
         return [query+";", query+sqlStr];
     }
-  
+
+    
     // paginated collegesFiltered
     async paginatedCollegesFiltered(fields, pageNumber) {
        

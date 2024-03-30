@@ -55,6 +55,7 @@ export function CollegeFormFormField({form, field, isNested, errors}: CollegeFor
       <Input
         {...form.register(field.id)}
         type={field.type}
+        step={field.type === "number" ? (field.step || 0.1) : undefined}
         containerProps={{className: "min-w-0"}}
         crossOrigin
       />
