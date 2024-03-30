@@ -264,6 +264,15 @@ app.post("/api/autofillCollege", (req, res) => {
     );
 });
 
+// autofillCollege
+app.post("/api/batchAutofill", (req, res) => {
+  collegeController
+    .batchAutofillColleges()
+    .then((data)=>
+      res.status(200).json(data)
+    );
+});
+
 // *** USER API CALLS ***
 
 // allUsers

@@ -20,20 +20,20 @@ const basicInformation: CollegeFormSection = {
       id: "location_state"
     },
     {
-      type: "url",
+      type: "text",
       title: "General University Website",
       id: "general_web_addr",
       required: true
     },
     {
-      type: "url",
+      type: "text",
       title: "Admissions Website",
       id: "admissions_web_addr"
     },
     {
       type: "number",
       title: "Acceptance Rate",
-      id: "acceptance_rate"
+      id: "acceptance_rate",
     },
     {
       title: "Admitted GPA",
@@ -43,12 +43,12 @@ const basicInformation: CollegeFormSection = {
         {
           id: "min_gpa",
           title: "25th Percentile",
-          type: "number"
+          type: "number",
         },
         {
           id: "max_gpa",
           title: "75th Percentile",
-          type: "number"
+          type: "number",
         }
       ]
     }, {
@@ -61,14 +61,16 @@ const basicInformation: CollegeFormSection = {
           title: "25th Percentile",
           type: "number",
           min: 400,
-          max: 1600
+          max: 1600,
+          step: 10
         },
         {
           id: "max_sat",
           title: "75th Percentile",
           type: "number",
           min: 400,
-          max: 1600
+          max: 1600,
+          step: 10
         }
       ]
     }, {
@@ -81,14 +83,16 @@ const basicInformation: CollegeFormSection = {
           title: "25th Percentile",
           type: "number",
           min: 200,
-          max: 800
+          max: 800,
+          step: 10
         },
         {
           id: "max_sat_read_write",
           title: "75th Percentile",
           type: "number",
           min: 200,
-          max: 800
+          max: 800,
+          step: 10
         }
       ]
     }, {
@@ -101,14 +105,16 @@ const basicInformation: CollegeFormSection = {
           title: "25th Percentile",
           type: "number",
           min: 200,
-          max: 800
+          max: 800,
+          step: 10
         },
         {
           id: "max_sat_math",
           title: "75th Percentile",
           type: "number",
           min: 200,
-          max: 800
+          max: 800,
+          step: 10
         }
       ]
     }, {
@@ -121,14 +127,16 @@ const basicInformation: CollegeFormSection = {
           title: "25th Percentile",
           type: "number",
           min: 1,
-          max: 36
+          max: 36,
+          step: 1
         },
         {
           id: "max_act",
           title: "75th Percentile",
           type: "number",
           min: 1,
-          max: 36
+          max: 36,
+          step: 1
         }
       ]
     }, {
@@ -141,14 +149,16 @@ const basicInformation: CollegeFormSection = {
           title: "25th Percentile",
           type: "number",
           min: 1,
-          max: 36
+          max: 36,
+          step: 1
         },
         {
           id: "max_act_english",
           title: "75th Percentile",
           type: "number",
           min: 1,
-          max: 36
+          max: 36,
+          step: 1
         }
       ]
     }, {
@@ -161,14 +171,16 @@ const basicInformation: CollegeFormSection = {
           title: "25th Percentile",
           type: "number",
           min: 1,
-          max: 36
+          max: 36,
+          step: 1
         },
         {
           id: "max_act_math",
           title: "75th Percentile",
           type: "number",
           min: 1,
-          max: 36
+          max: 36,
+          step: 1
         }
       ]
     }, {
@@ -181,14 +193,16 @@ const basicInformation: CollegeFormSection = {
           title: "25th Percentile",
           type: "number",
           min: 1,
-          max: 36
+          max: 36,
+          step: 1
         },
         {
           id: "max_act_reading",
           title: "75th Percentile",
           type: "number",
           min: 1,
-          max: 36
+          max: 36,
+          step: 1
         }
       ]
     }, {
@@ -201,14 +215,16 @@ const basicInformation: CollegeFormSection = {
           title: "25th Percentile",
           type: "number",
           min: 1,
-          max: 36
+          max: 36,
+          step: 1
         },
         {
           id: "max_act_science",
           title: "75th Percentile",
           type: "number",
           min: 1,
-          max: 36
+          max: 36,
+          step: 1
         }
       ]
     }
@@ -230,17 +246,17 @@ const programs: CollegeFormSection = {
     },
     {
       title: "Undergraduate Programs Website",
-      type: "url",
+      type: "text",
       id: "majors_web_addr"
     },
     {
       title: "Athletics Website",
-      type: "url",
+      type: "text",
       id: "athletics_web_addr"
     },
     {
       title: "Prospective Student Athlete Questionaire Form Website",
-      type: "url",
+      type: "text",
       id: "questionaire_web_addr"
     }
   ]
@@ -320,7 +336,7 @@ const enrollmentStats: CollegeFormSection = {
         },
       ]
     }, {
-      type: "url",
+      type: "text",
       title: "Enrollment by Race Website",
       id: "gender_stats_web_addr"
     }, {
@@ -345,7 +361,7 @@ const enrollmentStats: CollegeFormSection = {
         },
       ]
     }, {
-      type: "url",
+      type: "text",
       title: "Enrollment by Gender Website",
       id: "gender_stats_web_addr"
     }, {
@@ -380,7 +396,7 @@ const costsAndFinAid: CollegeFormSection = {
   title: "Costs and Financial Aid",
   fields: [
     {
-      type: "url",
+      type: "text",
       title: "Net Price Calculator Website",
       id: "net_price_calc_web_addr"
     },
@@ -404,7 +420,7 @@ const costsAndFinAid: CollegeFormSection = {
       title: "Average Cost of Attendance After Aid",
       id: "avg_total_cost_est"
     }, {
-      type: "url",
+      type: "text",
       title: "Financial Aid and Scholarships Website",
       id: "fin_aid_athlete_web_addr"
     }
@@ -415,23 +431,23 @@ const resources: CollegeFormSection = {
   title: "College Resources",
   fields: [
     {
-      type: "url",
+      type: "text",
       title: "Student Academic Resources Website",
       id: "stu_ath_academic_res_web_addr"
     }, {
-      type: "url",
+      type: "text",
       title: "Student Diversity Resources Website",
       id: "diversity_resources_web_addr"
     }, {
-      type: "url",
+      type: "text",
       title: "Student Athlete Academic Resources Website",
       id: "academic_resources_web_addr"
     }, {
-      type: "url",
+      type: "text",
       title: "Organizations Website",
       id: "student_orgs_web_addr"
     }, {
-      type: "url",
+      type: "text",
       title: "Study Abroad Website",
       id: "study_abroad_web_addr"
     }
@@ -442,7 +458,7 @@ const deadlines: CollegeFormSection = {
   title: "Regular Application Website",
   fields: [
     {
-      type: "url",
+      type: "text",
       title: "Regular Application Website",
       id: "app_web_addr"
     }, {
