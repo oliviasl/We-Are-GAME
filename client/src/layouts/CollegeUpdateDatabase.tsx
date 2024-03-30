@@ -17,7 +17,11 @@ const CollegeUpdateDatabase = () => {
             {cookies.user_status === 3 && (
                 <>
                     <div className={"space-x-2"}>
-                        <Button color="gray" variant={"outlined"}>
+                        <Button 
+                            color="gray" 
+                            variant={"outlined"}
+                            onClick={() => setIsModalOpen(true)}
+                        >
                             Update Database
                         </Button>
                         <Button
