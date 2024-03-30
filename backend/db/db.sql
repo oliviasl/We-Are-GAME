@@ -218,15 +218,15 @@ INSERT INTO colleges (
     extra_notes
 )
 VALUES 
-    ('Ohio State University', 'Columbus', 'OH', 'www.osu.edu', 'admissions.com', 'finaid.com', 2.0, 4.0, 1100, 1400, 400, 800, 400, 800, 26, 32, 26, 32, 26, 32, 26, 32, 26, 32, 'majors.com', 'athletics.com', 'Big Ten', .7, 'questionaire.com', 4, .1, 'racestats.com', .1, .1, .1, .1, .1, .1, .1, .1, .1, 'genderstats.com', .55, .45, .75, .25, .75, 'netpricecalc.com', 25000, 55000, 75000, 'finaidathlete.com', 'stuathacademicres.com', 'academicresources.com', 'diversityresources.com', 'studentorgs.com', 'studyabroad.com', 'application.com', '2023-12-31', '2023-12-31', '2024-01-15', '2023-11-10', '2023-12-31', 'OSU is awesome'),
+    ('Ohio State University-Lima Campus', 'Columbus', 'OH', 'www.osu.edu', 'admissions.com', 'finaid.com', 2.0, 4.0, 1100, 1400, 400, 800, 400, 800, 26, 32, 26, 32, 26, 32, 26, 32, 26, 32, 'majors.com', 'athletics.com', 'Big Ten', .7, 'questionaire.com', 4, .1, 'racestats.com', .1, .1, .1, .1, .1, .1, .1, .1, .1, 'genderstats.com', .55, .45, .75, .25, .75, 'netpricecalc.com', 25000, 55000, 75000, 'finaidathlete.com', 'stuathacademicres.com', 'academicresources.com', 'diversityresources.com', 'studentorgs.com', 'studyabroad.com', 'application.com', '2023-12-31', '2023-12-31', '2024-01-15', '2023-11-10', '2023-12-31', 'OSU is awesome'),
 
-    ('UC Irvine', 'Irvine', 'CA', 'www.uci.edu', 'admissions.com', 'finaid.com', 2.5, 3.8, 1200, 1600, 400, 800, 400, 800, 27, 34, 27, 34, 27, 34, 27, 34, 27, 34, 'majors.com', 'athletics.com', 'Big West', .8, 'questionaire.com', 4, .15, 'racestats.com', .12, .12, .12, .12, .12, .12, .12, .12, .13, 'genderstats.com', .48, .52, .7, .3, .7, 'netpricecalc.com', 28000, 60000, 85000, 'finaidathlete.com', 'stuathacademicres.com', 'academicresources.com', 'diversityresources.com', 'studentorgs.com', 'studyabroad.com', 'application.com', '2023-12-31', '2023-12-31', '2024-01-15', '2023-11-10', '2023-12-31', 'UCI is fantastic'),
+    ('University of California-Irvine', 'Irvine', 'CA', 'www.uci.edu', 'admissions.com', 'finaid.com', 2.5, 3.8, 1200, 1600, 400, 800, 400, 800, 27, 34, 27, 34, 27, 34, 27, 34, 27, 34, 'majors.com', 'athletics.com', 'Big West', .8, 'questionaire.com', 4, .15, 'racestats.com', .12, .12, .12, .12, .12, .12, .12, .12, .13, 'genderstats.com', .48, .52, .7, .3, .7, 'netpricecalc.com', 28000, 60000, 85000, 'finaidathlete.com', 'stuathacademicres.com', 'academicresources.com', 'diversityresources.com', 'studentorgs.com', 'studyabroad.com', 'application.com', '2023-12-31', '2023-12-31', '2024-01-15', '2023-11-10', '2023-12-31', 'UCI is fantastic'),
 
     ('University of Southern California', 'Los Angeles', 'CA', 'https://www.usc.edu', 'https://admissions.com', 'https://finaid.com', 2.0, 4.0, 1200, 1500, 400, 800, 400, 800, 28, 35, 28, 35, 28, 35, 28, 35, 28, 35, 'https://majors.com', 'https://athletics.com', 'PAC12', 75, 'https://questionaire.com', 4, 12, 'https://racestats.com', 11, 11, 11, 11, 11, 11, 11, 11, 12, 'https://genderstats.com', 5, 5, 8, 2, 8, 'https://netpricecalc.com', 30000, 60000, 80000, 'https://finaidathlete.com', 'https://stuathacademicres.com', 'https://academicresources.com', 'https://diversityresources.com', 'https://studentorgs.com', 'https://studyabroad.com', 'https://application.com', '2023-12-31', '2023-12-31', '2024-01-15', '2023-11-10', '2023-12-31', 'USC is cool ig'),
 
-    ('UC Los Angeles', 'Los Angeles', 'CA', 'www.ucla.edu', 'admissions.com', 'finaid.com', 2.0, 4.0, 800, 1000, 400, 800, 400, 800, 25, 33, 25, 33, 25, 33, 25, 34, 25, 33, 'majors.com', 'athletics.com', 'PAC12', .75, 'questionaire.com', 4, .12, 'racestats.com', .11, .11, .11, .11, .11, .11, .11, .11, .12, 'genderstats.com', .5, .5, .8, .2, .8, 'netpricecalc.com', 30000, 60000, 80000, 'finaidathlete.com', 'stuathacademicres.com', 'academicresources.com', 'diversityresources.com', 'studentorgs.com', 'studyabroad.com', 'application.com', '2023-12-31', '2023-12-31', '2024-01-15', '2023-11-10', '2023-12-31', 'UCLA is great'),
+    ('University of California-Los Angeles', 'Los Angeles', 'CA', 'www.ucla.edu', 'admissions.com', 'finaid.com', 2.0, 4.0, 800, 1000, 400, 800, 400, 800, 25, 33, 25, 33, 25, 33, 25, 34, 25, 33, 'majors.com', 'athletics.com', 'PAC12', .75, 'questionaire.com', 4, .12, 'racestats.com', .11, .11, .11, .11, .11, .11, .11, .11, .12, 'genderstats.com', .5, .5, .8, .2, .8, 'netpricecalc.com', 30000, 60000, 80000, 'finaidathlete.com', 'stuathacademicres.com', 'academicresources.com', 'diversityresources.com', 'studentorgs.com', 'studyabroad.com', 'application.com', '2023-12-31', '2023-12-31', '2024-01-15', '2023-11-10', '2023-12-31', 'UCLA is great'),
 
-    ('UC Berkeley', 'Berkeley', 'CA', 'www.ucberkeley.edu', 'admissions.com', 'finaid.com', 2.0, 4.0, 1100, 1300, 400, 800, 400, 800, 26, 32, 26, 32, 26, 32, 27, 32, 26, 32, 'majors.com', 'athletics.com', 'Big Ten', .7, 'questionaire.com', 4, .1, 'racestats.com', .1, .1, .1, .1, .1, .1, .1, .1, .1, 'genderstats.com', .55, .45, .75, .25, .75, 'netpricecalc.com', 25000, 55000, 75000, 'finaidathlete.com', 'stuathacademicres.com', 'academicresources.com', 'diversityresources.com', 'studentorgs.com', 'studyabroad.com', 'application.com', '2023-12-31', '2023-12-31', '2024-01-15', '2023-11-10', '2023-12-31', 'UCB is awesome'),
+    ('University of California-Berkeley', 'Berkeley', 'CA', 'www.ucberkeley.edu', 'admissions.com', 'finaid.com', 2.0, 4.0, 1100, 1300, 400, 800, 400, 800, 26, 32, 26, 32, 26, 32, 27, 32, 26, 32, 'majors.com', 'athletics.com', 'Big Ten', .7, 'questionaire.com', 4, .1, 'racestats.com', .1, .1, .1, .1, .1, .1, .1, .1, .1, 'genderstats.com', .55, .45, .75, .25, .75, 'netpricecalc.com', 25000, 55000, 75000, 'finaidathlete.com', 'stuathacademicres.com', 'academicresources.com', 'diversityresources.com', 'studentorgs.com', 'studyabroad.com', 'application.com', '2023-12-31', '2023-12-31', '2024-01-15', '2023-11-10', '2023-12-31', 'UCB is awesome'),
 
     ('Stanford University', 'Palo Alto', 'CA', 'www.stanford.edu', 'admissions.com', 'finaid.com', 2.5, 3.8, 1000, 1600, 400, 800, 400, 800, 27, 34, 27, 34, 24, 34, 27, 34, 27, 34, 'majors.com', 'athletics.com', 'Big West', .8, 'questionaire.com', 4, .15, 'racestats.com', .12, .12, .12, .12, .12, .12, .12, .12, .13, 'genderstats.com', .48, .52, .7, .3, .7, 'netpricecalc.com', 28000, 60000, 85000, 'finaidathlete.com', 'stuathacademicres.com', 'academicresources.com', 'diversityresources.com', 'studentorgs.com', 'studyabroad.com', 'application.com', '2023-12-31', '2023-12-31', '2024-01-15', '2023-11-10', '2023-12-31', 'Stanford is fantastic'),
 
@@ -273,9 +273,10 @@ INSERT INTO master_users (
     user_notes
 )
 VALUES 
-    ('janedoe@example.com', '', 'Jane', 'Doe', '000-000-0000', 'instagram', 'facebook', true, 'Mountain View HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'National', 'basketball', 'center', 'State', 'notes'),
     ('admin@example.com', '', 'Admin', 'Admin', '000-000-0000', 'instagram', 'facebook', true, 'Mountain View HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'National', 'basketball', 'center', 'State', 'notes'),
-    ('billybob@example.com', '', 'Billy', 'Bob', '000-000-0000', 'instagram', 'facebook', true, 'Los Altos HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'math', 'english', 'coding', 'coding more', 'tennis', 'doubles', 'National', 'basketball', 'center', 'State', 'notes'),
+    ('mentor@example.com', '', 'Mentor', 'Mentor', '000-000-0000', 'instagram', 'facebook', true, 'Mountain View HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'National', 'basketball', 'center', 'State', 'notes'),
+    ('janedoe@example.com', '', 'Jane', 'Doe', '000-000-0000', 'instagram', 'facebook', true, 'Mountain View HS', 2025, false, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'National', 'basketball', 'center', 'State', 'notes'),
+    ('billybob@example.com', '', 'Billy', 'Bob', '000-000-0000', 'instagram', 'facebook', false, 'Los Altos HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'math', 'english', 'coding', 'coding more', 'tennis', 'doubles', 'National', 'basketball', 'center', 'State', 'notes'),
     ('sarahjane@example.com', '', 'Sarah', 'Jane', '000-000-0000', 'instagram', 'facebook', true, 'Ohio HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'design', 'biology', 'computer science', 'coding', 'coding more', 'soccer', 'defense', 'National', 'tennis', 'singles', 'State', 'notes'),
     ('gracekuo@example.com', '', 'Grace', 'Kuo', '000-000-0000', 'instagram', 'facebook', true, 'Homestead', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'english', 'politcal science', 'design', 'coding', 'coding more', 'football', 'defense', 'National', 'hockey', 'center', 'State', 'notes'),
     ('maryjane@example.com', '', 'Olivia', 'Lai', '000-000-0000', 'instagram', 'facebook', true, 'Mountain View HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'National', 'basketball', 'center', 'State', 'notes'),
@@ -287,15 +288,16 @@ VALUES
 
 INSERT INTO user_status (user_id, user_status)
 VALUES 
-    (1, 0),
-    (2, 3),
-    (3, 0),
+    (1, 3),
+    (2, 2),
+    (3, 1),
     (4, 0),
     (5, 0),
     (6, 0),
     (7, 0),
     (8, 0),
-    (9, 0);
+    (9, 0),
+    (10, 0);
 
 
 INSERT INTO college_assignments (
@@ -303,14 +305,14 @@ INSERT INTO college_assignments (
     college_id
 )
 VALUES 
-    (1, 1), (1, 2),
-    (2, 3), (2, 4),
-    (3, 5), (3, 6),
-    (4, 7), (4, 8),
-    (5, 1), (5, 8),
-    (6, 2), (6, 7),
-    (7, 3), (7, 6),
-    (8, 4), (8, 5);
+    (3, 1), (3, 2),
+    (4, 3), (4, 4),
+    (5, 5), (5, 6),
+    (6, 7), (6, 8),
+    (7, 1), (7, 8),
+    (8, 2), (8, 7),
+    (9, 3), (9, 6),
+    (10, 4), (10, 5);
 
 
 INSERT INTO mentors (
