@@ -273,9 +273,10 @@ INSERT INTO master_users (
     user_notes
 )
 VALUES 
-    ('janedoe@example.com', '', 'Jane', 'Doe', '000-000-0000', 'instagram', 'facebook', true, 'Mountain View HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'National', 'basketball', 'center', 'State', 'notes'),
     ('admin@example.com', '', 'Admin', 'Admin', '000-000-0000', 'instagram', 'facebook', true, 'Mountain View HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'National', 'basketball', 'center', 'State', 'notes'),
-    ('billybob@example.com', '', 'Billy', 'Bob', '000-000-0000', 'instagram', 'facebook', true, 'Los Altos HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'math', 'english', 'coding', 'coding more', 'tennis', 'doubles', 'National', 'basketball', 'center', 'State', 'notes'),
+    ('mentor@example.com', '', 'Mentor', 'Mentor', '000-000-0000', 'instagram', 'facebook', true, 'Mountain View HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'National', 'basketball', 'center', 'State', 'notes'),
+    ('janedoe@example.com', '', 'Jane', 'Doe', '000-000-0000', 'instagram', 'facebook', true, 'Mountain View HS', 2025, false, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'National', 'basketball', 'center', 'State', 'notes'),
+    ('billybob@example.com', '', 'Billy', 'Bob', '000-000-0000', 'instagram', 'facebook', false, 'Los Altos HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'math', 'english', 'coding', 'coding more', 'tennis', 'doubles', 'National', 'basketball', 'center', 'State', 'notes'),
     ('sarahjane@example.com', '', 'Sarah', 'Jane', '000-000-0000', 'instagram', 'facebook', true, 'Ohio HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'design', 'biology', 'computer science', 'coding', 'coding more', 'soccer', 'defense', 'National', 'tennis', 'singles', 'State', 'notes'),
     ('gracekuo@example.com', '', 'Grace', 'Kuo', '000-000-0000', 'instagram', 'facebook', true, 'Homestead', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'english', 'politcal science', 'design', 'coding', 'coding more', 'football', 'defense', 'National', 'hockey', 'center', 'State', 'notes'),
     ('maryjane@example.com', '', 'Olivia', 'Lai', '000-000-0000', 'instagram', 'facebook', true, 'Mountain View HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'National', 'basketball', 'center', 'State', 'notes'),
@@ -287,15 +288,16 @@ VALUES
 
 INSERT INTO user_status (user_id, user_status)
 VALUES 
-    (1, 0),
-    (2, 3),
-    (3, 0),
+    (1, 3),
+    (2, 2),
+    (3, 1),
     (4, 0),
     (5, 0),
     (6, 0),
     (7, 0),
     (8, 0),
-    (9, 0);
+    (9, 0),
+    (10, 0);
 
 
 INSERT INTO college_assignments (
@@ -303,14 +305,14 @@ INSERT INTO college_assignments (
     college_id
 )
 VALUES 
-    (1, 1), (1, 2),
-    (2, 3), (2, 4),
-    (3, 5), (3, 6),
-    (4, 7), (4, 8),
-    (5, 1), (5, 8),
-    (6, 2), (6, 7),
-    (7, 3), (7, 6),
-    (8, 4), (8, 5);
+    (3, 1), (3, 2),
+    (4, 3), (4, 4),
+    (5, 5), (5, 6),
+    (6, 7), (6, 8),
+    (7, 1), (7, 8),
+    (8, 2), (8, 7),
+    (9, 3), (9, 6),
+    (10, 4), (10, 5);
 
 
 INSERT INTO mentors (
