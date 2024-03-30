@@ -368,10 +368,10 @@ class userController {
             wheres.push("(LOWER(CONCAT('%', user_firstname, '%')) LIKE LOWER('%"+fields["userByName"]+"%') OR LOWER(CONCAT('%', user_lastname, '%')) LIKE LOWER('%"+fields["userByName"]+"%') OR LOWER(CONCAT(user_firstname, ' ', user_lastname)) LIKE LOWER('%"+fields["userByName"]+"%'))");
         }
         if("userBySport" in fields && fields["userBySport"]!=null && fields["userBySport"]!=""){
-            wheres.push("(LOWER(user_sport1) LIKE LOWER('"+fields["userBySport"]+"') OR LOWER(user_sport2) LIKE LOWER('"+fields["userBySport"]+"'))");
+            wheres.push("(LOWER(CONCAT('%', user_sport1, '%')) LIKE LOWER('%"+fields["userBySport"]+"%') OR LOWER(CONCAT('%', user_sport2, '%')) LIKE LOWER('%"+fields["userBySport"]+"%'))");
         }
         if("userByMajor" in fields && fields["userByMajor"]!=null && fields["userByMajor"]!=""){
-            wheres.push("(LOWER(user_potential_major) LIKE LOWER('"+fields["userByMajor"]+"') OR LOWER(user_alt_major1) LIKE LOWER('"+fields["userByMajor"]+"') OR LOWER(user_alt_major2) LIKE LOWER('"+fields["userByMajor"]+"'))");
+            wheres.push("(LOWER(CONCAT('%', user_potential_major, '%')) LIKE LOWER('%"+fields["userByMajor"]+"%') OR LOWER(CONCAT('%', user_alt_major1, '%')) LIKE LOWER('%"+fields["userByMajor"]+"%') OR LOWER(CONCAT('%', user_alt_major2, '%')) LIKE LOWER('%"+fields["userByMajor"]+"%'))");
         }
 
         const sqlWhere=wheres.join(" AND ");
