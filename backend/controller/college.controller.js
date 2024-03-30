@@ -3,21 +3,6 @@ const db = require("../db");
 
 class collegeController {
 
-    static filterMap = new Map();
-
-    constructor() {
-        collegeController.filterMap.set('allColleges', () => this.allColleges(false));
-        collegeController.filterMap.set('collegeByName', (college_name) => this.collegeByName(college_name, false));
-        collegeController.filterMap.set('collegeById', (collegeId) => this.collegeById(collegeId, false));
-        collegeController.filterMap.set('collegeHasStuAthAcademicRes', () => this.collegeHasStuAthAcademicRes(false));
-        collegeController.filterMap.set('collegeHasAcademicResource', () => this.collegeHasAcademicResource(false));
-        collegeController.filterMap.set('collegeHasDiversityResource', () => this.collegeHasDiversityResource(false));
-        collegeController.filterMap.set('collegeByGPA', (gpa) => this.collegeByGPA(gpa, false));
-        collegeController.filterMap.set('collegeBySATRead', (satReadWrite) => this.collegeBySATRead(satReadWrite, false));
-        collegeController.filterMap.set('collegeBySATMath', (satMath) => this.collegeBySATMath(satMath, false));
-        collegeController.filterMap.set('collegeByACT', (act) => this.collegeByACT(act, false));
-    }
-
     // for all SELECT SQL calls
     /** 
     * @param {boolean} directCall - returns results of SQL call if true, otherwise returns SQL statement string and inputs, defaults true
@@ -394,80 +379,64 @@ class collegeController {
         return data;
     }
 
-    // generateFilterQuery
-    /**
-     * Generates sql string and params for a combined filtered search
-     * @param {object} fields - attributes have the search function name as the key and the input param as the value
-     * fields that don't require an input value must set null as the value
-     * @returns {[string[], object[]]}  - array of sql query substrings and array of parameters
-     */
-    async generateFilterQuery(fields) {
-        const filterFields = Object.keys(fields);
-        let queryStr = [];
-        let queryParams = [];
+    sqlBuilder(fields, pageNumber) {
 
-        
-        // null field values mean no input is required for that filter
-        for (const [idx, field] of filterFields.entries()) {
-            if (fields[field] != null && fields[field] !== "") {
-                // Await the promise and then process the result
-                const res = await collegeController.filterMap.get(field)(fields[field]);
-                if (res[0] !== undefined) {
-                    if (typeof fields[field] === 'boolean' && fields[field] === false){
-                        continue;
-                    }
-                    if (idx > 0 && queryStr.length > 0) { // Ensure INTERSECT is added only if needed
-                        queryStr.push(" INTERSECT ");
-                    }
-                    if (res[1] !== undefined){
-                        queryParams.push(res[1]);
-                    }
-                    queryStr.push(res[0].replace("$1", `$${queryParams.length}`));
-                }
-            } else if (fields[field] !== "") {
-                const res = await collegeController.filterMap.get(field)();
-                if (res !== undefined) {
-                    if (idx > 0 && queryStr.length > 0) { // Ensure INTERSECT is added only if needed
-                        queryStr.push(" INTERSECT ");
-                    }
-                    queryStr.push(res[0]);
-                }
-            }
+        let query="SELECT * FROM colleges";
+        let wheres=[];
+
+        if("collegeByName" in fields && fields["collegeByName"]!=""){
+            wheres.push("LOWER(college_name) LIKE LOWER('%"+fields["collegeByName"]+"%')");
         }
-        const queryParamLength = queryParams.length;
-        queryStr.push(` LIMIT $${queryParamLength + 1} OFFSET $${queryParamLength + 2}`);
+        if("collegeByGPA" in fields &&fields["collegeByGPA"]!=""){
+            wheres.push(fields["collegeByGPA"]+" BETWEEN min_gpa AND max_gpa");
+        }
+        if("collegeBySATRead" in fields &&fields["collegeBySATRead"]!=""){
+            wheres.push(fields["collegeBySATRead"]+" BETWEEN min_sat_read_write AND max_sat_read_write");
+        }
+        if("collegeBySATMath" in fields &&fields["collegeBySATMath"]!=""){
+            wheres.push(fields["collegeBySATMath"]+" BETWEEN min_sat_math AND max_sat_math");
+        }
+        if("collegeByACT" in fields && fields["collegeByACT"]!=""){
+            wheres.push(fields["collegeByACT"]+" BETWEEN min_act AND max_act");
+        }
+        if("collegeHasStuAthAcademicRes" in fields && fields["collegeHasStuAthAcademicRes"]){
+            wheres.push("stu_ath_academic_res_web_addr IS NOT NULL");
+        }
+        if("collegeHasAcademicResource" in fields && fields["collegeHasAcademicResource"]){
+            wheres.push("academic_resources_web_addr IS NOT NULL");
+        }
+        if("collegeHasDiversityResource" in fields && fields["collegeHasDiversityResource"]){
+            wheres.push("diversity_resources_web_addr IS NOT NULL");
+        }
+        const sqlWhere=wheres.join(" AND ");
 
-    
-        return [queryStr, queryParams];
+        const PAGE_SIZE = 7;
+        const offset = (pageNumber - 1) * PAGE_SIZE;
+        const sqlStr = " ORDER BY college_name LIMIT "+PAGE_SIZE+" OFFSET "+offset+";";
+      
+        if(wheres.length!=0){
+            return [query+" WHERE "+sqlWhere+";", query+" WHERE "+sqlWhere+sqlStr];
+        }
+        return [query+";", query+sqlStr];
     }
 
-    // collegesFiltered
-    // uses generated intersected sql call and params to get filtered results
-    async collegesFiltered(fields, pageSize, offset) {
-        // queryValues = [queryStr : string[], queryParams : object[]]
-        if (!Object.values(fields).some(value => value)) {
-            return this.allColleges();
-        }
-        let queryValues = await this.generateFilterQuery(fields);
-        const queryParams = [...queryValues[1], pageSize, offset];
-        const result = await db.query(queryValues[0].join(''), queryParams);
-        return result.rows;
-    }
     
     // paginated collegesFiltered
     async paginatedCollegesFiltered(fields, pageNumber) {
-        // page size is 6
+       
         const PAGE_SIZE = 7;
-        const offset = (pageNumber - 1) * PAGE_SIZE;
-        const partialResult = await this.collegesFiltered(fields, PAGE_SIZE, offset);
-        const result = await this.collegesFiltered(fields);
-        const totalCount = result.length;
+        const [filteredCollegeQuery, filteredPaginatedCollegeQuery] = this.sqlBuilder(fields, pageNumber);
+
+        const filteredPaginatedCollegeResult = await db.query(filteredPaginatedCollegeQuery);
+        const filteredCollegeResult = await db.query(filteredCollegeQuery);
+        
+        const totalCount = filteredCollegeResult.rows.length;
         const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
         return {
             totalPages: totalPages,
             page: pageNumber,
-            colleges: partialResult
+            colleges: filteredPaginatedCollegeResult.rows
         };
     }
 
