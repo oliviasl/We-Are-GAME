@@ -110,10 +110,7 @@ CREATE TABLE IF NOT EXISTS master_users
     user_sport2 VARCHAR,
     user_sport2_role VARCHAR,
     user_sport2_level VARCHAR,
-    user_notes VARCHAR,
-    user_instagram VARCHAR,
-    user_facebook VARCHAR,
-    user_show_socials BOOLEAN
+    user_notes VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS user_status
@@ -278,7 +275,7 @@ INSERT INTO master_users (
 VALUES 
     ('janedoe@example.com', '', 'Jane', 'Doe', '000-000-0000', 'instagram', 'facebook', true, 'Mountain View HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'National', 'basketball', 'center', 'State', 'notes'),
     ('admin@example.com', '', 'Admin', 'Admin', '000-000-0000', 'instagram', 'facebook', true, 'Mountain View HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'National', 'basketball', 'center', 'State', 'notes'),
-    ('billybob@example.com', '', 'Billy', 'Bob', '000-000-0000', 'instagram', 'facebook', true, 'Los Altos HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'math', 'english', 'coding', 'coding more', 'tennis', 'doubles', 'National', 'basketball', 'center', 'State', 'notes'),
+    ('billybob@example.com', '', 'Billy', 'Bob', '000-000-0000', 'instagram', 'facebook', false, 'Los Altos HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'math', 'english', 'coding', 'coding more', 'tennis', 'doubles', 'National', 'basketball', 'center', 'State', 'notes'),
     ('sarahjane@example.com', '', 'Sarah', 'Jane', '000-000-0000', 'instagram', 'facebook', true, 'Ohio HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'design', 'biology', 'computer science', 'coding', 'coding more', 'soccer', 'defense', 'National', 'tennis', 'singles', 'State', 'notes'),
     ('gracekuo@example.com', '', 'Grace', 'Kuo', '000-000-0000', 'instagram', 'facebook', true, 'Homestead', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'english', 'politcal science', 'design', 'coding', 'coding more', 'football', 'defense', 'National', 'hockey', 'center', 'State', 'notes'),
     ('maryjane@example.com', '', 'Olivia', 'Lai', '000-000-0000', 'instagram', 'facebook', true, 'Mountain View HS', 2025, true, 1, 'goal', 'purpose', 3.0, 1000, 500, 500, 28, 27, 27, 29, 29, 'computer science', 'biology', 'chemistry', 'coding', 'coding more', 'soccer', 'defense', 'National', 'basketball', 'center', 'State', 'notes'),

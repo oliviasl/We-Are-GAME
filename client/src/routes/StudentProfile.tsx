@@ -1,8 +1,9 @@
 import StudentProfile from "../layouts/StudentProfile";
-import React, { useEffect, useState, ElementType } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PeerProfileView from "../layouts/PeerProfileView";
 import { useCookies } from "react-cookie";
+import MentorOfStudentView from "../layouts/MentorOfStudentView";
 
 export interface studentData {
   user_id: number;
@@ -81,7 +82,7 @@ const StudentProfileRoute = () => {
   const [studentData, setStudentData] = useState<studentData>({} as studentData);
   const [collegeAssignments, setCollegeAssignments] = useState<collegeAssignments[]>([]);
   const [peerData, setPeerData] = useState<peerData>({} as peerData);
-  const [cookies, setCookies] = useCookies(['user_id', 'user_status', 'user_name']);
+  const [cookies] = useCookies(['user_id', 'user_status', 'user_name']);
 
   const fetchAssignments = async () => {
     try {
@@ -148,6 +149,7 @@ const StudentProfileRoute = () => {
 
         const data = await response.json();
         setStudentData(data[0]);
+        setPeerData(data[0]);
         console.log("studentData:", studentData);
       } catch (error) {
         console.error("Error fetching student data:", error);
@@ -207,10 +209,11 @@ const StudentProfileRoute = () => {
       console.error('Error creating assignment:', error);
     }
   };
+  console.log("cookies:", cookies);
 
   return (
     <div>
-      {(cookies.user_status === 3 || cookies.user_id === parseInt(id ? id : "")) && cookies.user_status !== 1 ? (
+      {(cookies.user_status === 3 || cookies.user_id === parseInt(id ? id : "")) ? (
         <StudentProfile
           studentData={studentData}
           collegeAssignments={collegeAssignments}
@@ -221,9 +224,17 @@ const StudentProfileRoute = () => {
         <PeerProfileView
           peerData={peerData}
         />
+      ) : cookies.user_status === 2 ? (
+        <MentorOfStudentView
+          studentData={studentData}
+          collegeAssignments={collegeAssignments}
+          handleDelete={handleDelete}
+          handleAdd={handleAdd}
+        />
       ) : null}
     </div>
   );
+  
 };
 
 export default StudentProfileRoute;

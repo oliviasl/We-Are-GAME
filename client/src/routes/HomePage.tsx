@@ -1,7 +1,7 @@
 import {useState} from "react";
 import clsx from "clsx";
 import {useCookies} from 'react-cookie';
-import {BookUser, School, SquareUser, Users, PersonStanding} from "lucide-react";
+import {BookUser, School, SquareUser, Users} from "lucide-react";
 import HomePageLinks from "../layouts/HomePageLinks";
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -26,11 +26,6 @@ const studentRouteInfo = [
       name: "View Profile", 
       url: "/student-profile",
       Icon: SquareUser
-  },
-  {
-      name: "View Peer Profile",
-      url: "/peer-profile",
-      Icon: PersonStanding
   }
 ]
 
