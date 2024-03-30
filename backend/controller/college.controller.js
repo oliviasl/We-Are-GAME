@@ -3,21 +3,6 @@ const db = require("../db");
 
 class collegeController {
 
-    static filterMap = new Map();
-
-    constructor() {
-        collegeController.filterMap.set('allColleges', () => this.allColleges(false));
-        collegeController.filterMap.set('collegeByName', (college_name) => this.collegeByName(college_name, false));
-        collegeController.filterMap.set('collegeById', (collegeId) => this.collegeById(collegeId, false));
-        collegeController.filterMap.set('collegeHasStuAthAcademicRes', () => this.collegeHasStuAthAcademicRes(false));
-        collegeController.filterMap.set('collegeHasAcademicResource', () => this.collegeHasAcademicResource(false));
-        collegeController.filterMap.set('collegeHasDiversityResource', () => this.collegeHasDiversityResource(false));
-        collegeController.filterMap.set('collegeByGPA', (gpa) => this.collegeByGPA(gpa, false));
-        collegeController.filterMap.set('collegeBySATRead', (satReadWrite) => this.collegeBySATRead(satReadWrite, false));
-        collegeController.filterMap.set('collegeBySATMath', (satMath) => this.collegeBySATMath(satMath, false));
-        collegeController.filterMap.set('collegeByACT', (act) => this.collegeByACT(act, false));
-    }
-
     // for all SELECT SQL calls
     /** 
     * @param {boolean} directCall - returns results of SQL call if true, otherwise returns SQL statement string and inputs, defaults true
@@ -374,7 +359,7 @@ class collegeController {
         return data;
     }
 
-    sqlBuilderV2(fields, pageNumber) {
+    sqlBuilder(fields, pageNumber) {
 
         let query="SELECT * FROM colleges";
         let wheres=[];
@@ -419,7 +404,7 @@ class collegeController {
     async paginatedCollegesFiltered(fields, pageNumber) {
        
         const PAGE_SIZE = 7;
-        const [filteredCollegeQuery, filteredPaginatedCollegeQuery] = this.sqlBuilderV2(fields, pageNumber);
+        const [filteredCollegeQuery, filteredPaginatedCollegeQuery] = this.sqlBuilder(fields, pageNumber);
 
         const filteredPaginatedCollegeResult = await db.query(filteredPaginatedCollegeQuery);
         const filteredCollegeResult = await db.query(filteredCollegeQuery);
