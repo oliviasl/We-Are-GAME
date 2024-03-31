@@ -12,12 +12,26 @@ interface MentorOfStudentViewProps {
   handleAdd: (collegeId: number) => void;
 }
 
+export function shouldDisplayTitle(key: keyof typeof studentData, studentData: any) {
+  const isSocialKey = key === 'user_facebook' || key === 'user_instagram';
+  const isContactKey = key === 'user_email' || key === 'user_phone';
+  const showSocials = studentData.user_show_socials;
+
+  // Show if it's a social key and user_show_socials is true
+  // Or if it's not a social key
+  // Now also checks if it's a contact key, applying the same logic
+  return ((isContactKey || isSocialKey) && showSocials) || (!isSocialKey && !isContactKey);
+}
+
+
 export function renderStudentData(key: keyof typeof studentData, studentData: any) {
+  const isSocialKey = key === 'user_facebook' || key === 'user_instagram';
+  const isContactKey = key === 'user_email' || key === 'user_phone';
   if (key === 'user_gpa' && typeof studentData[key] !== 'undefined') {
     return studentData[key].toFixed(1);
   } else if (key === 'user_ncaa_registered') {
     return studentData[key] ? 'Yes' : 'No';
-  } else if ((key === 'user_facebook' || key === 'user_instagram') && !studentData.user_show_socials) {
+  } else if ((isSocialKey || isContactKey) && !studentData.user_show_socials) {
     // Directly return null if user_show_socials is false or not set for social keys
     return null;
   } else {
@@ -25,7 +39,6 @@ export function renderStudentData(key: keyof typeof studentData, studentData: an
     return studentData[key] ? studentData[key] : null;
   }
 }
-
 const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
   studentData,
   collegeAssignments,
@@ -54,35 +67,9 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
     user_email: "Email",
     user_facebook: "Facebook",
     user_instagram: "Instagram",
-    user_gpa: "GPA",
-    user_ncaa_registered: "NCAA Eligibility",
   };
   
-  const personalInfoKeys = ["user_phone", "user_email", "user_facebook", "user_instagram", "user_gpa", "user_ncaa_registered"] as Array<keyof typeof studentData>;
-
-  const actTitles: Record<string, string> = {
-    user_act_math: "ACT Math",
-    user_act_science: "ACT Science",
-    user_act_reading: "ACT Reading",
-    user_act_english: "ACT English",
-    user_act: "Composite",
-  };
-  const actKeys = [
-    "user_act_math",
-    "user_act_science",
-    "user_act_reading",
-    "user_act_english",
-    "user_act",
-  ] as Array<keyof typeof studentData>;
-
-  const satTitles: Record<string, string> = {
-    user_sat_math: "SAT Math",
-    user_sat_read_write: "SAT Reading",
-    user_sat: "Composite",
-  };
-  const satKeys = ["user_sat_math", "user_sat_read_write", "user_sat"] as Array<
-    keyof typeof studentData
-  >;
+  const personalInfoKeys = ["user_phone", "user_email", "user_facebook", "user_instagram"] as Array<keyof typeof studentData>;
 
   const sports: string[] = [
     ...(studentData.user_sport1
@@ -169,27 +156,24 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
       </div>
 
       {/* Personal */}
+      {(studentData.user_show_socials) && (
     <div className='border-gray-400 border-2 rounded-md col-span-2 order-3'>
       <div className="w-full p-4">
         <h2 className="text-md mb-4">Personal</h2>
         <div className="grid grid-cols-2 gap-y-4 justify-between w-full">
         {personalInfoKeys.map((key) => (
           <React.Fragment key={key}>
-            {/* Only display the title if the key is not user_facebook or user_instagram */}
-            {(((key === 'user_facebook' || key === 'user_instagram') && studentData.user_show_socials) 
-            || (key !== 'user_facebook' && key !== 'user_instagram')) &&
-              (
+            {/* Only display title when appropriate */}
+            {shouldDisplayTitle(key, studentData) && (
               <div>{personalTitles[key]}</div>
             )}
-            {/* Separate logic for clarity */}
-            <div className="text-right">
-              {renderStudentData(key, studentData)}
-            </div>
+            {renderStudentData(key, studentData) ? 
+              <div className="text-right">{renderStudentData(key, studentData)}</div> : ''}
           </React.Fragment>
         ))}
         </div>
       </div>
-    </div>
+    </div>)}
       {/* Sport */}
       <div className="order-5 border-gray-400 border-2 rounded-md ">
         <ProfileBox type="Sport" data={sports} />
@@ -221,13 +205,6 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
         <div className="w-full p-4">
           <h2 className="text-md mb-2">Pursue My Purpose</h2>
           <div>{studentData.user_purpose}</div>
-        </div>
-      </div>
-      {/* Notes */}
-      <div className=" border-gray-400 border-2 rounded-md row-span-2 order-8">
-        <div className="w-full p-4">
-          <h2 className="text-md mb-2">Notes</h2>
-          <div>{studentData.user_notes}</div>
         </div>
       </div>
       {/* Goal */}

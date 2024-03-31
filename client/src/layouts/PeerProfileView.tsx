@@ -38,8 +38,12 @@ const PeerProfileView: React.FC<PeerProfileProps> = ({peerData}) => {
             </div>
           </div>
         </div>
-        <div className="col-span-2 grid grid-cols-3 gap-4 order-2">
+
+        
+            
+        <div className={peerData.user_show_socials ? "col-span-2 grid grid-cols-3 gap-4 order-2" : "col-span-2 grid grid-cols-2 gap-4 order-2"}>
             {/* Personal */}
+            {peerData.user_show_socials && (
             <div className=' border-gray-400 border-2 rounded-md order-3'>
                 <div className="w-full p-4">
                     <h2 className="text-md mb-4">Personal</h2>
@@ -62,6 +66,7 @@ const PeerProfileView: React.FC<PeerProfileProps> = ({peerData}) => {
                     </div>
                 </div>
             </div>
+            )}
 
             
             {/* Sport */}

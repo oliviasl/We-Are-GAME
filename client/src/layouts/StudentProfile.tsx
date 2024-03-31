@@ -5,6 +5,7 @@ import { studentData, collegeAssignments } from "../routes/StudentProfile";
 import Pencil from "../components/Pencil";
 import AddCollegeModal from "../layouts/AddCollegeModal";
 import { renderStudentData } from "./MentorOfStudentView";
+import { shouldDisplayTitle } from "./MentorOfStudentView";
 
 interface StudentProfileProps {
   studentData: studentData;
@@ -156,22 +157,18 @@ const StudentProfile: React.FC<StudentProfileProps> = ({
       </div>
 
       {/* Personal */}
-    <div className='border-gray-400 border-2 rounded-md order-3'>
+    <div className={studentData.user_show_socials ? 'border-gray-400 border-2 rounded-md order-3' : 'border-gray-400 border-2 rounded-md order-3 col-span-2'}>
       <div className="w-full p-4">
         <h2 className="text-md mb-4">Personal</h2>
         <div className="grid grid-cols-2 gap-y-4 justify-between w-full">
         {personalInfoKeys.map((key) => (
           <React.Fragment key={key}>
-            {/* Only display the title if the key is not user_facebook or user_instagram */}
-            {(((key === 'user_facebook' || key === 'user_instagram') && studentData.user_show_socials) 
-            || (key !== 'user_facebook' && key !== 'user_instagram')) &&
-              (
+            {/* Only display title when appropriate */}
+            {shouldDisplayTitle(key, studentData) && (
               <div>{personalTitles[key]}</div>
             )}
-            {/* Separate logic for clarity */}
-            <div className="text-right">
-              {renderStudentData(key, studentData)}
-            </div>
+              {renderStudentData(key, studentData) ? 
+              <div className="text-right">{renderStudentData(key, studentData)}</div> : ''}
           </React.Fragment>
         ))}
         </div>
@@ -180,7 +177,7 @@ const StudentProfile: React.FC<StudentProfileProps> = ({
 
 
       {/* Academics */}
-      <div className="border-gray-400 border-2 rounded-md min-h-[50px] order-4">
+      <div className={studentData.user_show_socials ? "border-gray-400 border-2 rounded-md min-h-[50px] order-4" : "border-gray-400 border-2 rounded-md min-h-[50px] order-4 col-span-2"}>
         <div className="w-full p-4 flex-wrap">
           <h2 className="text-md mb-2">Academics</h2>
           {/* ACT*/}
