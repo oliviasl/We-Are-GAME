@@ -223,16 +223,6 @@ app.get("/api/fetchFromScorecard", (req, res) => {
     });
 });
 
-// collegesFiltered
-app.post("/api/collegesFiltered", (req, res) => {
-  const {fields} = req.body;
-  collegeController
-    .collegesFiltered(fields)
-    .then((data) =>
-      res.status(200).json(data)
-    );
-});
-
 // paginatedCollegesFilterd
 app.post("/api/paginatedCollegesFiltered", (req, res) => {
   const { fields, pageNumber } = req.body;
@@ -259,6 +249,15 @@ app.post("/api/autofillCollege", (req, res) => {
   const { collegeName } = req.body;
   collegeController
     .autofillCollege(collegeName)
+    .then((data)=>
+      res.status(200).json(data)
+    );
+});
+
+// autofillCollege
+app.post("/api/batchAutofill", (req, res) => {
+  collegeController
+    .batchAutofillColleges()
     .then((data)=>
       res.status(200).json(data)
     );
@@ -454,16 +453,6 @@ app.post("/api/assignmentsByUserId", (req, res) => {
       console.error(error);
       return res.status(500).json({error});
     });
-});
-
-// usersFiltered
-app.post("/api/usersFiltered", (req, res) => {
-  const {fields} = req.body;
-  userController
-    .usersFiltered(fields)
-    .then((data) =>
-      res.status(200).json(data)
-    );
 });
 
 // paginatedUsersFiltered

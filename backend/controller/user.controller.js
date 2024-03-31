@@ -4,15 +4,6 @@ const bcrypt = require("bcrypt");
 
 class userController {
 
-    static filterMap = new Map();
-
-    constructor() {
-        userController.filterMap.set('allUsers', () => this.allUsers(false));
-        userController.filterMap.set('userByName', (userName) => this.userByName(userName, false));
-        userController.filterMap.set('userBySport', (sport) => this.userBySport(sport, false));
-        userController.filterMap.set('userByMajor', (major) => this.userByMajor(major, false));
-    }
-
     // allUsers
     async allUsers(directCall=true) {
         const queryStr = "SELECT * FROM master_users";
@@ -370,68 +361,7 @@ class userController {
         }
     }
 
-    // generateFilterQuery
-    /**
-     * Generates sql string and params for a combined filtered search
-     * @param {object} fields - attributes have the search function name as the key and the input param as the value
-     * fields that don't require an input value must set null as the value
-     * @returns {[string[], object[]]}  - array of sql query substrings and array of parameters
-     */
-    async generateFilterQuery(fields) {
-        const filterFields = Object.keys(fields);
-        let queryStr = [];
-        let queryParams = [];
-        console.log("-")
-        // null field values mean no input is required for that filter
-        filterFields.forEach((field, idx) => {
-            if (fields[field] != null) {
-                userController.filterMap.get(field)(fields[field]).then((res) => {
-                    if (res != undefined) {
-                        if (idx > 0) {
-                            queryStr.push(" INTERSECT ");
-                        }
-                        if (res[1].length === 1) {
-                            queryParams.push(res[1][0]);
-                            queryStr.push(res[0].replaceAll("$1", "$" + queryParams.length));
-                        } else {
-                            let newQueryStr = res[0];
-                            queryParams.push(res[1][0]);
-                            newQueryStr.replaceAll("$1", "$" + queryParams.length)
-                            queryParams.push(res[1][1]);
-                            newQueryStr.replaceAll("$2", "$" + queryParams.length)
-                            queryStr.push(newQueryStr);
-                        }
-                    }
-                });
-            } else {
-                userController.filterMap.get(field)().then((res) => {
-                    if (res != undefined) {
-                        if (idx > 0) {
-                            queryStr.push(" INTERSECT ");
-                        }
-                        queryStr.push(res[0]);
-                    }
-                });
-            }
-        })
-        console.log("queryStr",queryStr);
-        console.log("queryP",queryParams);
-        console.log("-");
-        return [queryStr, queryParams];
-    }
-
-    // usersFiltered
-    // uses generated intersected sql call and params to get filtered results
-    async usersFiltered(fields) {
-        // queryValues = [queryStr : string[], queryParams : object[]]
-        let queryValues = await this.generateFilterQuery(fields);
-        console.log(queryValues[0].join(''));
-        console.log(queryValues[1]);
-        const result = await db.query(queryValues[0].join(''), queryValues[1]);
-        return result.rows;
-    }
-
-    sqlBuilderV2(fields, pageNumber) {
+    sqlBuilder(fields, pageNumber) {
 
       
         let query="SELECT * FROM master_users";
@@ -464,7 +394,7 @@ class userController {
         // page size is 6
         const PAGE_SIZE = 6;
         // Make one not paginated to calculate total pages
-        const [filteredUserQuery, filteredPaginatedUserQuery] = this.sqlBuilderV2(fields, pageNumber);
+        const [filteredUserQuery, filteredPaginatedUserQuery] = this.sqlBuilder(fields, pageNumber);
 
         const filteredPaginatedUserResult = await db.query(filteredPaginatedUserQuery);
         const filteredUserResult = await db.query(filteredUserQuery);
