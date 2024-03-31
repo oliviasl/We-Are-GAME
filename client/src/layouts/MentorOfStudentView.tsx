@@ -12,6 +12,20 @@ interface MentorOfStudentViewProps {
   handleAdd: (collegeId: number) => void;
 }
 
+export function renderStudentData(key: keyof typeof studentData, studentData: any) {
+  if (key === 'user_gpa' && typeof studentData[key] !== 'undefined') {
+    return studentData[key].toFixed(1);
+  } else if (key === 'user_ncaa_registered') {
+    return studentData[key] ? 'Yes' : 'No';
+  } else if ((key === 'user_facebook' || key === 'user_instagram') && !studentData.user_show_socials) {
+    // Directly return null if user_show_socials is false or not set for social keys
+    return null;
+  } else {
+    // For other keys, return the value if available, otherwise null to avoid rendering empty strings
+    return studentData[key] ? studentData[key] : null;
+  }
+}
+
 const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
   studentData,
   collegeAssignments,
@@ -36,7 +50,6 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
   };
 
   const personalTitles: Record<string, string> = {
-    user_grad_year: "Graduation Year",
     user_phone: "Phone Number",
     user_email: "Email",
     user_facebook: "Facebook",
@@ -45,7 +58,7 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
     user_ncaa_registered: "NCAA Eligibility",
   };
   
-  const personalInfoKeys = ["user_grad_year", "user_phone", "user_email", "user_facebook", "user_instagram", "user_gpa", "user_ncaa_registered"] as Array<keyof typeof studentData>;
+  const personalInfoKeys = ["user_phone", "user_email", "user_facebook", "user_instagram", "user_gpa", "user_ncaa_registered"] as Array<keyof typeof studentData>;
 
   const actTitles: Record<string, string> = {
     user_act_math: "ACT Math",
@@ -101,6 +114,10 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
       : "",
   ];
 
+  
+  
+  
+
   return (
     <div className="grid grid-cols-3 gap-4 m-auto mx-20 my-10 mb-32 font-circular-std leading-none">
       {/* Username/Grad year */}
@@ -152,62 +169,27 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
       </div>
 
       {/* Personal */}
-    <div className='border-gray-400 border-2 rounded-md order-3'>
+    <div className='border-gray-400 border-2 rounded-md col-span-2 order-3'>
       <div className="w-full p-4">
         <h2 className="text-md mb-4">Personal</h2>
         <div className="grid grid-cols-2 gap-y-4 justify-between w-full">
-          {personalInfoKeys.map((key) => (
-            <React.Fragment key={key}>
+        {personalInfoKeys.map((key) => (
+          <React.Fragment key={key}>
+            {/* Only display the title if the key is not user_facebook or user_instagram */}
+            {(((key === 'user_facebook' || key === 'user_instagram') && studentData.user_show_socials) 
+            || (key !== 'user_facebook' && key !== 'user_instagram')) &&
+              (
               <div>{personalTitles[key]}</div>
-              {/* Separate logic for clarity */}
-              <div className="text-right">
-                {key === 'user_gpa' && typeof studentData[key] !== 'undefined'
-                  ? studentData[key].toFixed(1)
-                  : key === 'user_ncaa_registered'
-                    ? studentData[key] ? 'Yes' : 'No'
-                    : (key !== 'user_facebook' && key !== 'user_instagram') ? studentData[key] : ''
-                }
-                {/* Display socials if user_show_socials is true */}
-                {(key === 'user_facebook' || key === 'user_instagram') && studentData.user_show_socials
-                  ? studentData[key]
-                  : ''}
-              </div>
-            </React.Fragment>
-          ))}
+            )}
+            {/* Separate logic for clarity */}
+            <div className="text-right">
+              {renderStudentData(key, studentData)}
+            </div>
+          </React.Fragment>
+        ))}
         </div>
       </div>
     </div>
-
-
-      {/* Academics */}
-      <div className="border-gray-400 border-2 rounded-md min-h-[50px] order-4">
-        <div className="w-full p-4 flex-wrap">
-          <h2 className="text-md mb-2">Academics</h2>
-          {/* ACT*/}
-          <div className={`bg-brand-blue-95 mb-3 rounded-md`}>
-            <div className="grid grid-cols-2 w-full py-2 px-4 gap-x-6 gap-y-2">
-              {actKeys.map((key) => (
-                <div key={key} className="flex justify-between w-full">
-                  <div>{actTitles[key]}</div>
-                  <div>{studentData[key]}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-          {/* SAT*/}
-          <div className={`bg-brand-blue-95 mb-3 rounded-md`}>
-            <div className="grid grid-cols-2 w-full py-2 px-4 gap-x-6 gap-y-2">
-              {satKeys.map((key) => (
-                <div key={key} className="flex justify-between w-full">
-                  <div>{satTitles[key]}</div>
-                  <div>{studentData[key]}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Sport */}
       <div className="order-5 border-gray-400 border-2 rounded-md ">
         <ProfileBox type="Sport" data={sports} />
