@@ -17,6 +17,7 @@ import {ToastContainer} from "react-toastify";
 import MentorDatabase from "./routes/MentorDatabase";
 import AuthGuard from "./routes/AuthGuard";
 import NotFoundPage from "./routes/NotFoundPage";
+import Background from "./layouts/Background";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <div>
         <Navbar/>
         <Router>
+          <Background/>
           <Routes>
             <Route path="/" element={<HomePage/>}/>
             <Route element={<AuthGuard/>}>
