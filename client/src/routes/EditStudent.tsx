@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import { Navbar } from "../layouts/Navbar";
-import { set } from "react-hook-form";
-import { setgid } from "process";
 import EditStudentPill from "../components/EditStudentPill";
 
 export const EditStudent = () => {

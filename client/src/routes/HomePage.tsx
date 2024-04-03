@@ -14,7 +14,7 @@ const studentRouteInfo = [
   },
   {
       name: "Find a Mentor",
-      url: "#",
+      url: "/mentor-database",
       Icon: Users
   },
   {
@@ -29,6 +29,29 @@ const studentRouteInfo = [
   }
 ]
 
+const mentorRouteInfo = [
+  {
+      name: "College Database", 
+      url: "/college-database",
+      Icon: School
+  },
+  {
+      name: "Mentor Database", 
+      url: "/mentor-database",
+      Icon: Users
+  },
+  {
+      name: "Student Database", 
+      url: "/student-database",
+      Icon: BookUser
+  },
+  {
+      name: "Authenticate Users", 
+      url: "/authenticate",
+      Icon: SquareUser
+  },
+]
+
 const adminRouteInfo = [
   {
       name: "College Database", 
@@ -37,7 +60,7 @@ const adminRouteInfo = [
   },
   {
       name: "Mentor Database", 
-      url: "#",
+      url: "/mentor-database",
       Icon: Users
   },
   {
@@ -191,6 +214,7 @@ const HomePage = () => {
             Welcome, {cookies.user_name}!
           </h1>
           {cookies.user_status === 1 && <HomePageLinks RouteInfo={studentRouteInfo}/>}
+          {cookies.user_status === 2 && <HomePageLinks RouteInfo={mentorRouteInfo}/>}
           {cookies.user_status === 3 && <HomePageLinks RouteInfo={adminRouteInfo}/>}
         </div>
       ) : (
