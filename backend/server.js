@@ -596,19 +596,7 @@ app.post("/api/paginatedMentorsFiltered", (req, res) => {
     );
 });
 
-// paginatedMentorsFiltered
-app.post("/api/paginatedMentorsFiltered", (req, res) => {
-  const {fields, pageNumber} = req.body;
-
-  mentorController
-    .paginatedMentorsFiltered(fields, pageNumber)
-    .then((data) =>
-      res.status(200).json(data)
-    );
-});
-
 // Start Backend Port
 app.listen(port, () => {
   console.log(`Server listening on the port  ${port}`);
 });
-
