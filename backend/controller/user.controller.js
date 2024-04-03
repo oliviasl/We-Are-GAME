@@ -362,7 +362,7 @@ class userController {
     sqlBuilder(fields, pageNumber) {
 
         let query="SELECT * FROM master_users JOIN user_status ON master_users.user_id = user_status.user_id";
-        let wheres=["user_status.user_status = 0"];
+        let wheres=["user_status.user_status = 1"];
 
         if("userByName" in fields && fields["userByName"]!=null && fields["userByName"]!=""){
             wheres.push("(LOWER(CONCAT('%', user_firstname, '%')) LIKE LOWER('%"+fields["userByName"]+"%') OR LOWER(CONCAT('%', user_lastname, '%')) LIKE LOWER('%"+fields["userByName"]+"%') OR LOWER(CONCAT(user_firstname, ' ', user_lastname)) LIKE LOWER('%"+fields["userByName"]+"%'))");
