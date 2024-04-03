@@ -17,10 +17,12 @@ import {ToastContainer} from "react-toastify";
 import MentorDatabase from "./routes/MentorDatabase";
 import AuthGuard from "./routes/AuthGuard";
 import NotFoundPage from "./routes/NotFoundPage";
+import MobilePopup from "./layouts/MobilePopup";
 
 function App() {
   return (
     <ThemeProvider value={theme}>
+      <MobilePopup/>
       <div>
         <Navbar/>
         <Router>
