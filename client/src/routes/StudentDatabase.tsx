@@ -82,8 +82,8 @@ const StudentDatabase = () => {
                                             " " +
                                             student?.user_lastname
                                         }
-                                        major={student?.user_potential_major}
-                                        sport={student?.user_sport1}
+                                        major={[student?.user_potential_major,student?.user_alt_major1,student?.user_alt_major2]}
+                                        sport={[student?.user_sport1, student?.user_sport2]}
                                         id={student?.user_id}
                                     />
                                 );
