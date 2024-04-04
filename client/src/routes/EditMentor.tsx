@@ -105,7 +105,7 @@ export const EditMentor = () => {
         setColleges(mentorData.mentor_colleges);
         setPhoneNumber(mentorData.mentor_phone);
         setEmail(mentorData.mentor_email);
-        setCurrEmployment(mentorData.mentor_curr_Employment);
+        setCurrEmployment(mentorData.mentor_curr_employment);
         setDegree1(mentorData.mentor_degree1);
         setDegree2(mentorData.mentor_degree2);
         setDegree3(mentorData.mentor_degree3);
