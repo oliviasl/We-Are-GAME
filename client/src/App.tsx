@@ -12,12 +12,12 @@ import CollegeProfile from "./routes/CollegeProfile";
 import EditCollege from "./routes/EditCollege";
 import MentorDatabase from "./routes/MentorDatabase";
 import EditMentor from "./routes/EditMentor";
+import AddMentor from "./routes/AddMentor";
 import AuthGuard from "./routes/AuthGuard";
 import NotFoundPage from "./routes/NotFoundPage";
 import { ThemeProvider } from "@material-tailwind/react";
 import { Navbar } from "./layouts/Navbar";
 import { ToastContainer } from "react-toastify";
-
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route element={<AuthGuard/>}>
+            <Route element={<AuthGuard />}>
               <Route path="/authenticate" element={<AuthenticateUsers />} />
               <Route path="/add-college" element={<AddCollege />} />
               <Route path="/edit-college">
@@ -45,12 +45,12 @@ function App() {
                 <Route path=":id" element={<CollegeProfile />} />
               </Route>
               <Route path="/student-database" element={<StudentDatabase />} />
-              <Route path="/edit-mentor" element={<EditMentor />} />
               <Route path="/edit-mentor">
                 <Route path=":id" element={<EditMentor />} />
               </Route>
+              <Route path="/add-mentor" element={<AddMentor />} />
             </Route>
-            <Route path="*" element={<NotFoundPage/>}/>
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Router>
       </div>
