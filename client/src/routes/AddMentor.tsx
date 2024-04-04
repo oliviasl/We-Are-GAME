@@ -31,7 +31,7 @@ export const AddMentor = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
-  const saveUserData = async () => {
+  const addUserData = async () => {
     // cannot save with empty first or last name
     if (!firstName.trim() || !lastName.trim()) {
       toast("First name and last name can't be empty!", {
@@ -40,9 +40,8 @@ export const AddMentor = () => {
       return;
     }
     try {
-      const userData = {
-        mentorId: id,
-        newFields: {
+      const fieldData = {
+        mentorData: {
           mentor_firstname: firstName,
           mentor_lastname: lastName,
           mentor_email: email,
@@ -70,7 +69,7 @@ export const AddMentor = () => {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify(userData),
+        body: JSON.stringify(fieldData),
       });
 
       if (response.ok) {
@@ -133,7 +132,6 @@ export const AddMentor = () => {
     <div className="mb-10">
       {/* Grid Wrapper */}
       <div className="mx-24 grid grid-cols-3 gap-5">
-        {/* MY EDIT AND CANCEL */}
         <div className="col-span-full">
           <div className="flex justify-between items-center my-9">
             <div className="text-5xl font-bold">Add Mentor</div>
@@ -455,7 +453,7 @@ export const AddMentor = () => {
           <div className="flex justify-end">
             <div
               className="flex justify-center items-center w-28 h-9 bg-brand-gray-20 border-2 border-brand-gray-20 rounded text-white hover:bg-brand-green-45 transition duration-300 ease-in-out cursor-pointer"
-              onClick={saveUserData}
+              onClick={addUserData}
             >
               Add Profile
             </div>
