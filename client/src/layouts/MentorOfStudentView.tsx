@@ -199,19 +199,20 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
           data={studentData.user_interests != null ? studentData.user_interests.split(",") : []}
         />
       </div>
-
-      {/* Pursue My Purpose */}
-      <div className=" border-gray-400 border-2 rounded-md min-h-[50px] col-span-2 order-7">
-        <div className="w-full p-4">
-          <h2 className="text-md mb-2">Pursue My Purpose</h2>
-          <div>{studentData.user_purpose}</div>
+      <div className="grid-rows-2">
+        {/* Pursue My Purpose */}
+        <div className=" border-gray-400 border-2 rounded-md min-h-[50px] col-span-2 order-7">
+          <div className="w-full p-4">
+            <h2 className="text-md mb-2">Pursue My Purpose</h2>
+            <div>{studentData.user_purpose}</div>
+          </div>
         </div>
-      </div>
-      {/* Goal */}
-      <div className=" border-gray-400 border-2 rounded-md min-h-[50px] col-span-2 order-9">
-        <div className="w-full m-4">
-          <h2 className="text-md mb-2">Goal</h2>
-          <div>{studentData.user_goal}</div>
+        {/* Goal */}
+        <div className=" border-gray-400 border-2 rounded-md min-h-[50px] col-span-2 order-9">
+          <div className="w-full m-4">
+            <h2 className="text-md mb-2">Goal</h2>
+            <div>{studentData.user_goal}</div>
+          </div>
         </div>
       </div>
     </div>
