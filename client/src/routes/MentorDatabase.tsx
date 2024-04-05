@@ -89,8 +89,8 @@ const MentorDatabase = () => {
                                             " " +
                                             mentor?.mentor_lastname
                                         }
-                                        major={mentor?.mentor_major1}
-                                        sport={mentor?.mentor_sport1}
+                                        major={[mentor?.mentor_major1,mentor?.mentor_major2,mentor?.mentor_major3]}
+                                        sport={[mentor?.mentor_sport1, mentor?.mentor_sport2]}
                                         id={mentor?.mentor_id}
                                     />
                                 );
