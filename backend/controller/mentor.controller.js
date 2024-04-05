@@ -160,13 +160,13 @@ class mentorController {
       let wheres=[];
 
       if("mentorByName" in fields && fields["mentorByName"]!=null && fields["mentorByName"]!=""){
-          wheres.push("(LOWER(mentor_firstname) LIKE LOWER('"+fields["mentorByName"]+"') OR LOWER(mentor_lastname) LIKE LOWER('"+fields["mentorByName"]+"'))");
-      }
+        wheres.push("(LOWER(CONCAT('%', mentor_firstname, '%')) LIKE LOWER('%"+fields["mentorByName"]+"%') OR LOWER(CONCAT('%', mentor_lastname, '%')) LIKE LOWER('%"+fields["mentorByName"]+"%') OR LOWER(CONCAT(mentor_firstname, ' ', mentor_lastname)) LIKE LOWER('%"+fields["mentorByName"]+"%'))");
+    }
       if("mentorBySport" in fields && fields["mentorBySport"]!=null && fields["mentorBySport"]!=""){
-          wheres.push("(LOWER(mentor_sport1) LIKE LOWER('"+fields["mentorBySport"]+"') OR LOWER(mentor_sport2) LIKE LOWER('"+fields["mentorBySport"]+"'))");
+          wheres.push("(LOWER(CONCAT('%', mentor_sport1, '%')) LIKE LOWER('%"+fields["mentorBySport"]+"%') OR LOWER(CONCAT('%', mentor_sport2, '%')) LIKE LOWER('%"+fields["mentorBySport"]+"%'))");
       }
       if("mentorByMajor" in fields && fields["mentorByMajor"]!=null && fields["mentorByMajor"]!=""){
-          wheres.push("(LOWER(mentor_major1) LIKE LOWER('"+fields["mentorByMajor"]+"') OR LOWER(mentor_major2) LIKE LOWER('"+fields["mentorByMajor"]+"') OR LOWER(mentor_major3) LIKE LOWER('"+fields["mentorByMajor"]+"'))");
+          wheres.push("(LOWER(CONCAT('%', mentor_major1, '%')) LIKE LOWER('%"+fields["mentorByMajor"]+"%') OR LOWER(CONCAT('%', mentor_major2, '%')) LIKE LOWER('%"+fields["mentorByMajor"]+"%') OR LOWER(CONCAT('%', mentor_major3, '%')) LIKE LOWER('%"+fields["mentorByMajor"]+"%'))");
       }
 
       const sqlWhere=wheres.join(" AND ");
