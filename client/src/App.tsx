@@ -15,6 +15,7 @@ import MentorDatabase from "./routes/MentorDatabase";
 import EditMentor from "./routes/EditMentor";
 import AuthGuard from "./routes/AuthGuard";
 import NotFoundPage from "./routes/NotFoundPage";
+import Background from "./layouts/Background";
 import MobilePopup from "./layouts/MobilePopup";
 import { ThemeProvider } from "@material-tailwind/react";
 import { Navbar } from "./layouts/Navbar";
@@ -27,6 +28,7 @@ function App() {
       <div>
         <Navbar />
         <Router>
+          <Background/>
           <Routes>
             <Route path="/" element={<HomePage/>}/>
             <Route element={<AuthGuard/>}>
