@@ -32,7 +32,7 @@ export const EditStudent = () => {
   const [inputInterest, setInputInterest] = useState("");
   const [arrInterest, setArrInterest] = useState<string[]>([]);
   const [inputExtracurricular, setInputExtracurricular] = useState("");
-  const [arrExtracirricular, setArrExtracirricular] = useState<string[]>([]);
+  const [arrExtracurricular, setArrExtracurricular] = useState<string[]>([]);
   const [actReading, setACTReading] = useState("");
   const [actMath, setACTMath] = useState("");
   const [actScience, setACTScience] = useState("");
@@ -77,7 +77,7 @@ export const EditStudent = () => {
           user_sport1_level: level1,
           user_sport2_level: level2,
           user_interests: arrInterest.join(","),
-          user_extracurriculars: arrExtracirricular.join(","),
+          user_extracurriculars: arrExtracurricular.join(","),
           user_act_reading: parseInt(actReading),
           user_act_math: parseInt(actMath),
           user_act_science: parseInt(actScience),
@@ -145,8 +145,8 @@ export const EditStudent = () => {
         setPosition2(studentData.user_sport2_role);
         setLevel1(studentData.user_sport1_level);
         setLevel2(studentData.user_sport2_level);
-        setInputInterest(studentData.user_interests);
-        setInputExtracurricular(studentData.user_extracurriculars);
+        setArrInterest(studentData.user_interests.split(","));
+        setArrExtracurricular(studentData.user_extracurriculars.split(","));
         setACTReading(studentData.user_act_reading.toString());
         setACTMath(studentData.user_act_math.toString());
         setACTScience(studentData.user_act_science.toString());
@@ -190,21 +190,21 @@ export const EditStudent = () => {
     };
   };
 
-  const handleExtracirricularKeypress = (
+  const handleExtracurricularKeypress = (
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      setArrExtracirricular((prevExtracirriculars: string[]) => {
-        return [...prevExtracirriculars, inputExtracurricular];
+      setArrExtracurricular((prevExtracurriculars: string[]) => {
+        return [...prevExtracurriculars, inputExtracurricular];
       });
       setInputExtracurricular("");
     }
   };
 
-  const removeExtracirricular = (indexToRemove: number) => {
+  const removeExtracurricular = (indexToRemove: number) => {
     return () => {
-      setArrExtracirricular((prevItems) => {
+      setArrExtracurricular((prevItems) => {
         // Create a copy of the previous array and remove the item at the specified index
         const updatedItems = [...prevItems];
         updatedItems.splice(indexToRemove, 1);
@@ -615,15 +615,15 @@ export const EditStudent = () => {
             value={inputExtracurricular}
             placeholder="Type and press enter to add"
             onChange={(e) => setInputExtracurricular(e.target.value)}
-            onKeyDown={handleExtracirricularKeypress}
+            onKeyDown={handleExtracurricularKeypress}
           />
           <div className="gap-3 w-full flex mt-5 flex-wrap">
-            {arrExtracirricular?.map((extracurricular: string, idx: number) => {
+            {arrExtracurricular?.map((extracurricular: string, idx: number) => {
               return (
                 <EditStudentPill
                   key={extracurricular + idx}
                   text={extracurricular}
-                  closeHandler={removeExtracirricular(idx)}
+                  closeHandler={removeExtracurricular(idx)}
                 />
               );
             })}

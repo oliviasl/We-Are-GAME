@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
+import theme from "./util/theme";
 import AddCollege from "./routes/AddCollege";
 import HomePage from "./routes/HomePage";
 import AuthenticateUsers from "./routes/AuthenticateUsers";
@@ -10,13 +11,13 @@ import StudentProfileRoute from "./routes/StudentProfile";
 import EditStudent from "./routes/EditStudent";
 import CollegeProfile from "./routes/CollegeProfile";
 import EditCollege from "./routes/EditCollege";
-import { ThemeProvider } from "@material-tailwind/react";
-import theme from "./util/theme";
-import { Navbar } from "./layouts/Navbar";
-import { ToastContainer } from "react-toastify";
 import MentorDatabase from "./routes/MentorDatabase";
+import EditMentor from "./routes/EditMentor";
 import AuthGuard from "./routes/AuthGuard";
 import NotFoundPage from "./routes/NotFoundPage";
+import { ThemeProvider } from "@material-tailwind/react";
+import { Navbar } from "./layouts/Navbar";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -41,9 +42,12 @@ function App() {
                 <Route path=":id" element={<EditStudent />} />
               </Route>
               <Route path="/college-profile">
-                <Route path=":id" element={<CollegeProfile/>}/>
+                <Route path=":id" element={<CollegeProfile />} />
               </Route>
-              <Route path="/student-database" element={<StudentDatabase/>}/>
+              <Route path="/student-database" element={<StudentDatabase />} />
+              <Route path="/edit-mentor">
+                <Route path=":id" element={<EditMentor />} />
+              </Route>
             </Route>
             <Route path="*" element={<NotFoundPage/>}/>
           </Routes>
