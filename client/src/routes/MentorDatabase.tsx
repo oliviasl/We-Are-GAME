@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import MentorDirectoryRow from '../components/MentorDirectoryRow';
+import { useCookies } from "react-cookie";
 
 const MentorDatabase = () => {
+    const [cookies] = useCookies(["user_status"]);
 
     // table data
     const [mentors, setMentors] = useState<any[]>([]);
@@ -62,9 +64,10 @@ const MentorDatabase = () => {
                         <div className="font-bold text-5xl font-grotesk">
                             Find a Mentor
                         </div>
-                        <div className="w-30 h-9 cursor-pointer bg-brand-gray-20 text-white font-medium px-8 py-[5px] rounded">
+                        {cookies?.user_status!==1 && <div className="w-30 h-9 cursor-pointer bg-brand-gray-20 text-white font-medium px-8 py-[5px] rounded">
                             Add Profile
-                        </div>
+                        </div>}
+                        
                     </div>
                     <table className="mt-16 w-full px-20 table-fixed font-circular-std">
                         <thead>

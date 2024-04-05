@@ -16,7 +16,7 @@ const CollegeUpdateDatabase = () => {
             <div className="font-bold text-5xl">College Database</div>
             {cookies.user_status === 3 && (
                 <>
-                    <div className={"space-x-2"}>
+                    <div className="flex gap-2">
                         <Button 
                             color="gray" 
                             variant={"outlined"}
