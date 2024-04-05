@@ -3,8 +3,8 @@ import clsx from "clsx";
 import { useCookies } from "react-cookie";
 import { BookUser, School, SquareUser, Users } from "lucide-react";
 import HomePageLinks from "../layouts/HomePageLinks";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const HomePage = () => {
   //Page State
