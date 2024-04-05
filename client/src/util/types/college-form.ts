@@ -11,6 +11,7 @@ type NumberField = {
   id: string;
   min?: number;
   max?: number;
+  step?: number;
   percentage?: boolean;
 };
 
@@ -26,19 +27,13 @@ type LongformField = {
   id: string;
 };
 
-type UrlField = {
-  type: "url";
-  title: string;
-  id: string;
-};
-
 type DateField = {
   type: "date";
   title: string;
   id: string;
 };
 
-export type CollegeFormField = (TextField | NumberField | LongformField | UrlField | DateField) & {
+export type CollegeFormField = (TextField | NumberField | LongformField | DateField) & {
   half_width?: boolean;
   required?: boolean;
 };

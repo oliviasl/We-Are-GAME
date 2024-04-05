@@ -89,6 +89,7 @@ export const EditStudent = () => {
           user_gpa: parseFloat(gpa),
           user_purpose: purpose,
           user_goal: goal,
+          user_show_socials: showContact,
         },
       };
       const response = await fetch("/api/editUser", {
@@ -157,6 +158,7 @@ export const EditStudent = () => {
         setGPA(studentData.user_gpa.toString());
         setPurpose(studentData.user_purpose);
         setGoal(studentData.user_goal);
+        setShowContact(studentData.user_show_socials);
       } catch (error) {
         console.error("Error fetching student data:", error);
       }
