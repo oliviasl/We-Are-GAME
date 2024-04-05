@@ -32,7 +32,7 @@ const HomePage = () => {
     },
     {
       name: "Find a Mentor",
-      url: "#",
+      url: "/mentor-database",
       Icon: Users,
     },
     {
@@ -55,7 +55,7 @@ const HomePage = () => {
     },
     {
       name: "Mentor Database",
-      url: "#",
+      url: "/mentor-database",
       Icon: Users,
     },
     {
