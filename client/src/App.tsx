@@ -15,6 +15,7 @@ import MentorDatabase from "./routes/MentorDatabase";
 import EditMentor from "./routes/EditMentor";
 import AuthGuard from "./routes/AuthGuard";
 import NotFoundPage from "./routes/NotFoundPage";
+import MobilePopup from "./layouts/MobilePopup";
 import { ThemeProvider } from "@material-tailwind/react";
 import { Navbar } from "./layouts/Navbar";
 import { ToastContainer } from "react-toastify";
@@ -22,6 +23,7 @@ import { ToastContainer } from "react-toastify";
 function App() {
   return (
     <ThemeProvider value={theme}>
+      <MobilePopup/>
       <div>
         <Navbar />
         <Router>
