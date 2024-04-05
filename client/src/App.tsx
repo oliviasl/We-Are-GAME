@@ -1,5 +1,5 @@
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css";
 import AddCollege from "./routes/AddCollege";
 import HomePage from "./routes/HomePage";
 import AuthenticateUsers from "./routes/AuthenticateUsers";
@@ -10,10 +10,10 @@ import StudentProfileRoute from "./routes/StudentProfile";
 import EditStudent from "./routes/EditStudent";
 import CollegeProfile from "./routes/CollegeProfile";
 import EditCollege from "./routes/EditCollege";
-import {ThemeProvider} from "@material-tailwind/react";
+import { ThemeProvider } from "@material-tailwind/react";
 import theme from "./util/theme";
-import {Navbar} from "./layouts/Navbar";
-import {ToastContainer} from "react-toastify";
+import { Navbar } from "./layouts/Navbar";
+import { ToastContainer } from "react-toastify";
 import MentorDatabase from "./routes/MentorDatabase";
 import AuthGuard from "./routes/AuthGuard";
 import NotFoundPage from "./routes/NotFoundPage";
@@ -22,7 +22,7 @@ function App() {
   return (
     <ThemeProvider value={theme}>
       <div>
-        <Navbar/>
+        <Navbar />
         <Router>
           <Routes>
             <Route path="/" element={<HomePage/>}/>
@@ -37,7 +37,9 @@ function App() {
               <Route path="/student-profile">
                 <Route path=":id" element={<StudentProfileRoute/>}/>
               </Route>
-              <Route path="/edit-student" element={<EditStudent/>}/>
+              <Route path="/edit-student">
+                <Route path=":id" element={<EditStudent />} />
+              </Route>
               <Route path="/college-profile">
                 <Route path=":id" element={<CollegeProfile/>}/>
               </Route>
@@ -47,7 +49,7 @@ function App() {
           </Routes>
         </Router>
       </div>
-      <ToastContainer hideProgressBar={true} position={"bottom-right"}/>
+      <ToastContainer hideProgressBar={true} position={"bottom-right"} />
     </ThemeProvider>
   );
 }
