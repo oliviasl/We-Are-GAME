@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import MentorDirectoryRow from '../components/MentorDirectoryRow';
+import { useCookies } from "react-cookie";
 
 const MentorDatabase = () => {
+    const [cookies] = useCookies(["user_status"]);
 
     // table data
     const [mentors, setMentors] = useState<any[]>([]);
@@ -62,9 +64,10 @@ const MentorDatabase = () => {
                         <div className="font-bold text-5xl font-grotesk">
                             Find a Mentor
                         </div>
-                        <div className="w-30 h-9 cursor-pointer bg-brand-gray-20 text-white font-medium px-8 py-[5px] rounded">
+                        {cookies?.user_status!==1 && <div className="w-30 h-9 cursor-pointer bg-brand-gray-20 text-white font-medium px-8 py-[5px] rounded">
                             Add Profile
-                        </div>
+                        </div>}
+                        
                     </div>
                     <table className="mt-16 w-full px-20 table-fixed font-circular-std">
                         <thead>
@@ -89,8 +92,8 @@ const MentorDatabase = () => {
                                             " " +
                                             mentor?.mentor_lastname
                                         }
-                                        major={mentor?.mentor_major1}
-                                        sport={mentor?.mentor_sport1}
+                                        major={[mentor?.mentor_major1,mentor?.mentor_major2,mentor?.mentor_major3]}
+                                        sport={[mentor?.mentor_sport1, mentor?.mentor_sport2]}
                                         id={mentor?.mentor_id}
                                     />
                                 );
@@ -201,7 +204,7 @@ const MentorDatabase = () => {
                             type="text"
                         />
                     </div>
-                    <div className="flex items-center justify-start mt-3 ">
+                    <div className="flex items-center justify-center mt-3 gap-4">
                         <div
                             onClick={() => {
                                 setFilterName(displayName);
@@ -209,7 +212,7 @@ const MentorDatabase = () => {
                                 setFilterMajor(displayMajor);
                                 setPage(1);
                             }}
-                            className="w-28 h-9 cursor-pointer bg-brand-gray-20 text-white font-medium px-8 py-[5px] mx-3 rounded"
+                            className="cursor-pointer bg-brand-gray-20 border-2 border-brand-gray-20 text-white font-medium px-8 py-[5px] mx-3 rounded"
                         >
                             Search
                         </div>
@@ -223,9 +226,9 @@ const MentorDatabase = () => {
                                 setFilterMajor("");
                                 setPage(1);
                             }}
-                            className="w-38 h-9 cursor-pointer bg-brand-gray-90 border-2 border-brand-gray-20 font-medium px-8 py-[5px] rounded"
+                            className="cursor-pointer bg-brand-gray-90 border-2 border-brand-gray-20 font-medium px-8 py-[5px] rounded"
                         >
-                            Clear Filters
+                            Clear
                         </div>
                     </div>
                 </div>
