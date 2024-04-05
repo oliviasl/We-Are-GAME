@@ -13,6 +13,7 @@ import CollegeProfile from "./routes/CollegeProfile";
 import EditCollege from "./routes/EditCollege";
 import MentorDatabase from "./routes/MentorDatabase";
 import EditMentor from "./routes/EditMentor";
+import AddMentor from "./routes/AddMentor";
 import AuthGuard from "./routes/AuthGuard";
 import NotFoundPage from "./routes/NotFoundPage";
 import Background from "./layouts/Background";
@@ -52,8 +53,9 @@ function App() {
               <Route path="/edit-mentor">
                 <Route path=":id" element={<EditMentor />} />
               </Route>
+              <Route path="/add-mentor" element={<AddMentor />} />
             </Route>
-            <Route path="*" element={<NotFoundPage/>}/>
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Router>
       </div>
