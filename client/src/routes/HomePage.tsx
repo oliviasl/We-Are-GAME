@@ -26,7 +26,7 @@ const studentRouteInfo = [
       name: "View Profile", 
       url: "/student-profile",
       Icon: SquareUser
-  },
+  }
 ]
 
 const adminRouteInfo = [

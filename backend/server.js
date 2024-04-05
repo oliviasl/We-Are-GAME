@@ -600,4 +600,3 @@ app.post("/api/paginatedMentorsFiltered", (req, res) => {
 app.listen(port, () => {
   console.log(`Server listening on the port  ${port}`);
 });
-
