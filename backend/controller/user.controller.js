@@ -84,15 +84,13 @@ class userController {
         const PAGE_SIZE = 6;
         const offset = (pageNumber - 1) * PAGE_SIZE;
 
-        // changes: user_status.user_status = 0 --> user_status.user_status >= 0
-
         // gets userID, email, first name, last name, major, and sport
         const query = `SELECT master_users.user_id, master_users.user_email, master_users.user_firstname, master_users.user_lastname, master_users.user_potential_major, master_users.user_sport1
         FROM master_users
         JOIN user_status ON master_users.user_id = user_status.user_id
-        WHERE user_status.user_status >= 0
-        LIMIT $1 OFFSET $2
-        ORDER BY last_name ASC;`
+        WHERE user_status.user_status = 1
+		ORDER BY user_firstname
+        LIMIT $1 OFFSET $2;`
 
         const result = await db.query(query, [PAGE_SIZE, offset]);
 
@@ -363,30 +361,27 @@ class userController {
 
     sqlBuilder(fields, pageNumber) {
 
-      
-        let query="SELECT * FROM master_users";
-        let wheres=[];
+        let query="SELECT * FROM master_users JOIN user_status ON master_users.user_id = user_status.user_id";
+        let wheres=["user_status.user_status = 1"];
 
         if("userByName" in fields && fields["userByName"]!=null && fields["userByName"]!=""){
-            wheres.push("(LOWER(user_firstname) LIKE LOWER('"+fields["userByName"]+"') OR LOWER(user_lastname) LIKE LOWER('"+fields["userByName"]+"'))");
+            wheres.push("(LOWER(CONCAT('%', user_firstname, '%')) LIKE LOWER('%"+fields["userByName"]+"%') OR LOWER(CONCAT('%', user_lastname, '%')) LIKE LOWER('%"+fields["userByName"]+"%') OR LOWER(CONCAT(user_firstname, ' ', user_lastname)) LIKE LOWER('%"+fields["userByName"]+"%'))");
         }
         if("userBySport" in fields && fields["userBySport"]!=null && fields["userBySport"]!=""){
-            wheres.push("(LOWER(user_sport1) LIKE LOWER('"+fields["userBySport"]+"') OR LOWER(user_sport2) LIKE LOWER('"+fields["userBySport"]+"'))");
+            wheres.push("(LOWER(CONCAT('%', user_sport1, '%')) LIKE LOWER('%"+fields["userBySport"]+"%') OR LOWER(CONCAT('%', user_sport2, '%')) LIKE LOWER('%"+fields["userBySport"]+"%'))");
         }
         if("userByMajor" in fields && fields["userByMajor"]!=null && fields["userByMajor"]!=""){
-            wheres.push("(LOWER(user_potential_major) LIKE LOWER('"+fields["userByMajor"]+"') OR LOWER(user_alt_major1) LIKE LOWER('"+fields["userByMajor"]+"') OR LOWER(user_alt_major2) LIKE LOWER('"+fields["userByMajor"]+"'))");
+            wheres.push("(LOWER(CONCAT('%', user_potential_major, '%')) LIKE LOWER('%"+fields["userByMajor"]+"%') OR LOWER(CONCAT('%', user_alt_major1, '%')) LIKE LOWER('%"+fields["userByMajor"]+"%') OR LOWER(CONCAT('%', user_alt_major2, '%')) LIKE LOWER('%"+fields["userByMajor"]+"%'))");
         }
 
         const sqlWhere=wheres.join(" AND ");
 
         const PAGE_SIZE = 6;
         const offset = (pageNumber - 1) * PAGE_SIZE;
-        const sqlStr = " ORDER BY user_lastname LIMIT "+PAGE_SIZE+" OFFSET "+offset+";";
+        const sqlStr = " ORDER BY user_firstname LIMIT "+PAGE_SIZE+" OFFSET "+offset+";";
 
-        if(wheres.length!=0){
-            return [query+" WHERE "+sqlWhere+";", query+" WHERE "+sqlWhere+sqlStr];
-        }
-        return [query+";", query+sqlStr];
+        return [query+" WHERE "+sqlWhere+";", query+" WHERE "+sqlWhere+sqlStr];
+
     }
 
     async paginatedUsersFiltered(fields, pageNumber){
