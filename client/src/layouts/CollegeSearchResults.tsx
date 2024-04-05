@@ -81,11 +81,9 @@ const CollegeSearchResults = (formData: any) => {
         </thead>
         <tbody>
         {TABLE_ROWS.map(({college_id, college_name, location_city, acceptance_rate, max_gpa}, index) => {
-          const isLast = index === TABLE_ROWS.length - 1;
           const classes = "p-4 border-b border-black";
-
                 return (
-                  <tr key={college_name} className="h-12">
+                  <tr key={college_id} className="h-12">
                     <td className={classes}>
                       <Typography
                         variant="small"
@@ -136,66 +134,66 @@ const CollegeSearchResults = (formData: any) => {
               })}
             </tbody>
           </table>
-            <div className="flex justify-center items-center gap-2 mt-16">
-                <button
-                    disabled={page === 1}
-                    className="relative h-8 max-h-[32px] w-8 max-w-[32px] select-none rounded-lg border border-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                    onClick={() => {
-                        setPage((p) => {
-                            return p - 1;
-                        });
-                    }}
-                >
-                    <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="2"
-                            stroke="currentColor"
-                            aria-hidden="true"
-                            className="w-4 h-4"
+          <div className="flex justify-start items-center gap-2 mt-16">
+                        <button
+                            disabled={page === 1 || totalPages === 0}
+                            className="relative h-8 max-h-[24px] w-8 max-w-[24px] select-none rounded-lg border border-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                            onClick={() => {
+                                setPage((p) => {
+                                    return p - 1;
+                                });
+                            }}
                         >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-                            ></path>
-                        </svg>
-                    </span>
-                </button>
-                <span>
-                    Page {page} of {totalPages}
-                </span>
-                <button
-                    disabled={page === totalPages}
-                    className="relative h-8 max-h-[32px] w-8 max-w-[32px] select-none rounded-lg border border-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                    type="button"
-                    onClick={() => {
-                        setPage((p) => {
-                            return p + 1;
-                        });
-                    }}
-                >
-                    <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="2"
-                            stroke="currentColor"
-                            aria-hidden="true"
-                            className="w-4 h-4"
+                            <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="2"
+                                    stroke="currentColor"
+                                    aria-hidden="true"
+                                    className="w-4 h-4"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                                    ></path>
+                                </svg>
+                            </span>
+                        </button>
+                        <span className="text-[#577347] text-[12px] font-circular-std">
+                            Page {page} of {totalPages}
+                        </span>
+                        <button
+                            disabled={page === totalPages || totalPages === 0}
+                            className="relative h-8 max-h-[24px] w-8 max-w-[24px] select-none rounded-lg border border-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                            type="button"
+                            onClick={() => {
+                                setPage((p) => {
+                                    return p + 1;
+                                });
+                            }}
                         >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                            ></path>
-                        </svg>
-                    </span>
-                </button>
-            </div>
+                            <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="2"
+                                    stroke="currentColor"
+                                    aria-hidden="true"
+                                    className="w-4 h-4"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                                    ></path>
+                                </svg>
+                            </span>
+                        </button>
+                    </div>
         </Card>
       );
 };

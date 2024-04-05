@@ -1,10 +1,11 @@
-import { useState } from "react";
+import {useState} from "react";
 import clsx from "clsx";
-import { useCookies } from "react-cookie";
-import { BookUser, School, SquareUser, Users } from "lucide-react";
+import {useCookies} from "react-cookie";
+import {BookUser, School, SquareUser, Users} from "lucide-react";
 import HomePageLinks from "../layouts/HomePageLinks";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const HomePage = () => {
   //Page State
@@ -66,6 +67,29 @@ const HomePage = () => {
       name: "Authenticate Users",
       url: "/authenticate",
       Icon: SquareUser,
+    },
+  ];
+
+  const mentorRouteInfo = [
+    {
+      name: "College Database",
+      url: "/college-database",
+      Icon: School
+    },
+    {
+      name: "Mentor Database",
+      url: "/mentor-database",
+      Icon: Users
+    },
+    {
+      name: "Student Database",
+      url: "/student-database",
+      Icon: BookUser
+    },
+    {
+      name: "Authenticate Users",
+      url: "/authenticate",
+      Icon: SquareUser
     },
   ];
 
@@ -172,9 +196,9 @@ const HomePage = () => {
     console.log(status);
 
     if (status[1] > 0) {
-      setCookies("user_id", status[0], { path: "/" });
-      setCookies("user_status", status[1], { path: "/" });
-      setCookies("user_name", status[2], { path: "/" });
+      setCookies("user_id", status[0], {path: "/"});
+      setCookies("user_status", status[1], {path: "/"});
+      setCookies("user_name", status[2], {path: "/"});
     } else {
       toast("You are not authorized.", {
         className: "border-l-8 border-semantic-warning",
@@ -185,16 +209,13 @@ const HomePage = () => {
   return (
     <div>
       {cookies.user_id !== null && cookies.user_id > 0 ? (
-        <div className="h-screen w-screen flex flex-col items-center">
+        <div className="w-screen flex flex-col items-center">
           <h1 className="w-full p-14 pl-24 text-left text-4xl text-brand-black font-bold font-grotesk">
             Welcome, {cookies.user_name}!
           </h1>
-          {cookies.user_status === 1 && (
-            <HomePageLinks RouteInfo={studentRouteInfo} />
-          )}
-          {cookies.user_status === 3 && (
-            <HomePageLinks RouteInfo={adminRouteInfo} />
-          )}
+          {cookies.user_status === 1 && <HomePageLinks RouteInfo={studentRouteInfo}/>}
+          {cookies.user_status === 2 && <HomePageLinks RouteInfo={mentorRouteInfo}/>}
+          {cookies.user_status === 3 && <HomePageLinks RouteInfo={adminRouteInfo}/>}
         </div>
       ) : (
         <div className="flex justify-center m-3">

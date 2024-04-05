@@ -5,7 +5,6 @@ import {collegeForm} from "./data/college-form";
 const createZodField = (field: CollegeFormField) => {
   switch (field.type) {
     case "text":
-    case "url":
     case "date":
     case "longform":
       return z
