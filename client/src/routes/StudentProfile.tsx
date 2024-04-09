@@ -40,7 +40,7 @@ export interface studentData {
   user_sport2_role: string;
   user_notes: string;
 
-  user_grad_year:number;
+  user_grad_year: number;
 
   user_instagram: string;
   user_facebook: string;
@@ -77,7 +77,7 @@ export interface collegeAssignments {
 }
 
 const StudentProfileRoute = () => {
-  const {id} = useParams();
+  const { id } = useParams();
 
   const [studentData, setStudentData] = useState<studentData>({} as studentData);
   const [collegeAssignments, setCollegeAssignments] = useState<collegeAssignments[]>([]);
@@ -99,31 +99,31 @@ const StudentProfileRoute = () => {
         body: userData,
       });
 
-      const assignmentsData = await assignmentsResponse.json();        
+      const assignmentsData = await assignmentsResponse.json();
       const collegeNamesPromises = (assignmentsData as collegeAssignments[]).map(async (assignment: collegeAssignments) => {
-      const collegeId = assignment.college_id;
-      
-      const collegeResponse = await fetch("/api/collegeById", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          userId: id,
-          collegeId: collegeId,
-        }),
-      });
-    
-      const collegeData = await collegeResponse.json();
-      return {
-        assignment_id: assignment.assignment_id,
-        college_id: assignment.college_id,
-        user_id: assignment.user_id,
-        college_name: collegeData[0]?.college_name || "College unknown",
+        const collegeId = assignment.college_id;
+
+        const collegeResponse = await fetch("/api/collegeById", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            userId: id,
+            collegeId: collegeId,
+          }),
+        });
+
+        const collegeData = await collegeResponse.json();
+        return {
+          assignment_id: assignment.assignment_id,
+          college_id: assignment.college_id,
+          user_id: assignment.user_id,
+          college_name: collegeData[0]?.college_name || "College unknown",
         };
       });
-      
+
       const resolvedCollegeNames = await Promise.all(collegeNamesPromises);
       setCollegeAssignments(resolvedCollegeNames);
 
@@ -209,7 +209,6 @@ const StudentProfileRoute = () => {
       console.error('Error creating assignment:', error);
     }
   };
-  console.log("cookies:", cookies);
 
   return (
     <div>
@@ -234,7 +233,7 @@ const StudentProfileRoute = () => {
       ) : null}
     </div>
   );
-  
+
 };
 
 export default StudentProfileRoute;
