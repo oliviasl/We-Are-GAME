@@ -28,7 +28,7 @@ async function fetchColleges(fields: any, pageNumber: number): Promise<any> {
 }
 
 const CollegeSearchResults = (formData: any) => {
-    const TABLE_HEAD = ["College Name", "Location", "Admit Rate", "Average GPA", ""];
+    const TABLE_HEAD = ["College Name", "Location", "Admit Rate", "GPA Range", ""];
     const [TABLE_ROWS, setTableRows] =useState<any[]>([]);
     const [totalPages, setTotalPages] = useState(1);
     const [page, setPage] = useState(1);
@@ -80,7 +80,7 @@ const CollegeSearchResults = (formData: any) => {
         </tr>
         </thead>
         <tbody>
-        {TABLE_ROWS.map(({college_id, college_name, location_city, acceptance_rate, max_gpa}, index) => {
+        {TABLE_ROWS.map(({college_id, college_name, location_city, acceptance_rate, max_gpa, min_gpa}, index) => {
           const classes = "p-4 border-b border-black";
                 return (
                   <tr key={college_id} className="h-12">
@@ -119,7 +119,7 @@ const CollegeSearchResults = (formData: any) => {
                         color="blue-gray"
                         className="font-medium"
                       >
-                          {max_gpa}
+                          {min_gpa} - {max_gpa}
                       </Typography>
                     </td>
                     <td className={classes}>

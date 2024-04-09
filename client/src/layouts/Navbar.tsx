@@ -8,12 +8,13 @@ const Logo = () => (
 
 export function Navbar() {
   /*
-- User state 0 = unauthorized
-- User state 1 = student
-- User state 2 = mentor
-- User state 3 = admin
-  */
-  const [cookies] = useCookies(["user_status", "user_id"]);
+  - User state 0 = unauthorized
+  - User state 1 = student
+  - User state 2 = mentor
+  - User state 3 = admin
+    */
+  const [cookies] = useCookies(['user_id', 'user_status', 'user_name']);
+
   return (
     // added padding for testing purposes: should be removed once Nav is integrated into other components
     <div className="z-[20] mx-auto mt-20 mb-4 px-20 flex w-full items-center justify-between bg-grey-600 text-brand-black font-bold font-grotesk">
@@ -42,3 +43,5 @@ export function Navbar() {
     </div>
   );
 }
+
+export default Navbar;

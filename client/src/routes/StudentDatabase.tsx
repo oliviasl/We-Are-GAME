@@ -170,12 +170,12 @@ const StudentDatabase = () => {
                     </div>
                     <div className="flex pt-5 items-center">
                         <div className="w-1/3  text-left font-normal">
-                            Major
+                            Sport
                         </div>
                         <input
-                            value={displayMajor}
+                            value={displaySport}
                             onChange={(e) => {
-                                setDisplayMajor(e.target.value);
+                                setDisplaySport(e.target.value);
                             }}
                             className="border-2 border-black rounded w-2/3 h-9"
                             type="text"
@@ -183,12 +183,12 @@ const StudentDatabase = () => {
                     </div>
                     <div className="flex pt-5 pb-3 items-center">
                         <div className="w-1/3  text-left font-normal">
-                            Sport
+                            Major
                         </div>
                         <input
-                            value={displaySport}
+                            value={displayMajor}
                             onChange={(e) => {
-                                setDisplaySport(e.target.value);
+                                setDisplayMajor(e.target.value);
                             }}
                             className="border-2 border-black rounded w-2/3 h-9"
                             type="text"

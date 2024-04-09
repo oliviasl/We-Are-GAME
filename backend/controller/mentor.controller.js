@@ -173,7 +173,7 @@ class mentorController {
 
       const PAGE_SIZE = 6;
       const offset = (pageNumber - 1) * PAGE_SIZE;
-      const sqlStr = " ORDER BY mentor_lastname LIMIT "+PAGE_SIZE+" OFFSET "+offset+";";
+      const sqlStr = " ORDER BY mentor_firstname LIMIT "+PAGE_SIZE+" OFFSET "+offset+";";
 
       if(wheres.length!=0){
           return [query+" WHERE "+sqlWhere+";", query+" WHERE "+sqlWhere+sqlStr];
