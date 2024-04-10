@@ -2,7 +2,7 @@ import { useCookies } from "react-cookie";
 
 const Logo = () => (
   <div className="rounded-full w-20 h-20 bg-gray-200">
-    {/* <img src='#' alt='Logo' /> */}
+    <img src='/logo.png' alt='Logo' />
   </div>
 );
 
@@ -13,7 +13,7 @@ export function Navbar() {
   - User state 2 = mentor
   - User state 3 = admin
     */
-  const [cookies] = useCookies(['user_id', 'user_status', 'user_name']);
+  const [cookies, setCookies, removeCookie] = useCookies(['user_id', 'user_status', 'user_name']);
 
   return (
     // added padding for testing purposes: should be removed once Nav is integrated into other components
@@ -39,6 +39,15 @@ export function Navbar() {
             <a href={`/student-profile/${cookies.user_id}`}>Student Profile</a>
           </div>
         )}
+        <div 
+          className="hover:text-brand-green-45 text-sm" 
+          onClick={()=>{
+            removeCookie("user_id", {path: "/"});
+            removeCookie("user_status", {path: "/"});
+            removeCookie("user_name", {path: "/"});
+          }}>
+            <a href='/'>Log Out</a>
+        </div>
       </div>}
     </div>
   );
