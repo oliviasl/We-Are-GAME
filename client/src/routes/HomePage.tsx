@@ -1,60 +1,13 @@
 import {useState} from "react";
 import clsx from "clsx";
-import {useCookies} from 'react-cookie';
+import {useCookies} from "react-cookie";
 import {BookUser, School, SquareUser, Users} from "lucide-react";
 import HomePageLinks from "../layouts/HomePageLinks";
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const studentRouteInfo = [
-  {
-      name: "Explore Colleges", 
-      url: "/college-database",
-      Icon: School
-  },
-  {
-      name: "Find a Mentor",
-      url: "#",
-      Icon: Users
-  },
-  {
-      name: "Student Directory", 
-      url: "/student-database",
-      Icon: BookUser
-  },
-  {
-      name: "View Profile", 
-      url: "/student-profile",
-      Icon: SquareUser
-  }
-]
-
-const adminRouteInfo = [
-  {
-      name: "College Database", 
-      url: "/college-database",
-      Icon: School
-  },
-  {
-      name: "Mentor Database", 
-      url: "#",
-      Icon: Users
-  },
-  {
-      name: "Student Database", 
-      url: "/student-database",
-      Icon: BookUser
-  },
-  {
-      name: "Authenticate Users", 
-      url: "/authenticate",
-      Icon: SquareUser
-  },
-]
-
 
 const HomePage = () => {
-
   //Page State
   const [tabs, setTabs] = useState("Login");
   //Input States
@@ -65,7 +18,80 @@ const HomePage = () => {
   const [email, setEmail] = useState("");
   const [institution, setInstitution] = useState("");
   // user cookies
-  const [cookies, setCookies] = useCookies(['user_id', 'user_status', 'user_name']);
+  const [cookies, setCookies] = useCookies([
+    "user_id",
+    "user_status",
+    "user_name",
+  ]);
+
+  const studentRouteInfo = [
+    {
+      name: "Explore Colleges",
+      url: "/college-database",
+      Icon: School,
+    },
+    {
+      name: "Find a Mentor",
+      url: "/mentor-database",
+      Icon: Users,
+    },
+    {
+      name: "Student Directory",
+      url: "/student-database",
+      Icon: BookUser,
+    },
+    {
+      name: "View Profile",
+      url: `/student-profile/${cookies.user_id}`,
+      Icon: SquareUser,
+    },
+  ];
+
+  const adminRouteInfo = [
+    {
+      name: "College Database",
+      url: "/college-database",
+      Icon: School,
+    },
+    {
+      name: "Mentor Database",
+      url: "/mentor-database",
+      Icon: Users,
+    },
+    {
+      name: "Student Database",
+      url: "/student-database",
+      Icon: BookUser,
+    },
+    {
+      name: "Authenticate Users",
+      url: "/authenticate",
+      Icon: SquareUser,
+    },
+  ];
+
+  const mentorRouteInfo = [
+    {
+      name: "College Database",
+      url: "/college-database",
+      Icon: School
+    },
+    {
+      name: "Mentor Database",
+      url: "/mentor-database",
+      Icon: Users
+    },
+    {
+      name: "Student Database",
+      url: "/student-database",
+      Icon: BookUser
+    },
+    {
+      name: "Authenticate Users",
+      url: "/authenticate",
+      Icon: SquareUser
+    },
+  ];
 
   const clearFields = () => {
     setPassword("");
@@ -77,11 +103,10 @@ const HomePage = () => {
   };
 
   const createUser = async () => {
-
     // invalid email toast condition
     if (!email.includes("@")) {
       toast("Email format is invalid.", {
-        className: "border-l-8 border-semantic-warning"
+        className: "border-l-8 border-semantic-warning",
       });
       return;
     }
@@ -89,7 +114,7 @@ const HomePage = () => {
     // matching passwords toast condition
     if (password !== verifyPassword) {
       toast("Please make sure your passwords match.", {
-        className: "border-l-8 border-semantic-warning"
+        className: "border-l-8 border-semantic-warning",
       });
       return;
     }
@@ -111,7 +136,7 @@ const HomePage = () => {
 
     if (userEmailStatus.length > 0) {
       toast(email + " is already in use.", {
-        className: "border-l-8 border-semantic-warning"
+        className: "border-l-8 border-semantic-warning",
       });
       return;
     }
@@ -122,7 +147,7 @@ const HomePage = () => {
         user_password: password,
         user_firstname: firstName,
         user_lastname: lastName,
-        user_school: institution
+        user_school: institution,
       },
     });
     const response = await fetch("/api/createUser", {
@@ -140,9 +165,7 @@ const HomePage = () => {
     setTabs("Login");
   };
 
-
   const authUser = async () => {
-
     // API Endpoint Format:
     // status: [user_id, user_status, user_firstname]
     // user_id: (integer if user exists)
@@ -152,7 +175,7 @@ const HomePage = () => {
     // invalid email toast condition
     if (!email.includes("@")) {
       toast("Email format is invalid.", {
-        className: "border-l-8 border-semantic-warning"
+        className: "border-l-8 border-semantic-warning",
       });
       return;
     }
@@ -160,37 +183,38 @@ const HomePage = () => {
     const authBody = JSON.stringify({
       email: email,
       password: password,
-    })
+    });
     const response = await fetch("/api/validateUser", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: authBody
+      body: authBody,
     });
     const status = await response.json();
     console.log(status);
 
     if (status[1] > 0) {
-      setCookies('user_id', status[0], {path: '/'});
-      setCookies('user_status', status[1], {path: '/'});
-      setCookies('user_name', status[2], {path: '/'});
+      setCookies("user_id", status[0], {path: "/"});
+      setCookies("user_status", status[1], {path: "/"});
+      setCookies("user_name", status[2], {path: "/"});
     } else {
       toast("You are not authorized.", {
-        className: "border-l-8 border-semantic-warning"
+        className: "border-l-8 border-semantic-warning",
       });
     }
   };
 
   return (
     <div>
-      {(cookies.user_id !== null && cookies.user_id > 0) ? (
-        <div className="h-screen w-screen flex flex-col items-center">
+      {cookies.user_id !== null && cookies.user_id > 0 ? (
+        <div className="w-screen flex flex-col items-center">
           <h1 className="w-full p-14 pl-24 text-left text-4xl text-brand-black font-bold font-grotesk">
             Welcome, {cookies.user_name}!
           </h1>
           {cookies.user_status === 1 && <HomePageLinks RouteInfo={studentRouteInfo}/>}
+          {cookies.user_status === 2 && <HomePageLinks RouteInfo={mentorRouteInfo}/>}
           {cookies.user_status === 3 && <HomePageLinks RouteInfo={adminRouteInfo}/>}
         </div>
       ) : (
@@ -364,8 +388,8 @@ const HomePage = () => {
               </div>
             )}
           </div>
-        </div>)
-      }
+        </div>
+      )}
     </div>
   );
 };

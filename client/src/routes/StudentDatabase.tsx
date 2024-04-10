@@ -82,12 +82,12 @@ const StudentDatabase = () => {
                                             " " +
                                             student?.user_lastname
                                         }
-                                        major={student?.user_potential_major}
-                                        sport={student?.user_sport1}
+                                        major={[student?.user_potential_major,student?.user_alt_major1,student?.user_alt_major2]}
+                                        sport={[student?.user_sport1, student?.user_sport2]}
                                         id={student?.user_id}
                                     />
                                 );
-                            })}                          
+                            })}
                         </tbody>
                     </table>
                     <div className="flex justify-start items-center gap-2 mt-16">
@@ -170,19 +170,6 @@ const StudentDatabase = () => {
                     </div>
                     <div className="flex pt-5 items-center">
                         <div className="w-1/3  text-left font-normal">
-                            Major
-                        </div>
-                        <input
-                            value={displayMajor}
-                            onChange={(e) => {
-                                setDisplayMajor(e.target.value);
-                            }}
-                            className="border-2 border-black rounded w-2/3 h-9"
-                            type="text"
-                        />
-                    </div>
-                    <div className="flex pt-5 pb-3 items-center">
-                        <div className="w-1/3  text-left font-normal">
                             Sport
                         </div>
                         <input
@@ -194,7 +181,20 @@ const StudentDatabase = () => {
                             type="text"
                         />
                     </div>
-                    <div className="flex items-center justify-start mt-3 ">
+                    <div className="flex pt-5 pb-3 items-center">
+                        <div className="w-1/3  text-left font-normal">
+                            Major
+                        </div>
+                        <input
+                            value={displayMajor}
+                            onChange={(e) => {
+                                setDisplayMajor(e.target.value);
+                            }}
+                            className="border-2 border-black rounded w-2/3 h-9"
+                            type="text"
+                        />
+                    </div>
+                    <div className="flex items-center justify-center mt-3 gap-4">
                         {/* Auth Wrapper */}
                         <div
                             onClick={() => {
@@ -203,9 +203,19 @@ const StudentDatabase = () => {
                                 setFilterMajor(displayMajor);
                                 setPage(1);
                             }}
-                            className="w-28 h-9 cursor-pointer bg-brand-gray-20 text-white font-medium px-8 py-[5px] rounded"
+                            className="cursor-pointer bg-brand-gray-20 border-2 border-brand-gray-20 text-white font-medium px-8 py-[5px] mx-3 rounded"
                         >
                             Search
+                        </div>
+                        <div
+                            onClick={() => {
+                                setDisplayName("");
+                                setDisplayMajor("");
+                                setDisplaySport("");
+                            }}
+                            className="cursor-pointer bg-brand-gray-90 border-2 border-brand-gray-20 font-medium px-8 py-[5px] rounded"
+                        >
+                            Clear
                         </div>
                     </div>
                 </div>
