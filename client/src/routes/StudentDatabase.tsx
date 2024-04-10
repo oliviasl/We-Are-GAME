@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import StudentDirectoryRow from "../components/StudentDirectoryRow";
+import { Typography } from "@material-tailwind/react";
 
 const StudentDatabase = () => {
     //Table Data
@@ -63,14 +64,30 @@ const StudentDatabase = () => {
                         <thead>
                             <tr className="border-y border-black">
                                 <th className="text-left py-2 pl-16 font-semibold">
-                                    Name
+                                    <Typography
+                                        variant="small"
+                                        color="black"
+                                        className="font-semibold leading-none opacity-70"
+                                    >
+                                        Name
+                                    </Typography>
                                 </th>
                                 <th className="text-left py-2 px-8 font-semibold">
-                                    Sport
-                                </th>
+                                <Typography
+                                        variant="small"
+                                        color="black"
+                                        className="font-semibold leading-none opacity-70"
+                                    >
+                                        Sport
+                                    </Typography>                                </th>
                                 <th className="text-left py-2 pr-16 font-semibold">
-                                    Major
-                                </th>
+                                <Typography
+                                        variant="small"
+                                        color="black"
+                                        className="font-semibold leading-none opacity-70"
+                                    >
+                                        Major
+                                    </Typography>                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -82,8 +99,15 @@ const StudentDatabase = () => {
                                             " " +
                                             student?.user_lastname
                                         }
-                                        major={[student?.user_potential_major,student?.user_alt_major1,student?.user_alt_major2]}
-                                        sport={[student?.user_sport1, student?.user_sport2]}
+                                        major={[
+                                            student?.user_potential_major,
+                                            student?.user_alt_major1,
+                                            student?.user_alt_major2,
+                                        ]}
+                                        sport={[
+                                            student?.user_sport1,
+                                            student?.user_sport2,
+                                        ]}
                                         id={student?.user_id}
                                     />
                                 );

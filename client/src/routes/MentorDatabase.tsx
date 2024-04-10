@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import MentorDirectoryRow from "../components/MentorDirectoryRow";
+import {Typography} from "@material-tailwind/react";
 
 const MentorDatabase = () => {
   // table data
@@ -74,13 +75,31 @@ const MentorDatabase = () => {
             <thead>
               <tr className="border-y border-black">
                 <th className="text-left py-2 pl-16 font-semibold">
-                  Mentor Name
+                  <Typography
+                  variant="small"
+                  color="black"
+                  className="font-semibold leading-none opacity-70"
+                  >
+                    Mentor Name              
+                  </Typography>
                 </th>
                 <th className="text-left py-2 px-8 font-semibold">
-                  Sport
+                  <Typography
+                    variant="small"
+                    color="black"
+                    className="font-semibold leading-none opacity-70"
+                    >
+                      Sport              
+                  </Typography>                
                 </th>
                 <th className="text-left py-2 pr-16 font-semibold">
-                  Major
+                  <Typography
+                    variant="small"
+                    color="black"
+                    className="font-semibold leading-none opacity-70"
+                    >
+                      Major              
+                  </Typography>
                 </th>
               </tr>
             </thead>

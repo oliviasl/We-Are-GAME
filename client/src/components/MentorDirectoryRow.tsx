@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useParams, useNavigate } from "react-router-dom";
+import {Typography} from "@material-tailwind/react";
 
 
 type MentorDirectoryRowProps = {
@@ -30,9 +31,33 @@ const MentorDirectoryRow = ({ name, sport, major, id }: MentorDirectoryRowProps)
       onClick={() => { navigate('/mentor-profile/' + id) }}
       key={id}
     >
-      <td className='pl-16'>{name}</td>
-      <td className='px-8'>{sportCell}</td>
-      <td className='pr-16'>{majorCell}</td>
+      <td className="pl-16">
+                <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal"
+                >
+                    {name}
+                </Typography>
+            </td>
+            <td className="px-8">
+                <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal"
+                >
+                    {sportCell}
+                </Typography>
+            </td>
+            <td className="pr-16">
+                <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal"
+                >
+                    {majorCell}
+                </Typography>
+            </td>
     </tr>
   )
 }
