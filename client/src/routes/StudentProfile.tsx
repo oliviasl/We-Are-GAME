@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import PeerProfileView from "../layouts/PeerProfileView";
 import { useCookies } from "react-cookie";
 import MentorOfStudentView from "../layouts/MentorOfStudentView";
+import NotFoundPage from "./NotFoundPage";
 
 export interface studentData {
   user_id: number;
@@ -80,6 +81,7 @@ const StudentProfileRoute = () => {
   const { id } = useParams();
 
   const [studentData, setStudentData] = useState<studentData>({} as studentData);
+  const [validID, setValidID] = useState(false);
   const [collegeAssignments, setCollegeAssignments] = useState<collegeAssignments[]>([]);
   const [peerData, setPeerData] = useState<peerData>({} as peerData);
   const [cookies] = useCookies(['user_id', 'user_status', 'user_name']);
@@ -151,8 +153,14 @@ const StudentProfileRoute = () => {
         setStudentData(data[0]);
         setPeerData(data[0]);
         console.log("studentData:", studentData);
+        
+        if (Object.keys(data).length === 0)
+          setValidID(false);
+        else
+          setValidID(true);
       } catch (error) {
         console.error("Error fetching student data:", error);
+        setValidID(false);
       }
     };
 
@@ -210,27 +218,32 @@ const StudentProfileRoute = () => {
     }
   };
 
+  console.log("ValidID " + validID);
+
   return (
+    
     <div>
-      {(cookies.user_status === 3 || cookies.user_id === parseInt(id ? id : "")) ? (
+      {validID && (cookies.user_status === 3 || cookies.user_id === parseInt(id ? id : "")) ? (
         <StudentProfile
           studentData={studentData}
           collegeAssignments={collegeAssignments}
           handleDelete={handleDelete}
           handleAdd={handleAdd}
         />
-      ) : cookies.user_status === 1 ? (
+      ) : validID && cookies.user_status === 1 ? (
         <PeerProfileView
           peerData={peerData}
         />
-      ) : cookies.user_status === 2 ? (
+      ) : validID && cookies.user_status === 2 ? (
         <MentorOfStudentView
           studentData={studentData}
           collegeAssignments={collegeAssignments}
           handleDelete={handleDelete}
           handleAdd={handleAdd}
         />
-      ) : null}
+      ) : (
+        <NotFoundPage/>
+      )}
     </div>
   );
 

@@ -442,7 +442,7 @@ class collegeController {
 
     async searchScorecard(name){
 
-        const response = await this.fetchFromScorecard(name, ["school.name"], false, 0, 5);
+        const response = await this.fetchFromScorecard(name, ["school.name"], false, 0, 10);
         return response.results.map((datum) => datum["school.name"]);
     }
     
