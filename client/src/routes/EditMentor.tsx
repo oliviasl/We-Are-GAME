@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import EditStudentPill from "../components/EditStudentPill";
 import { toast } from "react-toastify";
+import { useCookies } from "react-cookie";
 import "react-toastify/dist/ReactToastify.css";
+import NotFoundPage from "./NotFoundPage";
 
 export const EditMentor = () => {
   // field data
@@ -30,6 +32,9 @@ export const EditMentor = () => {
   const [arrExtracurricular, setArrExtracurricular] = useState<string[]>([]);
 
   const { id } = useParams();
+  const [validID, setValidID] = useState(false);
+  const [cookies] = useCookies(["user_id", "user_status", "user_name"]);
+
   const navigate = useNavigate();
   const saveUserData = async () => {
     // cannot save with empty first or last name
@@ -119,8 +124,11 @@ export const EditMentor = () => {
         setHighestLevel(mentorData.mentor_highest_sports_level);
         setArrInterest(mentorData.mentor_interests.split(","));
         setArrExtracurricular(mentorData.mentor_extracurriculars.split(","));
+        if (Object.keys(data).length === 0) setValidID(false);
+        else setValidID(true);
       } catch (error) {
         console.error("Error fetching mentor data:", error);
+        setValidID(false);
       }
     };
 
@@ -174,338 +182,348 @@ export const EditMentor = () => {
   };
 
   return (
-    <div className="mb-10">
-      {/* Grid Wrapper */}
-      <div className="mx-24 grid grid-cols-3 gap-5">
-        {/* MY EDIT AND CANCEL */}
-        <div className="col-span-full">
-          <div className="flex justify-between items-center my-9">
-            <div className="text-5xl font-bold">Mentor Edit</div>
-            <div
-              className="flex justify-center items-center w-28 h-9 bg-brand-gray-90 border-2 border-brand-gray-20 rounded cursor-pointer"
-              onClick={() => navigate(`/mentor-profile/${id}`)}
-            >
-              Cancel
-            </div>
-          </div>
-        </div>
-
-        {/* First Name */}
-        <div>
-          <div className="text-lg font-medium mb-3">First</div>
-          <input
-            className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-            id="first"
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-        </div>
-        {/* Last Name */}
-        <div>
-          <div className="text-lg font-medium mb-3">Last</div>
-          <input
-            className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-            id="last"
-            type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        </div>
-        {/* Phone Number */}
-        <div>
-          <div className="text-lg font-medium mb-3">Phone Number</div>
-          <input
-            className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-            id="first"
-            type="text"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-          />
-        </div>
-        {/* Email */}
-        <div>
-          <div className="text-lg font-medium mb-3">Email</div>
-          <input
-            className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-            id="last"
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        {/* Current Employment */}
-        <div>
-          <div className="text-lg font-medium mb-3">Current Employment</div>
-          <input
-            className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-            id="first"
-            type="text"
-            value={currEmployment}
-            onChange={(e) => setCurrEmployment(e.target.value)}
-          />
-        </div>
-        {/* Colleges */}
-        <div>
-          <div className="text-lg font-medium mb-3">Colleges</div>
-          <input
-            className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-            id="last"
-            type="text"
-            value={colleges}
-            onChange={(e) => setColleges(e.target.value)}
-          />
-        </div>
-      </div>
-      <div className="mx-24 mt-7 grid grid-cols-3 gap-5">
-        {/* Degree 1 */}
-        <div>
-          <div className="text-lg font-medium mb-3">Degrees</div>
-          <input
-            className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-            id="last"
-            type="text"
-            value={degree1}
-            onChange={(e) => setDegree1(e.target.value)}
-          />
-        </div>
-        {/* Major 1 */}
-        <div>
-          <div className="text-lg font-medium mb-3">Majors</div>
-          <input
-            className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-            id="first"
-            type="text"
-            value={major1}
-            onChange={(e) => setMajor1(e.target.value)}
-          />
-        </div>
-        {/* Degree 2 */}
-        <div className="col-start-1">
-          <input
-            className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-            id="last"
-            type="text"
-            value={degree2}
-            onChange={(e) => setDegree2(e.target.value)}
-          />
-        </div>
-        {/* Major 2 */}
-        <div className="flex items-end">
-          <input
-            className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-            id="last"
-            type="text"
-            value={major2}
-            onChange={(e) => setMajor2(e.target.value)}
-          />
-        </div>
-        {/* Degree 3 */}
-        <div className="col-start-1">
-          <input
-            className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-            id="last"
-            type="text"
-            value={degree3}
-            onChange={(e) => setDegree3(e.target.value)}
-          />
-        </div>
-        {/* Major 3 */}
-        <div className="flex items-end">
-          <input
-            className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-            id="last"
-            type="text"
-            value={major3}
-            onChange={(e) => setMajor3(e.target.value)}
-          />
-        </div>
-      </div>
-
-      <div className="mx-24 mt-5 grid grid-cols-3 gap-5">
-        {/* Sport */}
-        <div className="mt-4">
-          <div className="text-lg font-medium mb-3">Sport</div>
-          <input
-            className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-            id="first"
-            type="text"
-            value={sport1}
-            onChange={(e) => setSport1(e.target.value)}
-          />
-        </div>
-        {/* Position 1 */}
-        <div>
-          <div className="text-lg font-medium mb-3 mt-4">Position</div>
-          <input
-            className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-            id="last"
-            type="text"
-            value={position1}
-            onChange={(e) => setPosition1(e.target.value)}
-          />
-        </div>
-        {/* Highest Level */}
-        <div>
-          <div className="text-lg font-medium mb-3 mt-4">Highest Level</div>
-          <div className="relative inline-block text-left w-full">
-            <div>
-              <button
-                className="flex w-full h-9 justify-between gap-x-1.5 text-md font-medium rounded bg-white px-3 py-2 text-sm text-gray-700 border-black border-2 hover:bg-gray-50"
-                id="menu-button"
-                aria-expanded="true"
-                aria-haspopup="true"
-                onClick={() => {
-                  setShowHighestLevel(!showHighestLevel);
-                }}
-              >
-                {highestLevel}
-                <svg
-                  className="-mr-1 h-5 w-5 text-gray-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
+    <div>
+      {validID &&
+      (cookies.user_status === 2 || cookies.user_status === 3) &&
+      cookies.user_id === parseInt(id ? id : "") ? (
+        <div className="mb-10">
+          {/* Grid Wrapper */}
+          <div className="mx-24 grid grid-cols-3 gap-5">
+            {/* MY EDIT AND CANCEL */}
+            <div className="col-span-full">
+              <div className="flex justify-between items-center my-9">
+                <div className="text-5xl font-bold">Mentor Edit</div>
+                <div
+                  className="flex justify-center items-center w-28 h-9 bg-brand-gray-90 border-2 border-brand-gray-20 rounded cursor-pointer"
+                  onClick={() => navigate(`/mentor-profile/${id}`)}
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </button>
-            </div>
-            {showHighestLevel && (
-              <div
-                className="absolute right-0 z-10 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="menu-button"
-              >
-                <div className="py-1" role="none">
-                  <div
-                    className="text-gray-700 block px-4 py-2 text-sm"
-                    role="menuitem"
-                    id="menu-item-0"
-                    onClick={() => {
-                      setHighestLevel("D1");
-                      setShowHighestLevel(false);
-                    }}
-                  >
-                    D1
-                  </div>
-                  <div
-                    className="text-gray-700 block px-4 py-2 text-sm"
-                    role="menuitem"
-                    id="menu-item-0"
-                    onClick={() => {
-                      setHighestLevel("D2");
-                      setShowHighestLevel(false);
-                    }}
-                  >
-                    D2
-                  </div>
-                  <div
-                    className="text-gray-700 block px-4 py-2 text-sm"
-                    role="menuitem"
-                    id="menu-item-0"
-                    onClick={() => {
-                      setHighestLevel("D3");
-                      setShowHighestLevel(false);
-                    }}
-                  >
-                    D3
-                  </div>
+                  Cancel
                 </div>
               </div>
-            )}
-          </div>
-        </div>
+            </div>
 
-        {/* Sport 2 */}
-        <div className="col-start-1">
-          <input
-            className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-            id="first"
-            type="text"
-            value={sport2}
-            onChange={(e) => setSport2(e.target.value)}
-          />
-        </div>
-        {/* Position 2 */}
-        <div className="flex items-end">
-          <input
-            className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-            id="last"
-            type="text"
-            value={position2}
-            onChange={(e) => setPosition2(e.target.value)}
-          />
-        </div>
-      </div>
-
-      <div className="mx-24 grid grid-cols-3 gap-5">
-        {/* Interests */}
-        <div className="my-10">
-          <div className="text-lg font-medium mb-3">Interests</div>
-          <input
-            className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-            id="first"
-            type="text"
-            placeholder="Type and press enter to add"
-            value={inputInterest}
-            onChange={(e) => setInputInterest(e.target.value)}
-            onKeyDown={handleInterestKeypress}
-          />
-          <div className="gap-3 w-full flex mt-5 flex-wrap">
-            {arrInterest?.map((interest: string, idx: number) => {
-              return (
-                <EditStudentPill
-                  key={interest + idx}
-                  text={interest}
-                  closeHandler={removeInterest(idx)}
-                />
-              );
-            })}
+            {/* First Name */}
+            <div>
+              <div className="text-lg font-medium mb-3">First</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="first"
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </div>
+            {/* Last Name */}
+            <div>
+              <div className="text-lg font-medium mb-3">Last</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="last"
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </div>
+            {/* Phone Number */}
+            <div>
+              <div className="text-lg font-medium mb-3">Phone Number</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="first"
+                type="text"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
+            </div>
+            {/* Email */}
+            <div>
+              <div className="text-lg font-medium mb-3">Email</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="last"
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            {/* Current Employment */}
+            <div>
+              <div className="text-lg font-medium mb-3">Current Employment</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="first"
+                type="text"
+                value={currEmployment}
+                onChange={(e) => setCurrEmployment(e.target.value)}
+              />
+            </div>
+            {/* Colleges */}
+            <div>
+              <div className="text-lg font-medium mb-3">Colleges</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="last"
+                type="text"
+                value={colleges}
+                onChange={(e) => setColleges(e.target.value)}
+              />
+            </div>
           </div>
-          {/* Map each interest from an interests array */}
-        </div>
-        {/* Extracurricular */}
-        <div className="my-10">
-          <div className="text-lg font-medium mb-3">Extracurriculars</div>
-          <input
-            className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-            id="last"
-            type="text"
-            value={inputExtracurricular}
-            placeholder="Type and press enter to add"
-            onChange={(e) => setInputExtracurricular(e.target.value)}
-            onKeyDown={handleExtracurricularKeypress}
-          />
-          <div className="gap-3 w-full flex mt-5 flex-wrap">
-            {arrExtracurricular?.map((extracurricular: string, idx: number) => {
-              return (
-                <EditStudentPill
-                  key={extracurricular + idx}
-                  text={extracurricular}
-                  closeHandler={removeExtracurricular(idx)}
-                />
-              );
-            })}
+          <div className="mx-24 mt-7 grid grid-cols-3 gap-5">
+            {/* Degree 1 */}
+            <div>
+              <div className="text-lg font-medium mb-3">Degrees</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="last"
+                type="text"
+                value={degree1}
+                onChange={(e) => setDegree1(e.target.value)}
+              />
+            </div>
+            {/* Major 1 */}
+            <div>
+              <div className="text-lg font-medium mb-3">Majors</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="first"
+                type="text"
+                value={major1}
+                onChange={(e) => setMajor1(e.target.value)}
+              />
+            </div>
+            {/* Degree 2 */}
+            <div className="col-start-1">
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="last"
+                type="text"
+                value={degree2}
+                onChange={(e) => setDegree2(e.target.value)}
+              />
+            </div>
+            {/* Major 2 */}
+            <div className="flex items-end">
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="last"
+                type="text"
+                value={major2}
+                onChange={(e) => setMajor2(e.target.value)}
+              />
+            </div>
+            {/* Degree 3 */}
+            <div className="col-start-1">
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="last"
+                type="text"
+                value={degree3}
+                onChange={(e) => setDegree3(e.target.value)}
+              />
+            </div>
+            {/* Major 3 */}
+            <div className="flex items-end">
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="last"
+                type="text"
+                value={major3}
+                onChange={(e) => setMajor3(e.target.value)}
+              />
+            </div>
           </div>
-          {/* Map each extracurricular from an extracurriculars array */}
-        </div>
 
-        <div className="col-span-full mt-6 mb-32">
-          <div className="flex justify-end">
-            <div
-              className="flex justify-center items-center w-28 h-9 bg-brand-gray-20 border-2 border-brand-gray-20 rounded text-white hover:bg-brand-green-45 transition duration-300 ease-in-out cursor-pointer"
-              onClick={saveUserData}
-            >
-              Save
+          <div className="mx-24 mt-5 grid grid-cols-3 gap-5">
+            {/* Sport */}
+            <div className="mt-4">
+              <div className="text-lg font-medium mb-3">Sport</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="first"
+                type="text"
+                value={sport1}
+                onChange={(e) => setSport1(e.target.value)}
+              />
+            </div>
+            {/* Position 1 */}
+            <div>
+              <div className="text-lg font-medium mb-3 mt-4">Position</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="last"
+                type="text"
+                value={position1}
+                onChange={(e) => setPosition1(e.target.value)}
+              />
+            </div>
+            {/* Highest Level */}
+            <div>
+              <div className="text-lg font-medium mb-3 mt-4">Highest Level</div>
+              <div className="relative inline-block text-left w-full">
+                <div>
+                  <button
+                    className="flex w-full h-9 justify-between gap-x-1.5 text-md font-medium rounded bg-white px-3 py-2 text-sm text-gray-700 border-black border-2 hover:bg-gray-50"
+                    id="menu-button"
+                    aria-expanded="true"
+                    aria-haspopup="true"
+                    onClick={() => {
+                      setShowHighestLevel(!showHighestLevel);
+                    }}
+                  >
+                    {highestLevel}
+                    <svg
+                      className="-mr-1 h-5 w-5 text-gray-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                {showHighestLevel && (
+                  <div
+                    className="absolute right-0 z-10 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="menu-button"
+                  >
+                    <div className="py-1" role="none">
+                      <div
+                        className="text-gray-700 block px-4 py-2 text-sm"
+                        role="menuitem"
+                        id="menu-item-0"
+                        onClick={() => {
+                          setHighestLevel("D1");
+                          setShowHighestLevel(false);
+                        }}
+                      >
+                        D1
+                      </div>
+                      <div
+                        className="text-gray-700 block px-4 py-2 text-sm"
+                        role="menuitem"
+                        id="menu-item-0"
+                        onClick={() => {
+                          setHighestLevel("D2");
+                          setShowHighestLevel(false);
+                        }}
+                      >
+                        D2
+                      </div>
+                      <div
+                        className="text-gray-700 block px-4 py-2 text-sm"
+                        role="menuitem"
+                        id="menu-item-0"
+                        onClick={() => {
+                          setHighestLevel("D3");
+                          setShowHighestLevel(false);
+                        }}
+                      >
+                        D3
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Sport 2 */}
+            <div className="col-start-1">
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="first"
+                type="text"
+                value={sport2}
+                onChange={(e) => setSport2(e.target.value)}
+              />
+            </div>
+            {/* Position 2 */}
+            <div className="flex items-end">
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="last"
+                type="text"
+                value={position2}
+                onChange={(e) => setPosition2(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="mx-24 grid grid-cols-3 gap-5">
+            {/* Interests */}
+            <div className="my-10">
+              <div className="text-lg font-medium mb-3">Interests</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="first"
+                type="text"
+                placeholder="Type and press enter to add"
+                value={inputInterest}
+                onChange={(e) => setInputInterest(e.target.value)}
+                onKeyDown={handleInterestKeypress}
+              />
+              <div className="gap-3 w-full flex mt-5 flex-wrap">
+                {arrInterest?.map((interest: string, idx: number) => {
+                  return (
+                    <EditStudentPill
+                      key={interest + idx}
+                      text={interest}
+                      closeHandler={removeInterest(idx)}
+                    />
+                  );
+                })}
+              </div>
+              {/* Map each interest from an interests array */}
+            </div>
+            {/* Extracurricular */}
+            <div className="my-10">
+              <div className="text-lg font-medium mb-3">Extracurriculars</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="last"
+                type="text"
+                value={inputExtracurricular}
+                placeholder="Type and press enter to add"
+                onChange={(e) => setInputExtracurricular(e.target.value)}
+                onKeyDown={handleExtracurricularKeypress}
+              />
+              <div className="gap-3 w-full flex mt-5 flex-wrap">
+                {arrExtracurricular?.map(
+                  (extracurricular: string, idx: number) => {
+                    return (
+                      <EditStudentPill
+                        key={extracurricular + idx}
+                        text={extracurricular}
+                        closeHandler={removeExtracurricular(idx)}
+                      />
+                    );
+                  }
+                )}
+              </div>
+              {/* Map each extracurricular from an extracurriculars array */}
+            </div>
+
+            <div className="col-span-full mt-6 mb-32">
+              <div className="flex justify-end">
+                <div
+                  className="flex justify-center items-center w-28 h-9 bg-brand-gray-20 border-2 border-brand-gray-20 rounded text-white hover:bg-brand-green-45 transition duration-300 ease-in-out cursor-pointer"
+                  onClick={saveUserData}
+                >
+                  Save
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <NotFoundPage />
+      )}
     </div>
   );
 };
