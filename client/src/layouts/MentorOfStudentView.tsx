@@ -108,7 +108,7 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
   return (
     <div className="grid grid-cols-3 gap-4 m-auto mx-20 my-10 mb-32 font-circular-std leading-none">
       {/* Username/Grad year */}
-      <div className="col-span-2 order-1">
+      <div className="col-span-2 order-0">
         <div className="bg-brand-gray-20 rounded-t-md text-brand-white flex p-4 items-center">
           <div className="flex-col flex-grow">
             <div className="text-lg font-medium p-0 m-0">
@@ -123,7 +123,7 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
       </div>
 
       {/* Colleges */}
-      <div className=" rounded-md row-span-4 order-2 border-gray-400 border-2">
+      <div className=" rounded-md row-span-4 col-span-1 order-1 border-gray-400 border-2">
         <div className="p-4 ">
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-md mb-2">Colleges</h2>
@@ -153,6 +153,14 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
             onAdd={handleAdd}
           />
         </div>
+      </div>
+
+   
+      {/* Notes */}
+      <div className="border-gray-400 border-2 rounded-md">
+        <div className="w-full p-4">
+            <h2 className="text-md mb-2">Notes</h2>
+          </div>
       </div>
 
       {/* Personal */}
@@ -199,7 +207,7 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
           data={studentData.user_interests != null ? studentData.user_interests.split(",") : []}
         />
       </div>
-      <div className="grid-rows-2">
+      <div className="grid-rows-2 col-span-2">
         {/* Pursue My Purpose */}
         <div className=" border-gray-400 border-2 rounded-md min-h-[50px] col-span-2 order-7">
           <div className="w-full p-4">
