@@ -124,8 +124,11 @@ export const EditMentor = () => {
         setHighestLevel(mentorData.mentor_highest_sports_level);
         setArrInterest(mentorData.mentor_interests.split(","));
         setArrExtracurricular(mentorData.mentor_extracurriculars.split(","));
-        if (Object.keys(data).length === 0) setValidID(false);
-        else setValidID(true);
+        
+        if (Object.keys(data).length === 0) 
+          setValidID(false);
+        else 
+          setValidID(true);
       } catch (error) {
         console.error("Error fetching mentor data:", error);
         setValidID(false);
@@ -181,11 +184,13 @@ export const EditMentor = () => {
     };
   };
 
+  console.log("ID " + validID);
+  console.log("cookies " + cookies.user_status);
+
   return (
     <div>
       {validID &&
-      (cookies.user_status === 2 || cookies.user_status === 3) &&
-      cookies.user_id === parseInt(id ? id : "") ? (
+      (cookies.user_status === 2 || cookies.user_status === 3) ? (
         <div className="mb-10">
           {/* Grid Wrapper */}
           <div className="mx-24 grid grid-cols-3 gap-5">
