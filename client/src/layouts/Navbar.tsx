@@ -13,7 +13,7 @@ export function Navbar() {
   - User state 2 = mentor
   - User state 3 = admin
     */
-  const [cookies, setCookies] = useCookies(['user_id', 'user_status', 'user_name']);
+  const [cookies, setCookies, removeCookie] = useCookies(['user_id', 'user_status', 'user_name']);
 
   return (
     // added padding for testing purposes: should be removed once Nav is integrated into other components
@@ -42,9 +42,9 @@ export function Navbar() {
         <div 
           className="hover:text-brand-green-45 text-sm" 
           onClick={()=>{
-            setCookies("user_id", null);
-            setCookies("user_status",null);
-            setCookies("user_name",null);
+            removeCookie("user_id", {path: "/"});
+            removeCookie("user_status", {path: "/"});
+            removeCookie("user_name", {path: "/"});
           }}>
             <a href='/'>Log Out</a>
         </div>
