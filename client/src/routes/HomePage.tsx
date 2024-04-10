@@ -199,6 +199,8 @@ const HomePage = () => {
       setCookies("user_id", status[0], {path: "/"});
       setCookies("user_status", status[1], {path: "/"});
       setCookies("user_name", status[2], {path: "/"});
+      setEmail("");
+      setPassword("");
     } else {
       toast("You are not authorized.", {
         className: "border-l-8 border-semantic-warning",
