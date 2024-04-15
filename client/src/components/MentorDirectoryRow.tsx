@@ -27,11 +27,11 @@ const MentorDirectoryRow = ({ name, sport, major, id }: MentorDirectoryRowProps)
 
   return (
     <tr
-      className='h-12 border-b border-black cursor-pointer'
-      onClick={() => { navigate('/mentor-profile/' + id) }}
-      key={id}
+        className="h-12"
+        onClick={() => { navigate('/mentor-profile/' + id) }}
+        key={id}
     >
-      <td className="pl-16">
+            <td className="p-4 border-b border-black">
                 <Typography
                     variant="small"
                     color="blue-gray"
@@ -40,7 +40,7 @@ const MentorDirectoryRow = ({ name, sport, major, id }: MentorDirectoryRowProps)
                     {name}
                 </Typography>
             </td>
-            <td className="px-8">
+            <td className="p-4 border-b border-black">
                 <Typography
                     variant="small"
                     color="blue-gray"
@@ -49,7 +49,7 @@ const MentorDirectoryRow = ({ name, sport, major, id }: MentorDirectoryRowProps)
                     {sportCell}
                 </Typography>
             </td>
-            <td className="pr-16">
+            <td className="p-4 border-b border-black">
                 <Typography
                     variant="small"
                     color="blue-gray"

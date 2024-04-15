@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import MentorDirectoryRow from "../components/MentorDirectoryRow";
-import {Typography} from "@material-tailwind/react";
+import {Typography, Card, Button, Input} from "@material-tailwind/react";
 
 const MentorDatabase = () => {
   // table data
@@ -58,203 +58,193 @@ const MentorDatabase = () => {
   }, [page, fetchApprovedMentors]);
 
   return (
-    <div>
-      {/* View Wrapper */}
-      <div className="flex mx-20 mt-16 gap-2">
-        {/* Table Wrapper */}
-        <div className="w-3/4">
-          <div className='flex items-center justify-between'>
-            <div className="font-bold text-5xl font-grotesk">
-              Find a Mentor
-            </div>
-            {cookies?.user_status !== 1 && <div onClick={() => navigate(`/add-mentor`)} className="w-30 h-9 cursor-pointer bg-brand-gray-20 text-white font-medium px-8 py-[5px] rounded">
-              Add Profile
-            </div>}
-          </div>
-          <table className="mt-16 w-full px-20 table-fixed font-circular-std">
-            <thead>
-              <tr className="border-y border-black">
-                <th className="text-left py-2 pl-16 font-semibold">
-                  <Typography
-                  variant="small"
-                  color="black"
-                  className="font-semibold leading-none opacity-70"
+    <div className="h-screen w-screen flex flex-col">
+        <div className="flex mx-0 mt-16 w-screen">
+            <div className="flex-grow ml-[100px]"> 
+              <div className="pb-16 pt-[19px] pr-5 flex items-center justify-between">
+                <div className="font-bold text-5xl">
+                    Find a Mentor
+                </div>
+              </div>
+              <Card shadow={false} className="h-full w-full pr-5">
+                <table className="table-auto text-left rounded-none">
+                  <thead>
+                    <tr className="h-12">
+                    <th className="border-b border-black p-4 border-t">
+                        <Typography
+                        variant="small"
+                        color="black"
+                        className="font-semibold leading-none opacity-70"
+                        >
+                          Mentor Name              
+                        </Typography>
+                      </th>
+                      <th className="border-b border-black p-4 border-t">
+                        <Typography
+                          variant="small"
+                          color="black"
+                          className="font-semibold leading-none opacity-70"
+                          >
+                            Sport              
+                        </Typography>                
+                      </th>
+                      <th className="border-b border-black p-4 border-t">
+                        <Typography
+                          variant="small"
+                          color="black"
+                          className="font-semibold leading-none opacity-70"
+                          >
+                            Major              
+                        </Typography>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {mentors.map((mentor) => {
+                      return (
+                        <MentorDirectoryRow
+                          name={
+                            mentor?.mentor_firstname +
+                            " " +
+                            mentor?.mentor_lastname
+                          }
+                          major={[mentor?.mentor_major1, mentor?.mentor_major2, mentor?.mentor_major3]}
+                          sport={[mentor?.mentor_sport1, mentor?.mentor_sport2]}
+                          id={mentor?.mentor_id}
+                        />
+                      );
+                    })}
+                  </tbody>
+                </table>
+                <div className="flex justify-start items-center gap-2 mt-16">
+                  <button
+                      disabled={page === 1 || totalPages === 0}
+                      className="relative h-8 max-h-[24px] w-8 max-w-[24px] select-none rounded-lg border border-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                      onClick={() => {
+                          setPage((p) => {
+                              return p - 1;
+                          });
+                      }}
                   >
-                    Mentor Name              
-                  </Typography>
-                </th>
-                <th className="text-left py-2 px-8 font-semibold">
-                  <Typography
-                    variant="small"
-                    color="black"
-                    className="font-semibold leading-none opacity-70"
-                    >
-                      Sport              
-                  </Typography>                
-                </th>
-                <th className="text-left py-2 pr-16 font-semibold">
-                  <Typography
-                    variant="small"
-                    color="black"
-                    className="font-semibold leading-none opacity-70"
-                    >
-                      Major              
-                  </Typography>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {mentors.map((mentor) => {
-                return (
-                  <MentorDirectoryRow
-                    name={
-                      mentor?.mentor_firstname +
-                      " " +
-                      mentor?.mentor_lastname
-                    }
-                    major={[mentor?.mentor_major1, mentor?.mentor_major2, mentor?.mentor_major3]}
-                    sport={[mentor?.mentor_sport1, mentor?.mentor_sport2]}
-                    id={mentor?.mentor_id}
-                  />
-                );
-              })}
-            </tbody>
-          </table>
-          <div className="flex justify-start items-center gap-2 mt-16">
-            <button
-              disabled={page === 1 || totalPages === 0}
-              className="relative h-8 max-h-[24px] w-8 max-w-[24px] select-none rounded-lg border border-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-              onClick={() => {
-                setPage((p) => {
-                  return p - 1;
-                });
-              }}
-            >
-              <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                  className="w-4 h-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-                  ></path>
-                </svg>
-              </span>
-            </button>
-            <span className="text-[#577347] text-[12px] font-circular-std">
-              Page {page} of {totalPages}
-            </span>
-            <button
-              disabled={page === totalPages || totalPages === 0}
-              className="relative h-8 max-h-[24px] w-8 max-w-[24px] select-none rounded-lg border border-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-              type="button"
-              onClick={() => {
-                setPage((p) => {
-                  return p + 1;
-                });
-              }}
-            >
-              <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                  className="w-4 h-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                  ></path>
-                </svg>
-              </span>
-            </button>
+                      <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                          <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth="2"
+                              stroke="currentColor"
+                              aria-hidden="true"
+                              className="w-4 h-4"
+                          >
+                              <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                              ></path>
+                          </svg>
+                      </span>
+                  </button>
+                  <span className="text-[#577347] text-[12px] font-circular-std">
+                      Page {page} of {totalPages}
+                  </span>
+                  <button
+                      disabled={page === totalPages || totalPages === 0}
+                      className="relative h-8 max-h-[24px] w-8 max-w-[24px] select-none rounded-lg border border-gray-900 text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:opacity-75 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                      type="button"
+                      onClick={() => {
+                          setPage((p) => {
+                              return p + 1;
+                          });
+                      }}
+                  >
+                      <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                          <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth="2"
+                              stroke="currentColor"
+                              aria-hidden="true"
+                              className="w-4 h-4"
+                          >
+                              <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                              ></path>
+                          </svg>
+                      </span>
+                  </button>
+                </div>
+              </Card>
+            </div>
+            <div className="mr-[100px] pl-[100px]">
+              <div className="text-2xl font-bold">Search & Filter</div>
+              <div className="flex items-center place-content-between my-2">
+                  <div>Name</div>
+                  <div className="w-40">
+                      <Input
+                          size="lg"
+                          value={displayName}
+                          onChange={(e) => setDisplayName(e.target.value)}
+                          crossOrigin={undefined}
+                      />
+                  </div>
+              </div>
+              <div className="flex items-center place-content-between my-2">
+                  <div>Sport</div>
+                  <div className="w-40">
+                      <Input
+                          size="lg"
+                          value={displaySport}
+                          onChange={(e) =>
+                              setDisplaySport(e.target.value)
+                          }
+                          crossOrigin={undefined}
+                      />
+                  </div>
+              </div>
+              <div className="flex items-center place-content-between my-2">
+                  <div>Major</div>
+                  <div className="w-40">
+                      <Input
+                          size="lg"
+                          value={displayMajor}
+                          onChange={(e) =>
+                              setDisplayMajor(e.target.value)
+                          }
+                          crossOrigin={undefined}
+                      />
+                  </div>
+              </div>
+              <div className="flex gap-4 w-full">
+                  <Button
+                      className="w-full"
+                      onClick={() => {
+                          setFilterName(displayName);
+                          setFilterSport(displaySport);
+                          setFilterMajor(displayMajor);
+                          setPage(1);
+                      }}
+                  >
+                      Search
+                  </Button>
+                  <Button
+                      variant="outlined"
+                      className="w-full"
+                      onClick={() => {
+                          setDisplayName("");
+                          setDisplayMajor("");
+                          setDisplaySport("");
+                      }}
+                  >
+                      Clear
+                  </Button>
+              </div>
           </div>
         </div>
-
-        {/* Search Component */}
-        <div className="w-1/4 pl-2">
-          <div className="font-bold text-2xl font-grotesk">
-            Search & Filter
-          </div>
-          <div className="flex pt-5 items-center">
-            <div className="w-1/3  text-left font-normal">Name</div>
-            <input
-              value={displayName}
-              onChange={(e) => {
-                setDisplayName(e.target.value);
-              }}
-              className="border-2 border-black rounded w-2/3 h-9"
-              type="text"
-            />
-          </div>
-          <div className="flex pt-5 items-center">
-            <div className="w-1/3  text-left font-normal">
-              Major
-            </div>
-            <input
-              value={displayMajor}
-              onChange={(e) => {
-                setDisplayMajor(e.target.value);
-              }}
-              className="border-2 border-black rounded w-2/3 h-9"
-              type="text"
-            />
-          </div>
-          <div className="flex pt-5 pb-3 items-center">
-            <div className="w-1/3  text-left font-normal">
-              Sport
-            </div>
-            <input
-              value={displaySport}
-              onChange={(e) => {
-                setDisplaySport(e.target.value);
-              }}
-              className="border-2 border-black rounded w-2/3 h-9"
-              type="text"
-            />
-          </div>
-          <div className="flex items-center justify-center mt-3 gap-4">
-            <div
-              onClick={() => {
-                setFilterName(displayName);
-                setFilterSport(displaySport);
-                setFilterMajor(displayMajor);
-                setPage(1);
-              }}
-              className="cursor-pointer bg-brand-gray-20 border-2 border-brand-gray-20 text-white font-medium px-8 py-[5px] mx-3 rounded"
-            >
-              Search
-            </div>
-            <div
-              onClick={() => {
-                setDisplayName("");
-                setDisplaySport("");
-                setDisplayMajor("");
-                setFilterName("");
-                setFilterSport("");
-                setFilterMajor("");
-                setPage(1);
-              }}
-              className="cursor-pointer bg-brand-gray-90 border-2 border-brand-gray-20 font-medium px-8 py-[5px] rounded"
-            >
-              Clear
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-  );
+);
 };
 
 export default MentorDatabase;
