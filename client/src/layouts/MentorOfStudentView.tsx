@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import ProfileBox from "../components/ProfileBox";
 import CollegeBox from "../components/CollegeBox";
-import { studentData, collegeAssignments } from "../routes/StudentProfile";
+import {collegeAssignments, studentData} from "../routes/StudentProfile";
 import Pencil from "../components/Pencil";
 import AddCollegeModal from "../layouts/AddCollegeModal";
 
@@ -27,7 +27,7 @@ export function shouldDisplayTitle(key: keyof typeof studentData, studentData: a
 export function renderStudentData(key: keyof typeof studentData, studentData: any) {
   const isSocialKey = key === 'user_facebook' || key === 'user_instagram';
   const isContactKey = key === 'user_email' || key === 'user_phone';
-  if (key === 'user_gpa' && typeof studentData[key] !== 'undefined') {
+  if (key === 'user_gpa' && typeof studentData[key] !== 'undefined' && studentData[key] !== null) {
     return studentData[key].toFixed(1);
   } else if (key === 'user_ncaa_registered') {
     return studentData[key] ? 'Yes' : 'No';
@@ -39,6 +39,7 @@ export function renderStudentData(key: keyof typeof studentData, studentData: an
     return studentData[key] ? studentData[key] : null;
   }
 }
+
 const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
   studentData,
   collegeAssignments,
@@ -68,42 +69,38 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
     user_facebook: "Facebook",
     user_instagram: "Instagram",
   };
-  
+
   const personalInfoKeys = ["user_phone", "user_email", "user_facebook", "user_instagram"] as Array<keyof typeof studentData>;
 
   const sports: string[] = [
     ...(studentData.user_sport1
       ? [
-          `${capFirstLetter(studentData.user_sport1)}/${capFirstLetter(
-            studentData.user_sport1_role
-          )}`,
-        ]
+        `${capFirstLetter(studentData.user_sport1)}/${capFirstLetter(
+          studentData.user_sport1_role
+        )}`,
+      ]
       : []),
     ...(studentData.user_sport2
       ? [
-          `${capFirstLetter(studentData.user_sport2)}/${capFirstLetter(
-            studentData.user_sport2_role
-          )}`,
-        ]
+        `${capFirstLetter(studentData.user_sport2)}/${capFirstLetter(
+          studentData.user_sport2_role
+        )}`,
+      ]
       : []),
   ];
 
   // TO DO: major naming?
-  const majors: string[] = [
+  const majors = [
     studentData.user_potential_major
       ? capFirstLetter(studentData.user_potential_major)
-      : "",
+      : null,
     studentData.user_alt_major1
       ? capFirstLetter(studentData.user_alt_major1)
-      : "",
+      : null,
     studentData.user_alt_major2
       ? capFirstLetter(studentData.user_alt_major2)
-      : "",
-  ];
-
-  
-  
-  
+      : null,
+  ].filter(Boolean) as string[];
 
   return (
     <div className="grid grid-cols-3 gap-4 m-auto mx-20 my-10 mb-32 font-circular-std leading-none">
@@ -128,7 +125,7 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-md mb-2">Colleges</h2>
             <div className="px-1 pb-1">
-              <Pencil fill="#B3B3B3" onClick={openModal} />
+              <Pencil fill="#B3B3B3" onClick={openModal}/>
             </div>
           </div>
           <div>
@@ -157,31 +154,31 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
 
       {/* Personal */}
       {(studentData.user_show_socials) && (
-    <div className='border-gray-400 border-2 rounded-md col-span-2 order-3'>
-      <div className="w-full p-4">
-        <h2 className="text-md mb-4">Personal</h2>
-        <div className="grid grid-cols-2 gap-y-4 justify-between w-full">
-        {personalInfoKeys.map((key) => (
-          <React.Fragment key={key}>
-            {/* Only display title when appropriate */}
-            {shouldDisplayTitle(key, studentData) && (
-              <div>{personalTitles[key]}</div>
-            )}
-            {renderStudentData(key, studentData) ? 
-              <div className="text-right">{renderStudentData(key, studentData)}</div> : ''}
-          </React.Fragment>
-        ))}
-        </div>
-      </div>
-    </div>)}
+        <div className='border-gray-400 border-2 rounded-md col-span-2 order-3'>
+          <div className="w-full p-4">
+            <h2 className="text-md mb-4">Personal</h2>
+            <div className="grid grid-cols-2 gap-y-4 justify-between w-full">
+              {personalInfoKeys.map((key) => (
+                <React.Fragment key={key}>
+                  {/* Only display title when appropriate */}
+                  {shouldDisplayTitle(key, studentData) && (
+                    <div>{personalTitles[key]}</div>
+                  )}
+                  {renderStudentData(key, studentData) ?
+                    <div className="text-right">{renderStudentData(key, studentData)}</div> : ''}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        </div>)}
       {/* Sport */}
       <div className="order-5 border-gray-400 border-2 rounded-md ">
-        <ProfileBox type="Sport" data={sports} />
+        <ProfileBox type="Sport" data={sports}/>
       </div>
 
       {/* Major */}
       <div className="order-5 border-gray-400 border-2 rounded-md ">
-        <ProfileBox type="Major" data={majors} />
+        <ProfileBox type="Major" data={majors}/>
       </div>
 
       {/* Extracurriculars */}
