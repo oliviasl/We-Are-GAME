@@ -213,7 +213,7 @@ const MentorDatabase = () => {
                 setFilterMajor(displayMajor);
                 setPage(1);
               }}
-              className="cursor-pointer bg-brand-gray-20 border-2 border-brand-gray-20 text-white font-medium px-8 py-[5px] mx-3 rounded"
+              className="cursor-pointer bg-brand-gray-20 border-2 border-brand-gray-20 hover:bg-semantic-success text-white font-medium px-8 py-[5px] mx-3 rounded"
             >
               Search
             </div>
