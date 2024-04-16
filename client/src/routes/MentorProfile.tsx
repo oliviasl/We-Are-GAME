@@ -11,8 +11,11 @@ export interface mentorData {
     mentor_colleges: string;
     mentor_degrees: string;
     mentor_major1: string;
+    mentor_degree1: string;
     mentor_major2: string;
+    mentor_degree2: string;
     mentor_major3: string;
+    mentor_degree3: string;
     mentor_curr_employment: string;
     mentor_highest_sports_level: string;
     mentor_interests: string;
@@ -21,10 +24,6 @@ export interface mentorData {
     mentor_sport1_role: string;
     mentor_sport2: string;
     mentor_sport2_role: string;
-    mentor_facebook: string;
-    mentor_instagram: string;
-    mentor_show_socials: boolean;
-
 }
 
 
