@@ -149,7 +149,8 @@ CREATE TABLE IF NOT EXISTS mentors
     mentor_sport1 VARCHAR,
     mentor_sport1_role VARCHAR,
     mentor_sport2 VARCHAR,
-    mentor_sport2_role VARCHAR
+    mentor_sport2_role VARCHAR,
+    mentor_show_socials BOOLEAN
 );
 
 INSERT INTO colleges (
@@ -335,15 +336,19 @@ INSERT INTO mentors (
     mentor_sport1,
     mentor_sport1_role,
     mentor_sport2,
-    mentor_sport2_role
+    mentor_sport2_role,
+    mentor_facebook,
+    mentor_instagram,
+    mentor_show_socials
 )
-VALUES 
-    ('Bob', 'Smith', 'bobsmith@example.com', '111-111-1111', 'USC', 'Computer Science', 'Bachelors', 'Design', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'football', 'quarterback', 'volleyball', 'setter'),
-    ('Bobby', 'Smith', 'bobbysmith@example.com', '111-111-1111', 'USC', 'Computer Science', 'Bachelors', 'Design', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'tennis', 'quarterback', 'soccer', 'setter'),
-    ('Heather', 'Liu', 'heatherliu@example.com', '111-111-1111', 'USC', 'Math', 'Bachelors', 'Design', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'badminton', 'quarterback', 'basketball', 'setter'),
-    ('Icesha', 'Sanders', 'iceshasanders@example.com', '111-111-1111', 'USC', 'Computer Science', 'Bachelors', 'Math', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'soccer', 'quarterback', 'volleyball', 'setter'),
-    ('Vincent', 'Hang', 'vincenthang@example.com', '111-111-1111', 'USC', 'Chemistry', 'Bachelors', 'Design', 'Bachelors', 'Math', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'football', 'quarterback', 'volleyball', 'setter'),
-    ('Angel', 'Liu', 'angelliu@example.com', '111-111-1111', 'USC', 'Computer Science', 'Bachelors', 'Design', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'tennis', 'quarterback', 'soccer', 'setter'),
-    ('Vincent', 'Jung', 'vincentjung@example.com', '111-111-1111', 'USC', 'English', 'Bachelors', 'Design', 'Bachelors', 'Chemistry', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'football', 'quarterback', 'basketball', 'setter');
+VALUES
+    ('Bob', 'Smith', 'bobsmith@example.com', '111-111-1111', 'USC', 'Computer Science', 'Bachelors', 'Design', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'football', 'quarterback', 'volleyball', 'setter', 'facebook', 'instagram', true),
+    ('Bobby', 'Smith', 'bobbysmith@example.com', '111-111-1111', 'USC', 'Computer Science', 'Bachelors', 'Design', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'tennis', 'quarterback', 'soccer', 'setter', 'facebook', 'instagram', true),
+    ('Heather', 'Liu', 'heatherliu@example.com', '111-111-1111', 'USC', 'Math', 'Bachelors', 'Design', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'badminton', 'quarterback', 'basketball', 'setter', 'facebook', 'instagram', true),
+    ('Icesha', 'Sanders', 'iceshasanders@example.com', '111-111-1111', 'USC', 'Computer Science', 'Bachelors', 'Math', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'soccer', 'quarterback', 'volleyball', 'setter', 'facebook', 'instagram', true),
+    ('Vincent', 'Hang', 'vincenthang@example.com', '111-111-1111', 'USC', 'Chemistry', 'Bachelors', 'Design', 'Bachelors', 'Math', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'football', 'quarterback', 'volleyball', 'setter', 'facebook', 'instagram', true),
+    ('Angel', 'Liu', 'angelliu@example.com', '111-111-1111', 'USC', 'Computer Science', 'Bachelors', 'Design', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'tennis', 'quarterback', 'soccer', 'setter', 'facebook', 'instagram', true),
+    ('Vincent', 'Jung', 'vincentjung@example.com', '111-111-1111', 'USC', 'English', 'Bachelors', 'Design', 'Bachelors', 'Chemistry', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'football', 'quarterback', 'basketball', 'setter', 'facebook', 'instagram', true);
+
 
 
