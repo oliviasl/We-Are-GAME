@@ -39,7 +39,7 @@ const BatchAutofillModal = ({ isOpen, setIsOpen }: BatchAutofillModalProps) => {
             toast("Fail.");
         }
         setIsLoading(false);
-
+        setIsOpen(false);
     };
 
     return (
