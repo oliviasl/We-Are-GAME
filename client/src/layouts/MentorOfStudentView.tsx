@@ -4,6 +4,7 @@ import CollegeBox from "../components/CollegeBox";
 import { studentData, collegeAssignments } from "../routes/StudentProfile";
 import Pencil from "../components/Pencil";
 import AddCollegeModal from "../layouts/AddCollegeModal";
+import NotFoundPage from "../routes/NotFoundPage";
 
 interface MentorOfStudentViewProps {
   studentData: studentData;
@@ -22,7 +23,6 @@ export function shouldDisplayTitle(key: keyof typeof studentData, studentData: a
   // Now also checks if it's a contact key, applying the same logic
   return ((isContactKey || isSocialKey) && showSocials) || (!isSocialKey && !isContactKey);
 }
-
 
 export function renderStudentData(key: keyof typeof studentData, studentData: any) {
   const isSocialKey = key === 'user_facebook' || key === 'user_instagram';
@@ -68,23 +68,23 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
     user_facebook: "Facebook",
     user_instagram: "Instagram",
   };
-  
+
   const personalInfoKeys = ["user_phone", "user_email", "user_facebook", "user_instagram"] as Array<keyof typeof studentData>;
 
   const sports: string[] = [
     ...(studentData.user_sport1
       ? [
-          `${capFirstLetter(studentData.user_sport1)}/${capFirstLetter(
-            studentData.user_sport1_role
-          )}`,
-        ]
+        `${capFirstLetter(studentData.user_sport1)}/${capFirstLetter(
+          studentData.user_sport1_role
+        )}`,
+      ]
       : []),
     ...(studentData.user_sport2
       ? [
-          `${capFirstLetter(studentData.user_sport2)}/${capFirstLetter(
-            studentData.user_sport2_role
-          )}`,
-        ]
+        `${capFirstLetter(studentData.user_sport2)}/${capFirstLetter(
+          studentData.user_sport2_role
+        )}`,
+      ]
       : []),
   ];
 
@@ -101,119 +101,125 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
       : "",
   ];
 
-  
-  
-  
+
+
+
 
   return (
-    <div className="grid grid-cols-3 gap-4 m-auto mx-20 my-10 mb-32 font-circular-std leading-none">
-      {/* Username/Grad year */}
-      <div className="col-span-2 order-1">
-        <div className="bg-brand-gray-20 rounded-t-md text-brand-white flex p-4 items-center">
-          <div className="flex-col flex-grow">
-            <div className="text-lg font-medium p-0 m-0">
-              {studentData.user_firstname + " " + studentData.user_lastname}
-            </div>
-            {/* TO DO: how to handle? */}
-            <div className="text-sm font-normal">
-              {studentData.user_grad_year}
+    <div>
+      {studentData.user_id === 1 || studentData.user_id === 2 ? (
+        <NotFoundPage />
+      ) : (
+        <div className="grid grid-cols-3 gap-4 m-auto mx-20 my-10 mb-32 font-circular-std leading-none">
+          {/* Username/Grad year */}
+          <div className="col-span-2 order-1">
+            <div className="bg-brand-gray-20 rounded-t-md text-brand-white flex p-4 items-center">
+              <div className="flex-col flex-grow">
+                <div className="text-lg font-medium p-0 m-0">
+                  {studentData.user_firstname + " " + studentData.user_lastname}
+                </div>
+                {/* TO DO: how to handle? */}
+                <div className="text-sm font-normal">
+                  {studentData.user_grad_year}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Colleges */}
-      <div className=" rounded-md row-span-4 order-2 border-gray-400 border-2">
-        <div className="p-4 ">
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-md mb-2">Colleges</h2>
-            <div className="px-1 pb-1">
-              <Pencil fill="#B3B3B3" onClick={openModal} />
-            </div>
-          </div>
-          <div>
-            {collegeAssignments.map((assignment) => (
-              <CollegeBox
-                key={assignment.college_id}
-                name={assignment.college_name}
-                college_id={assignment.college_id}
-                onDelete={() => handleDelete(assignment.college_id)}
+          {/* Colleges */}
+          <div className=" rounded-md row-span-4 order-2 border-gray-400 border-2">
+            <div className="p-4 ">
+              <div className="flex justify-between items-center mb-2">
+                <h2 className="text-md mb-2">Colleges</h2>
+                <div className="px-1 pb-1">
+                  <Pencil fill="#B3B3B3" onClick={openModal} />
+                </div>
+              </div>
+              <div>
+                {collegeAssignments.map((assignment) => (
+                  <CollegeBox
+                    key={assignment.college_id}
+                    name={assignment.college_name}
+                    college_id={assignment.college_id}
+                    onDelete={() => handleDelete(assignment.college_id)}
+                  />
+                ))}
+              </div>
+              <button
+                className="border-4 border-gray-400 border-dashed rounded-md text-gray-400 text-3xl text-center p-2 py-1 w-full transition duration-300 ease-in-out hover:bg-brand-blue-95 hover:border-brand-blue-95 hover:text-white focus:outline-none"
+                onClick={openModal}
+              >
+                +
+              </button>
+              <AddCollegeModal
+                isOpen={modalOpen}
+                onClose={closeModal}
+                onAdd={handleAdd}
               />
-            ))}
+            </div>
           </div>
-          <button
-            className="border-4 border-gray-400 border-dashed rounded-md text-gray-400 text-3xl text-center p-2 py-1 w-full transition duration-300 ease-in-out hover:bg-brand-blue-95 hover:border-brand-blue-95 hover:text-white focus:outline-none"
-            onClick={openModal}
-          >
-            +
-          </button>
-          <AddCollegeModal
-            isOpen={modalOpen}
-            onClose={closeModal}
-            onAdd={handleAdd}
-          />
+
+          {/* Personal */}
+          {(studentData.user_show_socials) && (
+            <div className='border-gray-400 border-2 rounded-md col-span-2 order-3'>
+              <div className="w-full p-4">
+                <h2 className="text-md mb-4">Personal</h2>
+                <div className="grid grid-cols-2 gap-y-4 justify-between w-full">
+                  {personalInfoKeys.map((key) => (
+                    <React.Fragment key={key}>
+                      {/* Only display title when appropriate */}
+                      {shouldDisplayTitle(key, studentData) && (
+                        <div>{personalTitles[key]}</div>
+                      )}
+                      {renderStudentData(key, studentData) ?
+                        <div className="text-right">{renderStudentData(key, studentData)}</div> : ''}
+                    </React.Fragment>
+                  ))}
+                </div>
+              </div>
+            </div>)}
+          {/* Sport */}
+          <div className="order-5 border-gray-400 border-2 rounded-md ">
+            <ProfileBox type="Sport" data={sports} />
+          </div>
+
+          {/* Major */}
+          <div className="order-5 border-gray-400 border-2 rounded-md ">
+            <ProfileBox type="Major" data={majors} />
+          </div>
+
+          {/* Extracurriculars */}
+          <div className="order-5 border-gray-400 border-2 rounded-md ">
+            <ProfileBox
+              type="Extracurriculars"
+              data={studentData.user_extracurriculars != null ? studentData.user_extracurriculars.split(",") : []}
+            />
+          </div>
+
+          {/* Special Interests */}
+          <div className="order-5 border-gray-400 border-2 rounded-md ">
+            <ProfileBox
+              type="Special Interests"
+              data={studentData.user_interests != null ? studentData.user_interests.split(",") : []}
+            />
+          </div>
+
+          {/* Pursue My Purpose */}
+          <div className=" border-gray-400 border-2 rounded-md min-h-[50px] col-span-2 order-7">
+            <div className="w-full p-4">
+              <h2 className="text-md mb-2">Pursue My Purpose</h2>
+              <div>{studentData.user_purpose}</div>
+            </div>
+          </div>
+          {/* Goal */}
+          <div className=" border-gray-400 border-2 rounded-md min-h-[50px] col-span-2 order-9">
+            <div className="w-full m-4">
+              <h2 className="text-md mb-2">Goal</h2>
+              <div>{studentData.user_goal}</div>
+            </div>
+          </div>
         </div>
-      </div>
-
-      {/* Personal */}
-      {(studentData.user_show_socials) && (
-    <div className='border-gray-400 border-2 rounded-md col-span-2 order-3'>
-      <div className="w-full p-4">
-        <h2 className="text-md mb-4">Personal</h2>
-        <div className="grid grid-cols-2 gap-y-4 justify-between w-full">
-        {personalInfoKeys.map((key) => (
-          <React.Fragment key={key}>
-            {/* Only display title when appropriate */}
-            {shouldDisplayTitle(key, studentData) && (
-              <div>{personalTitles[key]}</div>
-            )}
-            {renderStudentData(key, studentData) ? 
-              <div className="text-right">{renderStudentData(key, studentData)}</div> : ''}
-          </React.Fragment>
-        ))}
-        </div>
-      </div>
-    </div>)}
-      {/* Sport */}
-      <div className="order-5 border-gray-400 border-2 rounded-md ">
-        <ProfileBox type="Sport" data={sports} />
-      </div>
-
-      {/* Major */}
-      <div className="order-5 border-gray-400 border-2 rounded-md ">
-        <ProfileBox type="Major" data={majors} />
-      </div>
-
-      {/* Extracurriculars */}
-      <div className="order-5 border-gray-400 border-2 rounded-md ">
-        <ProfileBox
-          type="Extracurriculars"
-          data={studentData.user_extracurriculars != null ? studentData.user_extracurriculars.split(",") : []}
-        />
-      </div>
-
-      {/* Special Interests */}
-      <div className="order-5 border-gray-400 border-2 rounded-md ">
-        <ProfileBox
-          type="Special Interests"
-          data={studentData.user_interests != null ? studentData.user_interests.split(",") : []}
-        />
-      </div>
-
-      {/* Pursue My Purpose */}
-      <div className=" border-gray-400 border-2 rounded-md min-h-[50px] col-span-2 order-7">
-        <div className="w-full p-4">
-          <h2 className="text-md mb-2">Pursue My Purpose</h2>
-          <div>{studentData.user_purpose}</div>
-        </div>
-      </div>
-      {/* Goal */}
-      <div className=" border-gray-400 border-2 rounded-md min-h-[50px] col-span-2 order-9">
-        <div className="w-full m-4">
-          <h2 className="text-md mb-2">Goal</h2>
-          <div>{studentData.user_goal}</div>
-        </div>
-      </div>
+      )}
     </div>
   );
 };

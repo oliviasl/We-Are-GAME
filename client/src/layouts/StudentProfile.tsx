@@ -108,6 +108,8 @@ const StudentProfile: React.FC<StudentProfileProps> = ({
       : "",
   ];
 
+  console.log(studentData.user_id);
+
   return (
     <div>
       {studentData.user_id === 1 || studentData.user_id === 2 ? (
