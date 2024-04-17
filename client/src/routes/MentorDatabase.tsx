@@ -66,7 +66,7 @@ const MentorDatabase = () => {
             <div className="font-bold text-5xl font-grotesk">
               Find a Mentor
             </div>
-            {cookies?.user_status !== 1 && <div onClick={() => navigate(`/add-mentor`)} className="w-30 h-9 cursor-pointer bg-brand-gray-20 text-white font-medium px-8 py-[5px] rounded">
+            {cookies?.user_status !== 1 && <div onClick={() => navigate(`/add-mentor`)} className="w-30 h-9 cursor-pointer bg-brand-gray-20 text-white border-2 border-brand-gray-20 hover:bg-semantic-success font-medium px-8 py-[5px] rounded">
               Add Profile
             </div>}
           </div>
