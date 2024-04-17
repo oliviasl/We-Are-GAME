@@ -10,7 +10,7 @@ type StudentDirectoryRowProps = {
 };
 
 function formatArray(array: string[]) {
-    const cell = array.filter((str) => str.trim() !== "").join(", ");
+    const cell = array.filter((str) => (str && str.trim() !== "")).join(", ");
     if (cell.length > 20) {
         return cell.substring(0, 17) + "...";
     } else {
