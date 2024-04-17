@@ -66,7 +66,7 @@ const MentorDatabase = () => {
             <div className="font-bold text-5xl font-grotesk">
               Find a Mentor
             </div>
-            {cookies?.user_status !== 1 && <div onClick={() => navigate(`/add-mentor`)} className="w-30 h-9 cursor-pointer bg-brand-gray-20 text-white font-medium px-8 py-[5px] rounded">
+            {cookies?.user_status !== 1 && <div onClick={() => navigate(`/add-mentor`)} className="w-30 h-9 cursor-pointer bg-brand-gray-20 text-white border-2 border-brand-gray-20 hover:bg-semantic-success font-medium px-8 py-[5px] rounded">
               Add Profile
             </div>}
           </div>
@@ -175,7 +175,7 @@ const MentorDatabase = () => {
               onChange={(e) => {
                 setDisplayName(e.target.value);
               }}
-              className="border-2 border-black rounded w-2/3 h-9"
+              className="border-2 border-black rounded w-2/3 h-9 px-2"
               type="text"
             />
           </div>
@@ -188,7 +188,7 @@ const MentorDatabase = () => {
               onChange={(e) => {
                 setDisplayMajor(e.target.value);
               }}
-              className="border-2 border-black rounded w-2/3 h-9"
+              className="border-2 border-black rounded w-2/3 h-9 px-2"
               type="text"
             />
           </div>
@@ -201,7 +201,7 @@ const MentorDatabase = () => {
               onChange={(e) => {
                 setDisplaySport(e.target.value);
               }}
-              className="border-2 border-black rounded w-2/3 h-9"
+              className="border-2 border-black rounded w-2/3 h-9 px-2"
               type="text"
             />
           </div>
@@ -213,7 +213,7 @@ const MentorDatabase = () => {
                 setFilterMajor(displayMajor);
                 setPage(1);
               }}
-              className="cursor-pointer bg-brand-gray-20 border-2 border-brand-gray-20 text-white font-medium px-8 py-[5px] mx-3 rounded"
+              className="cursor-pointer bg-brand-gray-20 border-2 border-brand-gray-20 hover:bg-semantic-success text-white font-medium px-8 py-[5px] mx-3 rounded"
             >
               Search
             </div>
