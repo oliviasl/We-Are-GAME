@@ -107,9 +107,10 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
 
   return (
     <div className="grid grid-cols-3 gap-4 m-auto mx-20 my-10 mb-32 font-circular-std leading-none">
+      
       {/* Username/Grad year */}
-      <div className="col-span-2 order-1">
-        <div className="bg-brand-gray-20 rounded-t-md text-brand-white flex p-4 items-center">
+      <div className="col-span-2 order-0">
+        <div className="bg-brand-gray-20 rounded text-brand-white flex p-4 items-center">
           <div className="flex-col flex-grow">
             <div className="text-lg font-medium p-0 m-0">
               {studentData.user_firstname + " " + studentData.user_lastname}
@@ -123,7 +124,7 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
       </div>
 
       {/* Colleges */}
-      <div className=" rounded-md row-span-4 order-2 border-gray-400 border-2">
+      <div className=" rounded row-span-4 col-span-1 order-0 border-gray-400 border-2">
         <div className="p-4 ">
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-md mb-2">Colleges</h2>
@@ -142,7 +143,7 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
             ))}
           </div>
           <button
-            className="border-4 border-gray-400 border-dashed rounded-md text-gray-400 text-3xl text-center p-2 py-1 w-full transition duration-300 ease-in-out hover:bg-brand-blue-95 hover:border-brand-blue-95 hover:text-white focus:outline-none"
+            className="border-4 border-gray-400 border-dashed rounded text-gray-400 text-3xl text-center p-2 py-1 w-full transition duration-300 ease-in-out hover:bg-brand-blue-95 hover:border-brand-blue-95 hover:text-white focus:outline-none"
             onClick={openModal}
           >
             +
@@ -155,9 +156,17 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
         </div>
       </div>
 
+      {/* Notes */}
+      <div className="order-7 border-gray-400 border-2 rounded">
+        <div className="w-full p-4">
+            <h2 className="text-md mb-2">Notes</h2>
+          </div>
+      </div>
+
+
       {/* Personal */}
       {(studentData.user_show_socials) && (
-    <div className='border-gray-400 border-2 rounded-md col-span-2 order-3'>
+    <div className='border-gray-400 border-2 rounded col-span-2 order-3'>
       <div className="w-full p-4">
         <h2 className="text-md mb-4">Personal</h2>
         <div className="grid grid-cols-2 gap-y-4 justify-between w-full">
@@ -175,17 +184,17 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
       </div>
     </div>)}
       {/* Sport */}
-      <div className="order-5 border-gray-400 border-2 rounded-md ">
+      <div className="order-5 border-gray-400 border-2 rounded">
         <ProfileBox type="Sport" data={sports} />
       </div>
 
       {/* Major */}
-      <div className="order-5 border-gray-400 border-2 rounded-md ">
+      <div className="order-5 border-gray-400 border-2 rounded">
         <ProfileBox type="Major" data={majors} />
       </div>
 
       {/* Extracurriculars */}
-      <div className="order-5 border-gray-400 border-2 rounded-md ">
+      <div className="order-5 border-gray-400 border-2 rounded ">
         <ProfileBox
           type="Extracurriculars"
           data={studentData.user_extracurriculars != null ? studentData.user_extracurriculars.split(",") : []}
@@ -193,27 +202,30 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
       </div>
 
       {/* Special Interests */}
-      <div className="order-5 border-gray-400 border-2 rounded-md ">
+      <div className="order-5 border-gray-400 border-2 rounded h-40">
         <ProfileBox
           type="Special Interests"
           data={studentData.user_interests != null ? studentData.user_interests.split(",") : []}
         />
       </div>
+      
+      <div className="grid-rows-2 col-span-2 order-6">
+  {/* Pursue My Purpose */}
+  <div className="border-gray-400 border-2 rounded min-h-[50px] col-span-2 p-5 h-36 mb-4">
+    <div className="w-full">
+      <h2 className="text-md mb-2 font-medium">Pursue My Purpose</h2>
+      <div className="font-weight-450">{studentData.user_purpose}</div>
+    </div>
+  </div>
+  {/* Goal */}
+  <div className="border-gray-400 border-2 rounded min-h-[50px] col-span-2 p-5 h-36">
+    <div className="w-full">
+      <h2 className="text-md mb-2 font-medium">Goal</h2>
+      <div className="font-weight-450">{studentData.user_goal}</div>
+    </div>
+  </div>
+</div>
 
-      {/* Pursue My Purpose */}
-      <div className=" border-gray-400 border-2 rounded-md min-h-[50px] col-span-2 order-7">
-        <div className="w-full p-4">
-          <h2 className="text-md mb-2">Pursue My Purpose</h2>
-          <div>{studentData.user_purpose}</div>
-        </div>
-      </div>
-      {/* Goal */}
-      <div className=" border-gray-400 border-2 rounded-md min-h-[50px] col-span-2 order-9">
-        <div className="w-full m-4">
-          <h2 className="text-md mb-2">Goal</h2>
-          <div>{studentData.user_goal}</div>
-        </div>
-      </div>
     </div>
   );
 };

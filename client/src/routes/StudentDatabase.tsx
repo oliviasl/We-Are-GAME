@@ -164,7 +164,7 @@ const StudentDatabase = () => {
                             onChange={(e) => {
                                 setDisplayName(e.target.value);
                             }}
-                            className="border-2 border-black rounded w-2/3 h-9"
+                            className="border-2 border-black rounded w-2/3 h-9 px-2"
                             type="text"
                         />
                     </div>
@@ -177,7 +177,7 @@ const StudentDatabase = () => {
                             onChange={(e) => {
                                 setDisplaySport(e.target.value);
                             }}
-                            className="border-2 border-black rounded w-2/3 h-9"
+                            className="border-2 border-black rounded w-2/3 h-9 px-2"
                             type="text"
                         />
                     </div>
@@ -190,7 +190,7 @@ const StudentDatabase = () => {
                             onChange={(e) => {
                                 setDisplayMajor(e.target.value);
                             }}
-                            className="border-2 border-black rounded w-2/3 h-9"
+                            className="border-2 border-black rounded w-2/3 h-9 px-2"
                             type="text"
                         />
                     </div>
