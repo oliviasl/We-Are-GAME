@@ -26,6 +26,7 @@ const CollegeUpdateDatabase = () => {
                         </Button>
                         <Button
                             color="gray"
+                            className="border-2 border-brand-gray-20 hover:bg-semantic-success"
                             onClick={() => navigate("/add-college")}
                         >
                             Add College
