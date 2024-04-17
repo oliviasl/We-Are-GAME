@@ -1,7 +1,7 @@
-import React, { useEffect, useState, ElementType } from "react";
+import React, {useState} from "react";
 import ProfileBox from "../components/ProfileBox";
 import CollegeBox from "../components/CollegeBox";
-import { studentData, collegeAssignments } from "../routes/StudentProfile";
+import {collegeAssignments, studentData} from "../routes/StudentProfile";
 import Pencil from "../components/Pencil";
 import AddCollegeModal from "../layouts/AddCollegeModal";
 import { renderStudentData } from "./MentorOfStudentView";
@@ -39,17 +39,20 @@ const StudentProfile: React.FC<StudentProfileProps> = ({
   };
 
   const personalTitles: Record<string, string> = {
-    user_grad_year: "Graduation Year",
     user_phone: "Phone Number",
     user_email: "Email",
+    user_facebook: "Facebook",
+    user_instagram: "Instagram",
     user_gpa: "GPA",
     user_ncaa_registered: "NCAA Eligibility",
   };
 
+
   const personalInfoKeys = [
-    "user_grad_year",
     "user_phone",
     "user_email",
+    "user_facebook",
+    "user_instagram",
     "user_gpa",
     "user_ncaa_registered",
   ] as Array<keyof typeof studentData>;
@@ -85,9 +88,17 @@ const StudentProfile: React.FC<StudentProfileProps> = ({
           studentData.user_sport1_role
         )}`,
       ]
+        `${capFirstLetter(studentData.user_sport1)}/${capFirstLetter(
+          studentData.user_sport1_role
+        )}`,
+      ]
       : []),
     ...(studentData.user_sport2
       ? [
+        `${capFirstLetter(studentData.user_sport2)}/${capFirstLetter(
+          studentData.user_sport2_role
+        )}`,
+      ]
         `${capFirstLetter(studentData.user_sport2)}/${capFirstLetter(
           studentData.user_sport2_role
         )}`,
@@ -96,17 +107,17 @@ const StudentProfile: React.FC<StudentProfileProps> = ({
   ];
 
   // TO DO: major naming?
-  const majors: string[] = [
+  const majors = [
     studentData.user_potential_major
       ? capFirstLetter(studentData.user_potential_major)
-      : "",
+      : null,
     studentData.user_alt_major1
       ? capFirstLetter(studentData.user_alt_major1)
-      : "",
+      : null,
     studentData.user_alt_major2
       ? capFirstLetter(studentData.user_alt_major2)
-      : "",
-  ];
+      : null,
+  ].filter(Boolean) as string[];
 
   console.log(studentData.user_id);
 
@@ -170,24 +181,27 @@ const StudentProfile: React.FC<StudentProfileProps> = ({
             </div>
           </div>
 
-          {/* Personal */}
-          <div className={studentData.user_show_socials ? 'border-gray-400 border-2 rounded-md order-3' : 'border-gray-400 border-2 rounded-md order-3 col-span-2'}>
-            <div className="w-full p-4">
-              <h2 className="text-md mb-4">Personal</h2>
-              <div className="grid grid-cols-2 gap-y-4 justify-between w-full">
-                {personalInfoKeys.map((key) => (
-                  <React.Fragment key={key}>
-                    {/* Only display title when appropriate */}
-                    {shouldDisplayTitle(key, studentData) && (
-                      <div>{personalTitles[key]}</div>
-                    )}
-                    {renderStudentData(key, studentData) ?
-                      <div className="text-right">{renderStudentData(key, studentData)}</div> : ''}
-                  </React.Fragment>
-                ))}
-              </div>
-            </div>
+      {/* Personal */}
+      <div
+        className={studentData.user_show_socials ? 'border-gray-400 border-2 rounded-md order-3' : 'border-gray-400 border-2 rounded-md order-3 col-span-2'}>
+        <div className="w-full p-4">
+          <h2 className="text-md mb-4">Personal</h2>
+          <div className="grid grid-cols-2 gap-y-4 justify-between w-full">
+            {personalInfoKeys.map((key) => (
+              <React.Fragment key={key}>
+                {/* Only display title when appropriate */}
+                {shouldDisplayTitle(key, studentData) && (
+                  <div>{personalTitles[key]}</div>
+                )}
+                {renderStudentData(key, studentData) ?
+                  <div
+                    className="text-right">{renderStudentData(key, studentData)}</div> : (shouldDisplayTitle(key, studentData) ?
+                    <div/> : null)}
+              </React.Fragment>
+            ))}
           </div>
+        </div>
+      </div>
 
 
           {/* Academics */}
@@ -237,37 +251,30 @@ const StudentProfile: React.FC<StudentProfileProps> = ({
             />
           </div>
 
-          {/* Special Interests */}
-          <div className="order-5 border-gray-400 border-2 rounded-md ">
-            <ProfileBox
-              type="Special Interests"
-              data={studentData.user_interests != null ? studentData.user_interests.split(",") : []}
-            />
-          </div>
+      {/* Special Interests */}
+      <div className="order-5 border-gray-400 border-2 rounded h-40">
+        <ProfileBox
+          type="Special Interests"
+          data={studentData.user_interests != null ? studentData.user_interests.split(",") : []}
+        />
+      </div>
 
-          {/* Pursue My Purpose */}
-          <div className=" border-gray-400 border-2 rounded-md min-h-[50px] col-span-2 order-7">
-            <div className="w-full p-4">
-              <h2 className="text-md mb-2">Pursue My Purpose</h2>
-              <div>{studentData.user_purpose}</div>
-            </div>
-          </div>
-          {/* Notes */}
-          <div className=" border-gray-400 border-2 rounded-md row-span-2 order-8">
-            <div className="w-full p-4">
-              <h2 className="text-md mb-2">Notes</h2>
-              <div>{studentData.user_notes}</div>
-            </div>
-          </div>
-          {/* Goal */}
-          <div className=" border-gray-400 border-2 rounded-md min-h-[50px] col-span-2 order-9">
-            <div className="w-full m-4">
-              <h2 className="text-md mb-2">Goal</h2>
-              <div>{studentData.user_goal}</div>
-            </div>
-          </div>
-        </div>
-      )}
+      <div className="grid-rows-2 col-span-2 order-6">
+  {/* Pursue My Purpose */}
+  <div className="border-gray-400 border-2 rounded min-h-[50px] col-span-2 p-5 h-36 mb-4">
+    <div className="w-full">
+      <h2 className="text-md mb-2 font-medium">Pursue My Purpose</h2>
+      <div className="font-weight-450">{studentData.user_purpose}</div>
+    </div>
+  </div>
+  {/* Goal */}
+  <div className="border-gray-400 border-2 rounded min-h-[50px] col-span-2 p-5 h-36">
+    <div className="w-full">
+      <h2 className="text-md mb-2 font-medium">Goal</h2>
+      <div className="font-weight-450">{studentData.user_goal}</div>
+    </div>
+  </div>
+</div>
     </div>
   );
 };
