@@ -69,7 +69,7 @@ export const EditStudent = () => {
           user_school: school,
           user_phone: phoneNumber,
           user_email: email,
-          user_grad_year: parseInt(grade),
+          ...(grade) && {user_grad_year: parseInt(grade)},
           user_instagram: instagram,
           user_facebook: facebook,
           user_potential_major: major1,
@@ -81,22 +81,25 @@ export const EditStudent = () => {
           user_sport2_role: position2,
           user_sport1_level: level1,
           user_sport2_level: level2,
-          user_interests: arrInterest.join(","),
-          user_extracurriculars: arrExtracurricular.join(","),
-          user_act_reading: parseInt(actReading),
-          user_act_math: parseInt(actMath),
-          user_act_science: parseInt(actScience),
-          user_act_english: parseInt(actWriting),
-          user_act: parseInt(actComposite),
-          user_sat_read_write: parseInt(satReading),
-          user_sat_math: parseInt(satMath),
-          user_sat: parseInt(satComposite),
-          user_gpa: parseFloat(gpa),
+          ...(arrInterest.length > 0) && {user_interests: arrInterest.join(",")},
+          ...(arrExtracurricular.length > 0) && {user_extracurriculars: arrExtracurricular.join(",")},
+          ...(actReading) && {user_act_reading: parseInt(actReading)},
+          ...(actMath) && {user_act_math: parseInt(actMath)},
+          ...(actScience) && {user_act_science: parseInt(actScience)},
+          ...(actWriting) && {user_act_english: parseInt(actWriting)},
+          ...(actComposite) && {user_act: parseInt(actComposite)},
+          ...(satReading) && {user_sat_read_write: parseInt(satReading)},
+          ...(satMath) && {user_sat_math: parseInt(satMath)},
+          ...(satComposite) && {user_sat: parseInt(satComposite)},
+          ...(gpa) && {user_gpa: parseFloat(gpa)},
           user_purpose: purpose,
           user_goal: goal,
           user_show_socials: showContact,
         },
       };
+
+      console.log(userData);
+
       const response = await fetch("/api/editUser", {
         method: "put",
         headers: {
@@ -138,7 +141,8 @@ export const EditStudent = () => {
         setSchool(studentData.user_school);
         setPhoneNumber(studentData.user_phone);
         setEmail(studentData.user_email);
-        setGrade(studentData.user_grad_year.toString());
+        if (studentData.user_grad_year != null)
+          setGrade(studentData.user_grad_year.toString());
         setInstagram(studentData.user_instagram);
         setFacebook(studentData.user_facebook);
         setMajor1(studentData.user_potential_major);
@@ -150,17 +154,28 @@ export const EditStudent = () => {
         setPosition2(studentData.user_sport2_role);
         setLevel1(studentData.user_sport1_level);
         setLevel2(studentData.user_sport2_level);
-        setArrInterest(studentData.user_interests.split(","));
-        setArrExtracurricular(studentData.user_extracurriculars.split(","));
-        setACTReading(studentData.user_act_reading.toString());
-        setACTMath(studentData.user_act_math.toString());
-        setACTScience(studentData.user_act_science.toString());
-        setACTWriting(studentData.user_act_english.toString());
-        setACTComposite(studentData.user_act.toString());
-        setSATReading(studentData.user_sat_read_write.toString());
-        setSATMath(studentData.user_sat_math.toString());
-        setSATComposite(studentData.user_sat.toString());
-        setGPA(studentData.user_gpa.toString());
+        if (studentData.user_interests != null)
+          setArrInterest(studentData.user_interests.split(","));
+        if (studentData.user_extracurriculars != null)
+          setArrExtracurricular(studentData.user_extracurriculars.split(","));
+        if (studentData.user_act_reading != null)
+          setACTReading(studentData.user_act_reading.toString());
+        if (studentData.user_act_math != null)
+          setACTMath(studentData.user_act_math.toString());
+        if (studentData.user_act_science != null)
+          setACTScience(studentData.user_act_science.toString());
+        if (studentData.user_act_english != null)
+          setACTWriting(studentData.user_act_english.toString());
+        if (studentData.user_act != null)
+          setACTComposite(studentData.user_act.toString());
+        if (studentData.user_sat_read_write != null)
+          setSATReading(studentData.user_sat_read_write.toString());
+        if (studentData.user_sat_math != null)
+          setSATMath(studentData.user_sat_math.toString());
+        if (studentData.user_sat != null)
+          setSATComposite(studentData.user_sat.toString());
+        if (studentData.user_gpa != null)
+          setGPA(studentData.user_gpa.toString());
         setPurpose(studentData.user_purpose);
         setGoal(studentData.user_goal);
         setShowContact(studentData.user_show_socials);
