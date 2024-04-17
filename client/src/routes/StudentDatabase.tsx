@@ -164,7 +164,7 @@ const StudentDatabase = () => {
                             onChange={(e) => {
                                 setDisplayName(e.target.value);
                             }}
-                            className="border-2 border-black rounded w-2/3 h-9"
+                            className="border-2 border-black rounded w-2/3 h-9 px-2"
                             type="text"
                         />
                     </div>
@@ -177,7 +177,7 @@ const StudentDatabase = () => {
                             onChange={(e) => {
                                 setDisplaySport(e.target.value);
                             }}
-                            className="border-2 border-black rounded w-2/3 h-9"
+                            className="border-2 border-black rounded w-2/3 h-9 px-2"
                             type="text"
                         />
                     </div>
@@ -190,7 +190,7 @@ const StudentDatabase = () => {
                             onChange={(e) => {
                                 setDisplayMajor(e.target.value);
                             }}
-                            className="border-2 border-black rounded w-2/3 h-9"
+                            className="border-2 border-black rounded w-2/3 h-9 px-2"
                             type="text"
                         />
                     </div>
@@ -203,7 +203,7 @@ const StudentDatabase = () => {
                                 setFilterMajor(displayMajor);
                                 setPage(1);
                             }}
-                            className="cursor-pointer bg-brand-gray-20 border-2 border-brand-gray-20 text-white font-medium px-8 py-[5px] mx-3 rounded"
+                            className="cursor-pointer bg-brand-gray-20 border-2 border-brand-gray-20 hover:bg-semantic-success text-white font-medium px-8 py-[5px] mx-3 rounded"
                         >
                             Search
                         </div>
