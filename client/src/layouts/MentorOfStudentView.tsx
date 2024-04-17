@@ -28,7 +28,7 @@ export function shouldDisplayTitle(key: keyof typeof studentData, studentData: a
 export function renderStudentData(key: keyof typeof studentData, studentData: any) {
   const isSocialKey = key === 'user_facebook' || key === 'user_instagram';
   const isContactKey = key === 'user_email' || key === 'user_phone';
-  if (key === 'user_gpa' && typeof studentData[key] !== 'undefined') {
+  if (key === 'user_gpa' && typeof studentData[key] !== 'undefined' && studentData[key] !== null) {
     return studentData[key].toFixed(1);
   } else if (key === 'user_ncaa_registered') {
     return studentData[key] ? 'Yes' : 'No';
@@ -40,6 +40,7 @@ export function renderStudentData(key: keyof typeof studentData, studentData: an
     return studentData[key] ? studentData[key] : null;
   }
 }
+
 const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
   studentData,
   collegeAssignments,
@@ -69,42 +70,38 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
     user_facebook: "Facebook",
     user_instagram: "Instagram",
   };
-  
+
   const personalInfoKeys = ["user_phone", "user_email", "user_facebook", "user_instagram"] as Array<keyof typeof studentData>;
 
   const sports: string[] = [
     ...(studentData.user_sport1
       ? [
-          `${capFirstLetter(studentData.user_sport1)}/${capFirstLetter(
-            studentData.user_sport1_role
-          )}`,
-        ]
+        `${capFirstLetter(studentData.user_sport1)}/${capFirstLetter(
+          studentData.user_sport1_role
+        )}`,
+      ]
       : []),
     ...(studentData.user_sport2
       ? [
-          `${capFirstLetter(studentData.user_sport2)}/${capFirstLetter(
-            studentData.user_sport2_role
-          )}`,
-        ]
+        `${capFirstLetter(studentData.user_sport2)}/${capFirstLetter(
+          studentData.user_sport2_role
+        )}`,
+      ]
       : []),
   ];
 
   // TO DO: major naming?
-  const majors: string[] = [
+  const majors = [
     studentData.user_potential_major
       ? capFirstLetter(studentData.user_potential_major)
-      : "",
+      : null,
     studentData.user_alt_major1
       ? capFirstLetter(studentData.user_alt_major1)
-      : "",
+      : null,
     studentData.user_alt_major2
       ? capFirstLetter(studentData.user_alt_major2)
-      : "",
-  ];
-
-  
-  
-  
+      : null,
+  ].filter(Boolean) as string[];
 
   return (
     <div>
