@@ -3,6 +3,7 @@ import {Button} from "@material-tailwind/react";
 import {BoxPlot} from "./BoxPlot";
 import {ArcElement, Chart as ChartJS, Legend, Tooltip} from 'chart.js';
 import {DonutPlot} from "./DonutPlot";
+import ensureValidLink from "../util/ensureValidLink";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -16,9 +17,9 @@ export function CollegeProfileInfo({data}: { data: Partial<College> }) {
   ].filter(([data]) => !!data) as [number, string][]
 
   const programInfo = [
-    [data!.majors_web_addr, "Undergraduate Programs Website"],
-    [data!.athletics_web_addr, "Athletic Programs Website"],
-    [data!.questionaire_web_addr, "Prospective Student Athlete FAQ Website"],
+    [ensureValidLink(data!.majors_web_addr!), "Undergraduate Programs Website"],
+    [ensureValidLink(data!.athletics_web_addr!), "Athletic Programs Website"],
+    [ensureValidLink(data!.questionaire_web_addr!), "Prospective Student Athlete FAQ Website"],
   ].filter(([data]) => !!data) as [string, string][]
 
   const enrollmentByRace = [
