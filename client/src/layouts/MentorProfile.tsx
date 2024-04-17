@@ -90,7 +90,7 @@ const MentorProfile: React.FC<MentorProfileProps> = ({mentorData}) => {
       </div>
       
       {/* Personal */}
-      <div className='border-gray-400 border-2 rounded-md order-3 row-span-2'>
+      <div className='border-gray-400 border-2 rounded-md order-3 row-span-9'>
         <div className="w-full p-4">
           <h2 className="text-md mb-4">Personal</h2>
           <div className="grid grid-cols-2 gap-y-4 justify-between w-full">
@@ -108,22 +108,22 @@ const MentorProfile: React.FC<MentorProfileProps> = ({mentorData}) => {
       </div>
         
       {/* Sport */}
-      <div className="order-5 border-gray-400 border-2 rounded-md ">
+      <div className="order-5 border-gray-400 border-2 rounded-md row-span-5">
         <ProfileBox type="Sport" data={sports}/>        
       </div>
 
       {/* Special Interests */}
-      <div className="order-5 border-gray-400 border-2 rounded-md ">
+      <div className="order-5 border-gray-400 border-2 rounded-md row-span-5">
         <ProfileBox type="Special Interests" data={mentorData.mentor_interests != null ? mentorData.mentor_interests.split(",") : []}/>        
       </div>
 
       {/* Major */}
-      <div className="order-5 border-gray-400 border-2 rounded-md ">
+      <div className="order-5 border-gray-400 border-2 rounded-md row-span-6">
         <ProfileBox type="Major" data={majors} />        
       </div>
 
       {/* Extracurriculars */}
-      <div className="order-5 border-gray-400 border-2 rounded-md ">
+      <div className="order-5 border-gray-400 border-2 rounded-md row-span-5">
         <ProfileBox type="Extracurriculars" data={mentorData.mentor_extracurriculars != null ? mentorData.mentor_extracurriculars.split(",") : []} />        
       </div>
 
