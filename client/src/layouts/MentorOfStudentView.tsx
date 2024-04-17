@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import React, { useState } from "react";
 import ProfileBox from "../components/ProfileBox";
 import CollegeBox from "../components/CollegeBox";
 import { collegeAssignments, studentData } from "../routes/StudentProfile";
