@@ -1,6 +1,7 @@
 import {Button} from "@material-tailwind/react";
 import {College} from "../util/types/college";
 import {formatDate} from "../util/formatDate";
+import ensureValidLink from "../util/ensureValidLink";
 
 export function CollegeProfileSidebar({data}: { data: Partial<College> }) {
   return (
@@ -9,27 +10,27 @@ export function CollegeProfileSidebar({data}: { data: Partial<College> }) {
         <h2 className={"text-2xl font-bold"}>Important Links</h2>
         <div className={"space-y-2 w-full"}>
           {data!.general_web_addr &&
-            <a href={data!.general_web_addr} className={"block w-full"}>
+            <a href={ensureValidLink(data!.general_web_addr!)} className={"block w-full"}>
               <Button className={"w-full"}>University Website</Button>
             </a>
           }
           {data!.general_web_addr &&
-            <a href={data!.admissions_web_addr} className={"block w-full"}>
+            <a href={ensureValidLink(data!.admissions_web_addr!)} className={"block w-full"}>
               <Button className={"w-full"}>Admissions Website</Button>
             </a>
           }
           {data!.general_web_addr &&
-            <a href={data!.app_web_addr} className={"block w-full"}>
+            <a href={ensureValidLink(data!.app_web_addr!)} className={"block w-full"}>
               <Button className={"w-full"}>Application</Button>
             </a>
           }
           {data!.general_web_addr &&
-            <a href={data!.fin_aid_web_addr} className={"block w-full"}>
+            <a href={ensureValidLink(data!.fin_aid_web_addr!)} className={"block w-full"}>
               <Button className={"w-full"}>Financial Aid & Scholarships</Button>
             </a>
           }
           {data!.general_web_addr &&
-            <a href={data!.net_price_calc_web_addr} className={"block w-full"}>
+            <a href={ensureValidLink(data!.net_price_calc_web_addr!)} className={"block w-full"}>
               <Button className={"w-full"}>Net Price Calculator</Button>
             </a>
           }
@@ -86,27 +87,27 @@ export function CollegeProfileSidebar({data}: { data: Partial<College> }) {
         <h2 className={"text-2xl font-bold"}>Other Resources</h2>
         <div className={"space-y-2 w-full"}>
           {data!.academic_resources_web_addr &&
-            <a href={data!.academic_resources_web_addr} className={"block w-full"}>
+            <a href={ensureValidLink(data!.academic_resources_web_addr)} className={"block w-full"}>
               <Button className={"w-full"}>Student Academic Resources</Button>
             </a>
           }
           {data!.diversity_resources_web_addr &&
-            <a href={data!.diversity_resources_web_addr} className={"block w-full"}>
+            <a href={ensureValidLink(data!.diversity_resources_web_addr)} className={"block w-full"}>
               <Button className={"w-full"}>Student Diversity Resources</Button>
             </a>
           }
           {data!.stu_ath_academic_res_web_addr &&
-            <a href={data!.stu_ath_academic_res_web_addr} className={"block w-full"}>
+            <a href={ensureValidLink(data!.stu_ath_academic_res_web_addr)} className={"block w-full"}>
               <Button className={"w-full"}>Student Athlete Academic Resources</Button>
             </a>
           }
           {data!.student_orgs_web_addr &&
-            <a href={data!.student_orgs_web_addr} className={"block w-full"}>
+            <a href={ensureValidLink(data!.student_orgs_web_addr)} className={"block w-full"}>
               <Button className={"w-full"}>Organizations</Button>
             </a>
           }
           {data!.study_abroad_web_addr &&
-            <a href={data!.study_abroad_web_addr} className={"block w-full"}>
+            <a href={ensureValidLink(data!.study_abroad_web_addr)} className={"block w-full"}>
               <Button className={"w-full"}>Study Abroad</Button>
             </a>
           }
