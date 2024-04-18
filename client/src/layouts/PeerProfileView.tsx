@@ -7,6 +7,10 @@ interface PeerProfileProps {
   peerData: peerData;
 }
 
+const capFirstLetter = (str: string): string => {
+  return str.replace(/\b\w/g, (match: string) => match.toUpperCase());
+};
+
 const PeerProfileView: React.FC<PeerProfileProps> = ({ peerData }) => {
   const peerInfoKeys = ["user_email", "user_facebook", "user_instagram"] as Array<keyof typeof peerData>;
   const personalTitles: Record<string, string> = {
@@ -21,12 +25,18 @@ const PeerProfileView: React.FC<PeerProfileProps> = ({ peerData }) => {
     ...(peerData.user_sport2 ? [`${peerData.user_sport2}/${peerData.user_sport2_role}`] : []),
   ];
 
-  const majors: string[] = [
-    peerData.user_potential_major ? peerData.user_potential_major : '',
-    peerData.user_alt_major1 ? peerData.user_alt_major1 : '',
-    peerData.user_alt_major2 ? peerData.user_alt_major2 : '',
-  ];
-
+  const majors = [
+    peerData.user_potential_major
+      ? capFirstLetter(peerData.user_potential_major)
+      : null,
+      peerData.user_alt_major1
+      ? capFirstLetter(peerData.user_alt_major1)
+      : null,
+      peerData.user_alt_major2
+      ? capFirstLetter(peerData.user_alt_major2)
+      : null,
+  ].filter(Boolean) as string[];
+  
   return (
     <div>
       {peerData.user_id === 1 || peerData.user_id === 2 ? (
