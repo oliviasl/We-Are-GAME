@@ -136,7 +136,7 @@ class mentorController {
           const query =
               "UPDATE mentors SET " +
               Object.keys(newFields)
-              .map((column) => column + "='" + newFields[column] + "'")
+              .map((column) => (newFields[column] ? column + "='" + newFields[column] + "'" : column + "=NULL"))
               .join(", ") +
               " WHERE mentor_id=" +
               mentorId +

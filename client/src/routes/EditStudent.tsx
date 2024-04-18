@@ -61,41 +61,41 @@ export const EditStudent = () => {
       const userData = {
         userId: id,
         newFields: {
-          ...(firstName) && {user_firstname: firstName},
-          ...(lastName) && {user_lastname: lastName},
-          ...(school) && {user_school: school},
-          ...(phoneNumber) && {user_phone: phoneNumber},
-          ...(email) && {user_email: email},
-          ...(grade) && {user_grad_year: parseInt(grade)},
-          ...(instagram) && {user_instagram: instagram},
-          ...(facebook) && {user_facebook: facebook},
-          ...(major1) && {user_potential_major: major1},
-          ...(major2) && {user_alt_major1: major2},
-          ...(major3) && {user_alt_major2: major3},
-          ...(sport1) && {user_sport1: sport1},
-          ...(sport2) && {user_sport2: sport2},
-          ...(position1) && {user_sport1_role: position1},
-          ...(position2) && {user_sport2_role: position2},
-          ...(level1) && {user_sport1_level: level1},
-          ...(level2) && {user_sport2_level: level2},
-          ...(arrInterest && arrInterest.length > 0) && {user_interests: arrInterest.join(",")},
-          ...(arrExtracurricular && arrExtracurricular.length > 0) && {user_extracurriculars: arrExtracurricular.join(",")},
-          ...(actReading) && {user_act_reading: parseInt(actReading)},
-          ...(actMath) && {user_act_math: parseInt(actMath)},
-          ...(actScience) && {user_act_science: parseInt(actScience)},
-          ...(actWriting) && {user_act_english: parseInt(actWriting)},
-          ...(actComposite) && {user_act: parseInt(actComposite)},
-          ...(satReading) && {user_sat_read_write: parseInt(satReading)},
-          ...(satMath) && {user_sat_math: parseInt(satMath)},
-          ...(satComposite) && {user_sat: parseInt(satComposite)},
-          ...(gpa) && {user_gpa: parseFloat(gpa)},
-          ...(purpose) && {user_purpose: purpose},
-          ...(goal) && {user_goal: goal},
-          ...(showContact) && {user_show_socials: showContact},
+          ...(firstName) ? {user_firstname: firstName} : {user_firstname: null},
+          ...(lastName) ? {user_lastname: lastName} : {user_lastname: null},
+          ...(school) ? {user_school: school} : {user_school: null},
+          ...(phoneNumber) ? {user_phone: phoneNumber} : {user_phone: null},
+          ...(email) ? {user_email: email} : {user_email: null},
+          ...(grade) ? {user_grad_year: parseInt(grade)} : {user_grad_year: null},
+          ...(instagram) ? {user_instagram: instagram} : {user_instagram: null},
+          ...(facebook) ? {user_facebook: facebook} : {user_facebook: null},
+          ...(major1) ? {user_potential_major: major1} : {user_potential_major: null},
+          ...(major2) ? {user_alt_major1: major2} : {user_alt_major1: null},
+          ...(major3) ? {user_alt_major2: major3} : {user_alt_major2: null},
+          ...(sport1) ? {user_sport1: sport1} : {user_sport1: null},
+          ...(sport2) ? {user_sport2: sport2} : {user_sport2: null},
+          ...(position1) ? {user_sport1_role: position1} : {user_sport1_role: null},
+          ...(position2) ? {user_sport2_role: position2} : {user_sport2_role: null},
+          ...(level1) ? {user_sport1_level: level1} : {user_sport1_level: null},
+          ...(level2) ? {user_sport2_level: level2} : {user_sport2_level: null},
+          ...(arrInterest && arrInterest.length > 0) ? {user_interests: arrInterest.join(",")} : {user_interests: []},
+          ...(arrExtracurricular && arrExtracurricular.length > 0) ? {user_extracurriculars: arrExtracurricular.join(",")} : {user_extracurriculars: []},
+          ...(actReading) ? {user_act_reading: parseInt(actReading)} : {user_act_reading: null},
+          ...(actMath) ? {user_act_math: parseInt(actMath)} : {user_act_math: null},
+          ...(actScience) ? {user_act_science: parseInt(actScience)} : {user_act_science: null},
+          ...(actWriting) ? {user_act_english: parseInt(actWriting)} : {user_act_english: null},
+          ...(actComposite) ? {user_act: parseInt(actComposite)} : {user_act: null},
+          ...(satReading) ? {user_sat_read_write: parseInt(satReading)} : {user_sat_read_write: null},
+          ...(satMath) ? {user_sat_math: parseInt(satMath)} : {user_sat_math: null},
+          ...(satComposite) ? {user_sat: parseInt(satComposite)} : {user_sat: null},
+          ...(gpa) ? {user_gpa: parseFloat(gpa)} : {user_gpa: null},
+          ...(purpose) ? {user_purpose: purpose} : {user_purpose: null},
+          ...(goal) ? {user_goal: goal} : {user_goal: null},
+          ...(showContact) ? {user_show_socials: showContact} : {user_show_socials: null},
         },
       };
 
-      console.log({userData});
+      console.log(userData);
 
       const response = await fetch("/api/editUser", {
         method: "put",
@@ -151,10 +151,16 @@ export const EditStudent = () => {
         setPosition2(studentData.user_sport2_role);
         setLevel1(studentData.user_sport1_level);
         setLevel2(studentData.user_sport2_level);
-        if (studentData.user_interests != null)
+        
+        if (studentData.user_interests != null && studentData.user_interests.length > 0)
           setArrInterest(studentData.user_interests.split(","));
-        if (studentData.user_extracurriculars != null)
+        else
+          setArrInterest([])
+        if (studentData.user_extracurriculars != null  && studentData.user_extracurriculars.length > 0)
           setArrExtracurricular(studentData.user_extracurriculars.split(","));
+        else
+          setArrExtracurricular([])
+
         if (studentData.user_act_reading != null)
           setACTReading(studentData.user_act_reading.toString());
         if (studentData.user_act_math != null)
@@ -177,7 +183,7 @@ export const EditStudent = () => {
         setGoal(studentData.user_goal);
         setShowContact(studentData.user_show_socials);
 
-        if (Object.keys(data).length === 0)
+        if (Object.keys(studentData).length === 0)
           setValidID(false);
         else
           setValidID(true);
