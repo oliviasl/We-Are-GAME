@@ -87,7 +87,6 @@ const AutofillModal = ({ isOpen, setIsOpen, stateAutofill }: AutofillModalProps)
             } else {
                 toast("Fail.");
             }
-            // setIsOpen(false);
         };
     };
 
