@@ -49,12 +49,20 @@ const PeerProfileView: React.FC<PeerProfileProps> = ({ peerData }) => {
               <div className="flex-col flex-grow">
                 <div className="text-lg font-medium p-0 m-0">{peerData.user_firstname + " " + peerData.user_lastname}</div>
 
-                <div className="text-sm font-normal">{peerData.user_school + "/" + peerData.user_grad_year}</div>
+                <div className="text-sm font-normal">
+                  {peerData.user_school && peerData.user_grad_year ? (
+                    peerData.user_school + "/" + peerData.user_grad_year
+                  ) : "" }
+                  {peerData.user_school && !peerData.user_grad_year ? (
+                    peerData.user_school
+                  ) : "" }
+                  {!peerData.user_school && peerData.user_grad_year ? (
+                    peerData.user_grad_year
+                  ) : "" }
+                </div>
               </div>
             </div>
           </div>
-
-
 
           <div className={peerData.user_show_socials ? "col-span-2 grid grid-cols-3 gap-4 order-2" : "col-span-2 grid grid-cols-2 gap-4 order-2"}>
             {/* Personal */}
