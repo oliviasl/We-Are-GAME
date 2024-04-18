@@ -337,7 +337,7 @@ INSERT INTO mentors (
     mentor_sport2,
     mentor_sport2_role
 )
-VALUES 
+VALUES
     ('Bob', 'Smith', 'bobsmith@example.com', '111-111-1111', 'USC', 'Computer Science', 'Bachelors', 'Design', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'football', 'quarterback', 'volleyball', 'setter'),
     ('Bobby', 'Smith', 'bobbysmith@example.com', '111-111-1111', 'USC', 'Computer Science', 'Bachelors', 'Design', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'tennis', 'quarterback', 'soccer', 'setter'),
     ('Heather', 'Liu', 'heatherliu@example.com', '111-111-1111', 'USC', 'Math', 'Bachelors', 'Design', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'badminton', 'quarterback', 'basketball', 'setter'),
@@ -345,5 +345,6 @@ VALUES
     ('Vincent', 'Hang', 'vincenthang@example.com', '111-111-1111', 'USC', 'Chemistry', 'Bachelors', 'Design', 'Bachelors', 'Math', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'football', 'quarterback', 'volleyball', 'setter'),
     ('Angel', 'Liu', 'angelliu@example.com', '111-111-1111', 'USC', 'Computer Science', 'Bachelors', 'Design', 'Bachelors', 'Biology', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'tennis', 'quarterback', 'soccer', 'setter'),
     ('Vincent', 'Jung', 'vincentjung@example.com', '111-111-1111', 'USC', 'English', 'Bachelors', 'Design', 'Bachelors', 'Chemistry', 'Bachelors', 'Google', 'D1', 'Hiking', 'CTC', 'football', 'quarterback', 'basketball', 'setter');
+
 
 

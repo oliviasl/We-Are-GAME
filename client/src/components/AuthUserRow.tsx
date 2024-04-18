@@ -16,13 +16,13 @@ const AuthUserRow = ({ name, email, institution, onApprove, onDeny }: AuthUserRo
             <td className="pr-16">
                 <span
                     onClick={onApprove}
-                    className="my-2 px-4 py-2 rounded bg-gray-800 cursor-pointer text-white"
+                    className="my-2 px-4 py-2 rounded bg-gray-800 hover:bg-semantic-success cursor-pointer text-white "
                 >
                     Approve
                 </span>
                 <span
                     onClick={onDeny}
-                    className="my-2 px-4 py-2 rounded bg-gray-800 cursor-pointer ml-2 text-white"
+                    className="my-2 px-4 py-2 rounded bg-gray-800 hover:bg-semantic-danger cursor-pointer ml-2 text-white"
                 >
                     Deny
                 </span>

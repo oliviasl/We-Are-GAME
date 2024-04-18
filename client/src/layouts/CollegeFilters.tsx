@@ -33,18 +33,35 @@ const CollegeFilters: React.FC<CollegeFiltersProps> = ({ onCollegeData }) => {
     // Form submission handler
     const handleSubmit = (event: any) => {
         event.preventDefault(); // Prevents the default form submission behavior
-        const formData = {
-            collegeByName,
-            collegeByGPA,
-            collegeBySATRead,
-            collegeBySATMath,
-            collegeByACT,
-            collegeHasStuAthAcademicRes,
-            collegeHasAcademicResource,
-            collegeHasDiversityResource,
-        };
-        console.log("formData", formData); // For demonstration, you'd likely send this data to a server
-        onCollegeData(formData); // Pass the form data to the parent component
+
+        let regex = /^[a-zA-Z]+$/;
+        var strings = [collegeByGPA, collegeBySATMath, collegeBySATRead, collegeByACT];
+        var found = false;
+        for (var i = 0; i < strings.length; i++) {
+            for (var j = 0; j < strings[i].length; j++) {
+                if (regex.test(strings[i][j])) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+
+        if (found == false) {
+            const formData = {
+                collegeByName,
+                collegeByGPA,
+                collegeBySATRead,
+                collegeBySATMath,
+                collegeByACT,
+                collegeHasStuAthAcademicRes,
+                collegeHasAcademicResource,
+                collegeHasDiversityResource,
+            };
+            console.log("formData", formData); // For demonstration, you'd likely send this data to a server
+            onCollegeData(formData); // Pass the form data to the parent component
+        } else {
+            console.log("wrong data type");
+        }
     };
 
     // Checkbox custom icon
@@ -153,7 +170,7 @@ const CollegeFilters: React.FC<CollegeFiltersProps> = ({ onCollegeData }) => {
                 <div>Diversity Resources</div>
             </div>
             <div className="flex gap-4 w-full">
-                <Button className="w-full" type="submit">
+                <Button className="w-full border-2 border-2 border-brand-gray-20 hover:bg-semantic-success" type="submit">
                     Search
                 </Button>
                 <Button

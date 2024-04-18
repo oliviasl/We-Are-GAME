@@ -214,7 +214,7 @@ class userController {
             const query =
                 "UPDATE master_users SET " +
                 Object.keys(newFields)
-                .map((column) => column + "='" + newFields[column] + "'")
+                .map((column) => (newFields[column] ? column + "='" + newFields[column] + "'" : column + "=NULL"))
                 .join(", ") +
                 " WHERE user_id=" +
                 userId +
