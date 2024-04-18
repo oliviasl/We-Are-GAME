@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MentorProfile from "../layouts/MentorProfile";
 import { useParams } from "react-router-dom";
+import NotFoundPage from "./NotFoundPage";
 
 export interface mentorData {
     mentor_id: number;
@@ -30,6 +31,7 @@ export interface mentorData {
 
 const MentorProfileViewRoute = () => {
     const [mentorData, setMentorData] = useState({} as mentorData);
+    const [validID, setValidID] = useState(true);
     const {id} = useParams();
 
     useEffect(() => {
@@ -48,8 +50,12 @@ const MentorProfileViewRoute = () => {
             });
 
             const data = await response.json();
-            console.log("data:", data[0]);
             setMentorData(data[0]);
+
+            if (Object.keys(data).length === 0)
+                setValidID(false);
+            else
+                setValidID(true);
         } catch (error) {
             console.error("Error fetching mentor data:", error);
         }
@@ -59,9 +65,13 @@ const MentorProfileViewRoute = () => {
 
     return (
         <div>
-            <MentorProfile
-                mentorData={mentorData}
-            />
+            {validID ? (
+                <MentorProfile
+                    mentorData={mentorData}
+                />
+            ) : (
+                <NotFoundPage/>
+            )}
         </div>
     );
 };

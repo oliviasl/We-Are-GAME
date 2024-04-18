@@ -81,7 +81,7 @@ const StudentProfileRoute = () => {
   const { id } = useParams();
 
   const [studentData, setStudentData] = useState<studentData>({} as studentData);
-  const [validID, setValidID] = useState(false);
+  const [validID, setValidID] = useState(true);
   const [collegeAssignments, setCollegeAssignments] = useState<collegeAssignments[]>([]);
   const [peerData, setPeerData] = useState<peerData>({} as peerData);
   const [cookies] = useCookies(['user_id', 'user_status', 'user_name']);
@@ -152,7 +152,6 @@ const StudentProfileRoute = () => {
         const data = await response.json();
         setStudentData(data[0]);
         setPeerData(data[0]);
-        console.log("studentData:", studentData);
         
         if (Object.keys(data).length === 0)
           setValidID(false);
@@ -217,8 +216,6 @@ const StudentProfileRoute = () => {
       console.error('Error creating assignment:', error);
     }
   };
-
-  console.log("ValidID " + validID);
 
   return (
     
