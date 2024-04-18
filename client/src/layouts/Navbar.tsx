@@ -35,9 +35,14 @@ export function Navbar() {
             <a href="/authenticate">Authenticate Users</a>
           </div>
         ) : (
+          <div className="hidden"></div>
+        )}
+        {cookies.user_status === 1 ? (
           <div className="hover:text-brand-green-45 text-sm">
             <a href={`/student-profile/${cookies.user_id}`}>Student Profile</a>
           </div>
+        ) : (
+          <div className="hidden"></div>
         )}
         <div 
           className="hover:text-brand-green-45 text-sm" 
