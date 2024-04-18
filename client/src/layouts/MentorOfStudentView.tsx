@@ -117,9 +117,16 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
                 <div className="text-lg font-medium p-0 m-0">
                   {studentData.user_firstname + " " + studentData.user_lastname}
                 </div>
-                {/* TO DO: how to handle? */}
                 <div className="text-sm font-normal">
-                  {studentData.user_grad_year}
+                  {studentData.user_school && studentData.user_grad_year ? (
+                    studentData.user_school + "/" + studentData.user_grad_year
+                  ) : "" }
+                  {studentData.user_school && !studentData.user_grad_year ? (
+                    studentData.user_school
+                  ) : "" }
+                  {!studentData.user_school && studentData.user_grad_year ? (
+                    studentData.user_grad_year
+                  ) : "" }
                 </div>
               </div>
             </div>
@@ -199,7 +206,7 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
           <div className="order-5 border-gray-400 border-2 rounded ">
             <ProfileBox
               type="Extracurriculars"
-              data={studentData.user_extracurriculars != null ? studentData.user_extracurriculars.split(",") : []}
+              data={(studentData.user_extracurriculars != null && studentData.user_extracurriculars.length > 0) ? studentData.user_extracurriculars.split(",") : []}
             />
           </div>
 
@@ -207,7 +214,7 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
           <div className="order-5 border-gray-400 border-2 rounded h-40">
             <ProfileBox
               type="Special Interests"
-              data={studentData.user_interests != null ? studentData.user_interests.split(",") : []}
+              data={(studentData.user_interests != null && studentData.user_interests.length > 0) ? studentData.user_interests.split(",") : []}
             />
           </div>
 
