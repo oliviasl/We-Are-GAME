@@ -132,8 +132,6 @@ CREATE TABLE IF NOT EXISTS mentors
     mentor_firstname VARCHAR,
     mentor_lastname VARCHAR,
     mentor_email VARCHAR,
-    mentor_facebook VARCHAR,
-    mentor_instagram VARCHAR,
     mentor_phone VARCHAR,
     mentor_colleges VARCHAR,
     mentor_major1 VARCHAR,
