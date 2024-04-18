@@ -69,12 +69,7 @@ const HomePage = () => {
       name: "Student Database",
       url: "/student-database",
       Icon: BookUser,
-    },
-    {
-      name: "Authenticate Users",
-      url: "/authenticate",
-      Icon: SquareUser,
-    },
+    }
   ];
 
   return (
