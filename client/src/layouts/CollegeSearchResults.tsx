@@ -108,7 +108,7 @@ const CollegeSearchResults = (formData: any) => {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {acceptance_rate}
+                        {acceptance_rate ? acceptance_rate+'%' : ''}
                       </Typography>
                     </td>
                     <td className={classes}>
