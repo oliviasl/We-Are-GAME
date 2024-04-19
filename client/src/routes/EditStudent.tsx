@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Navbar } from "../layouts/Navbar";
-import { set } from "react-hook-form";
-import { setgid } from "process";
-import { useCookies } from "react-cookie";
-import { useParams, useNavigate } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useCookies} from "react-cookie";
+import {useNavigate, useParams} from "react-router-dom";
 import EditStudentPill from "../components/EditStudentPill";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import NotFoundPage from "./NotFoundPage";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -50,7 +47,7 @@ export const EditStudent = () => {
   const [goal, setGoal] = useState("");
   const [validID, setValidID] = useState(false);
 
-  const { id } = useParams();
+  const {id} = useParams();
   const navigate = useNavigate();
   const saveUserData = async () => {
     // cannot save with empty first or last name
@@ -64,37 +61,68 @@ export const EditStudent = () => {
       const userData = {
         userId: id,
         newFields: {
-          user_firstname: firstName,
-          user_lastname: lastName,
-          user_school: school,
-          user_phone: phoneNumber,
-          user_email: email,
+          ...(firstName) && {user_firstname: firstName},
+          ...(!firstName) && {user_firstname: null},
+          ...(lastName) && {user_lastname: lastName},
+          ...(!lastName) && {user_lastname: null},
+          ...(school) && {user_school: school},
+          ...(!school) && {user_school: null},
+          ...(phoneNumber) && {user_phone: phoneNumber},
+          ...(!phoneNumber) && {user_phone: null},
+          ...(email) && {user_email: email},
+          ...(!email) && {user_email: null},
           ...(grade) && {user_grad_year: parseInt(grade)},
-          user_instagram: instagram,
-          user_facebook: facebook,
-          user_potential_major: major1,
-          user_alt_major1: major2,
-          user_alt_major2: major3,
-          user_sport1: sport1,
-          user_sport2: sport2,
-          user_sport1_role: position1,
-          user_sport2_role: position2,
-          user_sport1_level: level1,
-          user_sport2_level: level2,
-          ...(arrInterest.length > 0) && {user_interests: arrInterest.join(",")},
-          ...(arrExtracurricular.length > 0) && {user_extracurriculars: arrExtracurricular.join(",")},
+          ...(!grade) && {user_grad_year: null},
+          ...(instagram) && {user_instagram: instagram},
+          ...(!instagram) && {user_instagram: null},
+          ...(facebook) && {user_facebook: facebook},
+          ...(!facebook) && {user_facebook: null},
+          ...(major1) && {user_potential_major: major1},
+          ...(!major1) && {user_potential_major: null},
+          ...(major2) && {user_alt_major1: major2},
+          ...(!major2) && {user_alt_major1: null},
+          ...(major3) && {user_alt_major2: major3},
+          ...(!major3) && {user_alt_major2: null},
+          ...(sport1) && {user_sport1: sport1},
+          ...(!sport1) && {user_sport1: null},
+          ...(sport2) && {user_sport2: sport2},
+          ...(!sport2) && {user_sport2: null},
+          ...(position1) && {user_sport1_role: position1},
+          ...(!position1) && {user_sport1_role: null},
+          ...(position2) && {user_sport2_role: position2},
+          ...(!position2) && {user_sport2_role: null},
+          ...(level1) && {user_sport1_level: level1},
+          ...(!level1) && {user_sport1_level: null},
+          ...(level2) && {user_sport2_level: level2},
+          ...(!level2) && {user_sport2_level: null},
+          ...(arrInterest && arrInterest.length > 0) && {user_interests: arrInterest.join(",")},
+          ...(!arrInterest || arrInterest.length === 0) && {user_interests: []},
+          ...(arrExtracurricular && arrExtracurricular.length > 0) && {user_extracurriculars: arrExtracurricular.join(",")},
+          ...(!arrExtracurricular || arrExtracurricular.length === 0) && {user_extracurriculars: []},
           ...(actReading) && {user_act_reading: parseInt(actReading)},
+          ...(!actReading) && {user_act_reading: null},
           ...(actMath) && {user_act_math: parseInt(actMath)},
+          ...(!actMath) && {user_act_math: null},
           ...(actScience) && {user_act_science: parseInt(actScience)},
+          ...(!actScience) && {user_act_science: null},
           ...(actWriting) && {user_act_english: parseInt(actWriting)},
+          ...(!actWriting) && {user_act_english: null},
           ...(actComposite) && {user_act: parseInt(actComposite)},
+          ...(!actComposite) && {user_act: null},
           ...(satReading) && {user_sat_read_write: parseInt(satReading)},
+          ...(!satReading) && {user_sat_read_write: null},
           ...(satMath) && {user_sat_math: parseInt(satMath)},
+          ...(!satMath) && {user_sat_math: null},
           ...(satComposite) && {user_sat: parseInt(satComposite)},
+          ...(!satComposite) && {user_sat: null},
           ...(gpa) && {user_gpa: parseFloat(gpa)},
-          user_purpose: purpose,
-          user_goal: goal,
-          user_show_socials: showContact,
+          ...(!gpa) && {user_gpa: null},
+          ...(purpose) && {user_purpose: purpose},
+          ...(!purpose) && {user_purpose: null},
+          ...(goal) && {user_goal: goal},
+          ...(!goal) && {user_goal: null},
+          ...(showContact) && {user_show_socials: showContact},
+          ...(!showContact) && {user_show_socials: null},
         },
       };
 
@@ -154,10 +182,16 @@ export const EditStudent = () => {
         setPosition2(studentData.user_sport2_role);
         setLevel1(studentData.user_sport1_level);
         setLevel2(studentData.user_sport2_level);
-        if (studentData.user_interests != null)
+        
+        if (studentData.user_interests != null && studentData.user_interests.length > 0)
           setArrInterest(studentData.user_interests.split(","));
-        if (studentData.user_extracurriculars != null)
+        else
+          setArrInterest([])
+        if (studentData.user_extracurriculars != null  && studentData.user_extracurriculars.length > 0)
           setArrExtracurricular(studentData.user_extracurriculars.split(","));
+        else
+          setArrExtracurricular([])
+
         if (studentData.user_act_reading != null)
           setACTReading(studentData.user_act_reading.toString());
         if (studentData.user_act_math != null)
@@ -180,7 +214,7 @@ export const EditStudent = () => {
         setGoal(studentData.user_goal);
         setShowContact(studentData.user_show_socials);
 
-        if (Object.keys(data).length === 0)
+        if (Object.keys(studentData).length === 0)
           setValidID(false);
         else
           setValidID(true);
@@ -242,176 +276,176 @@ export const EditStudent = () => {
   return (
     <div>
       {validID && (cookies.user_status === 3 || cookies.user_id === parseInt(id ? id : "")) ? (
-      <div className="mb-10">
-        {/* Grid Wrapper */}
-        <div className="mx-24 grid grid-cols-3 gap-5">
-          {/* MY EDIT AND CANCEL */}
-          <div className="col-span-full">
-            <div className="flex justify-between items-center my-9">
-              <div className="text-5xl font-bold">My Edit</div>
-              <div
-                className="flex justify-center items-center w-28 h-9 bg-brand-gray-90 border-2 border-brand-gray-20 rounded cursor-pointer"
-                onClick={() => navigate(`/student-profile/${id}`)}
-              >
-                Cancel
-              </div>
-            </div>
-          </div>
-
-          {/* First Name */}
-          <div>
-            <div className="text-lg font-medium mb-3">First</div>
-            <input
-              className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-              id="first"
-              type="text"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-          </div>
-          {/* Last Name */}
-          <div>
-            <div className="text-lg font-medium mb-3">Last</div>
-            <input
-              className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-              id="last"
-              type="text"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </div>
-          {/* School Name */}
-          <div>
-            <div className="text-lg font-medium mb-3">School</div>
-            <input
-              className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-              id="last"
-              type="text"
-              value={school}
-              onChange={(e) => setSchool(e.target.value)}
-            />
-          </div>
-
-          {/* Phone Number */}
-          <div>
-            <div className="text-lg font-medium mb-3">Phone Number</div>
-            <input
-              className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-              id="first"
-              type="text"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
-          </div>
-          {/* Email */}
-          <div>
-            <div className="text-lg font-medium mb-3">Email</div>
-            <input
-              className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-              id="last"
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          {/* Grade */}
-          <div>
-            <div className="text-lg font-medium mb-3">Grade</div>
-            <input
-              className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-              id="last"
-              type="text"
-              value={grade}
-              onChange={(e) => setGrade(e.target.value)}
-            />
-          </div>
-
-          {/* Instagram */}
-          <div>
-            <div className="text-lg font-medium mb-3">Instagram</div>
-            <input
-              className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-              id="first"
-              type="text"
-              value={instagram}
-              onChange={(e) => setInstagram(e.target.value)}
-            />
-          </div>
-          {/* Facebook */}
-          <div>
-            <div className="text-lg font-medium mb-3">Facebook</div>
-            <input
-              className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-              id="last"
-              type="text"
-              value={facebook}
-              onChange={(e) => setFacebook(e.target.value)}
-            />
-          </div>
-
-          {/* Contact Info */}
-          <div className="col-start-1 col-span-full my-3">
-            <div className="text-lg font-medium mb-3">
-              Show Contact on Profile
-            </div>
-            {showContact ? (
-              <div
-                className="cursor-pointer border border-brand-green-45 rounded w-20 h-9 bg-brand-green-45 mb-2"
-                onClick={() => setShowContact(!showContact)}
-              >
-                <div className="flex justify-between py-[6px] px-3 text-sm text-white font-normal">
-                  <div className="rounded bg-white w-5 h-5" />
-                  ON
+        <div className="mb-10">
+          {/* Grid Wrapper */}
+          <div className="mx-24 grid grid-cols-3 gap-5">
+            {/* MY EDIT AND CANCEL */}
+            <div className="col-span-full">
+              <div className="flex justify-between items-center my-9">
+                <div className="text-5xl font-bold">My Edit</div>
+                <div
+                  className="flex justify-center items-center w-28 h-9 bg-brand-gray-90 border-2 border-brand-gray-20 rounded cursor-pointer"
+                  onClick={() => navigate(`/student-profile/${id}`)}
+                >
+                  Cancel
                 </div>
               </div>
-            ) : (
-              <div
-                className="cursor-pointer border-black border-2 rounded w-20 h-9 mb-2"
-                onClick={() => setShowContact(!showContact)}
-              >
-                <div className="flex justify-between py-[6px] px-3 text-sm font-normal">
-                  OFF
-                  <div className="rounded bg-black w-5 h-5" />
-                </div>
-              </div>
-            )}
-            <div className="text-sm">
-              *Other students, mentors, and admins will see your contact
-              information
             </div>
-          </div>
 
-          {/* Majors */}
-          <div className="col-start-1 my-10">
-            <div className="text-lg font-medium mb-3">Majors</div>
-            <input
-              className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-              id="first"
-              type="text"
-              value={major1}
-              onChange={(e) => setMajor1(e.target.value)}
-            />
-          </div>
-          {/* Major 2 */}
-          <div className="flex items-end my-10">
-            <input
-              className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-              id="last"
-              type="text"
-              value={major2}
-              onChange={(e) => setMajor2(e.target.value)}
-            />
-          </div>
-          {/* Major 3 */}
-          <div className="flex items-end my-10">
-            <input
-              className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-              id="last"
-              type="text"
-              value={major3}
-              onChange={(e) => setMajor3(e.target.value)}
-            />
-          </div>
+            {/* First Name */}
+            <div>
+              <div className="text-lg font-medium mb-3">First</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="first"
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </div>
+            {/* Last Name */}
+            <div>
+              <div className="text-lg font-medium mb-3">Last</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="last"
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </div>
+            {/* School Name */}
+            <div>
+              <div className="text-lg font-medium mb-3">School</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="last"
+                type="text"
+                value={school}
+                onChange={(e) => setSchool(e.target.value)}
+              />
+            </div>
+
+            {/* Phone Number */}
+            <div>
+              <div className="text-lg font-medium mb-3">Phone Number</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="first"
+                type="text"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
+            </div>
+            {/* Email */}
+            <div>
+              <div className="text-lg font-medium mb-3">Email</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="last"
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            {/* Grade */}
+            <div>
+              <div className="text-lg font-medium mb-3">Grade</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="last"
+                type="text"
+                value={grade}
+                onChange={(e) => setGrade(e.target.value)}
+              />
+            </div>
+
+            {/* Instagram */}
+            <div>
+              <div className="text-lg font-medium mb-3">Instagram</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="first"
+                type="text"
+                value={instagram}
+                onChange={(e) => setInstagram(e.target.value)}
+              />
+            </div>
+            {/* Facebook */}
+            <div>
+              <div className="text-lg font-medium mb-3">Facebook</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="last"
+                type="text"
+                value={facebook}
+                onChange={(e) => setFacebook(e.target.value)}
+              />
+            </div>
+
+            {/* Contact Info */}
+            <div className="col-start-1 col-span-full my-3">
+              <div className="text-lg font-medium mb-3">
+                Show Contact on Profile
+              </div>
+              {showContact ? (
+                <div
+                  className="cursor-pointer border border-brand-green-45 rounded w-20 h-9 bg-brand-green-45 mb-2"
+                  onClick={() => setShowContact(!showContact)}
+                >
+                  <div className="flex justify-between py-[6px] px-3 text-sm text-white font-normal">
+                    <div className="rounded bg-white w-5 h-5"/>
+                    ON
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className="cursor-pointer border-black border-2 rounded w-20 h-9 mb-2"
+                  onClick={() => setShowContact(!showContact)}
+                >
+                  <div className="flex justify-between py-[6px] px-3 text-sm font-normal">
+                    OFF
+                    <div className="rounded bg-black w-5 h-5"/>
+                  </div>
+                </div>
+              )}
+              <div className="text-sm">
+                *Other students, mentors, and admins will see your contact
+                information
+              </div>
+            </div>
+
+            {/* Majors */}
+            <div className="col-start-1 my-10">
+              <div className="text-lg font-medium mb-3">Majors</div>
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="first"
+                type="text"
+                value={major1}
+                onChange={(e) => setMajor1(e.target.value)}
+              />
+            </div>
+            {/* Major 2 */}
+            <div className="flex items-end my-10">
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="last"
+                type="text"
+                value={major2}
+                onChange={(e) => setMajor2(e.target.value)}
+              />
+            </div>
+            {/* Major 3 */}
+            <div className="flex items-end my-10">
+              <input
+                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                id="last"
+                type="text"
+                value={major3}
+                onChange={(e) => setMajor3(e.target.value)}
+              />
+            </div>
 
           {/* Sport */}
           <div>
@@ -814,3 +848,4 @@ export const EditStudent = () => {
 };
 
 export default EditStudent;
+

@@ -8,12 +8,12 @@ export function ProfileBox({type, data}: { type: string; data: string | string[]
             <div key={index} className="bg-brand-blue-95 rounded-md p-2">
               {item}
             </div>
-          ))
-          : (
-            <div className="bg-brand-blue-95 rounded-md p-2">
-              {data}
-            </div>
-          )}
+          )
+        ) : (
+          <div className="bg-brand-blue-95 rounded-md p-2">
+            {data}
+          </div>
+        )}
       </div>
     </div>
   );

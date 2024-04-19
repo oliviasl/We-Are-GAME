@@ -48,25 +48,44 @@ export const EditMentor = () => {
       const userData = {
         mentorId: id,
         newFields: {
-          mentor_firstname: firstName,
-          mentor_lastname: lastName,
-          mentor_email: email,
-          mentor_phone: phoneNumber,
-          mentor_colleges: colleges,
-          mentor_degree1: degree1,
-          mentor_degree2: degree2,
-          mentor_degree3: degree3,
-          mentor_major1: major1,
-          mentor_major2: major2,
-          mentor_major3: major3,
-          mentor_curr_employment: currEmployment,
-          mentor_highest_sports_level: highestLevel,
-          mentor_interests: arrInterest.join(","),
-          mentor_extracurriculars: arrExtracurricular.join(","),
-          mentor_sport1: sport1,
-          mentor_sport1_role: position1,
-          mentor_sport2: sport2,
-          mentor_sport2_role: position2,
+          ...(firstName) && {mentor_firstname: firstName},
+          ...(!firstName) && {mentor_firstname: null},
+          ...(lastName) && {mentor_lastname: lastName},
+          ...(!lastName) && {mentor_lastname: null},
+          ...(email) && {mentor_email: email},
+          ...(!email) && {mentor_email: null},
+          ...(phoneNumber) && {mentor_phone: phoneNumber},
+          ...(!phoneNumber) && {mentor_phone: null},
+          ...(colleges) && {mentor_colleges: colleges},
+          ...(!colleges) && {mentor_colleges: null},
+          ...(degree1) && {mentor_degree1: degree1},
+          ...(!degree1) && {mentor_degree1: null},
+          ...(degree2) && {mentor_degree2: degree2},
+          ...(!degree2) && {mentor_degree2: null},
+          ...(degree3) && {mentor_degree3: degree3},
+          ...(!degree3) && {mentor_degree3: null},
+          ...(major1) && {mentor_major1: major1},
+          ...(!major1) && {mentor_major1: null},
+          ...(major2) && {mentor_major2: major2},
+          ...(!major2) && {mentor_major2: null},
+          ...(major3) && {mentor_major3: major3},
+          ...(!major3) && {mentor_major3: null},
+          ...(currEmployment) && {mentor_curr_employment: currEmployment},
+          ...(!currEmployment) && {mentor_curr_employment: null},
+          ...(highestLevel) && {mentor_highest_sports_level: highestLevel},
+          ...(!highestLevel) && {mentor_highest_sports_level: null},
+          ...(arrInterest && arrInterest.length > 0) && {mentor_interests: arrInterest.join(",")},
+          ...(!arrInterest || arrInterest.length === 0) && {mentor_interests: []},
+          ...(arrExtracurricular && arrExtracurricular.length > 0) && {mentor_extracurriculars: arrExtracurricular.join(",")},
+          ...(!arrExtracurricular || arrExtracurricular.length === 0) && {mentor_extracurriculars: []},
+          ...(sport1) && {mentor_sport1: sport1},
+          ...(!sport1) && {mentor_sport1: null},
+          ...(position1) && {mentor_sport1_role: position1},
+          ...(!position1) && {mentor_sport1_role: null},
+          ...(sport2) && {mentor_sport1: sport2},
+          ...(!sport2) && {mentor_sport1: null},
+          ...(position2) && {mentor_sport1_role: position1},
+          ...(!position2) && {mentor_sport2_role: null},
         },
       };
       const response = await fetch("/api/editMentor", {
@@ -122,10 +141,17 @@ export const EditMentor = () => {
         setPosition1(mentorData.mentor_sport1_role);
         setPosition2(mentorData.mentor_sport2_role);
         setHighestLevel(mentorData.mentor_highest_sports_level);
-        setArrInterest(mentorData.mentor_interests.split(","));
-        setArrExtracurricular(mentorData.mentor_extracurriculars.split(","));
+
+        if (mentorData.mentor_interests != null && mentorData.mentor_interests.length > 0)
+          setArrInterest(mentorData.mentor_interests.split(","));
+        else
+          setArrInterest([])
+        if (mentorData.mentor_extracurriculars != null  && mentorData.mentor_extracurriculars.length > 0)
+          setArrExtracurricular(mentorData.mentor_extracurriculars.split(","));
+        else
+          setArrExtracurricular([])
         
-        if (Object.keys(data).length === 0) 
+        if (Object.keys(mentorData).length === 0) 
           setValidID(false);
         else 
           setValidID(true);
