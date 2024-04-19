@@ -664,9 +664,9 @@ export const EditStudent = () => {
             <div className="text-lg font-medium mb-3">ACT</div>
             <div className="flex justify-between mb-3">
               <div className="flex justify-between items-center w-full">
-                <div>Reading</div>
+                <div className="mr-2">Reading</div>
                 <input
-                  className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
+                  className="border-2 border-black rounded min-w-10 w-2/5 h-9 px-2 py-2 mr-8 text-gray-700"
                   id="last"
                   type="text"
                   value={actReading}
@@ -674,9 +674,9 @@ export const EditStudent = () => {
                 />
               </div>
               <div className="flex justify-between items-center w-full">
-                <div>Math</div>
+                <div className="mr-2">Math</div>
                 <input
-                  className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
+                  className="border-2 border-black rounded w-2/5 h-9 px-2 py-2 mr-8 text-gray-700"
                   id="last"
                   type="text"
                   value={actMath}
@@ -686,9 +686,9 @@ export const EditStudent = () => {
             </div>
             <div className="flex justify-between items-center mb-3">
               <div className="flex justify-between items-center w-full">
-                <div>Writing</div>
+                <div className="mr-2">Writing</div>
                 <input
-                  className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
+                  className="border-2 border-black rounded w-2/5 h-9 px-2 py-2 mr-8 text-gray-700"
                   id="last"
                   type="text"
                   value={actWriting}
@@ -696,9 +696,9 @@ export const EditStudent = () => {
                 />
               </div>
               <div className="flex justify-between items-center w-full">
-                <div>Science</div>
+                <div className="mr-2">Science</div>
                 <input
-                  className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
+                  className="border-2 border-black rounded w-2/5 h-9 px-2 py-2 mr-8 text-gray-700"
                   id="last"
                   type="text"
                   value={actScience}
@@ -707,9 +707,9 @@ export const EditStudent = () => {
               </div>
             </div>
             <div className="flex justify-between items-center w-1/2">
-              <div>Composite</div>
+              <div className="mr-2">Composite</div>
               <input
-                className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
+                className="border-2 border-black rounded w-2/5 h-9 px-2 py-2 mr-8 text-gray-700"
                 id="last"
                 type="text"
                 value={actComposite}
@@ -723,9 +723,9 @@ export const EditStudent = () => {
             <div className="text-lg font-medium mb-3">SAT</div>
             <div className="flex justify-between mb-3">
               <div className="flex justify-between items-center w-full">
-                <div>Reading</div>
+                <div className="mr-2">Reading</div>
                 <input
-                  className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
+                  className="border-2 border-black rounded w-2/5 h-9 px-2 py-2 mr-8 text-gray-700"
                   id="last"
                   type="text"
                   value={satReading}
@@ -733,9 +733,9 @@ export const EditStudent = () => {
                 />
               </div>
               <div className="flex justify-between items-center w-full">
-                <div>Math</div>
+                <div className="mr-2">Math</div>
                 <input
-                  className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
+                  className="border-2 border-black rounded w-2/5 h-9 px-2 py-2 mr-8 text-gray-700"
                   id="last"
                   type="text"
                   value={satMath}
@@ -744,9 +744,9 @@ export const EditStudent = () => {
               </div>
             </div>
             <div className="flex justify-between items-center w-1/2">
-              <div>Composite</div>
+              <div className="mr-2">Composite</div>
               <input
-                className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
+                className="border-2 border-black rounded w-2/5 h-9 px-2 py-2 mr-8 text-gray-700"
                 id="last"
                 type="text"
                 value={satComposite}
@@ -759,7 +759,7 @@ export const EditStudent = () => {
           <div>
             <div className="text-lg font-medium mb-3">GPA</div>
             <input
-              className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-12 text-gray-700"
+              className="border-2 border-black rounded w-1/5 h-9 px-2 py-2 mr-12 text-gray-700"
               id="last"
               type="text"
               value={gpa}
