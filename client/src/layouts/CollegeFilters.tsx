@@ -170,7 +170,7 @@ const CollegeFilters: React.FC<CollegeFiltersProps> = ({ onCollegeData }) => {
                 <div>Diversity Resources</div>
             </div>
             <div className="flex gap-4 w-full">
-                <Button className="w-full border-2 border-2 border-brand-gray-20 hover:bg-semantic-success" type="submit">
+                <Button className="w-full border-2 border-brand-gray-20 hover:bg-semantic-success" type="submit">
                     Search
                 </Button>
                 <Button
