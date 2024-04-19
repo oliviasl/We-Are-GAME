@@ -447,399 +447,399 @@ export const EditStudent = () => {
               />
             </div>
 
-            {/* Sport */}
-            <div>
-              <div className="text-lg font-medium mb-3">Sport</div>
-              <input
-                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-                id="first"
-                type="text"
-                value={sport1}
-                onChange={(e) => setSport1(e.target.value)}
-              />
-            </div>
-            {/* Position */}
-            <div>
-              <div className="text-lg font-medium mb-3">Position</div>
-              <input
-                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-                id="last"
-                type="text"
-                value={position1}
-                onChange={(e) => setPosition1(e.target.value)}
-              />
-            </div>
-            {/* Level */}
-            <div>
-              <div className="text-lg font-medium mb-3">Level</div>
-              <div className="relative inline-block text-left w-full">
-                <div>
-                  <button
-                    className="flex w-full h-9 justify-between gap-x-1.5 text-md font-medium rounded bg-white px-3 py-2 text-sm text-gray-700 border-black border-2 hover:bg-gray-50"
-                    id="menu-button"
-                    aria-expanded="true"
-                    aria-haspopup="true"
-                    onClick={() => {
-                      setShowLevel1(!showLevel1);
-                      setShowLevel2(false);
-                    }}
-                  >
-                    {level1}
-                    <svg
-                      className="-mr-1 h-5 w-5 text-gray-400"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                  </button>
-                </div>
-                {showLevel1 && (
-                  <div
-                    className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="menu-button"
-                  >
-                    <div className="py-1" role="none">
-                      <div
-                        className="text-gray-700 block px-4 py-2 text-sm"
-                        role="menuitem"
-                        id="menu-item-0"
-                        onClick={() => {
-                          setLevel1("National");
-                          setShowLevel1(false);
-                        }}
-                      >
-                        National
-                      </div>
-                      <div
-                        className="text-gray-700 block px-4 py-2 text-sm"
-                        role="menuitem"
-                        id="menu-item-0"
-                        onClick={() => {
-                          setLevel1("State");
-                          setShowLevel1(false);
-                        }}
-                      >
-                        State
-                      </div>
-                      <div
-                        className="text-gray-700 block px-4 py-2 text-sm"
-                        role="menuitem"
-                        id="menu-item-0"
-                        onClick={() => {
-                          setLevel1("Regional");
-                          setShowLevel1(false);
-                        }}
-                      >
-                        Regional
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Sport 2 */}
-            <div className="col-start-1">
-              <input
-                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-                id="first"
-                type="text"
-                value={sport2}
-                onChange={(e) => setSport2(e.target.value)}
-              />
-            </div>
-            {/* Position 2 */}
-            <div className="flex items-end">
-              <input
-                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-                id="last"
-                type="text"
-                value={position2}
-                onChange={(e) => setPosition2(e.target.value)}
-              />
-            </div>
-            {/* Level 2 */}
-            <div className="flex items-end">
-              <div className="relative inline-block text-left w-full">
-                <div>
-                  <button
-                    className="flex w-full h-9 justify-between gap-x-1.5 text-md font-medium rounded bg-white px-3 py-2 text-sm text-gray-700 border-black border-2 hover:bg-gray-50"
-                    id="menu-button"
-                    aria-expanded="true"
-                    aria-haspopup="true"
-                    onClick={() => {
-                      setShowLevel2(!showLevel2);
-                      setShowLevel1(false);
-                    }}
-                  >
-                    {level2}
-                    <svg
-                      className="-mr-1 h-5 w-5 text-gray-400"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                  </button>
-                </div>
-                {showLevel2 && (
-                  <div
-                    className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="menu-button"
-                  >
-                    <div className="py-1" role="none">
-                      <div
-                        className="text-gray-700 block px-4 py-2 text-sm"
-                        role="menuitem"
-                        id="menu-item-0"
-                        onClick={() => {
-                          setLevel2("National");
-                          setShowLevel2(false);
-                        }}
-                      >
-                        National
-                      </div>
-                      <div
-                        className="text-gray-700 block px-4 py-2 text-sm"
-                        role="menuitem"
-                        id="menu-item-0"
-                        onClick={() => {
-                          setLevel2("State");
-                          setShowLevel2(false);
-                        }}
-                      >
-                        State
-                      </div>
-                      <div
-                        className="text-gray-700 block px-4 py-2 text-sm"
-                        role="menuitem"
-                        id="menu-item-0"
-                        onClick={() => {
-                          setLevel2("Regional");
-                          setShowLevel2(false);
-                        }}
-                      >
-                        Regional
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Interests */}
-            <div className="my-10">
-              <div className="text-lg font-medium mb-3">Interests</div>
-              <input
-                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-                id="first"
-                type="text"
-                placeholder="Type and press enter to add"
-                value={inputInterest}
-                onChange={(e) => setInputInterest(e.target.value)}
-                onKeyDown={handleInterestKeypress}
-              />
-              <div className="gap-3 w-full flex mt-5 flex-wrap">
-                {arrInterest?.map((interest: string, idx: number) => {
-                  return (
-                    <EditStudentPill
-                      key={interest + idx}
-                      text={interest}
-                      closeHandler={removeInterest(idx)}
-                    />
-                  );
-                })}
-              </div>
-              {/* Map each interest from an interests array */}
-            </div>
-            {/* Extracurricular */}
-            <div className="my-10">
-              <div className="text-lg font-medium mb-3">Extracurricular</div>
-              <input
-                className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-                id="last"
-                type="text"
-                value={inputExtracurricular}
-                placeholder="Type and press enter to add"
-                onChange={(e) => setInputExtracurricular(e.target.value)}
-                onKeyDown={handleExtracurricularKeypress}
-              />
-              <div className="gap-3 w-full flex mt-5 flex-wrap">
-                {arrExtracurricular?.map((extracurricular: string, idx: number) => {
-                  return (
-                    <EditStudentPill
-                      key={extracurricular + idx}
-                      text={extracurricular}
-                      closeHandler={removeExtracurricular(idx)}
-                    />
-                  );
-                })}
-              </div>
-              {/* Map each extracurricular from an extracurriculars array */}
-            </div>
-
-            {/* ACT WRAPPER */}
-            <div className="col-start-1">
-              <div className="text-lg font-medium mb-3">ACT</div>
-              <div className="flex justify-between mb-3">
-                <div className="flex justify-between items-center w-full">
-                  <div>Reading</div>
-                  <input
-                    className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
-                    id="last"
-                    type="text"
-                    value={actReading}
-                    onChange={(e) => setACTReading(e.target.value)}
-                  />
-                </div>
-                <div className="flex justify-between items-center w-full">
-                  <div>Math</div>
-                  <input
-                    className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
-                    id="last"
-                    type="text"
-                    value={actMath}
-                    onChange={(e) => setACTMath(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="flex justify-between items-center mb-3">
-                <div className="flex justify-between items-center w-full">
-                  <div>Writing</div>
-                  <input
-                    className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
-                    id="last"
-                    type="text"
-                    value={actWriting}
-                    onChange={(e) => setACTWriting(e.target.value)}
-                  />
-                </div>
-                <div className="flex justify-between items-center w-full">
-                  <div>Science</div>
-                  <input
-                    className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
-                    id="last"
-                    type="text"
-                    value={actScience}
-                    onChange={(e) => setACTScience(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="flex justify-between items-center w-1/2">
-                <div>Composite</div>
-                <input
-                  className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
-                  id="last"
-                  type="text"
-                  value={actComposite}
-                  onChange={(e) => setACTComposite(e.target.value)}
-                />
-              </div>
-            </div>
-
-            {/* SAT WRAPPER */}
-            <div>
-              <div className="text-lg font-medium mb-3">SAT</div>
-              <div className="flex justify-between mb-3">
-                <div className="flex justify-between items-center w-full">
-                  <div>Reading</div>
-                  <input
-                    className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
-                    id="last"
-                    type="text"
-                    value={satReading}
-                    onChange={(e) => setSATReading(e.target.value)}
-                  />
-                </div>
-                <div className="flex justify-between items-center w-full">
-                  <div>Math</div>
-                  <input
-                    className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
-                    id="last"
-                    type="text"
-                    value={satMath}
-                    onChange={(e) => setSATMath(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="flex justify-between items-center w-1/2">
-                <div>Composite</div>
-                <input
-                  className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-8 text-gray-700"
-                  id="last"
-                  type="text"
-                  value={satComposite}
-                  onChange={(e) => setSATComposite(e.target.value)}
-                />
-              </div>
-            </div>
-
-            {/* GPA WRAPPER */}
-            <div>
-              <div className="text-lg font-medium mb-3">GPA</div>
-              <input
-                className="border-2 border-black rounded w-20 h-9 px-2 py-2 mr-12 text-gray-700"
-                id="last"
-                type="text"
-                value={gpa}
-                onChange={(e) => setGPA(e.target.value)}
-              />
-            </div>
-
-            {/* PURPOSE AND GOAL WRAPPER */}
-            <div className="col-span-full mt-8">
-              <div className="grid grid-cols-2 gap-5">
-                <div>
-                  <div className="text-lg font-medium mb-3">Pursue My Purpose</div>
-                  <input
-                    className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-                    id="last"
-                    type="text"
-                    value={purpose}
-                    onChange={(e) => setPurpose(e.target.value)}
-                  />
-                </div>
-
-                <div>
-                  <div className="text-lg font-medium mb-3">Goal</div>
-                  <input
-                    className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
-                    id="last"
-                    type="text"
-                    value={goal}
-                    onChange={(e) => setGoal(e.target.value)}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="col-span-full mt-6 mb-52">
-              <div className="flex justify-end">
-                <div
-                  className="flex justify-center items-center w-28 h-9 bg-brand-gray-20 border-2 border-brand-gray-20 rounded text-white hover:bg-brand-green-45 transition duration-300 ease-in-out cursor-pointer"
-                  onClick={saveUserData}
+          {/* Sport */}
+          <div>
+            <div className="text-lg font-medium mb-3">Sport</div>
+            <input
+              className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+              id="first"
+              type="text"
+              value={sport1}
+              onChange={(e) => setSport1(e.target.value)}
+            />
+          </div>
+          {/* Position */}
+          <div>
+            <div className="text-lg font-medium mb-3">Position</div>
+            <input
+              className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+              id="last"
+              type="text"
+              value={position1}
+              onChange={(e) => setPosition1(e.target.value)}
+            />
+          </div>
+          {/* Level */}
+          <div>
+            <div className="text-lg font-medium mb-3">Level</div>
+            <div className="relative inline-block text-left w-full">
+              <div>
+                <button
+                  className="flex w-full h-9 justify-between gap-x-1.5 text-md font-medium rounded bg-white px-3 py-2 text-sm text-gray-700 border-black border-2 hover:bg-gray-50"
+                  id="menu-button"
+                  aria-expanded="true"
+                  aria-haspopup="true"
+                  onClick={() => {
+                    setShowLevel1(!showLevel1);
+                    setShowLevel2(false);
+                  }}
                 >
-                  Save
+                  {level1}
+                  <svg
+                    className="-mr-1 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </button>
+              </div>
+              {showLevel1 && (
+                <div
+                  className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="menu-button"
+                >
+                  <div className="py-1" role="none">
+                    <div
+                      className="text-gray-700 block px-4 py-2 text-sm"
+                      role="menuitem"
+                      id="menu-item-0"
+                      onClick={() => {
+                        setLevel1("National");
+                        setShowLevel1(false);
+                      }}
+                    >
+                      National
+                    </div>
+                    <div
+                      className="text-gray-700 block px-4 py-2 text-sm"
+                      role="menuitem"
+                      id="menu-item-0"
+                      onClick={() => {
+                        setLevel1("State");
+                        setShowLevel1(false);
+                      }}
+                    >
+                      State
+                    </div>
+                    <div
+                      className="text-gray-700 block px-4 py-2 text-sm"
+                      role="menuitem"
+                      id="menu-item-0"
+                      onClick={() => {
+                        setLevel1("Regional");
+                        setShowLevel1(false);
+                      }}
+                    >
+                      Regional
+                    </div>
+                  </div>
                 </div>
+              )}
+            </div>
+          </div>
+
+          {/* Sport 2 */}
+          <div className="col-start-1">
+            <input
+              className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+              id="first"
+              type="text"
+              value={sport2}
+              onChange={(e) => setSport2(e.target.value)}
+            />
+          </div>
+          {/* Position 2 */}
+          <div className="flex items-end">
+            <input
+              className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+              id="last"
+              type="text"
+              value={position2}
+              onChange={(e) => setPosition2(e.target.value)}
+            />
+          </div>
+          {/* Level 2 */}
+          <div className="flex items-end">
+            <div className="relative inline-block text-left w-full">
+              <div>
+                <button
+                  className="flex w-full h-9 justify-between gap-x-1.5 text-md font-medium rounded bg-white px-3 py-2 text-sm text-gray-700 border-black border-2 hover:bg-gray-50"
+                  id="menu-button"
+                  aria-expanded="true"
+                  aria-haspopup="true"
+                  onClick={() => {
+                    setShowLevel2(!showLevel2);
+                    setShowLevel1(false);
+                  }}
+                >
+                  {level2}
+                  <svg
+                    className="-mr-1 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </button>
+              </div>
+              {showLevel2 && (
+                <div
+                  className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="menu-button"
+                >
+                  <div className="py-1" role="none">
+                    <div
+                      className="text-gray-700 block px-4 py-2 text-sm"
+                      role="menuitem"
+                      id="menu-item-0"
+                      onClick={() => {
+                        setLevel2("National");
+                        setShowLevel2(false);
+                      }}
+                    >
+                      National
+                    </div>
+                    <div
+                      className="text-gray-700 block px-4 py-2 text-sm"
+                      role="menuitem"
+                      id="menu-item-0"
+                      onClick={() => {
+                        setLevel2("State");
+                        setShowLevel2(false);
+                      }}
+                    >
+                      State
+                    </div>
+                    <div
+                      className="text-gray-700 block px-4 py-2 text-sm"
+                      role="menuitem"
+                      id="menu-item-0"
+                      onClick={() => {
+                        setLevel2("Regional");
+                        setShowLevel2(false);
+                      }}
+                    >
+                      Regional
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Interests */}
+          <div className="my-10">
+            <div className="text-lg font-medium mb-3">Interests</div>
+            <input
+              className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+              id="first"
+              type="text"
+              placeholder="Type and press enter to add"
+              value={inputInterest}
+              onChange={(e) => setInputInterest(e.target.value)}
+              onKeyDown={handleInterestKeypress}
+            />
+            <div className="gap-3 w-full flex mt-5 flex-wrap">
+              {arrInterest?.map((interest: string, idx: number) => {
+                return (
+                  <EditStudentPill
+                    key={interest + idx}
+                    text={interest}
+                    closeHandler={removeInterest(idx)}
+                  />
+                );
+              })}
+            </div>
+            {/* Map each interest from an interests array */}
+          </div>
+          {/* Extracurricular */}
+          <div className="my-10">
+            <div className="text-lg font-medium mb-3">Extracurricular</div>
+            <input
+              className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+              id="last"
+              type="text"
+              value={inputExtracurricular}
+              placeholder="Type and press enter to add"
+              onChange={(e) => setInputExtracurricular(e.target.value)}
+              onKeyDown={handleExtracurricularKeypress}
+            />
+            <div className="gap-3 w-full flex mt-5 flex-wrap">
+              {arrExtracurricular?.map((extracurricular: string, idx: number) => {
+                return (
+                  <EditStudentPill
+                    key={extracurricular + idx}
+                    text={extracurricular}
+                    closeHandler={removeExtracurricular(idx)}
+                  />
+                );
+              })}
+            </div>
+            {/* Map each extracurricular from an extracurriculars array */}
+          </div>
+
+          {/* ACT WRAPPER */}
+          <div className="col-start-1">
+            <div className="text-lg font-medium mb-3">ACT</div>
+            <div className="flex justify-between mb-3">
+              <div className="flex justify-between items-center w-full">
+                <div className="mr-2">Reading</div>
+                <input
+                  className="border-2 border-black rounded min-w-10 w-2/5 h-9 px-2 py-2 mr-8 text-gray-700"
+                  id="last"
+                  type="text"
+                  value={actReading}
+                  onChange={(e) => setACTReading(e.target.value)}
+                />
+              </div>
+              <div className="flex justify-between items-center w-full">
+                <div className="mr-2">Math</div>
+                <input
+                  className="border-2 border-black rounded w-2/5 h-9 px-2 py-2 mr-8 text-gray-700"
+                  id="last"
+                  type="text"
+                  value={actMath}
+                  onChange={(e) => setACTMath(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="flex justify-between items-center mb-3">
+              <div className="flex justify-between items-center w-full">
+                <div className="mr-2">Writing</div>
+                <input
+                  className="border-2 border-black rounded w-2/5 h-9 px-2 py-2 mr-8 text-gray-700"
+                  id="last"
+                  type="text"
+                  value={actWriting}
+                  onChange={(e) => setACTWriting(e.target.value)}
+                />
+              </div>
+              <div className="flex justify-between items-center w-full">
+                <div className="mr-2">Science</div>
+                <input
+                  className="border-2 border-black rounded w-2/5 h-9 px-2 py-2 mr-8 text-gray-700"
+                  id="last"
+                  type="text"
+                  value={actScience}
+                  onChange={(e) => setACTScience(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="flex justify-between items-center w-1/2">
+              <div className="mr-2">Composite</div>
+              <input
+                className="border-2 border-black rounded w-2/5 h-9 px-2 py-2 mr-8 text-gray-700"
+                id="last"
+                type="text"
+                value={actComposite}
+                onChange={(e) => setACTComposite(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {/* SAT WRAPPER */}
+          <div>
+            <div className="text-lg font-medium mb-3">SAT</div>
+            <div className="flex justify-between mb-3">
+              <div className="flex justify-between items-center w-full">
+                <div className="mr-2">Reading</div>
+                <input
+                  className="border-2 border-black rounded w-2/5 h-9 px-2 py-2 mr-8 text-gray-700"
+                  id="last"
+                  type="text"
+                  value={satReading}
+                  onChange={(e) => setSATReading(e.target.value)}
+                />
+              </div>
+              <div className="flex justify-between items-center w-full">
+                <div className="mr-2">Math</div>
+                <input
+                  className="border-2 border-black rounded w-2/5 h-9 px-2 py-2 mr-8 text-gray-700"
+                  id="last"
+                  type="text"
+                  value={satMath}
+                  onChange={(e) => setSATMath(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="flex justify-between items-center w-1/2">
+              <div className="mr-2">Composite</div>
+              <input
+                className="border-2 border-black rounded w-2/5 h-9 px-2 py-2 mr-8 text-gray-700"
+                id="last"
+                type="text"
+                value={satComposite}
+                onChange={(e) => setSATComposite(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {/* GPA WRAPPER */}
+          <div>
+            <div className="text-lg font-medium mb-3">GPA</div>
+            <input
+              className="border-2 border-black rounded w-1/5 h-9 px-2 py-2 mr-12 text-gray-700"
+              id="last"
+              type="text"
+              value={gpa}
+              onChange={(e) => setGPA(e.target.value)}
+            />
+          </div>
+
+          {/* PURPOSE AND GOAL WRAPPER */}
+          <div className="col-span-full mt-8">
+            <div className="grid grid-cols-2 gap-5">
+              <div>
+                <div className="text-lg font-medium mb-3">Pursue My Purpose</div>
+                <input
+                  className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                  id="last"
+                  type="text"
+                  value={purpose}
+                  onChange={(e) => setPurpose(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <div className="text-lg font-medium mb-3">Goal</div>
+                <input
+                  className="border-2 border-black rounded w-full h-9 px-2 py-2 text-gray-700"
+                  id="last"
+                  type="text"
+                  value={goal}
+                  onChange={(e) => setGoal(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="col-span-full mt-6 mb-52">
+            <div className="flex justify-end">
+              <div
+                className="flex justify-center items-center w-28 h-9 bg-brand-gray-20 border-2 border-brand-gray-20 rounded text-white hover:bg-brand-green-45 transition duration-300 ease-in-out cursor-pointer"
+                onClick={saveUserData}
+              >
+                Save
               </div>
             </div>
           </div>
         </div>
+      </div>
       ) : (
         <NotFoundPage/>
       )}
@@ -848,3 +848,4 @@ export const EditStudent = () => {
 };
 
 export default EditStudent;
+
