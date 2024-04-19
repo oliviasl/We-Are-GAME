@@ -210,8 +210,6 @@ export const EditMentor = () => {
     };
   };
 
-  console.log("ID " + validID);
-  console.log("cookies " + cookies.user_status);
 
   return (
     <div>

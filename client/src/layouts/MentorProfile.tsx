@@ -80,7 +80,7 @@ const MentorProfile: React.FC<MentorProfileProps> = ({mentorData}) => {
           </div>
           <div className="mr-2">
             {cookies.user_status >= 2 && (
-                <button onClick={() => navigate(`/edit-mentor/${cookies.user_id}`)} style={{ background: 'none', border: 'none', padding: 0 }}>
+                <button onClick={() => navigate(`/edit-mentor/${mentorData.mentor_id}`)} style={{ background: 'none', border: 'none', padding: 0 }}>
                 <Pencil fill="#FFFFFF" />
               </button>
                

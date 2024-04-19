@@ -36,7 +36,7 @@ const EditCollege = () => {
       },
       body: JSON.stringify({ collegeId: id, newFields: data }),
     })
-    navigate("/")
+    navigate(`/college-profile/${id}`)
   }
 
   const [cookies] = useCookies(['user_status']);

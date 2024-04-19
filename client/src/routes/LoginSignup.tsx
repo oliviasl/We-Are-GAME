@@ -128,7 +128,7 @@ export default function LoginSignup() {
       setCookies("user_status", status[1], {path: "/"});
       setCookies("user_name", status[2], {path: "/"});
     } else {
-      toast("You are not authorized.", {
+      toast("Sign in is invalid or unauthorized.", {
         className: "border-l-8 border-semantic-warning",
       });
     }
