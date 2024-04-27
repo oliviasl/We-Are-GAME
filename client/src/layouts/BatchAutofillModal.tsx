@@ -34,12 +34,12 @@ const BatchAutofillModal = ({ isOpen, setIsOpen }: BatchAutofillModalProps) => {
         const data = await response.json();
 
         if (data) {
-            toast("Success! "+data+" colleges updated.");
+            toast.success("Success! "+data+" colleges updated.");
         } else {
-            toast("Fail.");
+            toast.error("Fail.");
         }
+        
         setIsLoading(false);
-        setIsOpen(false);
     };
 
     return (
