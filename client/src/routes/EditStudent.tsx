@@ -18,6 +18,7 @@ export const EditStudent = () => {
   const [grade, setGrade] = useState("");
   const [instagram, setInstagram] = useState("");
   const [facebook, setFacebook] = useState("");
+  const [ncaa, setNCAA] = useState(false);
   const [showContact, setShowContact] = useState(false);
   const [major1, setMajor1] = useState("");
   const [major2, setMajor2] = useState("");
@@ -45,6 +46,7 @@ export const EditStudent = () => {
   const [gpa, setGPA] = useState("");
   const [purpose, setPurpose] = useState("");
   const [goal, setGoal] = useState("");
+  const [notes, setNotes] = useState("");
   const [validID, setValidID] = useState(false);
 
   const {id} = useParams();
@@ -77,6 +79,10 @@ export const EditStudent = () => {
           ...(!instagram) && {user_instagram: null},
           ...(facebook) && {user_facebook: facebook},
           ...(!facebook) && {user_facebook: null},
+          ...(ncaa) && {user_ncaa_registered: showContact},
+          ...(!ncaa) && {user_ncaa_registered: null},
+          ...(showContact) && {user_show_socials: showContact},
+          ...(!showContact) && {user_show_socials: null},
           ...(major1) && {user_potential_major: major1},
           ...(!major1) && {user_potential_major: null},
           ...(major2) && {user_alt_major1: major2},
@@ -121,12 +127,10 @@ export const EditStudent = () => {
           ...(!purpose) && {user_purpose: null},
           ...(goal) && {user_goal: goal},
           ...(!goal) && {user_goal: null},
-          ...(showContact) && {user_show_socials: showContact},
-          ...(!showContact) && {user_show_socials: null},
+          ...(notes) && {user_notes: notes},
+          ...(!notes) && {user_notes: null},
         },
       };
-
-      console.log(userData);
 
       const response = await fetch("/api/editUser", {
         method: "put",
@@ -173,6 +177,8 @@ export const EditStudent = () => {
           setGrade(studentData.user_grad_year.toString());
         setInstagram(studentData.user_instagram);
         setFacebook(studentData.user_facebook);
+        setNCAA(studentData.user_ncaa_registered);
+        setShowContact(studentData.user_show_socials);
         setMajor1(studentData.user_potential_major);
         setMajor2(studentData.user_alt_major1);
         setMajor3(studentData.user_alt_major2);
@@ -212,7 +218,7 @@ export const EditStudent = () => {
           setGPA(studentData.user_gpa.toString());
         setPurpose(studentData.user_purpose);
         setGoal(studentData.user_goal);
-        setShowContact(studentData.user_show_socials);
+        setNotes(studentData.user_notes);
 
         if (Object.keys(studentData).length === 0)
           setValidID(false);
@@ -381,6 +387,34 @@ export const EditStudent = () => {
                 value={facebook}
                 onChange={(e) => setFacebook(e.target.value)}
               />
+            </div>
+
+            {/* NCAA Registered */}
+            <div className="col-start-1 col-span-full my-3 mb-0">
+              <div className="text-lg font-medium mb-3">
+                NCAA Registered
+              </div>
+              {ncaa ? (
+                <div
+                  className="cursor-pointer border border-brand-green-45 rounded w-20 h-9 bg-brand-green-45 mb-2"
+                  onClick={() => setNCAA(!ncaa)}
+                >
+                  <div className="flex justify-between py-[6px] px-3 text-sm text-white font-normal">
+                    <div className="rounded bg-white w-5 h-5"/>
+                    YES
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className="cursor-pointer border-black border-2 rounded w-20 h-9 mb-2"
+                  onClick={() => setNCAA(!ncaa)}
+                >
+                  <div className="flex justify-between py-[6px] px-3 text-sm font-normal">
+                    NO
+                    <div className="rounded bg-black w-5 h-5"/>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Contact Info */}
@@ -826,6 +860,20 @@ export const EditStudent = () => {
                 />
               </div>
             </div>
+          </div>
+
+          {/* NOTES */}
+          <div className="col-span-full mt-8">
+              <div>
+                <div className="text-lg font-medium mb-3">Notes</div>
+                <textarea
+                  className="border-2 border-black rounded w-full h-full px-2 py-2 text-gray-700 resize-y"
+                  id="last"
+                  rows={5}
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                />
+              </div>
           </div>
 
           <div className="col-span-full mt-6 mb-52">
