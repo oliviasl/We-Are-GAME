@@ -178,7 +178,7 @@ const MentorDatabase = () => {
                 </div>
               </Card>
             </div>
-            <div className="mr-[100px] pl-[100px]">
+            <div className="mr-[100px] pl-[5vw]">
               <div className="text-2xl font-bold">Search & Filter</div>
               <div className="flex items-center place-content-between my-2">
                   <div>Name</div>
