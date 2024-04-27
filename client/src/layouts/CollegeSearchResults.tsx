@@ -37,7 +37,6 @@ const CollegeSearchResults = (formData: any) => {
         const fetchData = async () => {
             try {
                 const fields = formData.formData;
-                console.log("Fields: ", fields);
                 const data = await fetchColleges(fields, page);
                 // console.log("Data: ", data);
 
