@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -34,12 +34,12 @@ const BatchAutofillModal = ({ isOpen, setIsOpen }: BatchAutofillModalProps) => {
         const data = await response.json();
 
         if (data) {
-            toast("Success! "+data+" colleges updated.");
+            toast.success("Success! "+data+" colleges updated.");
         } else {
-            toast("Fail.");
+            toast.error("Fail.");
         }
+        
         setIsLoading(false);
-        setIsOpen(false);
     };
 
     return (
@@ -62,6 +62,7 @@ const BatchAutofillModal = ({ isOpen, setIsOpen }: BatchAutofillModalProps) => {
                                 variant={"outlined"}
                                 onClick={() => {
                                     setIsOpen(false);
+                                    window.location.reload();
                                 }}
                                 className="font-circular-std font-normal"
                             >
