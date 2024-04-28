@@ -1,7 +1,10 @@
 {
   "name": "my-app",
   "version": "0.1.0",
-  "proxy": "http://localhost:3000",
+  "options": {
+    "allowedHosts": ["localhost", ".localhost"],
+    "proxy": "https://localhost:3001/"
+  },
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
