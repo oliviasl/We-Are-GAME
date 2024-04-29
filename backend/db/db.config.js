@@ -8,9 +8,11 @@ const connect = () => {
     const password = process.env.PASSWORD;
     const database = process.env.DB;
     const dialect = process.env.DIALECT;
+    const port = process.env.PORT;
 
     const sequelize = new Sequelize(database, userName, password, {
         host: hostName,
+        port: port,
         dialect: dialect,
         operatorsAliases: false,
         pool: {
@@ -27,10 +29,10 @@ const connect = () => {
     db.colleges = require("../model/colleges.model")(sequelize, DataTypes, Model);
     db.college_assignments = require("../model/college_assignments.model")(sequelize, DataTypes, Model);
     db.master_users = require("../model/master_users.model")(sequelize, DataTypes, Model);
+    db.user_status = require("../model/user_status.model")(sequelize, DataTypes, Model);
     db.mentors = require("../model/mentors.model")(sequelize, DataTypes, Model);
 
     return db;
-
 }
 
 module.exports = {
