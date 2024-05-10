@@ -63,7 +63,7 @@ export const AddMentor = () => {
           mentor_sport2_role: position2,
         },
       };
-      const response = await fetch("/api/createMentor", {
+      const response = await fetch("https://we-are-game-backend.onrender.com/api/createMentor", {
         method: "post",
         headers: {
           "Content-Type": "application/json",

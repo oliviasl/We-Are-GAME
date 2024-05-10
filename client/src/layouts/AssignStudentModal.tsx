@@ -28,7 +28,7 @@ const AssignStudentModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   }, [isOpen]);
 
   const fetchSearch = (value: string) => {
-    fetch("/api/userByName/", {
+    fetch("https://we-are-game-backend.onrender.com/api/userByName/", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +46,7 @@ const AssignStudentModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   };
 
   const createAssignment = async (student: StudentData) => {
-    await fetch("/api/createAssignment", {
+    await fetch("https://we-are-game-backend.onrender.com/api/createAssignment", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

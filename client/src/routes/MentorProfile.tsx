@@ -40,7 +40,7 @@ const MentorProfileViewRoute = () => {
             const mentorData = JSON.stringify({
                 mentorId: id
             });
-            const response = await fetch('/api/mentorById', {
+            const response = await fetch('https://we-are-game-backend.onrender.com/api/mentorById', {
                 method: "post",
                 headers: {
                     "Content-Type": "application/json",

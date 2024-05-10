@@ -35,7 +35,7 @@ const MentorDatabase = () => {
         mentorByMajor: filterMajor,
       },
     });
-    const response = await fetch("/api/paginatedMentorsFiltered", {
+    const response = await fetch("https://we-are-game-backend.onrender.com/api/paginatedMentorsFiltered", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

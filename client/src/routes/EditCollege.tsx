@@ -13,7 +13,7 @@ const EditCollege = () => {
 
   useEffect(() => {
     async function fetchCollegeData() {
-      const data = await fetch("/api/collegeById/", {
+      const data = await fetch("https://we-are-game-backend.onrender.com/api/collegeById/", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ const EditCollege = () => {
   }, [id, setInitialData]);
 
   async function onSubmit(data: any) {
-    await fetch("/api/editCollege", {
+    await fetch("https://we-are-game-backend.onrender.com/api/editCollege", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

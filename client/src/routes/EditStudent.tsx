@@ -132,7 +132,7 @@ export const EditStudent = () => {
         },
       };
 
-      const response = await fetch("/api/editUser", {
+      const response = await fetch("https://we-are-game-backend.onrender.com/api/editUser", {
         method: "put",
         headers: {
           "Content-Type": "application/json",
@@ -157,7 +157,7 @@ export const EditStudent = () => {
         const userData = JSON.stringify({
           userId: id,
         });
-        const response = await fetch(`/api/userById`, {
+        const response = await fetch(`https://we-are-game-backend.onrender.com/api/userById`, {
           method: "post",
           headers: {
             "Content-Type": "application/json",

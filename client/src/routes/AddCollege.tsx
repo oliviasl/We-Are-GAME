@@ -8,7 +8,7 @@ const AddCollege = () => {
   const navigate = useNavigate();
 
   async function onSubmit(data: any) {
-    await fetch("/api/createCollege", {
+    await fetch("https://we-are-game-backend.onrender.com/api/createCollege", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

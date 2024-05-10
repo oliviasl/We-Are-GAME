@@ -40,7 +40,7 @@ const AutofillModal = ({ isOpen, setIsOpen, stateAutofill }: AutofillModalProps)
             collegeName: collegeInput,
         });
         setIsLoading(true);
-        const response = await fetch("/api/searchScorecard", {
+        const response = await fetch("https://we-are-game-backend.onrender.com/api/searchScorecard", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -66,7 +66,7 @@ const AutofillModal = ({ isOpen, setIsOpen, stateAutofill }: AutofillModalProps)
                 collegeName: name,
             });
 
-            const response = await fetch("/api/autofillCollege", {
+            const response = await fetch("https://we-are-game-backend.onrender.com/api/autofillCollege", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

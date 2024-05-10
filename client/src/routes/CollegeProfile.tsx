@@ -20,7 +20,7 @@ const CollegeProfile = () => {
 
   useEffect(() => {
     async function fetchCollegeData() {
-      const _data = await fetch("/api/collegeById/", {
+      const _data = await fetch("https://we-are-game-backend.onrender.com/api/collegeById/", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ const CollegeProfile = () => {
   const [isAddedToProfile, setIsAddedToProfile] = useState(false);
 
   async function fetchAssignment() {
-    const assignmentsResponse = await fetch("/api/assignmentsByUserId", {
+    const assignmentsResponse = await fetch("https://we-are-game-backend.onrender.com/api/assignmentsByUserId", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +59,7 @@ const CollegeProfile = () => {
   }, [cookies.user_id]);
 
   async function handleAdd() {
-    await fetch('/api/createAssignment', {
+    await fetch('https://we-are-game-backend.onrender.com/api/createAssignment', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ const CollegeProfile = () => {
   }
 
   async function handleDelete() {
-    await fetch('/api/deleteAssignment', {
+    await fetch('https://we-are-game-backend.onrender.com/api/deleteAssignment', {
       method: 'delete',
       headers: {
         'Content-Type': 'application/json',

@@ -18,7 +18,7 @@ const AuthenticateUsers = () => {
     const pageBody = JSON.stringify({
       pageNumber: page,
     });
-    const response = await fetch("/api/paginatedUnapprovedUsers", {
+    const response = await fetch("https://we-are-game-backend.onrender.com/api/paginatedUnapprovedUsers", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -37,7 +37,7 @@ const AuthenticateUsers = () => {
     const idBody = JSON.stringify({
       userId: id,
     });
-    await fetch("/api/approveUser", {
+    await fetch("https://we-are-game-backend.onrender.com/api/approveUser", {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +52,7 @@ const AuthenticateUsers = () => {
     const idBody = JSON.stringify({
       userId: id,
     });
-    await fetch("/api/deleteUser", {
+    await fetch("https://we-are-game-backend.onrender.com/api/deleteUser", {
       method: "delete",
       headers: {
         "Content-Type": "application/json",

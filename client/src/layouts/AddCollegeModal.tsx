@@ -24,7 +24,7 @@ const AddCollegeModal: React.FC<ModalProps> = ({ isOpen, onClose, onAdd }) => {
   }, [isOpen]);
 
   const fetchSearch = (value: string) => {
-    fetch("/api/collegeByName/", {
+    fetch("https://we-are-game-backend.onrender.com/api/collegeByName/", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

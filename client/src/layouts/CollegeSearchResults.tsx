@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 async function fetchColleges(fields: any, pageNumber: number): Promise<any> {
     try {
-        const response = await fetch('/api/paginatedCollegesFiltered', {
+        const response = await fetch('https://we-are-game-backend.onrender.com/api/paginatedCollegesFiltered', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -29,7 +29,7 @@ const StudentDatabase = () => {
                 userByMajor: filterMajor,
             },
         });
-        const response = await fetch("/api/paginatedUsersFiltered", {
+        const response = await fetch("https://we-are-game-backend.onrender.com/api/paginatedUsersFiltered", {
             method: "post",
             headers: {
                 "Content-Type": "application/json",

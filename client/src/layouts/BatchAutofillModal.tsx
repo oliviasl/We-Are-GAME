@@ -24,7 +24,7 @@ const BatchAutofillModal = ({ isOpen, setIsOpen }: BatchAutofillModalProps) => {
 
     const autofillCollege = async () => {
         setIsLoading(true);
-        const response = await fetch("/api/batchAutofill", {
+        const response = await fetch("https://we-are-game-backend.onrender.com/api/batchAutofill", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
