@@ -52,7 +52,7 @@ export default function LoginSignup() {
       user_email: email,
     });
 
-    const userEmailResponse = await fetch("/api/userByEmail", {
+    const userEmailResponse = await fetch("https://we-are-game-backend.onrender.com/api/userByEmail", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +79,7 @@ export default function LoginSignup() {
       },
     });
 
-    const response = await fetch("/api/createUser", {
+    const response = await fetch("https://we-are-game-backend.onrender.com/api/createUser", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -115,7 +115,7 @@ export default function LoginSignup() {
       email: email,
       password: password,
     });
-    const response = await fetch("/api/validateUser", {
+    const response = await fetch("https://we-are-game-backend.onrender.com/api/validateUser", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
