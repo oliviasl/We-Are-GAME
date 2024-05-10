@@ -175,8 +175,8 @@ const StudentProfileRoute = () => {
 
   const handleDelete = async (collegeId: number) => {
     try {
-      const response = await fetch('/api/deleteAssignment', {
-        method: 'DELETE',
+      const response = await fetch('https://we-are-game-backend.onrender.com/api/deleteAssignment', {
+        method: 'delete',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
@@ -188,7 +188,7 @@ const StudentProfileRoute = () => {
       });
 
       if (response.ok) {
-        fetchAssignments();
+        await fetchAssignments();
         console.log('Assignment deleted');
       } else {
         console.error('Cannot delete assignment');
@@ -200,7 +200,7 @@ const StudentProfileRoute = () => {
 
   const handleAdd = async (collegeId: number) => {
     try {
-      const response = await fetch('/api/createAssignment', {
+      const response = await fetch('https://we-are-game-backend.onrender.com/api/createAssignment', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -211,9 +211,9 @@ const StudentProfileRoute = () => {
           collegeId: collegeId,
         }),
       });
-
+  
       if (response.ok) {
-        fetchAssignments();
+        await fetchAssignments();
         console.log('Assignment created');
       } else {
         console.error('Cannot create assignment');
