@@ -8,9 +8,11 @@ const connect = () => {
     const password = process.env.PASSWORD;
     const database = process.env.DB;
     const dialect = process.env.DIALECT;
+    const port = process.env.PORT;
 
     const sequelize = new Sequelize(database, userName, password, {
         host: hostName,
+        port: port,
         dialect: dialect,
         operatorsAliases: false,
         pool: {
@@ -24,9 +26,8 @@ const connect = () => {
     const db = {};
     db.Sequelize = Sequelize;
     db.sequelize = sequelize;
-    
-    return db;
 
+    return db;
 }
 
 module.exports = {
