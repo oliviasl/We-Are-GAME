@@ -24,11 +24,7 @@ const connect = () => {
     const db = {};
     db.Sequelize = Sequelize;
     db.sequelize = sequelize;
-    db.colleges = require("../model/colleges.model")(sequelize, DataTypes, Model);
-    db.college_assignments = require("../model/college_assignments.model")(sequelize, DataTypes, Model);
-    db.master_users = require("../model/master_users.model")(sequelize, DataTypes, Model);
-    db.mentors = require("../model/mentors.model")(sequelize, DataTypes, Model);
-
+    
     return db;
 
 }
