@@ -75,7 +75,6 @@ const AutofillModal = ({ isOpen, setIsOpen, stateAutofill }: AutofillModalProps)
             });
 
             const data = await response.json();
-            console.log(data);
             // pass data up
             stateAutofill(data);
             if (data) {

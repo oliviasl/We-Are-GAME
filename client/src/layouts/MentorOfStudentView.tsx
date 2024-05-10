@@ -76,16 +76,16 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
   const sports: string[] = [
     ...(studentData.user_sport1
       ? [
-        `${capFirstLetter(studentData.user_sport1)}/${capFirstLetter(
-          studentData.user_sport1_role
-        )}`,
+        `
+          ${capFirstLetter(studentData.user_sport1)}/${capFirstLetter(studentData.user_sport1_role)}/${capFirstLetter(studentData.user_sport1_level)}
+        `,
       ]
       : []),
     ...(studentData.user_sport2
       ? [
-        `${capFirstLetter(studentData.user_sport2)}/${capFirstLetter(
-          studentData.user_sport2_role
-        )}`,
+        `
+          ${capFirstLetter(studentData.user_sport2)}/${capFirstLetter(studentData.user_sport2_role)}/${capFirstLetter(studentData.user_sport2_level)}
+        `,
       ]
       : []),
   ];
@@ -171,7 +171,6 @@ const MentorOfStudentView: React.FC<MentorOfStudentViewProps> = ({
               <h2 className="text-md mb-2">Notes</h2>
             </div>
           </div>
-
 
           {/* Personal */}
           {(studentData.user_show_socials) && (

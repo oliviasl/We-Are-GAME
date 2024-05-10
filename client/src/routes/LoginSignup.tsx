@@ -78,6 +78,7 @@ export default function LoginSignup() {
         user_school: institution,
       },
     });
+
     const response = await fetch("/api/createUser", {
       method: "post",
       headers: {
@@ -87,9 +88,11 @@ export default function LoginSignup() {
       body: userBody,
     });
     const status = await response.json();
-    console.log(status);
-    //would put toast here
-    console.log("Logged in and user created");
+    if (status)
+      toast.success('New account requested. Please wait for authorization to sign in!')
+    else
+      toast.error('Error creating new account. Please try again.')
+
     setTabs("Login");
   };
 
@@ -121,7 +124,6 @@ export default function LoginSignup() {
       body: authBody,
     });
     const status = await response.json();
-    console.log(status);
 
     if (status[1] > 0) {
       setCookies("user_id", status[0], {path: "/"});

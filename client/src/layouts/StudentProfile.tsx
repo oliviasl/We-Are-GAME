@@ -83,16 +83,16 @@ const StudentProfile: React.FC<StudentProfileProps> = ({
   const sports: string[] = [
     ...(studentData.user_sport1
       ? [
-        `${capFirstLetter(studentData.user_sport1)}/${capFirstLetter(
-          studentData.user_sport1_role
-        )}`,
+        `
+          ${capFirstLetter(studentData.user_sport1)}/${capFirstLetter(studentData.user_sport1_role)}/${capFirstLetter(studentData.user_sport1_level)}
+        `,
       ]
       : []),
     ...(studentData.user_sport2
       ? [
-        `${capFirstLetter(studentData.user_sport2)}/${capFirstLetter(
-          studentData.user_sport2_role
-        )}`,
+        `
+          ${capFirstLetter(studentData.user_sport2)}/${capFirstLetter(studentData.user_sport2_role)}/${capFirstLetter(studentData.user_sport2_level)}
+        `,
       ]
       : []),
   ];

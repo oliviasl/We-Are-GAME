@@ -1,11 +1,3 @@
-import {
-  Button,
-  Dialog,
-  DialogBody,
-  DialogFooter,
-  DialogHeader,
-  Input,
-} from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
@@ -49,7 +41,6 @@ const AssignStudentModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       .then((response) => response.json())
       .then((json: StudentData[]) => {
         setSearchResults(json);
-        // console.log(json);
       })
       .catch((error) => console.error("Error fetching search:", error));
   };
