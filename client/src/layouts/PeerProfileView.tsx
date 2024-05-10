@@ -21,8 +21,8 @@ const PeerProfileView: React.FC<PeerProfileProps> = ({ peerData }) => {
 
   // TODO: make first letter caps
   const sports: string[] = [
-    ...(peerData.user_sport1 ? [`${peerData.user_sport1}/${peerData.user_sport1_role}`] : []),
-    ...(peerData.user_sport2 ? [`${peerData.user_sport2}/${peerData.user_sport2_role}`] : []),
+    ...(peerData.user_sport1 ? [`${capFirstLetter(peerData.user_sport1)}/${capFirstLetter(peerData.user_sport1_role)}/${capFirstLetter(peerData.user_sport1_level)}`,] : []),
+    ...(peerData.user_sport1 ? [`${capFirstLetter(peerData.user_sport2)}/${capFirstLetter(peerData.user_sport2_role)}/${capFirstLetter(peerData.user_sport2_level)}`,] : []),
   ];
 
   const majors = [

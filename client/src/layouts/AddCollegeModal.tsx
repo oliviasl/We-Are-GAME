@@ -37,7 +37,6 @@ const AddCollegeModal: React.FC<ModalProps> = ({ isOpen, onClose, onAdd }) => {
       .then((response) => response.json())
       .then((json: CollegeData[]) => {
         setSearchResults(json);
-        // console.log(json);
       })
       .catch((error) => console.error("Error fetching search:", error));
   };

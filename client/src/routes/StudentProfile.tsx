@@ -37,8 +37,10 @@ export interface studentData {
   user_extracurriculars: string;
   user_sport1: string;
   user_sport1_role: string;
+  user_sport1_level: string;
   user_sport2: string;
   user_sport2_role: string;
+  user_sport2_level: string;
   user_notes: string;
 
   user_grad_year: number;
@@ -64,8 +66,10 @@ export interface peerData {
   user_alt_major2: string;
   user_sport1: string;
   user_sport1_role: string;
+  user_sport1_level: string;
   user_sport2: string;
   user_sport2_role: string;
+  user_sport2_level: string;
 
   user_grad_year: number;
 }
@@ -165,6 +169,8 @@ const StudentProfileRoute = () => {
 
     fetchData();
     fetchAssignments();
+    
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const handleDelete = async (collegeId: number) => {

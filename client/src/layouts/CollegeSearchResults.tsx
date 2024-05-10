@@ -2,11 +2,6 @@ import React, {useEffect, useState} from "react";
 import {Button, Card, Typography} from "@material-tailwind/react";
 import {Link} from "react-router-dom";
 
-interface CollegeData {
-  college_name: string;
-  // other fields...
-}
-
 async function fetchColleges(fields: any, pageNumber: number): Promise<any> {
     try {
         const response = await fetch('/api/paginatedCollegesFiltered', {
@@ -38,14 +33,11 @@ const CollegeSearchResults = (formData: any) => {
             try {
                 const fields = formData.formData;
                 const data = await fetchColleges(fields, page);
-                // console.log("Data: ", data);
 
                 const {totalPages, colleges} = data;
-                // console.log("colleges: ", colleges);
+
                 setTableRows(colleges);
                 setTotalPages(totalPages);
-                // console.log("TotalPages: ", totalPages);
-                // console.log("Page: ", page);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -53,8 +45,6 @@ const CollegeSearchResults = (formData: any) => {
 
         fetchData();
     }, [page, formData]);
-
-    console.log(TABLE_ROWS)
 
   return (
     <Card shadow={false} className="h-full w-full pr-5">

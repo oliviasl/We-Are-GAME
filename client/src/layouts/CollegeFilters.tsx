@@ -46,7 +46,7 @@ const CollegeFilters: React.FC<CollegeFiltersProps> = ({ onCollegeData }) => {
             }
         }
 
-        if (found == false) {
+        if (found === false) {
             const formData = {
                 collegeByName,
                 collegeByGPA,
@@ -57,10 +57,9 @@ const CollegeFilters: React.FC<CollegeFiltersProps> = ({ onCollegeData }) => {
                 collegeHasAcademicResource,
                 collegeHasDiversityResource,
             };
-            console.log("formData", formData); // For demonstration, you'd likely send this data to a server
             onCollegeData(formData); // Pass the form data to the parent component
         } else {
-            console.log("wrong data type");
+            console.log("Error: wrong data type");
         }
     };
 

@@ -20,11 +20,8 @@ export default function CollegeFormPage({data, onSubmit}: { data?: any, onSubmit
   }
 
   const stateAutofill = async (collegeData : any) => {
-    //fill in state object something {...formData,collegeData}
+    //fill in state object {...formData,collegeData}
     setAutofillData(collegeData);
-    console.log(collegeData);
-    // possible solution?
-    // take existing formData and override all corresponding fields in autofillData
   }
   return <div className="h-screen w-screen flex flex-col items-center">
     <AutofillCollege stateAutofill={stateAutofill}/>
