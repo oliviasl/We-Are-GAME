@@ -96,7 +96,7 @@ const StudentProfileRoute = () => {
         userId: id
       });
 
-      const assignmentsResponse = await fetch("/api/assignmentsByUserId", {
+      const assignmentsResponse = await fetch("https://we-are-game-backend.onrender.com/api/assignmentsByUserId", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -109,7 +109,7 @@ const StudentProfileRoute = () => {
       const collegeNamesPromises = (assignmentsData as collegeAssignments[]).map(async (assignment: collegeAssignments) => {
         const collegeId = assignment.college_id;
 
-        const collegeResponse = await fetch("/api/collegeById", {
+        const collegeResponse = await fetch("https://we-are-game-backend.onrender.com/api/collegeById", {
           method: "post",
           headers: {
             "Content-Type": "application/json",
@@ -144,7 +144,7 @@ const StudentProfileRoute = () => {
         const userData = JSON.stringify({
           userId: id
         });
-        const response = await fetch(`/api/userById`, {
+        const response = await fetch(`https://we-are-game-backend.onrender.com/api/userById`, {
           method: "post",
           headers: {
             "Content-Type": "application/json",
