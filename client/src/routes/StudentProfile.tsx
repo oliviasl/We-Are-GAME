@@ -188,7 +188,7 @@ const StudentProfileRoute = () => {
       });
 
       if (response.ok) {
-        fetchAssignments();
+        await fetchAssignments();
         console.log('Assignment deleted');
       } else {
         console.error('Cannot delete assignment');
@@ -213,7 +213,7 @@ const StudentProfileRoute = () => {
       });
 
       if (response.ok) {
-        fetchAssignments();
+        await fetchAssignments();
         console.log('Assignment created');
       } else {
         console.error('Cannot create assignment');
