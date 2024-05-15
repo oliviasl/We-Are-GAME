@@ -65,6 +65,15 @@ const MentorDatabase = () => {
                 <div className="font-bold text-5xl">
                     Find a Mentor
                 </div>
+                { cookies.user_status > 1 &&
+                <Button
+                    color="gray"
+                    className="border-2 border-brand-gray-20 hover:bg-semantic-success"
+                    onClick={() => navigate("/add-mentor")}
+                >
+                    Add Mentor
+                </Button>
+                }
               </div>
               <Card shadow={false} className="h-full w-full pr-5">
                 <table className="table-auto text-left rounded-none">

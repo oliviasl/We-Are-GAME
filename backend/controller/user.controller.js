@@ -242,6 +242,23 @@ class userController {
         }
     }
 
+    // changeUserPassword
+    async changeUserPassword(userId, newPassword) {
+        try {
+            // hash password
+            newPassword = await bcrypt.hash(newPassword, 10);
+
+            const result = await db.query(
+                "UPDATE master_users SET user_password = $1 WHERE user_id = $2",
+                [newPassword, userId]
+            );
+            return result.rows;
+        }
+        catch (error) {
+            return error;
+        }
+    }
+
     // unapprovedUsers
     async unapprovedUsers() {
         const query = `SELECT *

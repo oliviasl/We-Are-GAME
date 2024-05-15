@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import EditStudentPill from "../components/EditStudentPill";
+import NotFoundPage from "./NotFoundPage";
 import { toast } from "react-toastify";
+import { useCookies } from "react-cookie";
 import "react-toastify/dist/ReactToastify.css";
 
 export const AddMentor = () => {
+  // cookies
+  const [cookies] = useCookies(["user_status"]);
+
   // field data
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -127,6 +132,11 @@ export const AddMentor = () => {
       });
     };
   };
+
+  // if not authorized to add mentor
+  if (parseInt(cookies.user_status, 10) < 2) {
+    return <NotFoundPage/>
+  }
 
   return (
     <div className="mb-10">

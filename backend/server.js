@@ -375,13 +375,12 @@ app.post("/api/createUser", (req, res) => {
 app.put("/api/editUser", (req, res) => {
   const {userId, newFields} = req.body;
   userController.editUser(newFields, userId).then((data) => {
-    return res.status(200).json(data);
-  })
+      return res.status(200).json(data);
+    })
     .catch((error) => {
       console.error(error);
       return res.status(500).json({error});
     });
-
 });
 
 // deleteUser
@@ -392,6 +391,18 @@ app.delete("/api/deleteUser", (req, res) => {
     .then((data) =>
       res.status(200).json(data)
     )
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({error});
+    });
+});
+
+// changeUserPassword
+app.put("/api/changeUserPassword", (req, res) => {
+  const {userId, newPassword} = req.body;
+  userController.changeUserPassword(userId, newPassword).then((data) => {
+      return res.status(200).json(data);
+    })
     .catch((error) => {
       console.error(error);
       return res.status(500).json({error});
