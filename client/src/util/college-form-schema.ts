@@ -13,9 +13,11 @@ const createZodField = (field: CollegeFormField) => {
         .refine((data) => !field.required || (data || "").trim() !== "", {
           message: "Field is required",
         })
+        .nullable()
         .transform((v) => (v === "" && field.type === "date") ? null : v);
     case "number":
       return z.union([z.string(), z.number()])
+        .nullable()
         .transform((v) => parseInt(String(v), 10))
         .refine((data) => !field.required || !isNaN(data), {
           message: "Field is required",
@@ -40,7 +42,7 @@ const processFields = (fields: (CategoryField | CollegeFormField)[]) => {
   fields.forEach((field) => {
     if (field.type === "category") {
       zodFields = {...zodFields, ...processFields(field.fields)};
-    } else {
+    } else if (field.id) {
       zodFields[field.id] = createZodField(field)
     }
   });

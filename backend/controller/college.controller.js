@@ -170,7 +170,7 @@ class collegeController {
       const query =
         "UPDATE colleges SET " +
         Object.keys(newFields)
-          .map((column) => column + "='" + newFields[column] + "'")
+          .map((column) => (newFields[column] ? column + "='" + newFields[column] + "'" : column + "=NULL"))
           .join(", ") +
         " WHERE college_id=" +
         collegeId +

@@ -12,7 +12,7 @@ type CollegeFormFieldProps = {
 
 export function CollegeFormFormField({form, field, isNested, errors}: CollegeFormFieldProps) {
   useEffect(() => {
-    if (field.type === "date") {
+    if (field.type === "date" && form.getValues()[field.id]) {
       form.setValue((field).id, form.getValues()[field.id].split("T")[0])
     }
   }, [form.getValues()[(field as CollegeFormField).id || ""]]);
@@ -47,6 +47,8 @@ export function CollegeFormFormField({form, field, isNested, errors}: CollegeFor
     </div>
   }
 
+  console.log(errors)
+
   return <div className={`grid ${isNested ? "grid-cols-[1fr_1fr]" : "grid-cols-[1fr_2fr]"} gap-8`}>
     <div className={"h-10 flex items-center"}>
       <Typography className={`${isNested ? "font-regular" : "font-bold"}`}>{field.title}</Typography>
@@ -57,7 +59,7 @@ export function CollegeFormFormField({form, field, isNested, errors}: CollegeFor
         type={field.type}
         step={field.type === "number" ? (field.step || 0.1) : undefined}
         containerProps={{className: "min-w-0"}}
-        crossOrigin
+        crossOrigin="true"
       />
       {errors[field.id] &&
         <p className={"text-xs text-red-500"}>{form.getFieldState(field.id).error?.message}</p>}
