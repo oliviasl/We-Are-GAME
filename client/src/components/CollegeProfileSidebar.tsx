@@ -14,22 +14,22 @@ export function CollegeProfileSidebar({data}: { data: Partial<College> }) {
               <Button className={"w-full"}>University Website</Button>
             </a>
           }
-          {data!.general_web_addr &&
+          {data!.admissions_web_addr &&
             <a href={ensureValidLink(data!.admissions_web_addr!)} className={"block w-full"}>
               <Button className={"w-full"}>Admissions Website</Button>
             </a>
           }
-          {data!.general_web_addr &&
+          {data!.app_web_addr &&
             <a href={ensureValidLink(data!.app_web_addr!)} className={"block w-full"}>
               <Button className={"w-full"}>Application</Button>
             </a>
           }
-          {data!.general_web_addr &&
+          {data!.fin_aid_web_addr &&
             <a href={ensureValidLink(data!.fin_aid_web_addr!)} className={"block w-full"}>
               <Button className={"w-full"}>Financial Aid & Scholarships</Button>
             </a>
           }
-          {data!.general_web_addr &&
+          {data!.net_price_calc_web_addr &&
             <a href={ensureValidLink(data!.net_price_calc_web_addr!)} className={"block w-full"}>
               <Button className={"w-full"}>Net Price Calculator</Button>
             </a>
