@@ -11,6 +11,11 @@ export default function CollegeFormPage({data, onSubmit}: { data?: any, onSubmit
   const [autofillData, setAutofillData] = useState({})
 
   async function onNextButtonClick(data: any) {
+    for (const field in data) {
+      if (Number.isNaN(data[field]))
+        data[field] = null;
+    }
+
     const updatedFormData = {...formData, ...data}
     setFormData(updatedFormData);
 

@@ -21,7 +21,7 @@ export function CollegeProgressBar({ activeStep }: CollegeProgressBarProps) {
         activeStep={activeStep}
       >
         {steps.map((step, i) => (
-          <Step className={"h-6 w-6 border-2 border-transparent"} activeClassName="bg-brand-green-45 border-gray-900">
+          <Step key={i} className={"h-6 w-6 border-2 border-transparent"} activeClassName="bg-brand-green-45 border-gray-900">
             <div className="absolute top-0 mt-8 w-36 text-center">
               <Typography
                 color={activeStep === i ? "blue-gray" : "gray"}
