@@ -267,7 +267,7 @@ const enrollmentStats: CollegeFormSection = {
   fields: [
     {
       type: "category",
-      title: "Enrollment by Race (%)",
+      title: "Enrollment by Ethnicity/Race (%)",
       columns: 1,
       fields: [
         {
@@ -337,7 +337,7 @@ const enrollmentStats: CollegeFormSection = {
       ]
     }, {
       type: "text",
-      title: "Enrollment by Race Website",
+      title: "Enrollment by Ethnicity/Race Website",
       id: "gender_stats_web_addr"
     }, {
       type: "category",
