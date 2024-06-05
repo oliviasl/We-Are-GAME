@@ -30,7 +30,8 @@ export function CollegeProfileInfo({data}: { data: Partial<College> }) {
     [data!.race_pacific_islander, "Pacific Islander", "hsla(313, 42%, 59%, 1)"],
     [data!.race_native_american, "Native American", "hsla(86, 35%, 53%, 1)"],
     [data!.race_two_or_more, "Two or More", "hsla(41, 80%, 64%, 1)"],
-    [data!.race_other, "Two or More", "hsla(238, 46%, 51%, 1)"],
+    [data!.race_international, "International", "hsla(174, 60%, 42%, 1)"],
+    [data!.race_other, "Other", "hsla(238, 46%, 51%, 1)"],
   ].filter(([data]) => !!data) as [number, string, string][]
 
   const enrollmentByGender = [
@@ -171,7 +172,7 @@ export function CollegeProfileInfo({data}: { data: Partial<College> }) {
         <h2 className={"text-2xl font-bold"}>Demographic Information</h2>
         <div className={"flex space-x-8"}>
           <div className={"w-full space-y-4"}>
-            <p className={"text-xl font-medium"}>Enrollment by Race</p>
+            <p className={"text-xl font-medium"}>Enrollment by Ethnicity/Race</p>
             <div><DonutPlot data={enrollmentByRace}/></div>
           </div>
           <div className={"w-full space-y-4"}>
