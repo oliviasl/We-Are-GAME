@@ -3,9 +3,11 @@ import { Button } from "@material-tailwind/react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import BatchAutofillModal from "./BatchAutofillModal";
+import DeleteCollegeModal from "./DeleteCollegeModal";
 
 const CollegeUpdateDatabase = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     const navigate = useNavigate();
 
@@ -31,10 +33,21 @@ const CollegeUpdateDatabase = () => {
                         >
                             Add College
                         </Button>
+                        <Button
+                            color="gray"
+                            className="border-2 border-brand-gray-20 hover:bg-semantic-success"
+                            onClick={() => setIsDeleteModalOpen(true)}
+                        >
+                            Delete College
+                        </Button>
                     </div>
                     <BatchAutofillModal
                         isOpen={isModalOpen}
                         setIsOpen={setIsModalOpen}
+                    />
+                    <DeleteCollegeModal
+                        isOpen={isDeleteModalOpen}
+                        setIsOpen={setIsDeleteModalOpen}
                     />
                 </>
             )}
