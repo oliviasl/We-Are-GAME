@@ -66,7 +66,7 @@ const DeleteCollegeModal = ({ isOpen, setIsOpen }: DeleteModalProps) => {
                 </div>
                 <div className="flex mt-6 gap-3">
                     <input
-                        placeholder="Search by college name"
+                        placeholder="Enter college id"
                         value={input}
                         onChange={(e) => handleChange(e.target.value)}
                         className="border-2 border-brand-gray-20 bg-gray-100 rounded-md px-4 py-1 w-full outline-none"
