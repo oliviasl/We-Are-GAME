@@ -23,7 +23,7 @@ const DeleteCollegeModal = ({ isOpen, setIsOpen }: DeleteModalProps) => {
     };
 
     const deleteCollege = (value: string) => {
-        fetch("/api/deleteCollege/", {
+        fetch("https://we-are-game-backend.onrender.com/api/deleteCollege/", {
             method: "delete",
             headers: {
                 "Content-Type": "application/json",
