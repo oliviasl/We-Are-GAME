@@ -1,4 +1,5 @@
 const express = require("express");
+const db = require('./db/index.js');
 const cors = require('cors');
 require("dotenv").config();
 
@@ -6,7 +7,6 @@ const collegeController = require("./controller/college.controller");
 const mentorController = require("./controller/mentor.controller");
 const userController = require("./controller/user.controller");
 const app = express();
-const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors());
@@ -614,6 +614,6 @@ app.post("/api/paginatedMentorsFiltered", (req, res) => {
 });
 
 // Start Backend Port
-app.listen(port, () => {
-  console.log(`Server listening on the port  ${port}`);
+app.listen(3000, () => {
+  console.log(`Server listening on the port  3000`);
 });
