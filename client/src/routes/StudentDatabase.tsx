@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Input, Button, Card, Typography } from "@material-tailwind/react";
 import StudentDirectoryRow from "../components/StudentDirectoryRow";
+import DeleteStudentModal from "../layouts/DeleteStudentModal";
+import { useCookies } from "react-cookie";
 
 const StudentDatabase = () => {
     //Table Data
     const [students, setStudents] = useState<any[]>([]);
+    const [cookies] = useCookies(["user_status"]);
 
     //Pagination States
     const [page, setPage] = useState(1);
@@ -19,6 +22,7 @@ const StudentDatabase = () => {
 
     const [displaySport, setDisplaySport] = useState("");
     const [filterSport, setFilterSport] = useState("");
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     const fetchApprovedUsers = useCallback(async () => {
         const pageBody = JSON.stringify({
@@ -59,6 +63,22 @@ const StudentDatabase = () => {
                         <div className="font-bold text-5xl">
                             Student Directory
                         </div>
+                        { cookies.user_status > 2 &&
+                            <div className="flex gap-2">
+                            <Button
+                                color="gray"
+                                className="border-2 border-brand-gray-20 hover:bg-semantic-success"
+                                onClick={() => setIsDeleteModalOpen(true)}
+                            >
+                                Delete Student
+                            </Button>
+                            </div>
+                            }
+                        {/* </div> */}
+                        <DeleteStudentModal
+                            isOpen={isDeleteModalOpen}
+                            setIsOpen={setIsDeleteModalOpen}
+                        />
                     </div>
                     <Card shadow={false} className="h-full w-full pr-5">
                         <table className="table-auto text-left rounded-none">
@@ -247,7 +267,7 @@ const StudentDatabase = () => {
                 </div>
             </div>
         </div>
-    );
+     );
 };
 
 export default StudentDatabase;

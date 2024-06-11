@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import MentorDirectoryRow from "../components/MentorDirectoryRow";
 import {Typography, Card, Button, Input} from "@material-tailwind/react";
+import DeleteMentorModal from "../layouts/DeleteMentorModal";
 
 const MentorDatabase = () => {
   // table data
@@ -22,6 +23,7 @@ const MentorDatabase = () => {
 
   const [displaySport, setDisplaySport] = useState("");
   const [filterSport, setFilterSport] = useState("");
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -66,6 +68,7 @@ const MentorDatabase = () => {
                     Find a Mentor
                 </div>
                 { cookies.user_status > 1 &&
+                <div className="flex gap-2">
                 <Button
                     color="gray"
                     className="border-2 border-brand-gray-20 hover:bg-semantic-success"
@@ -73,8 +76,20 @@ const MentorDatabase = () => {
                 >
                     Add Mentor
                 </Button>
-                }
+                <Button
+                    color="gray"
+                    className="border-2 border-brand-gray-20 hover:bg-semantic-success"
+                    onClick={() => setIsDeleteModalOpen(true)}
+                >
+                    Delete Mentor
+                </Button>
+                </div>
+              }
               </div>
+              <DeleteMentorModal
+                  isOpen={isDeleteModalOpen}
+                  setIsOpen={setIsDeleteModalOpen}
+              />
               <Card shadow={false} className="h-full w-full pr-5">
                 <table className="table-auto text-left rounded-none">
                   <thead>
