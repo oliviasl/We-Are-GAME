@@ -8,7 +8,11 @@ interface PeerProfileProps {
 }
 
 const capFirstLetter = (str: string): string => {
-  return str.replace(/\b\w/g, (match: string) => match.toUpperCase());
+  if (str == null) {
+    return ""
+  } else {
+    return str.replace(/\b\w/g, (match: string) => match.toUpperCase());
+  }
 };
 
 const PeerProfileView: React.FC<PeerProfileProps> = ({ peerData }) => {

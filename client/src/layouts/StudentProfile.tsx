@@ -35,7 +35,11 @@ const StudentProfile: React.FC<StudentProfileProps> = ({
   };
 
   const capFirstLetter = (str: string): string => {
-    return str.replace(/\b\w/g, (match: string) => match.toUpperCase());
+    if (str == null) {
+      return ""
+    } else {
+      return str.replace(/\b\w/g, (match: string) => match.toUpperCase());
+    }
   };
 
   const personalTitles: Record<string, string> = {
